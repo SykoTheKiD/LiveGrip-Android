@@ -23,7 +23,7 @@
             android:name=".EventListActivity"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".ChatActivity"
+            android:name=".MessagingActivity"
             android:screenOrientation="portrait"></activity>
 
         <meta-data

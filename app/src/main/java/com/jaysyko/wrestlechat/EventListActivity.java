@@ -52,7 +52,7 @@ public class EventListActivity extends Activity {
         events = new ArrayList<>();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Events");
         query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> eventList, com.parse.ParseException e) {
+            public void done(final List<ParseObject> eventList, com.parse.ParseException e) {
                 if (e == null) {
                     for (int i = 0; i < eventList.size(); i++) {
                         events.add(eventList.get(i).get("eventName").toString());
@@ -67,9 +67,10 @@ public class EventListActivity extends Activity {
                     usersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> a, View v, int i, long l) {
-                            Toast.makeText(getApplicationContext(),
-                                    events.get(i),
-                                    Toast.LENGTH_LONG).show();
+                            openConversation(eventList.get(i));
+//                            Toast.makeText(getApplicationContext(),
+//                                    events.get(i),
+//                                    Toast.LENGTH_LONG).show();
                         }
                     });
 
@@ -83,7 +84,9 @@ public class EventListActivity extends Activity {
     }
 
     public void openConversation(ParseObject event){
-
+        Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
+        intent.putExtra("EVENT_ID", event.getObjectId());
+        startActivity(intent);
     }
     //open a conversation with one person
     public void openConversation(final ArrayList<String> events, int pos) {
@@ -93,7 +96,7 @@ public class EventListActivity extends Activity {
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> events, com.parse.ParseException e) {
                 if (e == null) {
-                    Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
                     intent.putExtra("RECIPIENT_ID", events.get(0).getObjectId());
                     startActivity(intent);
                 } else {
