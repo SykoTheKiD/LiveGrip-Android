@@ -15,10 +15,10 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.List;
 
-public class ChatListAdapter extends ArrayAdapter<ParseMessageModel> {
+public class MessageListAdapter extends ArrayAdapter<ParseMessageModel> {
     private String mUserId;
 
-    public ChatListAdapter(Context context, String userId, List<ParseMessageModel> parseMessageModels) {
+    public MessageListAdapter(Context context, String userId, List<ParseMessageModel> parseMessageModels) {
         super(context, 0, parseMessageModels);
         this.mUserId = userId;
     }

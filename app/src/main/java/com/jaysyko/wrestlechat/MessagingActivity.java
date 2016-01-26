@@ -29,7 +29,7 @@ public class MessagingActivity extends Activity {
     private EditText etMessage;
     private ListView lvChat;
     private ArrayList<ParseMessageModel> messages;
-    private ChatListAdapter mAdapter;
+    private MessageListAdapter mAdapter;
     // Keep track of initial load to scroll to the bottom of the ListView
     private boolean mFirstLoad;
     private Handler handler = new Handler();
@@ -44,7 +44,7 @@ public class MessagingActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.activity_messaging);
         Intent intent = getIntent();
         sEventId = intent.getStringExtra("EVENT_ID");
         // User login
@@ -77,7 +77,7 @@ public class MessagingActivity extends Activity {
         // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen. Don't scroll to the bottom otherwise.
         lvChat.setTranscriptMode(1);
         mFirstLoad = true;
-        mAdapter = new ChatListAdapter(MessagingActivity.this, sUserId, messages);
+        mAdapter = new MessageListAdapter(MessagingActivity.this, sUserId, messages);
         lvChat.setAdapter(mAdapter);
         btSend.setOnClickListener(new View.OnClickListener() {
 
@@ -127,33 +127,6 @@ public class MessagingActivity extends Activity {
             }
         });
     }
-
-    private void getEventHistory(){
-
-    }
-
-//    private void populateMessageHistory() {
-//        String[] userIds = {currentUserId, recipientId};
-//        ParseQuery<ParseObject> query = ParseQuery.getQuery("ParseMessage");
-//        query.whereContainedIn("senderId", Arrays.asList(userIds));
-//        query.whereContainedIn("recipientId", Arrays.asList(userIds));
-//        query.orderByAscending("createdAt");
-//        query.findInBackground(new FindCallback<ParseObject>() {
-//            @Override
-//            public void done(List<ParseObject> messageList, com.parse.ParseException e) {
-//                if (e == null) {
-//                    for (int i = 0; i < messageList.size(); i++) {
-//                        WritableMessage message = new WritableMessage(messageList.get(i).get("recipientId").toString(), messageList.get(i).get("messageText").toString());
-//                        if (messageList.get(i).get("senderId").toString().equals(currentUserId)) {
-//                            messageAdapter.addMessage(message, MessageAdapter.DIRECTION_OUTGOING);
-//                        } else {
-//                            messageAdapter.addMessage(message, MessageAdapter.DIRECTION_INCOMING);
-//                        }
-//                    }
-//                }
-//            }
-//        });
-//    }
 
     // Create an anonymous user using ParseAnonymousUtils and set sUserId
 //    private void login() {
