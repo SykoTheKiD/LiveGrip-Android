@@ -10,44 +10,42 @@
     tools:context="com.jaysyko.wrestlechat.LoginActivity">
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/loginUsernameTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/password"
-        android:layout_alignLeft="@+id/password"
+        android:layout_alignEnd="@+id/loginPasswordTV"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/password"
-        android:layout_alignStart="@+id/password"
-        android:layout_marginTop="124dp"
+        android:layout_alignStart="@+id/loginPasswordTV"
+        android:layout_marginTop="31dp"
         android:hint="Username" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/loginPasswordTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/username"
+        android:layout_below="@+id/loginUsernameTV"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:ems="10"
-        android:hint="password"
+        android:hint="Password"
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/password"
+        android:layout_below="@+id/loginPasswordTV"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="33dp"
         android:text="Login" />
 
     <Button
-        android:id="@+id/signup"
+        android:id="@+id/signupButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/login"
-        android:layout_alignStart="@+id/login"
-        android:layout_below="@+id/login"
+        android:layout_alignLeft="@+id/loginButton"
+        android:layout_alignStart="@+id/loginButton"
+        android:layout_below="@+id/loginButton"
         android:layout_marginTop="28dp"
         android:text="Sign Up" />
 </RelativeLayout>

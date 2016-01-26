@@ -16,12 +16,14 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".EventListActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".ChatActivity"
             android:screenOrientation="portrait"></activity>
 
         <meta-data
@@ -30,8 +32,6 @@
         <meta-data
             android:name="com.parse.CLIENT_KEY"
             android:value="ySpg33jzOI3YKAQqJPJv7lfzFJMqbZlGhgtxGqg9" />
-
-        <!--<activity android:name=".ChatActivity"></activity>-->
     </application>
 
 </manifest>
