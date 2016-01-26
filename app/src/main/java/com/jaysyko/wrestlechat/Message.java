@@ -9,16 +9,12 @@ public class Message extends ParseObject {
         return getString("userId");
     }
 
-    public String getBody() {
-        return getString("body");
-    }
-
-    public String getBody() {
-        return getString("body");
-    }
-
     public void setUserId(String userId) {
         put("userId", userId);
+    }
+
+    public String getBody() {
+        return getString("body");
     }
 
     public void setBody(String body) {
