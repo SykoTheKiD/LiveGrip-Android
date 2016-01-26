@@ -105,6 +105,7 @@ public class MessagingActivity extends Activity {
         // Construct query to execute
         ParseQuery<ParseMessageModel> query = ParseQuery.getQuery(ParseMessageModel.class);
         // Configure limit and sort order
+        query.whereEqualTo("eventId", sEventId);
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
         query.orderByAscending("createdAt");
         // Execute query to fetch all messages from Parse asynchronously
