@@ -9,7 +9,6 @@ public class MainActivity extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        setContentView(R.layout.activity_main);
         Parse.initialize(this);
     }
 }
