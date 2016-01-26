@@ -6,4 +6,9 @@
     <string name="profile_other">Other profile pic</string>
     <string name="logout_button">Logout</string>
     <string name="title_activity_event_info">EventInfoActivity</string>
+    <string name="username_placeholder">Username</string>
+    <string name="password_placeholder">Password</string>
+    <string name="login_button_text">Login</string>
+    <string name="signup_button_text">Sign Up</string>
+    <string name="logo_alt">WrestleChat</string>
 </resources>

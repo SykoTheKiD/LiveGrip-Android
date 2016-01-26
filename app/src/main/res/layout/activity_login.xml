@@ -3,49 +3,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.jaysyko.wrestlechat.LoginActivity">
+    android:background="@drawable/login_bg_min"
+    android:gravity="center"
+    tools:context=".LoginActivity">
 
-    <EditText
-        android:id="@+id/loginUsernameTV"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/loginPasswordTV"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/loginPasswordTV"
-        android:layout_marginTop="31dp"
-        android:hint="Username" />
+        android:background="#fff"
+        android:backgroundTint="#424242"
+        android:clickable="false"
+        android:padding="25dp">
 
-    <EditText
-        android:id="@+id/loginPasswordTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/loginUsernameTV"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword" />
+        <ImageView
+            android:id="@+id/imgIcon"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:contentDescription="@string/logo_alt"
+            android:scaleType="fitXY"
+            android:src="@drawable/tv" />
 
-    <Button
-        android:id="@+id/loginButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/loginPasswordTV"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp"
-        android:text="Login" />
+        <EditText
+            android:id="@+id/loginUsernameTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgIcon"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:ems="10"
+            android:hint="@string/username_placeholder"
+            android:inputType="text">
 
-    <Button
-        android:id="@+id/signupButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/loginButton"
-        android:layout_alignStart="@+id/loginButton"
-        android:layout_below="@+id/loginButton"
-        android:layout_marginTop="28dp"
-        android:text="Sign Up" />
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/loginPasswordTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/loginUsernameTV"
+            android:layout_centerHorizontal="true"
+            android:ems="10"
+            android:hint="@string/password_placeholder"
+            android:inputType="textPassword"></EditText>
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/loginPasswordTV"
+            android:layout_alignRight="@+id/loginPasswordTV"
+            android:layout_below="@+id/loginPasswordTV"
+            android:layout_centerHorizontal="true"
+            android:text="@string/login_button_text" />
+
+        <Button
+            android:id="@+id/signupButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/loginButton"
+            android:layout_alignRight="@+id/loginPasswordTV"
+            android:layout_alignStart="@+id/loginButton"
+            android:layout_below="@+id/loginButton"
+            android:layout_centerHorizontal="true"
+            android:text="@string/signup_button_text" />
+    </RelativeLayout>
+
 </RelativeLayout>
