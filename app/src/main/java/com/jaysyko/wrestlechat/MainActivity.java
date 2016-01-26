@@ -10,7 +10,7 @@ public class MainActivity extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ParseObject.registerSubclass(Message.class);
+        ParseObject.registerSubclass(ParseMessageModel.class);
         Parse.initialize(this);
     }
 }

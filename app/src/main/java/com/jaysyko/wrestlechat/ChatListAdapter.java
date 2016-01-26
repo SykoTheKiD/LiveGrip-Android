@@ -15,11 +15,11 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.List;
 
-public class ChatListAdapter extends ArrayAdapter<Message> {
+public class ChatListAdapter extends ArrayAdapter<ParseMessageModel> {
     private String mUserId;
 
-    public ChatListAdapter(Context context, String userId, List<Message> messages) {
-        super(context, 0, messages);
+    public ChatListAdapter(Context context, String userId, List<ParseMessageModel> parseMessageModels) {
+        super(context, 0, parseMessageModels);
         this.mUserId = userId;
     }
 
@@ -47,9 +47,9 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
             holder.body = (TextView) convertView.findViewById(R.id.tvBody);
             convertView.setTag(holder);
         }
-        final Message message = (Message) getItem(position);
+        final ParseMessageModel parseMessageModel = (ParseMessageModel) getItem(position);
         final ViewHolder holder = (ViewHolder) convertView.getTag();
-        final boolean isMe = message.getUserId().equals(mUserId);
+        final boolean isMe = parseMessageModel.getUserId().equals(mUserId);
         // Show-hide image based on the logged-in user.
         // Display the profile image to the right for our user, left for other users.
         if (isMe) {
@@ -62,8 +62,8 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
             holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
         }
         final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
-        Picasso.with(getContext()).load(getProfileUrl(message.getUserId())).into(profileView);
-        holder.body.setText(message.getBody());
+        Picasso.with(getContext()).load(getProfileUrl(parseMessageModel.getUserId())).into(profileView);
+        holder.body.setText(parseMessageModel.getBody());
         return convertView;
     }    // Create a gravatar image based on the hash value obtained from userId
 
