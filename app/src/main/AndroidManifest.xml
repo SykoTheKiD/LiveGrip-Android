@@ -16,15 +16,16 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".EventListActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MessagingActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.parse.APPLICATION_ID"
@@ -32,6 +33,15 @@
         <meta-data
             android:name="com.parse.CLIENT_KEY"
             android:value="ySpg33jzOI3YKAQqJPJv7lfzFJMqbZlGhgtxGqg9" />
+
+        <activity
+            android:name=".EventInfoActivity"
+            android:label="@string/title_activity_event_info"
+            android:parentActivityName=".MessagingActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jaysyko.wrestlechat.MessagingActivity" />
+        </activity>
     </application>
 
 </manifest>
