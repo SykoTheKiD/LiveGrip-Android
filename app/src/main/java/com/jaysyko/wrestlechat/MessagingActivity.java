@@ -1,10 +1,14 @@
 package com.jaysyko.wrestlechat;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +23,7 @@ import com.parse.SaveCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessagingActivity extends Activity {
+public class MessagingActivity extends AppCompatActivity {
 
     public static final String EVENT_ID_INTENT_KEY = "EVENT_ID";
     public static final String EVENT_NAME_INTENT_KEY = "EVENT_NAME";
@@ -54,6 +58,8 @@ public class MessagingActivity extends Activity {
         Intent intent = getIntent();
         sEventId = intent.getStringExtra(EVENT_ID_INTENT_KEY);
         setTitle(intent.getStringExtra(EVENT_NAME_INTENT_KEY));
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
         // User login
         if (ParseUser.getCurrentUser() != null) { // start with existing user
             startWithCurrentUser();
@@ -139,6 +145,24 @@ public class MessagingActivity extends Activity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.messaging_screen_menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.action_event_info:
+                Intent eventInfoIntent = new Intent(getApplicationContext(), EventInfoActivity.class);
+                startActivity(eventInfoIntent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     // Create an anonymous user using ParseAnonymousUtils and set sUserId
 //    private void login() {
 //        ParseAnonymousUtils.logIn(new LogInCallback() {

@@ -26,7 +26,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".MessagingActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <meta-data
             android:name="com.parse.APPLICATION_ID"

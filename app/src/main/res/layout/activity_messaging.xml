@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <ListView
         android:id="@+id/lvChat"
@@ -12,7 +22,7 @@
         android:layout_above="@+id/llSend"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/my_toolbar"
         android:background="#ffffff"
         android:transcriptMode="alwaysScroll" />
 
@@ -21,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#607D8B"
+        android:background="#ffffff"
         android:paddingBottom="10dp"
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
@@ -35,8 +45,7 @@
             android:layout_toStartOf="@+id/btSend"
             android:gravity="top"
             android:hint="@string/message_hint"
-            android:paddingStart="10dp"
-            android:password="false" />
+            android:paddingStart="10dp" />
 
         <Button
             android:id="@+id/btSend"
