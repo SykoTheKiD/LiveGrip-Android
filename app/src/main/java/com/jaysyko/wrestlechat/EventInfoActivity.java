@@ -75,7 +75,7 @@ public class EventInfoActivity extends AppCompatActivity {
             modelList.add("List item " + i);
         }
 
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.event_info_list_item, modelList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.event_info_list_item, modelList);
         listView.setAdapter(adapter);
     }
 }
