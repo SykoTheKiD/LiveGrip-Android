@@ -1,8 +1,6 @@
 package com.jaysyko.wrestlechat;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -22,20 +20,21 @@ import java.util.List;
 
 public class EventListActivity extends Activity {
 
-    private String currentUserId;
+    public static final String ACTIVITY_TITLE = "Events";
+    public static final String EVENT_LIST_KEY = "eventName";
+    public static final String ERROR_LOADING_EVENTS = "Error loading events";
+    public static final String INTENT_KEY_EVENT_ID = "EVENT_ID";
+    public static final String INTENT_KEY_EVENT_NAME = "EVENT_NAME";
     private ArrayAdapter<String> namesArrayAdapter;
     private ArrayList<String> events;
     private ListView usersListView;
-    private Button logoutButton;
-    private ProgressDialog progressDialog;
-    private BroadcastReceiver receiver = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_list);
-        setTitle("Events");
-        logoutButton = (Button) findViewById(R.id.logoutButton);
+        setTitle(ACTIVITY_TITLE);
+        Button logoutButton = (Button) findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,16 +47,14 @@ public class EventListActivity extends Activity {
 
     //display clickable a list of all users
     private void setConversationsList() {
-        currentUserId = ParseUser.getCurrentUser().getObjectId();
         events = new ArrayList<>();
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Events");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(ACTIVITY_TITLE);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(final List<ParseObject> eventList, com.parse.ParseException e) {
                 if (e == null) {
                     for (int i = 0; i < eventList.size(); i++) {
-                        events.add(eventList.get(i).get("eventName").toString());
+                        events.add(eventList.get(i).get(EVENT_LIST_KEY).toString());
                     }
-
                     usersListView = (ListView) findViewById(R.id.usersListView);
                     namesArrayAdapter =
                             new ArrayAdapter<>(getApplicationContext(),
@@ -68,45 +65,23 @@ public class EventListActivity extends Activity {
                         @Override
                         public void onItemClick(AdapterView<?> a, View v, int i, long l) {
                             openConversation(eventList.get(i));
-//                            Toast.makeText(getApplicationContext(),
-//                                    events.get(i),
-//                                    Toast.LENGTH_LONG).show();
                         }
                     });
 
                 } else {
                     Toast.makeText(getApplicationContext(),
-                            "Error loading events",
+                            ERROR_LOADING_EVENTS,
                             Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
 
-    public void openConversation(ParseObject event){
+    public void openConversation(ParseObject event) {
         Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
-        intent.putExtra("EVENT_ID", event.getObjectId());
-        intent.putExtra("EVENT_NAME", event.get("eventName").toString());
+        intent.putExtra(INTENT_KEY_EVENT_ID, event.getObjectId());
+        intent.putExtra(INTENT_KEY_EVENT_NAME, event.get(EVENT_LIST_KEY).toString());
         startActivity(intent);
-    }
-    //open a conversation with one person
-    public void openConversation(final ArrayList<String> events, int pos) {
-        final int position = pos;
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Events");
-        query.whereEqualTo("eventName", events.get(pos));
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> events, com.parse.ParseException e) {
-                if (e == null) {
-                    Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
-                    intent.putExtra("RECIPIENT_ID", events.get(0).getObjectId());
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getApplicationContext(),
-                            "Error finding that event",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
 
     @Override
