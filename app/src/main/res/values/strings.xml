@@ -13,4 +13,6 @@
     <string name="logo_alt">WrestleChat</string>
     <string name="action_settings">Settings</string>
     <string name="action_event_details">test</string>
+    <string name="eventPosterAlt">eventPoster</string>
+    <string name="eventDetailHeader">Event Details</string>
 </resources>
