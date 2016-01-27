@@ -53,6 +53,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:text="@string/send"
-            android:textSize="18sp"></Button>
+            android:textSize="18sp" />
     </RelativeLayout>
 </RelativeLayout>
