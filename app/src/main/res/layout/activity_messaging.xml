@@ -13,7 +13,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="#455A64"
+        android:background="#ffffff"
         android:transcriptMode="alwaysScroll" />
 
     <RelativeLayout
@@ -34,15 +34,15 @@
             android:layout_alignBottom="@+id/btSend"
             android:layout_toStartOf="@+id/btSend"
             android:gravity="top"
-            android:hint="@string/message_hint" />
+            android:hint="@string/message_hint"
+            android:paddingStart="10dp"
+            android:password="false" />
 
         <Button
             android:id="@+id/btSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:gravity="center_vertical|end"
-            android:paddingEnd="10dp"
             android:text="@string/send"
             android:textSize="18sp"></Button>
     </RelativeLayout>

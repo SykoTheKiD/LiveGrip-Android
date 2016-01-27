@@ -34,7 +34,7 @@ public class EventListActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_list);
-
+        setTitle("Events");
         logoutButton = (Button) findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +86,7 @@ public class EventListActivity extends Activity {
     public void openConversation(ParseObject event){
         Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
         intent.putExtra("EVENT_ID", event.getObjectId());
+        intent.putExtra("EVENT_NAME", event.get("eventName").toString());
         startActivity(intent);
     }
     //open a conversation with one person
