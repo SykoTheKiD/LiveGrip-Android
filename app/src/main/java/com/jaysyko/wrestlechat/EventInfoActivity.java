@@ -9,7 +9,6 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +19,6 @@ public class EventInfoActivity extends AppCompatActivity {
     private View heroImageView;
 
     private View stickyViewSpacer;
-
-    private int MAX_ROWS = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +68,8 @@ public class EventInfoActivity extends AppCompatActivity {
 
         /* Populate the ListView with sample data */
         List<String> modelList = new ArrayList<>();
-        for (int i = 0; i < MAX_ROWS; i++) {
+        int maxRows = 20;
+        for (int i = 0; i < maxRows; i++) {
             modelList.add("List item " + i);
         }
 
