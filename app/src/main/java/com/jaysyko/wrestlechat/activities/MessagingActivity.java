@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat;
+package com.jaysyko.wrestlechat.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,12 +14,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
+import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.models.db.ParseMessageModel;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
 import java.util.ArrayList;
 import java.util.List;
 

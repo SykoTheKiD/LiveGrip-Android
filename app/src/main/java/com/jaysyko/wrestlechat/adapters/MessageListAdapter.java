@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat;
+package com.jaysyko.wrestlechat.adapters;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.models.db.ParseMessageModel;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigInteger;

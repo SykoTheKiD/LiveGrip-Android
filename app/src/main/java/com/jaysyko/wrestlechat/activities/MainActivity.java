@@ -1,7 +1,8 @@
-package com.jaysyko.wrestlechat;
+package com.jaysyko.wrestlechat.activities;
 
 import android.app.Application;
 
+import com.jaysyko.wrestlechat.models.db.ParseMessageModel;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
