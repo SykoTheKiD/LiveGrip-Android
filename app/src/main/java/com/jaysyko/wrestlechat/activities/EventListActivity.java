@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat;
+package com.jaysyko.wrestlechat.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.jaysyko.wrestlechat.R;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;

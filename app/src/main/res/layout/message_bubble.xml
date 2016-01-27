@@ -14,9 +14,9 @@
 
     <TextView
         android:id="@+id/tvBody"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
         android:layout_weight="1"
         android:background="#64dd17"
         android:padding="20dp"
@@ -27,7 +27,7 @@
         android:id="@+id/ivProfileRight"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_marginStart="-64dp"
+        android:layout_marginLeft="-64dp"
         android:contentDescription="@string/profile_me"
         android:src="@mipmap/ic_launcher" />
 </LinearLayout>
