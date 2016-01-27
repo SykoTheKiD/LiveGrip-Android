@@ -1,8 +1,8 @@
 package com.jaysyko.wrestlechat;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,7 +18,7 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventListActivity extends Activity {
+public class EventListActivity extends AppCompatActivity {
 
     public static final String ACTIVITY_TITLE = "Events";
     public static final String EVENT_LIST_KEY = "eventName";
