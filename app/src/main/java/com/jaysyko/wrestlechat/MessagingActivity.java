@@ -21,8 +21,14 @@ import java.util.List;
 
 public class MessagingActivity extends Activity {
 
-    public static final String USER_ID_KEY = "userId";
-    private static final String TAG = MessagingActivity.class.getName();
+    public static final String EVENT_ID_INTENT_KEY = "EVENT_ID";
+    public static final String EVENT_NAME_INTENT_KEY = "EVENT_NAME";
+    public static final String NULL_TEXT = "";
+    public static final String PARSE_EVENT_ID_KEY = "eventId";
+    public static final String PARSE_CREATED_AT_KEY = "createdAt";
+    public static final String LOG_KEY = "message";
+    public static final String ERROR_KEY = "Error: ";
+    public static final int FETCH_MSG_DELAY_MILLIS = 100;
     private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
     private static String sUserId;
     private static String sEventId;
@@ -37,7 +43,7 @@ public class MessagingActivity extends Activity {
         @Override
         public void run() {
             refreshMessages();
-            handler.postDelayed(this, 100);
+            handler.postDelayed(this, FETCH_MSG_DELAY_MILLIS);
         }
     };
 
@@ -46,17 +52,16 @@ public class MessagingActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messaging);
         Intent intent = getIntent();
-        sEventId = intent.getStringExtra("EVENT_ID");
-        setTitle(intent.getStringExtra("EVENT_NAME"));
+        sEventId = intent.getStringExtra(EVENT_ID_INTENT_KEY);
+        setTitle(intent.getStringExtra(EVENT_NAME_INTENT_KEY));
         // User login
         if (ParseUser.getCurrentUser() != null) { // start with existing user
             startWithCurrentUser();
         } else { // If not logged in, login as a new anonymous user
             Intent redirectToLogin = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(redirectToLogin);
-//            login();
         }
-        handler.postDelayed(runnable, 100);
+        handler.postDelayed(runnable, FETCH_MSG_DELAY_MILLIS);
     }
 
     // Get the userId from the cached currentUser object
@@ -100,7 +105,7 @@ public class MessagingActivity extends Activity {
                             receiveMessage();
                         }
                     });
-                    etMessage.setText("");
+                    etMessage.setText(NULL_TEXT);
                 }
             }
         });
@@ -111,9 +116,9 @@ public class MessagingActivity extends Activity {
         // Construct query to execute
         ParseQuery<ParseMessageModel> query = ParseQuery.getQuery(ParseMessageModel.class);
         // Configure limit and sort order
-        query.whereEqualTo("eventId", sEventId);
+        query.whereEqualTo(PARSE_EVENT_ID_KEY, sEventId);
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-        query.orderByAscending("createdAt");
+        query.orderByAscending(PARSE_CREATED_AT_KEY);
         // Execute query to fetch all messages from Parse asynchronously
         // This is equivalent to a SELECT query with SQL
         query.findInBackground(new FindCallback<ParseMessageModel>() {
@@ -128,7 +133,7 @@ public class MessagingActivity extends Activity {
                         mFirstLoad = false;
                     }
                 } else {
-                    Log.d("message", "Error: " + e.getMessage());
+                    Log.d(LOG_KEY, ERROR_KEY + e.getMessage());
                 }
             }
         });

@@ -3,30 +3,35 @@ package com.jaysyko.wrestlechat;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
-@ParseClassName("Message")
+@ParseClassName(ParseMessageModel.PARSE_MESSAGE_TABLE)
 public class ParseMessageModel extends ParseObject {
 
+    public static final String PARSE_MESSAGE_TABLE = "Message";
+    public static final String USER_ID_KEY = "userId";
+    public static final String EVENT_ID_KEY = "eventId";
+    public static final String MSG_BODY_KEY = "body";
+
     public String getUserId() {
-        return getString("userId");
+        return getString(USER_ID_KEY);
     }
 
     public void setUserId(String userId) {
-        put("userId", userId);
+        put(USER_ID_KEY, userId);
     }
 
     public String getEventId() {
-        return getString("eventId");
+        return getString(EVENT_ID_KEY);
     }
 
     public void setEventId(String eventId) {
-        put("eventId", eventId);
+        put(EVENT_ID_KEY, eventId);
     }
 
     public String getBody() {
-        return getString("body");
+        return getString(MSG_BODY_KEY);
     }
 
     public void setBody(String body) {
-        put("body", body);
+        put(MSG_BODY_KEY, body);
     }
 }
