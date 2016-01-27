@@ -8,10 +8,10 @@
     tools:context=".LoginActivity">
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#fff"
-        android:backgroundTint="#424242"
+        android:background="#616161"
         android:clickable="false"
         android:padding="25dp">
 
@@ -49,26 +49,36 @@
             android:hint="@string/password_placeholder"
             android:inputType="textPassword"></EditText>
 
-        <Button
-            android:id="@+id/loginButton"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/loginPasswordTV"
-            android:layout_alignRight="@+id/loginPasswordTV"
-            android:layout_below="@+id/loginPasswordTV"
-            android:layout_centerHorizontal="true"
-            android:text="@string/login_button_text" />
+            android:gravity="center_horizontal">
 
-        <Button
-            android:id="@+id/signupButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/loginButton"
-            android:layout_alignRight="@+id/loginPasswordTV"
-            android:layout_alignStart="@+id/loginButton"
-            android:layout_below="@+id/loginButton"
-            android:layout_centerHorizontal="true"
-            android:text="@string/signup_button_text" />
+        </LinearLayout>
+
     </RelativeLayout>
+
+    <Button
+        android:id="@+id/signupButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/relativeLayout"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_marginStart="27dp"
+        android:layout_marginTop="34dp"
+        android:layout_weight="1"
+        android:background="#1e88e5"
+        android:text="@string/signup_button_text" />
+
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/relativeLayout"
+        android:layout_alignTop="@+id/signupButton"
+        android:layout_marginEnd="30dp"
+        android:layout_weight="1"
+        android:background="#ef5350"
+        android:text="@string/login_button_text" />
 
 </RelativeLayout>

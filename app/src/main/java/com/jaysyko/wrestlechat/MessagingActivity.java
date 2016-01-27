@@ -47,6 +47,7 @@ public class MessagingActivity extends Activity {
         setContentView(R.layout.activity_messaging);
         Intent intent = getIntent();
         sEventId = intent.getStringExtra("EVENT_ID");
+        setTitle(intent.getStringExtra("EVENT_NAME"));
         // User login
         if (ParseUser.getCurrentUser() != null) { // start with existing user
             startWithCurrentUser();
@@ -84,18 +85,23 @@ public class MessagingActivity extends Activity {
             @Override
             public void onClick(View v) {
                 String body = etMessage.getText().toString();
-                // Use ParseMessageModel model to create new messages now
-                ParseMessageModel parseMessageModel = new ParseMessageModel();
-                parseMessageModel.setUserId(sUserId);
-                parseMessageModel.setEventId(sEventId);
-                parseMessageModel.setBody(body);
-                parseMessageModel.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        receiveMessage();
-                    }
-                });
-                etMessage.setText("");
+                if (body.isEmpty()) {
+                    return;
+                } else {
+                    body = body.trim();
+                    // Use ParseMessageModel model to create new messages now
+                    ParseMessageModel parseMessageModel = new ParseMessageModel();
+                    parseMessageModel.setUserId(sUserId);
+                    parseMessageModel.setEventId(sEventId);
+                    parseMessageModel.setBody(body);
+                    parseMessageModel.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            receiveMessage();
+                        }
+                    });
+                    etMessage.setText("");
+                }
             }
         });
     }
