@@ -36,6 +36,7 @@ public class MessagingActivity extends AppCompatActivity {
     private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
     private static String sUserId;
     private static String sEventId;
+    private String eventName;
     private EditText etMessage;
     private ListView lvChat;
     private ArrayList<ParseMessageModel> messages;
@@ -57,7 +58,8 @@ public class MessagingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_messaging);
         Intent intent = getIntent();
         sEventId = intent.getStringExtra(EVENT_ID_INTENT_KEY);
-        setTitle(intent.getStringExtra(EVENT_NAME_INTENT_KEY));
+        eventName = intent.getStringExtra(EVENT_NAME_INTENT_KEY);
+        setTitle(eventName);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         // User login
@@ -156,7 +158,8 @@ public class MessagingActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_event_info:
-                Intent eventInfoIntent = new Intent(getApplicationContext(), EventInfoActivity.class);
+                Intent eventInfoIntent = new Intent(getApplicationContext(), NewHomeActivity.class);
+                eventInfoIntent.putExtra("EVENT_NAME", eventName);
                 startActivity(eventInfoIntent);
                 return true;
             default:

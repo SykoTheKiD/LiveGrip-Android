@@ -23,7 +23,7 @@ public class MessageListAdapter extends ArrayAdapter<ParseMessageModel> {
         this.mUserId = userId;
     }
 
-    private static String getProfileUrl(final String userId) {
+    public static String getProfileUrl(final String userId) {
         String hex = "";
         try {
             final MessageDigest digest = MessageDigest.getInstance("MD5");

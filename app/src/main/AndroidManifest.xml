@@ -21,25 +21,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".EventListActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".MessagingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
-        <activity
-            android:name=".EventInfoActivity"
-            android:label="@string/title_activity_event_info"
-            android:parentActivityName=".MessagingActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jaysyko.wrestlechat.MessagingActivity" />
-        </activity>
 
         <meta-data
             android:name="com.parse.APPLICATION_ID"
@@ -48,6 +36,14 @@
             android:name="com.parse.CLIENT_KEY"
             android:value="ySpg33jzOI3YKAQqJPJv7lfzFJMqbZlGhgtxGqg9" />
 
+        <activity
+            android:name=".NewHomeActivity"
+            android:label="@string/title_activity_new_home"
+            android:theme="@style/NoActionBar" />
+        <activity
+            android:name=".EventInfoActivity"
+            android:label="@string/title_activity_new_event_info"
+            android:theme="@style/NoActionBar"></activity>
     </application>
 
 </manifest>
