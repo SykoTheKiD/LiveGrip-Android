@@ -1,8 +1,8 @@
 package com.jaysyko.wrestlechat;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,7 +12,7 @@ import com.parse.LogInCallback;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends AppCompatActivity {
 
     public static final String WELCOME_BACK_MESSAGE = "Welcome Back, ";
     public static final String FAILED_LOGIN_MSG = "Wrong username/password combo";

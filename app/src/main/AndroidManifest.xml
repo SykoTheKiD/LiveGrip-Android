@@ -10,31 +10,26 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Material">
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Material.NoActionBar">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".EventListActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".MessagingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
-        <meta-data
-            android:name="com.parse.APPLICATION_ID"
-            android:value="yM8G4t0atwmyM2372XHhb4xAqvUdUMiwKB5YCyAV" />
-        <meta-data
-            android:name="com.parse.CLIENT_KEY"
-            android:value="ySpg33jzOI3YKAQqJPJv7lfzFJMqbZlGhgtxGqg9" />
 
         <activity
             android:name=".EventInfoActivity"
@@ -44,6 +39,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jaysyko.wrestlechat.MessagingActivity" />
         </activity>
+
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="yM8G4t0atwmyM2372XHhb4xAqvUdUMiwKB5YCyAV" />
+        <meta-data
+            android:name="com.parse.CLIENT_KEY"
+            android:value="ySpg33jzOI3YKAQqJPJv7lfzFJMqbZlGhgtxGqg9" />
+
     </application>
 
 </manifest>
