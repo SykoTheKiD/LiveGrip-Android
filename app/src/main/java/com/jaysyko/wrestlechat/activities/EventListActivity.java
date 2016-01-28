@@ -143,16 +143,12 @@ public class EventListActivity extends AppCompatActivity
                                     new RecyclerItemClickListener.OnItemClickListener() {
                                         @Override
                                         public void onItemClick(View view, int position) {
-                                            Toast.makeText(getApplicationContext(),
-                                                    "CLICKED",
-                                                    Toast.LENGTH_LONG).show();
+                                            openConversation(eventList.get(position));
                                         }
 
                                         @Override
                                         public void onItemLongClick(View view, int position) {
-                                            Toast.makeText(getApplicationContext(),
-                                                    "LONG CLICK",
-                                                    Toast.LENGTH_LONG).show();
+                                            openEventInfo(eventList.get(position));
                                         }
                                     }));
                     EventListAdapter mAdapter = new EventListAdapter(events);
@@ -167,11 +163,18 @@ public class EventListActivity extends AppCompatActivity
         });
     }
 
-    public void openConversation(ParseObject event) {
+    private void openConversation(ParseObject event) {
         Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
         intent.putExtra(INTENT_KEY_EVENT_ID, event.getObjectId());
         intent.putExtra(INTENT_KEY_EVENT_NAME, event.get(DB_KEY_EVENT_NAME).toString());
         startActivity(intent);
+    }
+
+    private void openEventInfo(ParseObject event) {
+        Intent intent = new Intent(getApplicationContext(), EventInfoActivity.class);
+        Intent eventInfoIntent = new Intent(getApplicationContext(), EventInfoActivity.class);
+        intent.putExtra(INTENT_KEY_EVENT_NAME, event.get(DB_KEY_EVENT_NAME).toString());
+        startActivity(eventInfoIntent);
     }
 
     @Override
