@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
+import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.EventObject;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
@@ -138,6 +139,25 @@ public class EventListActivity extends AppCompatActivity
                     }
                     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    recyclerView.addOnItemTouchListener(
+                            new RecyclerItemClickListener(
+                                    EventListActivity.this,
+                                    recyclerView,
+                                    new RecyclerItemClickListener.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(View view, int position) {
+                                            Toast.makeText(getApplicationContext(),
+                                                    "CLICKED",
+                                                    Toast.LENGTH_LONG).show();
+                                        }
+
+                                        @Override
+                                        public void onItemLongClick(View view, int position) {
+                                            Toast.makeText(getApplicationContext(),
+                                                    "LONG CLICK",
+                                                    Toast.LENGTH_LONG).show();
+                                        }
+                                    }));
                     EventListAdapter mAdapter = new EventListAdapter(events);
                     recyclerView.setAdapter(mAdapter);
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
