@@ -31,11 +31,14 @@ import java.util.List;
 public class EventListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static final String ACTIVITY_TITLE = "Events";
-    public static final String EVENT_LIST_KEY = "eventName";
-    public static final String ERROR_LOADING_EVENTS = "Error loading events";
-    public static final String INTENT_KEY_EVENT_ID = "EVENT_ID";
-    public static final String INTENT_KEY_EVENT_NAME = "EVENT_NAME";
+    private static final String ACTIVITY_TITLE = "Events";
+    private static final String DB_KEY_EVENT_NAME = "eventName";
+    private static final String ERROR_LOADING_EVENTS = "Error loading events";
+    private static final String INTENT_KEY_EVENT_ID = "EVENT_ID";
+    private static final String INTENT_KEY_EVENT_NAME = "EVENT_NAME";
+    private static final String DB_KEY_EVENT_LOCATION = "location";
+    private static final String DB_KEY_EVENT_START_TIME = "startTime";
+    private static final String DB_KEY_EVENT_END_TIME = "endTime";
     private ArrayList<EventObject> events;
 
     @Override
@@ -126,21 +129,17 @@ public class EventListActivity extends AppCompatActivity
                     for (int i = 0; i < eventList.size(); i++) {
                         current = eventList.get(i);
                         events.add(new EventObject(
-                                        current.get("eventName").toString(),
-                                        current.get("location").toString(),
-                                        current.get("startTime").toString(),
-                                        current.get("endTime").toString()
+                                        current.get(DB_KEY_EVENT_NAME).toString(),
+                                        current.get(DB_KEY_EVENT_LOCATION).toString(),
+                                        current.get(DB_KEY_EVENT_START_TIME).toString(),
+                                        current.get(DB_KEY_EVENT_END_TIME).toString()
                                 )
                         );
                     }
                     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-                    // 2. set layoutManger
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    // 3. create an adapter
                     EventListAdapter mAdapter = new EventListAdapter(events);
-                    // 4. set adapter
                     recyclerView.setAdapter(mAdapter);
-                    // 5. set item animator to DefaultAnimator
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                 } else {
                     Toast.makeText(getApplicationContext(),
@@ -154,7 +153,7 @@ public class EventListActivity extends AppCompatActivity
     public void openConversation(ParseObject event) {
         Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
         intent.putExtra(INTENT_KEY_EVENT_ID, event.getObjectId());
-        intent.putExtra(INTENT_KEY_EVENT_NAME, event.get(EVENT_LIST_KEY).toString());
+        intent.putExtra(INTENT_KEY_EVENT_NAME, event.get(DB_KEY_EVENT_NAME).toString());
         startActivity(intent);
     }
 
