@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.models.db.ParseMessageModel;
