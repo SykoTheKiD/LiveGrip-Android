@@ -6,14 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.models.EventObject;
 
-public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {
-    private EventObject[] itemsData;
+import java.util.List;
 
-    public EventListAdapter(EventObject[] itemsData) {
+public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {
+    private List<EventObject> itemsData;
+
+    public EventListAdapter(List<EventObject> itemsData) {
         this.itemsData = itemsData;
     }
 
@@ -38,7 +39,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         // - get data from your itemsData at this position
         // - replace the contents of the view with that itemsData
 
-        viewHolder.txtViewTitle.setText(itemsData[position].getEventName());
+        viewHolder.txtViewTitle.setText(itemsData.get(position).getEventName());
 //        viewHolder.imgViewIcon.setImageResource(itemsData[position].getImageUrl());
 
 
@@ -47,7 +48,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
     // Return the size of your itemsData (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return itemsData.length;
+        return this.itemsData.size();
     }
 
     // inner class to hold a reference to each item of RecyclerView
