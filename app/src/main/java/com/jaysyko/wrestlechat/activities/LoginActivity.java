@@ -2,7 +2,6 @@ package com.jaysyko.wrestlechat.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -26,13 +25,6 @@ public class LoginActivity extends AppCompatActivity {
     private String createdDate;
     private String userId;
     private Intent intent;
-    private Handler userCreationHandler = new Handler();
-    private Runnable createUserObject = new Runnable() {
-        @Override
-        public void run() {
-            createUserObject(username, userId, createdDate, true);
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +46,9 @@ public class LoginActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     username = usernameField.getText().toString();
                     password = passwordField.getText().toString();
-
                     ParseUser.logInInBackground(username, password, new LogInCallback() {
                         public void done(ParseUser user, com.parse.ParseException e) {
                             if (user != null) {
-                                createdDate = user.getCreatedAt().toString();
-                                userId = user.getObjectId().toString();
-                                userCreationHandler.post(createUserObject);
                                 Toast.makeText(getApplicationContext(),
                                         WELCOME_BACK_MESSAGE.concat(username),
                                         Toast.LENGTH_LONG).show();
@@ -89,7 +77,6 @@ public class LoginActivity extends AppCompatActivity {
                     user.signUpInBackground(new SignUpCallback() {
                         public void done(com.parse.ParseException e) {
                             if (e == null) {
-                                userCreationHandler.post(createUserObject);
                                 startActivity(intent);
                             } else {
                                 Toast.makeText(getApplicationContext(),
@@ -101,9 +88,5 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         }
-    }
-
-    private void createUserObject(String name, String objectId, String joinDate, boolean isLoggedIn) {
-
     }
 }
