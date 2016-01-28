@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat;
+package com.jaysyko.wrestlechat.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,12 +14,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
+import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.models.db.ParseMessageModel;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class MessagingActivity extends AppCompatActivity {
     private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
     private static String sUserId;
     private static String sEventId;
+    private String eventName;
     private EditText etMessage;
     private ListView lvChat;
     private ArrayList<ParseMessageModel> messages;
@@ -57,7 +60,8 @@ public class MessagingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_messaging);
         Intent intent = getIntent();
         sEventId = intent.getStringExtra(EVENT_ID_INTENT_KEY);
-        setTitle(intent.getStringExtra(EVENT_NAME_INTENT_KEY));
+        eventName = intent.getStringExtra(EVENT_NAME_INTENT_KEY);
+        setTitle(eventName);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         // User login
@@ -157,6 +161,7 @@ public class MessagingActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_event_info:
                 Intent eventInfoIntent = new Intent(getApplicationContext(), EventInfoActivity.class);
+                eventInfoIntent.putExtra("EVENT_NAME", eventName);
                 startActivity(eventInfoIntent);
                 return true;
             default:

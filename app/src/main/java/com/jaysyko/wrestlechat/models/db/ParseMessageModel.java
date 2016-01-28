@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat;
+package com.jaysyko.wrestlechat.models.db;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;

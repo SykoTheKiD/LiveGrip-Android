@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat;
+package com.jaysyko.wrestlechat.adapters;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -9,10 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.models.db.ParseMessageModel;
+import com.jaysyko.wrestlechat.models.db.UserModel;
 import com.squareup.picasso.Picasso;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
 import java.util.List;
 
 public class MessageListAdapter extends ArrayAdapter<ParseMessageModel> {
@@ -21,19 +22,6 @@ public class MessageListAdapter extends ArrayAdapter<ParseMessageModel> {
     public MessageListAdapter(Context context, String userId, List<ParseMessageModel> parseMessageModels) {
         super(context, 0, parseMessageModels);
         this.mUserId = userId;
-    }
-
-    private static String getProfileUrl(final String userId) {
-        String hex = "";
-        try {
-            final MessageDigest digest = MessageDigest.getInstance("MD5");
-            final byte[] hash = digest.digest(userId.getBytes());
-            final BigInteger bigInt = new BigInteger(hash);
-            hex = bigInt.abs().toString(16);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "http://www.gravatar.com/avatar/" + hex + "?d=identicon";
     }
 
     @Override
@@ -62,7 +50,7 @@ public class MessageListAdapter extends ArrayAdapter<ParseMessageModel> {
             holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
         }
         final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
-        Picasso.with(getContext()).load(getProfileUrl(parseMessageModel.getUserId())).into(profileView);
+        Picasso.with(getContext()).load(UserModel.getProfileUrl(parseMessageModel.getUserId())).into(profileView);
         holder.body.setText(parseMessageModel.getBody());
         return convertView;
     }    // Create a gravatar image based on the hash value obtained from userId
