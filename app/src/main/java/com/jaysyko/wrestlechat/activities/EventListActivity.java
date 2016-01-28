@@ -9,22 +9,22 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.jaysyko.wrestlechat.R;
-import com.parse.FindCallback;
+import com.jaysyko.wrestlechat.adapters.EventListAdapter;
+import com.jaysyko.wrestlechat.models.EventObject;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class EventListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -65,6 +65,27 @@ public class EventListActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+
+        // this is data fro recycler view
+        EventObject itemsData[] = {
+                new EventObject("Royal Rumble", "Orlando", "Monday", "Monday"),
+                new EventObject("Royal Rumble", "Orlando", "Monday", "Monday"),
+                new EventObject("Royal Rumble", "Orlando", "Monday", "Monday"),
+                new EventObject("Royal Rumble", "Orlando", "Monday", "Monday"),
+                new EventObject("Royal Rumble", "Orlando", "Monday", "Monday"),
+                new EventObject("Royal Rumble", "Orlando", "Monday", "Monday"),
+        };
+
+        // 2. set layoutManger
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // 3. create an adapter
+        EventListAdapter mAdapter = new EventListAdapter(itemsData);
+        // 4. set adapter
+        recyclerView.setAdapter(mAdapter);
+        // 5. set item animator to DefaultAnimator
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
     }
 
@@ -117,36 +138,36 @@ public class EventListActivity extends AppCompatActivity
     }
 
     //display clickable a list of all users
-    private void setConversationsList() {
-        events = new ArrayList<>();
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(ACTIVITY_TITLE);
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(final List<ParseObject> eventList, com.parse.ParseException e) {
-                if (e == null) {
-                    for (int i = 0; i < eventList.size(); i++) {
-                        events.add(eventList.get(i).get(EVENT_LIST_KEY).toString());
-                    }
-                    usersListView = (ListView) findViewById(R.id.usersListView);
-                    namesArrayAdapter =
-                            new ArrayAdapter<>(getApplicationContext(),
-                                    R.layout.user_list_item, events);
-                    usersListView.setAdapter(namesArrayAdapter);
-
-                    usersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> a, View v, int i, long l) {
-                            openConversation(eventList.get(i));
-                        }
-                    });
-
-                } else {
-                    Toast.makeText(getApplicationContext(),
-                            ERROR_LOADING_EVENTS,
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
+//    private void setConversationsList() {
+//        events = new ArrayList<>();
+//        ParseQuery<ParseObject> query = ParseQuery.getQuery(ACTIVITY_TITLE);
+//        query.findInBackground(new FindCallback<ParseObject>() {
+//            public void done(final List<ParseObject> eventList, com.parse.ParseException e) {
+//                if (e == null) {
+//                    for (int i = 0; i < eventList.size(); i++) {
+//                        events.add(eventList.get(i).get(EVENT_LIST_KEY).toString());
+//                    }
+//                    usersListView = (ListView) findViewById(R.id.usersListView);
+//                    namesArrayAdapter =
+//                            new ArrayAdapter<>(getApplicationContext(),
+//                                    R.layout.user_list_item, events);
+//                    usersListView.setAdapter(namesArrayAdapter);
+//
+//                    usersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                        @Override
+//                        public void onItemClick(AdapterView<?> a, View v, int i, long l) {
+//                            openConversation(eventList.get(i));
+//                        }
+//                    });
+//
+//                } else {
+//                    Toast.makeText(getApplicationContext(),
+//                            ERROR_LOADING_EVENTS,
+//                            Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        });
+//    }
 
     public void openConversation(ParseObject event) {
         Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
@@ -157,7 +178,7 @@ public class EventListActivity extends AppCompatActivity
 
     @Override
     public void onResume() {
-        setConversationsList();
+//        setConversationsList();
         super.onResume();
     }
 }
