@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.jaysyko.wrestlechat.R;
 import com.parse.LogInCallback;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -37,10 +36,10 @@ public class LoginActivity extends AppCompatActivity {
         if (currentUser != null) {
             startActivity(intent);
         } else {
-            Button loginButton = (Button) findViewById(R.id.loginButton);
-            Button signUpButton = (Button) findViewById(R.id.signupButton);
-            usernameField = (EditText) findViewById(R.id.loginUsernameTV);
-            passwordField = (EditText) findViewById(R.id.loginPasswordTV);
+            Button loginButton = (Button) findViewById(R.id.signIn);
+//            Button signUpButton = (Button) findViewById(R.id.signupButton);
+            usernameField = (EditText) findViewById(R.id.usernameEV);
+            passwordField = (EditText) findViewById(R.id.loginPasswordEV);
             loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -63,30 +62,30 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
 
-            signUpButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    username = usernameField.getText().toString();
-                    password = passwordField.getText().toString();
-
-                    ParseUser user = new ParseUser();
-                    user.setUsername(username);
-                    user.setPassword(password);
-
-                    user.signUpInBackground(new SignUpCallback() {
-                        public void done(com.parse.ParseException e) {
-                            if (e == null) {
-                                startActivity(intent);
-                            } else {
-                                Toast.makeText(getApplicationContext(),
-                                        SIGN_UP_ERROR_MSG
-                                        , Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
-                }
-            });
+//            signUpButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//
+//                    username = usernameField.getText().toString();
+//                    password = passwordField.getText().toString();
+//
+//                    ParseUser user = new ParseUser();
+//                    user.setUsername(username);
+//                    user.setPassword(password);
+//
+//                    user.signUpInBackground(new SignUpCallback() {
+//                        public void done(com.parse.ParseException e) {
+//                            if (e == null) {
+//                                startActivity(intent);
+//                            } else {
+//                                Toast.makeText(getApplicationContext(),
+//                                        SIGN_UP_ERROR_MSG
+//                                        , Toast.LENGTH_LONG).show();
+//                            }
+//                        }
+//                    });
+//                }
+//            });
         }
     }
 }

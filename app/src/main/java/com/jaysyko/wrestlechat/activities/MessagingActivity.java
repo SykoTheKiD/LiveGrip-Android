@@ -160,7 +160,7 @@ public class MessagingActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.action_event_info:
-                Intent eventInfoIntent = new Intent(getApplicationContext(), NewHomeActivity.class);
+                Intent eventInfoIntent = new Intent(getApplicationContext(), LoginActivity.class);
                 eventInfoIntent.putExtra("EVENT_NAME", eventName);
                 startActivity(eventInfoIntent);
                 return true;
