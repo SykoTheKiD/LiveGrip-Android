@@ -10,17 +10,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.models.db.ParseMessageModel;
-import com.jaysyko.wrestlechat.models.db.ParseUserModel;
+import com.jaysyko.wrestlechat.models.Message;
+import com.jaysyko.wrestlechat.models.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class MessageListAdapter extends ArrayAdapter<ParseMessageModel> {
+public class MessageListAdapter extends ArrayAdapter<Message> {
     private String mUserId;
 
-    public MessageListAdapter(Context context, String userId, List<ParseMessageModel> parseMessageModels) {
-        super(context, 0, parseMessageModels);
+    public MessageListAdapter(Context context, String userId, List<Message> messages) {
+        super(context, 0, messages);
         this.mUserId = userId;
     }
 
@@ -35,10 +35,9 @@ public class MessageListAdapter extends ArrayAdapter<ParseMessageModel> {
             holder.body = (TextView) convertView.findViewById(R.id.tvMessage);
             convertView.setTag(holder);
         }
-        final ParseMessageModel parseMessageModel = (ParseMessageModel) getItem(position);
+        final Message message = getItem(position);
         final ViewHolder holder = (ViewHolder) convertView.getTag();
-//        final String userName = parseMessageModel.get
-        final boolean isMe = parseMessageModel.getUserId().equals(mUserId);
+        final boolean isMe = message.getUserId().equals(mUserId);
         // Show-hide image based on the logged-in user.
         // Display the profile image to the right for our user, left for other users.
         if (isMe) {
@@ -53,10 +52,10 @@ public class MessageListAdapter extends ArrayAdapter<ParseMessageModel> {
             holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
         }
         final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
-        Picasso.with(getContext()).load(ParseUserModel.getProfileUrl(parseMessageModel.getUserId())).into(profileView);
-        holder.body.setText(parseMessageModel.getBody());
+        Picasso.with(getContext()).load(User.getProfileUrl(message.getUserId())).into(profileView);
+        holder.body.setText(message.getBody());
         return convertView;
-    }    // Create a gravatar image based on the hash value obtained from userId
+    }
 
     final class ViewHolder {
         public ImageView imageLeft;

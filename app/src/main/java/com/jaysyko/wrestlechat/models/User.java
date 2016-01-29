@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat.models.db;
+package com.jaysyko.wrestlechat.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
@@ -6,8 +6,8 @@ import com.parse.ParseObject;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 
-@ParseClassName(ParseUserModel.PARSE_USER_TABLE)
-public class ParseUserModel extends ParseObject {
+@ParseClassName(User.PARSE_USER_TABLE)
+public class User extends ParseObject {
     public static final String PARSE_USER_TABLE = "Users";
     public static final String USERNAME_KEY = "username";
 
