@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.models.db.ParseMessageModel;
-import com.jaysyko.wrestlechat.models.db.UserModel;
+import com.jaysyko.wrestlechat.models.db.ParseUserModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -37,6 +37,7 @@ public class MessageListAdapter extends ArrayAdapter<ParseMessageModel> {
         }
         final ParseMessageModel parseMessageModel = (ParseMessageModel) getItem(position);
         final ViewHolder holder = (ViewHolder) convertView.getTag();
+//        final String userName = parseMessageModel.get
         final boolean isMe = parseMessageModel.getUserId().equals(mUserId);
         // Show-hide image based on the logged-in user.
         // Display the profile image to the right for our user, left for other users.
@@ -52,7 +53,7 @@ public class MessageListAdapter extends ArrayAdapter<ParseMessageModel> {
             holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
         }
         final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
-        Picasso.with(getContext()).load(UserModel.getProfileUrl(parseMessageModel.getUserId())).into(profileView);
+        Picasso.with(getContext()).load(ParseUserModel.getProfileUrl(parseMessageModel.getUserId())).into(profileView);
         holder.body.setText(parseMessageModel.getBody());
         return convertView;
     }    // Create a gravatar image based on the hash value obtained from userId

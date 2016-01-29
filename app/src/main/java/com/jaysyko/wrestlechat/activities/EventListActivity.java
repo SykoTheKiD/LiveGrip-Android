@@ -13,15 +13,20 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.EventObject;
+import com.jaysyko.wrestlechat.models.db.ParseEventsModel;
+import com.jaysyko.wrestlechat.models.db.ParseUserModel;
+import com.jaysyko.wrestlechat.models.intentKeys.IntentKeys;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +35,7 @@ public class EventListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String ACTIVITY_TITLE = "Events";
-    private static final String DB_KEY_EVENT_NAME = "eventName";
     private static final String ERROR_LOADING_EVENTS = "Error loading events";
-    private static final String INTENT_KEY_EVENT_ID = "EVENT_ID";
-    private static final String INTENT_KEY_EVENT_NAME = "EVENT_NAME";
-    private static final String DB_KEY_EVENT_LOCATION = "location";
-    private static final String DB_KEY_EVENT_START_TIME = "startTime";
-    private static final String DB_KEY_EVENT_END_TIME = "endTime";
     private ArrayList<EventObject> events;
 
     @Override
@@ -46,16 +45,6 @@ public class EventListActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle(ACTIVITY_TITLE);
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ParseUser.logOut();
-//                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -64,6 +53,12 @@ public class EventListActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void setDrawerHeaderUsername(String username) {
+        View drawerNavHeader = getLayoutInflater().inflate(R.layout.nav_header_event_list, null);
+        TextView userNameTV = (TextView) drawerNavHeader.findViewById(R.id.drawer_username);
+        userNameTV.setText(username);
     }
 
     @Override
@@ -115,7 +110,7 @@ public class EventListActivity extends AppCompatActivity
     }
 
     //display clickable a list of all users
-    private void setConversationsList() {
+    private void updateEventCards() {
         events = new ArrayList<>();
         ParseQuery<ParseObject> query = ParseQuery.getQuery(ACTIVITY_TITLE);
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -124,11 +119,12 @@ public class EventListActivity extends AppCompatActivity
                 if (e == null) {
                     for (int i = 0; i < eventList.size(); i++) {
                         current = eventList.get(i);
-                        events.add(new EventObject(
-                                        current.get(DB_KEY_EVENT_NAME).toString(),
-                                        current.get(DB_KEY_EVENT_LOCATION).toString(),
-                                        current.get(DB_KEY_EVENT_START_TIME).toString(),
-                                        current.get(DB_KEY_EVENT_END_TIME).toString()
+                        events.add(
+                                new EventObject(
+                                        current.get(ParseEventsModel.EVENT_NAME_KEY).toString(),
+                                        current.get(ParseEventsModel.EVENT_LOCATION_KEY).toString(),
+                                        current.get(ParseEventsModel.EVENT_START_TIME_KEY).toString(),
+                                        current.get(ParseEventsModel.EVENT_END_TIME_KEY).toString()
                                 )
                         );
                     }
@@ -163,21 +159,22 @@ public class EventListActivity extends AppCompatActivity
 
     private void openConversation(ParseObject event) {
         Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
-        intent.putExtra(INTENT_KEY_EVENT_ID, event.getObjectId());
-        intent.putExtra(INTENT_KEY_EVENT_NAME, event.get(DB_KEY_EVENT_NAME).toString());
+        intent.putExtra(IntentKeys.EVENT_ID_INTENT_KEY, event.getObjectId());
+        intent.putExtra(IntentKeys.EVENT_NAME_INTENT_KEY, event.get(ParseEventsModel.EVENT_NAME_KEY).toString());
         startActivity(intent);
     }
 
     private void openEventInfo(ParseObject event) {
         Intent intent = new Intent(getApplicationContext(), EventInfoActivity.class);
         Intent eventInfoIntent = new Intent(getApplicationContext(), EventInfoActivity.class);
-        intent.putExtra(INTENT_KEY_EVENT_NAME, event.get(DB_KEY_EVENT_NAME).toString());
+        intent.putExtra(IntentKeys.EVENT_NAME_INTENT_KEY, event.get(ParseEventsModel.EVENT_NAME_KEY).toString());
         startActivity(eventInfoIntent);
     }
 
     @Override
     public void onResume() {
-        setConversationsList();
+        setDrawerHeaderUsername(ParseUser.getCurrentUser().get(ParseUserModel.USERNAME_KEY).toString());
+        updateEventCards();
         super.onResume();
     }
 }

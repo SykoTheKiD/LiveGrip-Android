@@ -8,8 +8,14 @@ public class ParseMessageModel extends ParseObject {
 
     public static final String PARSE_MESSAGE_TABLE = "Message";
     public static final String USER_ID_KEY = "userId";
+    public static final String USERNAME_KEY = "username";
     public static final String EVENT_ID_KEY = "eventId";
     public static final String MSG_BODY_KEY = "body";
+    public static final String CREATED_AT_KEY = "createdAt";
+
+    public String getUsername() {
+        return getString(USERNAME_KEY);
+    }
 
     public String getUserId() {
         return getString(USER_ID_KEY);

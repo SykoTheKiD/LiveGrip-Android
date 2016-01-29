@@ -4,7 +4,7 @@
     <item
         android:id="@+id/action_event_info"
         android:icon="@android:drawable/ic_menu_view"
-        android:title="@string/action_event_details"
+        android:title="@string/action_event_info"
         app:showAsAction="ifRoom" />
 
     <!-- Settings, should always be in the overflow -->

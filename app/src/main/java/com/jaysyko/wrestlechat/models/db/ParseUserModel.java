@@ -1,12 +1,17 @@
 package com.jaysyko.wrestlechat.models.db;
 
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 
-/**
- * Created by jarushaan on 2016-01-27.
- */
-public class UserModel {
+@ParseClassName(ParseUserModel.PARSE_USER_TABLE)
+public class ParseUserModel extends ParseObject {
+    public static final String PARSE_USER_TABLE = "Users";
+    public static final String USERNAME_KEY = "username";
+
+
     public static String getProfileUrl(final String userId) {
         String hex = "";
         try {
