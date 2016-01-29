@@ -46,6 +46,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         // - replace the contents of the view with that itemsData
         EventObject currentCard = itemsData.get(position);
         viewHolder.txtViewTitle.setText(currentCard.getEventName());
+        viewHolder.txtViewLocation.setText(currentCard.getLocation());
         Picasso.with(this.context).load(IMGUR_LINK.concat(currentCard.getImageLink())).into(viewHolder.imgViewIcon);
     }
 
@@ -60,11 +61,13 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
         public TextView txtViewTitle;
         public ImageView imgViewIcon;
+        public TextView txtViewLocation;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
             txtViewTitle = (TextView) itemLayoutView.findViewById(R.id.title);
             imgViewIcon = (ImageView) itemLayoutView.findViewById(R.id.thumbnail);
+            txtViewLocation = (TextView) itemLayoutView.findViewById(R.id.description);
         }
     }
 }
