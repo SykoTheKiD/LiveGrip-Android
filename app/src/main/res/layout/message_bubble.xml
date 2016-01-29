@@ -11,14 +11,15 @@
         android:layout_height="64dp"
         android:layout_weight="0.10"
         android:contentDescription="@string/profile_other"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/ic_launcher"
+        android:visibility="gone" />
 
     <TextView
-        android:id="@+id/tvBody"
+        android:id="@+id/tvMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.90"
-        android:background="#42a5f5"
+        android:layout_weight="0.80"
+        android:background="@drawable/speech_bubble_green"
         android:padding="20dp"
         android:textColor="#fff"
         android:textSize="18sp" />
@@ -29,5 +30,6 @@
         android:layout_height="64dp"
         android:layout_weight="0.10"
         android:contentDescription="@string/profile_me"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/ic_launcher"
+        android:visibility="gone" />
 </LinearLayout>
