@@ -65,9 +65,9 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
-            txtViewTitle = (TextView) itemLayoutView.findViewById(R.id.title);
-            imgViewIcon = (ImageView) itemLayoutView.findViewById(R.id.thumbnail);
-            txtViewLocation = (TextView) itemLayoutView.findViewById(R.id.description);
+            txtViewTitle = (TextView) itemLayoutView.findViewById(R.id.event_name);
+            imgViewIcon = (ImageView) itemLayoutView.findViewById(R.id.event_image);
+            txtViewLocation = (TextView) itemLayoutView.findViewById(R.id.event_location);
         }
     }
 }
