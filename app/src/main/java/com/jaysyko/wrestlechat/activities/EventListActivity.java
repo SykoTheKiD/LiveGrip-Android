@@ -114,7 +114,7 @@ public class EventListActivity extends AppCompatActivity
         ParseQuery<ParseObject> query = ParseQuery.getQuery(ACTIVITY_TITLE);
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(final List<ParseObject> eventList, com.parse.ParseException e) {
-                ParseObject current = null;
+                ParseObject current;
                 if (e == null) {
                     for (int i = 0; i < eventList.size(); i++) {
                         current = eventList.get(i);

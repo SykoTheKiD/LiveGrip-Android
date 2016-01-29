@@ -35,7 +35,7 @@ public class MessageListAdapter extends ArrayAdapter<ParseMessageModel> {
             holder.body = (TextView) convertView.findViewById(R.id.tvMessage);
             convertView.setTag(holder);
         }
-        final ParseMessageModel parseMessageModel = (ParseMessageModel) getItem(position);
+        final ParseMessageModel parseMessageModel = getItem(position);
         final ViewHolder holder = (ViewHolder) convertView.getTag();
 //        final String userName = parseMessageModel.get
         final boolean isMe = parseMessageModel.getUserId().equals(mUserId);

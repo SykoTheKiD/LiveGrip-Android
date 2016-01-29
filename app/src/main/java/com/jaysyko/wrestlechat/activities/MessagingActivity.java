@@ -86,7 +86,7 @@ public class MessagingActivity extends AppCompatActivity {
         etMessage = (EditText) findViewById(R.id.etMessage);
         Button btSend = (Button) findViewById(R.id.btSend);
         lvChat = (ListView) findViewById(R.id.lvChat);
-        messages = new ArrayList<ParseMessageModel>();
+        messages = new ArrayList<>();
         // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen. Don't scroll to the bottom otherwise.
         lvChat.setTranscriptMode(1);
         mFirstLoad = true;
