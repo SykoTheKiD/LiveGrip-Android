@@ -145,7 +145,7 @@ public class EventListActivity extends AppCompatActivity
                                             openEventInfo(eventList.get(position));
                                         }
                                     }));
-                    EventListAdapter mAdapter = new EventListAdapter(events);
+                    EventListAdapter mAdapter = new EventListAdapter(events, getApplicationContext());
                     recyclerView.setAdapter(mAdapter);
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                 } else {

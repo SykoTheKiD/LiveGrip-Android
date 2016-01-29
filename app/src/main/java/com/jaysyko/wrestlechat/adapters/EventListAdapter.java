@@ -1,21 +1,26 @@
 package com.jaysyko.wrestlechat.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.models.EventObject;
+import com.jaysyko.wrestlechat.utils.ImageManager;
 
 import java.util.List;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {
     private List<EventObject> itemsData;
+    private Context context;
 
-    public EventListAdapter(List<EventObject> itemsData) {
+    public EventListAdapter(List<EventObject> itemsData, Context context) {
         this.itemsData = itemsData;
+        this.context = context;
     }
 
     // Create new views (invoked by the layout manager)
@@ -40,6 +45,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         // - replace the contents of the view with that itemsData
 
         viewHolder.txtViewTitle.setText(itemsData.get(position).getEventName());
+        viewHolder.imgViewIcon.setImageBitmap(ImageManager.decodeSampledBitmapFromResource(this.context.getResources(), R.drawable.royal_rumble, 100, 100));
 //        viewHolder.imgViewIcon.setImageResource(itemsData[position].getImageUrl());
 
 
