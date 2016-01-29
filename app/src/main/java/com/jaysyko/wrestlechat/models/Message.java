@@ -1,10 +1,10 @@
-package com.jaysyko.wrestlechat.models.db;
+package com.jaysyko.wrestlechat.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
-@ParseClassName(ParseMessageModel.PARSE_MESSAGE_TABLE)
-public class ParseMessageModel extends ParseObject {
+@ParseClassName(Message.PARSE_MESSAGE_TABLE)
+public class Message extends ParseObject {
 
     public static final String PARSE_MESSAGE_TABLE = "Message";
     public static final String USER_ID_KEY = "userId";
@@ -23,10 +23,6 @@ public class ParseMessageModel extends ParseObject {
 
     public void setUserId(String userId) {
         put(USER_ID_KEY, userId);
-    }
-
-    public String getEventId() {
-        return getString(EVENT_ID_KEY);
     }
 
     public void setEventId(String eventId) {

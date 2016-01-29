@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat.models;
+package com.jaysyko.wrestlechat.adapters.adapterObjects;
 
 public class EventObject {
     private String eventName;
