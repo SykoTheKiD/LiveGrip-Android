@@ -10,7 +10,7 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_weight="0.10"
-        android:contentDescription="@string/profile_other"
+        android:contentDescription="@string/description_other_profile_image"
         android:src="@mipmap/ic_launcher"
         android:visibility="gone" />
 
@@ -29,7 +29,7 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_weight="0.10"
-        android:contentDescription="@string/profile_me"
+        android:contentDescription="@string/description_my_profile_image"
         android:src="@mipmap/ic_launcher"
         android:visibility="gone" />
 </LinearLayout>

@@ -19,6 +19,8 @@ import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.EventObject;
+import com.jaysyko.wrestlechat.models.db.ParseEventsModel;
+import com.jaysyko.wrestlechat.models.intentKeys.IntentKeys;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -30,13 +32,7 @@ public class EventListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String ACTIVITY_TITLE = "Events";
-    private static final String DB_KEY_EVENT_NAME = "eventName";
     private static final String ERROR_LOADING_EVENTS = "Error loading events";
-    private static final String INTENT_KEY_EVENT_ID = "EVENT_ID";
-    private static final String INTENT_KEY_EVENT_NAME = "EVENT_NAME";
-    private static final String DB_KEY_EVENT_LOCATION = "location";
-    private static final String DB_KEY_EVENT_START_TIME = "startTime";
-    private static final String DB_KEY_EVENT_END_TIME = "endTime";
     private ArrayList<EventObject> events;
 
     @Override
@@ -124,11 +120,12 @@ public class EventListActivity extends AppCompatActivity
                 if (e == null) {
                     for (int i = 0; i < eventList.size(); i++) {
                         current = eventList.get(i);
-                        events.add(new EventObject(
-                                        current.get(DB_KEY_EVENT_NAME).toString(),
-                                        current.get(DB_KEY_EVENT_LOCATION).toString(),
-                                        current.get(DB_KEY_EVENT_START_TIME).toString(),
-                                        current.get(DB_KEY_EVENT_END_TIME).toString()
+                        events.add(
+                                new EventObject(
+                                        current.get(ParseEventsModel.EVENT_NAME_KEY).toString(),
+                                        current.get(ParseEventsModel.EVENT_LOCATION_KEY).toString(),
+                                        current.get(ParseEventsModel.EVENT_START_TIME_KEY).toString(),
+                                        current.get(ParseEventsModel.EVENT_END_TIME_KEY).toString()
                                 )
                         );
                     }
@@ -163,15 +160,15 @@ public class EventListActivity extends AppCompatActivity
 
     private void openConversation(ParseObject event) {
         Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
-        intent.putExtra(INTENT_KEY_EVENT_ID, event.getObjectId());
-        intent.putExtra(INTENT_KEY_EVENT_NAME, event.get(DB_KEY_EVENT_NAME).toString());
+        intent.putExtra(IntentKeys.EVENT_ID_INTENT_KEY, event.getObjectId());
+        intent.putExtra(IntentKeys.EVENT_NAME_INTENT_KEY, event.get(ParseEventsModel.EVENT_NAME_KEY).toString());
         startActivity(intent);
     }
 
     private void openEventInfo(ParseObject event) {
         Intent intent = new Intent(getApplicationContext(), EventInfoActivity.class);
         Intent eventInfoIntent = new Intent(getApplicationContext(), EventInfoActivity.class);
-        intent.putExtra(INTENT_KEY_EVENT_NAME, event.get(DB_KEY_EVENT_NAME).toString());
+        intent.putExtra(IntentKeys.EVENT_NAME_INTENT_KEY, event.get(ParseEventsModel.EVENT_NAME_KEY).toString());
         startActivity(eventInfoIntent);
     }
 

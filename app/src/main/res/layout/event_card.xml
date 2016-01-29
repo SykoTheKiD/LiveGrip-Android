@@ -47,7 +47,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:paddingTop="10dp"
-            android:text="@string/pref_description_social_recommendations"
+            android:text="@string/lorem_ipsum_short"
             android:textColor="#666"
             android:textSize="15sp" />
 

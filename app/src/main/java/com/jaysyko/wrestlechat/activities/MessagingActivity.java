@@ -15,7 +15,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
 import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.models.db.ParseEventsModel;
 import com.jaysyko.wrestlechat.models.db.ParseMessageModel;
+import com.jaysyko.wrestlechat.models.intentKeys.IntentKeys;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -26,17 +28,13 @@ import java.util.List;
 
 public class MessagingActivity extends AppCompatActivity {
 
-    public static final String EVENT_ID_INTENT_KEY = "EVENT_ID";
-    public static final String EVENT_NAME_INTENT_KEY = "EVENT_NAME";
     public static final String NULL_TEXT = "";
-    public static final String PARSE_EVENT_ID_KEY = "eventId";
-    public static final String PARSE_CREATED_AT_KEY = "createdAt";
     public static final String LOG_KEY = "message";
     public static final String ERROR_KEY = "Error: ";
     public static final int FETCH_MSG_DELAY_MILLIS = 100;
     private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
-    private static String sUserId;
-    private static String sEventId;
+    private String sUserId;
+    private String sEventId;
     private String eventName;
     private EditText etMessage;
     private ListView lvChat;
@@ -58,8 +56,8 @@ public class MessagingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messaging);
         Intent intent = getIntent();
-        sEventId = intent.getStringExtra(EVENT_ID_INTENT_KEY);
-        eventName = intent.getStringExtra(EVENT_NAME_INTENT_KEY);
+        sEventId = intent.getStringExtra(IntentKeys.EVENT_ID_INTENT_KEY);
+        eventName = intent.getStringExtra(IntentKeys.EVENT_NAME_INTENT_KEY);
         setTitle(eventName);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -100,7 +98,6 @@ public class MessagingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String body = etMessage.getText().toString();
                 if (body.isEmpty()) {
-                    return;
                 } else {
                     body = body.trim();
                     // Use ParseMessageModel model to create new messages now
@@ -125,9 +122,9 @@ public class MessagingActivity extends AppCompatActivity {
         // Construct query to execute
         ParseQuery<ParseMessageModel> query = ParseQuery.getQuery(ParseMessageModel.class);
         // Configure limit and sort order
-        query.whereEqualTo(PARSE_EVENT_ID_KEY, sEventId);
+        query.whereEqualTo(ParseEventsModel.EVENT_ID_KEY, sEventId);
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-        query.orderByAscending(PARSE_CREATED_AT_KEY);
+        query.orderByAscending(ParseMessageModel.CREATED_AT_KEY);
         // Execute query to fetch all messages from Parse asynchronously
         // This is equivalent to a SELECT query with SQL
         query.findInBackground(new FindCallback<ParseMessageModel>() {
@@ -160,7 +157,7 @@ public class MessagingActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_event_info:
                 Intent eventInfoIntent = new Intent(getApplicationContext(), EventInfoActivity.class);
-                eventInfoIntent.putExtra("EVENT_NAME", eventName);
+                eventInfoIntent.putExtra(IntentKeys.EVENT_NAME_INTENT_KEY, eventName);
                 startActivity(eventInfoIntent);
                 return true;
             default:

@@ -37,6 +37,7 @@ public class MessageListAdapter extends ArrayAdapter<ParseMessageModel> {
         }
         final ParseMessageModel parseMessageModel = (ParseMessageModel) getItem(position);
         final ViewHolder holder = (ViewHolder) convertView.getTag();
+//        final String userName = parseMessageModel.get
         final boolean isMe = parseMessageModel.getUserId().equals(mUserId);
         // Show-hide image based on the logged-in user.
         // Display the profile image to the right for our user, left for other users.

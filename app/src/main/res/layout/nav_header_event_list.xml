@@ -15,7 +15,7 @@
         android:id="@+id/drawerProfilePicture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/user_profile_picture"
+        android:contentDescription="@string/app_name"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:scaleType="fitXY"
         android:src="@android:drawable/sym_def_app_icon" />
@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="@string/drawer_username_holder"
+        android:text="@string/username_placeholder"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <!--<TextView-->
