@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.models.db.ParseMessageModel;
-import com.jaysyko.wrestlechat.models.db.UserModel;
+import com.jaysyko.wrestlechat.models.db.ParseUserModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -53,7 +53,7 @@ public class MessageListAdapter extends ArrayAdapter<ParseMessageModel> {
             holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
         }
         final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
-        Picasso.with(getContext()).load(UserModel.getProfileUrl(parseMessageModel.getUserId())).into(profileView);
+        Picasso.with(getContext()).load(ParseUserModel.getProfileUrl(parseMessageModel.getUserId())).into(profileView);
         holder.body.setText(parseMessageModel.getBody());
         return convertView;
     }    // Create a gravatar image based on the hash value obtained from userId

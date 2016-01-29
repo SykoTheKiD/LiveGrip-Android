@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jaysyko.wrestlechat.R;
@@ -20,10 +21,12 @@ import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.EventObject;
 import com.jaysyko.wrestlechat.models.db.ParseEventsModel;
+import com.jaysyko.wrestlechat.models.db.ParseUserModel;
 import com.jaysyko.wrestlechat.models.intentKeys.IntentKeys;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,16 +45,6 @@ public class EventListActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle(ACTIVITY_TITLE);
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ParseUser.logOut();
-//                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -60,6 +53,12 @@ public class EventListActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void setDrawerHeaderUsername(String username) {
+        View drawerNavHeader = getLayoutInflater().inflate(R.layout.nav_header_event_list, null);
+        TextView userNameTV = (TextView) drawerNavHeader.findViewById(R.id.drawer_username);
+        userNameTV.setText(username);
     }
 
     @Override
@@ -111,7 +110,7 @@ public class EventListActivity extends AppCompatActivity
     }
 
     //display clickable a list of all users
-    private void setConversationsList() {
+    private void updateEventCards() {
         events = new ArrayList<>();
         ParseQuery<ParseObject> query = ParseQuery.getQuery(ACTIVITY_TITLE);
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -174,7 +173,8 @@ public class EventListActivity extends AppCompatActivity
 
     @Override
     public void onResume() {
-        setConversationsList();
+        setDrawerHeaderUsername(ParseUser.getCurrentUser().get(ParseUserModel.USERNAME_KEY).toString());
+        updateEventCards();
         super.onResume();
     }
 }

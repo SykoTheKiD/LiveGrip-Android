@@ -35,6 +35,8 @@
     <string name="drawer_about">About</string>
     <string name="drawer_share">Share</string>
     <string name="drawer_section_communicate">Contact</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!-- Strings related to Event Info Screen -->
     <string name="action_event_info">Event Info</string>
