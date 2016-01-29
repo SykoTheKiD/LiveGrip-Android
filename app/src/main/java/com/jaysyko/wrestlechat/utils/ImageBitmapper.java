@@ -3,8 +3,12 @@ package com.jaysyko.wrestlechat.utils;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 
-public final class ImageManager {
+import java.io.InputStream;
+import java.net.URL;
+
+public final class ImageBitmapper {
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
                                                          int reqWidth, int reqHeight) {
 
@@ -19,6 +23,15 @@ public final class ImageManager {
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
+    }
+
+    public static Drawable loadImageFromURL(String url) {
+        try {
+            InputStream is = (InputStream) new URL(url).getContent();
+            return Drawable.createFromStream(is, null);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     private static int calculateInSampleSize(
@@ -40,7 +53,6 @@ public final class ImageManager {
                 inSampleSize *= 2;
             }
         }
-
         return inSampleSize;
     }
 }

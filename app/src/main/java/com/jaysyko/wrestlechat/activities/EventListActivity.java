@@ -86,7 +86,6 @@ public class EventListActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation vie.w item clicks here.
@@ -124,7 +123,8 @@ public class EventListActivity extends AppCompatActivity
                                         current.get(ParseEventsModel.EVENT_NAME_KEY).toString(),
                                         current.get(ParseEventsModel.EVENT_LOCATION_KEY).toString(),
                                         current.get(ParseEventsModel.EVENT_START_TIME_KEY).toString(),
-                                        current.get(ParseEventsModel.EVENT_END_TIME_KEY).toString()
+                                        current.get(ParseEventsModel.EVENT_END_TIME_KEY).toString(),
+                                        current.get(ParseEventsModel.EVENT_IMAGE_ID_KEY).toString()
                                 )
                         );
                     }

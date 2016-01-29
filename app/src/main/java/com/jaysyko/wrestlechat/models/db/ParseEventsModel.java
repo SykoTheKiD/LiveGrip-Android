@@ -11,6 +11,7 @@ public class ParseEventsModel extends ParseObject {
     public static final String EVENT_LOCATION_KEY = "location";
     public static final String EVENT_START_TIME_KEY = "startTime";
     public static final String EVENT_END_TIME_KEY = "endTime";
+    public static final String EVENT_IMAGE_ID_KEY = "imgurId";
 
     public String getEventIdKey() {
         return getString(EVENT_ID_KEY);
@@ -30,5 +31,9 @@ public class ParseEventsModel extends ParseObject {
 
     public String getEventEndTimeKey() {
         return getString(EVENT_END_TIME_KEY);
+    }
+
+    public String getEventImageIdKey() {
+        return getString(EVENT_IMAGE_ID_KEY);
     }
 }

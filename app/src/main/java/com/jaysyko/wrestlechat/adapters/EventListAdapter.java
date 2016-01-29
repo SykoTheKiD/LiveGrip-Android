@@ -10,11 +10,12 @@ import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.models.EventObject;
-import com.jaysyko.wrestlechat.utils.ImageManager;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {
+    private static final String IMGUR_LINK = "http://i.imgur.com/";
     private List<EventObject> itemsData;
     private Context context;
 
@@ -43,12 +44,9 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
         // - get data from your itemsData at this position
         // - replace the contents of the view with that itemsData
-
-        viewHolder.txtViewTitle.setText(itemsData.get(position).getEventName());
-        viewHolder.imgViewIcon.setImageBitmap(ImageManager.decodeSampledBitmapFromResource(this.context.getResources(), R.drawable.royal_rumble, 100, 100));
-//        viewHolder.imgViewIcon.setImageResource(itemsData[position].getImageUrl());
-
-
+        EventObject currentCard = itemsData.get(position);
+        viewHolder.txtViewTitle.setText(currentCard.getEventName());
+        Picasso.with(this.context).load(IMGUR_LINK.concat(currentCard.getImageLink())).into(viewHolder.imgViewIcon);
     }
 
     // Return the size of your itemsData (invoked by the layout manager)
