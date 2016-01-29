@@ -32,7 +32,7 @@ public class MessageListAdapter extends ArrayAdapter<ParseMessageModel> {
             final ViewHolder holder = new ViewHolder();
             holder.imageLeft = (ImageView) convertView.findViewById(R.id.ivProfileLeft);
             holder.imageRight = (ImageView) convertView.findViewById(R.id.ivProfileRight);
-            holder.body = (TextView) convertView.findViewById(R.id.tvBody);
+            holder.body = (TextView) convertView.findViewById(R.id.tvMessage);
             convertView.setTag(holder);
         }
         final ParseMessageModel parseMessageModel = (ParseMessageModel) getItem(position);
@@ -43,10 +43,12 @@ public class MessageListAdapter extends ArrayAdapter<ParseMessageModel> {
         if (isMe) {
             holder.imageRight.setVisibility(View.VISIBLE);
             holder.imageLeft.setVisibility(View.GONE);
+            holder.body.setBackgroundResource(R.drawable.speech_bubble_green);
             holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
         } else {
             holder.imageLeft.setVisibility(View.VISIBLE);
             holder.imageRight.setVisibility(View.GONE);
+            holder.body.setBackgroundResource(R.drawable.speech_bubble_orange);
             holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
         }
         final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
