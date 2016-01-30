@@ -25,10 +25,6 @@ public class Message extends ParseObject {
         put(USER_ID_KEY, userId);
     }
 
-    public String getEventId() {
-        return getString(EVENT_ID_KEY);
-    }
-
     public void setEventId(String eventId) {
         put(EVENT_ID_KEY, eventId);
     }

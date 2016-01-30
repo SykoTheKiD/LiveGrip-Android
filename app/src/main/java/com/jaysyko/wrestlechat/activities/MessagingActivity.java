@@ -22,6 +22,7 @@ import com.jaysyko.wrestlechat.models.Query;
 import com.jaysyko.wrestlechat.models.intentKeys.IntentKeys;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -48,7 +49,7 @@ public class MessagingActivity extends AppCompatActivity {
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            refreshMessages();
+            fetchNewMessages();
             handler.postDelayed(this, FETCH_MSG_DELAY_MILLIS);
         }
     };
@@ -63,28 +64,16 @@ public class MessagingActivity extends AppCompatActivity {
         setTitle(eventName);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+        ParseObject currentUser = ParseUser.getCurrentUser();
+        sUserId = currentUser.getObjectId();
         // User login
-        if (ParseUser.getCurrentUser() != null) { // start with existing user
-            startWithCurrentUser();
-        } else { // If not logged in, login as a new anonymous user
-            Intent redirectToLogin = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(redirectToLogin);
-        }
+        // start with existing user
+        saveMessage();
         handler.postDelayed(runnable, FETCH_MSG_DELAY_MILLIS);
     }
 
-    // Get the userId from the cached currentUser object
-    private void startWithCurrentUser() {
-        sUserId = ParseUser.getCurrentUser().getObjectId();
-        setupMessagePosting();
-    }
-
-    private void refreshMessages() {
-        receiveMessage();
-    }
-
     // Setup message field and posting
-    private void setupMessagePosting() {
+    private void saveMessage() {
         etMessage = (EditText) findViewById(R.id.etMessage);
         Button btSend = (Button) findViewById(R.id.btSend);
         lvChat = (ListView) findViewById(R.id.lvChat);
@@ -109,7 +98,7 @@ public class MessagingActivity extends AppCompatActivity {
                     message.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            receiveMessage();
+                            fetchNewMessages();
                         }
                     });
                     etMessage.setText(NULL_TEXT);
@@ -119,8 +108,7 @@ public class MessagingActivity extends AppCompatActivity {
     }
 
     // Query messages from Parse so we can load them into the chat adapter
-    private void receiveMessage() {
-        List<Message> results;
+    private void fetchNewMessages() {
         Query<Message> query = new Query<>(Message.class);
         query.whereEqualTo(Events.EVENT_ID_KEY, sEventId);
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
