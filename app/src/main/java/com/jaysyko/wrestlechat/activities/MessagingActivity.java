@@ -13,16 +13,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
+
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.models.db.ParseEventsModel;
-import com.jaysyko.wrestlechat.models.db.ParseMessageModel;
+import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
+import com.jaysyko.wrestlechat.models.Events;
+import com.jaysyko.wrestlechat.models.Message;
+import com.jaysyko.wrestlechat.models.Query;
 import com.jaysyko.wrestlechat.models.intentKeys.IntentKeys;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class MessagingActivity extends AppCompatActivity {
     private String eventName;
     private EditText etMessage;
     private ListView lvChat;
-    private ArrayList<ParseMessageModel> messages;
+    private ArrayList<Message> messages;
     private MessageListAdapter mAdapter;
     // Keep track of initial load to scroll to the bottom of the ListView
     private boolean mFirstLoad;
@@ -97,15 +99,14 @@ public class MessagingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String body = etMessage.getText().toString();
-                if (body.isEmpty()) {
-                } else {
+                if (!body.isEmpty()) {
                     body = body.trim();
-                    // Use ParseMessageModel model to create new messages now
-                    ParseMessageModel parseMessageModel = new ParseMessageModel();
-                    parseMessageModel.setUserId(sUserId);
-                    parseMessageModel.setEventId(sEventId);
-                    parseMessageModel.setBody(body);
-                    parseMessageModel.saveInBackground(new SaveCallback() {
+                    // Use Message model to create new messages now
+                    Message message = new Message();
+                    message.setUserId(sUserId);
+                    message.setEventId(sEventId);
+                    message.setBody(body);
+                    message.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
                             receiveMessage();
@@ -119,19 +120,16 @@ public class MessagingActivity extends AppCompatActivity {
 
     // Query messages from Parse so we can load them into the chat adapter
     private void receiveMessage() {
-        // Construct query to execute
-        ParseQuery<ParseMessageModel> query = ParseQuery.getQuery(ParseMessageModel.class);
-        // Configure limit and sort order
-        query.whereEqualTo(ParseEventsModel.EVENT_ID_KEY, sEventId);
+        List<Message> results;
+        Query<Message> query = new Query<>(Message.class);
+        query.whereEqualTo(Events.EVENT_ID_KEY, sEventId);
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-        query.orderByAscending(ParseMessageModel.CREATED_AT_KEY);
-        // Execute query to fetch all messages from Parse asynchronously
-        // This is equivalent to a SELECT query with SQL
-        query.findInBackground(new FindCallback<ParseMessageModel>() {
-            public void done(List<ParseMessageModel> parseMessageModels, ParseException e) {
+        query.orderByASC(Message.CREATED_AT_KEY);
+        query.getQuery().findInBackground(new FindCallback<Message>() {
+            public void done(List<Message> messages, ParseException e) {
                 if (e == null) {
-                    messages.clear();
-                    messages.addAll(parseMessageModels);
+                    MessagingActivity.this.messages.clear();
+                    MessagingActivity.this.messages.addAll(messages);
                     mAdapter.notifyDataSetChanged(); // update adapter
                     // Scroll to the bottom of the list on initial load
                     if (mFirstLoad) {
@@ -164,17 +162,4 @@ public class MessagingActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-    // Create an anonymous user using ParseAnonymousUtils and set sUserId
-//    private void login() {
-//        ParseAnonymousUtils.logIn(new LogInCallback() {
-//            @Override
-//            public void done(ParseUser user, ParseException e) {
-//                if (e != null) {
-//                    Log.d(TAG, "Anonymous login failed: " + e.toString());
-//                } else {
-//                    startWithCurrentUser();
-//                }
-//            }
-//        });
-//    }
 }

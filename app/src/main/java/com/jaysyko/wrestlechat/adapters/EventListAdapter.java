@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.models.EventObject;
+import com.jaysyko.wrestlechat.adapters.adapterObjects.EventObject;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

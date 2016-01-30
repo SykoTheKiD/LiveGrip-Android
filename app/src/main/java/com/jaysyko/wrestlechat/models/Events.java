@@ -1,10 +1,10 @@
-package com.jaysyko.wrestlechat.models.db;
+package com.jaysyko.wrestlechat.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
-@ParseClassName(ParseEventsModel.PARSE_EVENTS_TABLE)
-public class ParseEventsModel extends ParseObject {
+@ParseClassName(Events.PARSE_EVENTS_TABLE)
+public class Events extends ParseObject {
     public static final String PARSE_EVENTS_TABLE = "Events";
     public static final String EVENT_ID_KEY = "eventId";
     public static final String EVENT_NAME_KEY = "eventName";
