@@ -9,17 +9,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.adapters.adapterObjects.EventObject;
+import com.jaysyko.wrestlechat.dataObjects.Event;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {
     private static final String IMGUR_LINK = "http://i.imgur.com/";
-    private List<EventObject> itemsData;
+    private List<Event> itemsData;
     private Context context;
 
-    public EventListAdapter(List<EventObject> itemsData, Context context) {
+    public EventListAdapter(List<Event> itemsData, Context context) {
         this.itemsData = itemsData;
         this.context = context;
     }
@@ -43,7 +43,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
         // - get data from your itemsData at this position
         // - replace the contents of the view with that itemsData
-        EventObject currentCard = itemsData.get(position);
+        Event currentCard = itemsData.get(position);
         viewHolder.txtViewTitle.setText(currentCard.getEventName());
         viewHolder.txtViewLocation.setText(currentCard.getLocation());
         Picasso.with(this.context).load(IMGUR_LINK.concat(currentCard.getImageLink())).into(viewHolder.imgViewIcon);
