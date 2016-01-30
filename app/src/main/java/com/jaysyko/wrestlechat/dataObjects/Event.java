@@ -1,13 +1,13 @@
-package com.jaysyko.wrestlechat.adapters.adapterObjects;
+package com.jaysyko.wrestlechat.dataObjects;
 
-public class EventObject {
+public class Event {
     private String eventName;
     private String location;
     private String startTime;
     private String endTime;
     private String imageLink;
 
-    public EventObject(String eventName, String location, String startTime, String endTime, String imageLink) {
+    public Event(String eventName, String location, String startTime, String endTime, String imageLink) {
         this.eventName = eventName;
         this.location = location;
         this.startTime = startTime;

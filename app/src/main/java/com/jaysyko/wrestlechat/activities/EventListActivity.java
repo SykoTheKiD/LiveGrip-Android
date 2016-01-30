@@ -1,7 +1,9 @@
 package com.jaysyko.wrestlechat.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,7 +20,7 @@ import android.widget.Toast;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
-import com.jaysyko.wrestlechat.adapters.adapterObjects.EventObject;
+import com.jaysyko.wrestlechat.dataObjects.Event;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.models.Query;
@@ -35,7 +37,7 @@ public class EventListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String ERROR_LOADING_EVENTS = "Error loading events";
-    private ArrayList<EventObject> events;
+    private ArrayList<Event> events;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +119,7 @@ public class EventListActivity extends AppCompatActivity
                     for (int i = 0; i < eventList.size(); i++) {
                         current = eventList.get(i);
                         events.add(
-                                new EventObject(
+                                new Event(
                                         current.get(Events.EVENT_NAME_KEY).toString(),
                                         current.get(Events.EVENT_LOCATION_KEY).toString(),
                                         current.get(Events.EVENT_START_TIME_KEY).toString(),
@@ -140,6 +142,8 @@ public class EventListActivity extends AppCompatActivity
 
                                         @Override
                                         public void onItemLongClick(View view, int position) {
+                                            Vibrator vibe = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                                            vibe.vibrate(50);
                                             openEventInfo(eventList.get(position));
                                         }
                                     }));
