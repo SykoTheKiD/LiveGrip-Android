@@ -43,12 +43,12 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         if (isMe) {
             holder.imageRight.setVisibility(View.VISIBLE);
             holder.imageLeft.setVisibility(View.GONE);
-            holder.body.setBackgroundResource(R.drawable.speech_bubble_green);
+//            holder.body.setBackgroundResource(R.drawable.speech_bubble_green);
             holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
         } else {
             holder.imageLeft.setVisibility(View.VISIBLE);
             holder.imageRight.setVisibility(View.GONE);
-            holder.body.setBackgroundResource(R.drawable.speech_bubble_orange);
+//            holder.body.setBackgroundResource(R.drawable.speech_bubble_orange);
             holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
         }
         final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
