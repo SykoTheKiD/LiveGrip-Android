@@ -6,16 +6,10 @@ An Android app that lets you talk to others about wrestling.
 
 * Quick summary
 * Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
 ### How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+* Run `build.gradle` to install and download dependancies
 
 ### Contribution guidelines ###
 
@@ -25,5 +19,4 @@ An Android app that lets you talk to others about wrestling.
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Jay Syko
