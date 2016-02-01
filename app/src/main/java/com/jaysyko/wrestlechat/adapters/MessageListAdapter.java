@@ -43,13 +43,13 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         if (isMe) {
             holder.imageRight.setVisibility(View.VISIBLE);
             holder.imageLeft.setVisibility(View.GONE);
-//            holder.body.setBackgroundResource(R.drawable.speech_bubble_green);
-            holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
+            holder.body.setBackgroundResource(R.drawable.in_message_bg);
+            holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.END);
         } else {
             holder.imageLeft.setVisibility(View.VISIBLE);
             holder.imageRight.setVisibility(View.GONE);
-//            holder.body.setBackgroundResource(R.drawable.speech_bubble_orange);
-            holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+            holder.body.setBackgroundResource(R.drawable.out_message_bg);
+            holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
         }
         final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
         Picasso.with(getContext()).load(User.getProfileUrl(message.getUserId())).into(profileView);
