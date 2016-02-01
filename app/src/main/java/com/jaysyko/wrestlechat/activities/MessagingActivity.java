@@ -59,8 +59,8 @@ public class MessagingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messaging);
         Intent intent = getIntent();
-        sEventId = intent.getStringExtra(IntentKeys.EVENT_ID_INTENT_KEY);
-        eventName = intent.getStringExtra(IntentKeys.EVENT_NAME_INTENT_KEY);
+        sEventId = intent.getStringExtra(IntentKeys.EVENT_ID);
+        eventName = intent.getStringExtra(IntentKeys.EVENT_NAME);
         setTitle(eventName);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -110,7 +110,7 @@ public class MessagingActivity extends AppCompatActivity {
     // Query messages from Parse so we can load them into the chat adapter
     private void fetchNewMessages() {
         Query<Message> query = new Query<>(Message.class);
-        query.whereEqualTo(Events.EVENT_ID_KEY, sEventId);
+        query.whereEqualTo(Events.EVENT_ID, sEventId);
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
         query.orderByASC(Message.CREATED_AT_KEY);
         query.getQuery().findInBackground(new FindCallback<Message>() {
@@ -143,7 +143,7 @@ public class MessagingActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_event_info:
                 Intent eventInfoIntent = new Intent(getApplicationContext(), EventInfoActivity.class);
-                eventInfoIntent.putExtra(IntentKeys.EVENT_NAME_INTENT_KEY, eventName);
+                eventInfoIntent.putExtra(IntentKeys.EVENT_NAME, eventName);
                 startActivity(eventInfoIntent);
                 return true;
             default:
