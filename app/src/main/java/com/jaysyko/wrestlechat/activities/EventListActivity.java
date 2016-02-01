@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.dataObjects.Event;
@@ -29,13 +28,13 @@ import com.jaysyko.wrestlechat.models.intentKeys.IntentKeys;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class EventListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String SHARE_TEXT = "Share Text";
     private ArrayList<Event> events;
 
     @Override
@@ -109,8 +108,8 @@ public class EventListActivity extends AppCompatActivity
             case (R.id.nav_send):
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType("text/plain");
-                share.putExtra(Intent.EXTRA_TEXT, "Hey come chat with other wrestling fans on WrestleChat!");
-                startActivity(Intent.createChooser(share, "Share Text"));
+                share.putExtra(Intent.EXTRA_TEXT, R.string.app_share);
+                startActivity(Intent.createChooser(share, SHARE_TEXT));
                 break;
             case (R.id.nav_legal):
                 Intent legalIntent = new Intent(getApplicationContext(), LegalActivity.class);

@@ -21,9 +21,15 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/llSend"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/my_toolbar"
         android:background="#ffffff"
+        android:divider="#00000000"
+        android:dividerHeight="20dp"
+        android:padding="15dp"
+        android:scrollbars="none"
         android:transcriptMode="alwaysScroll" />
 
     <RelativeLayout
@@ -42,9 +48,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/btSend"
+            android:layout_toLeftOf="@+id/btSend"
             android:layout_toStartOf="@+id/btSend"
             android:gravity="top"
             android:hint="@string/message_hint"
+            android:paddingEnd="0dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="0dp"
             android:paddingStart="10dp" />
 
         <Button
@@ -52,6 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:text="@string/message_button_send"
             android:textSize="18sp" />
     </RelativeLayout>
