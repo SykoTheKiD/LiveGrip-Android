@@ -88,8 +88,7 @@
                 android:textAllCaps="true"
                 android:textColor="#64dd17"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:visibility="gone" />
+                android:textStyle="bold" />
 
         </LinearLayout>
 
