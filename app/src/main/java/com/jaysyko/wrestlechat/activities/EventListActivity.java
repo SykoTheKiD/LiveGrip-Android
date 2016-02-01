@@ -90,21 +90,35 @@ public class EventListActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation vie.w item clicks here.
         int id = item.getItemId();
-        if (id == R.id.nav_my_profile) {
-
-        } else if (id == R.id.nav_logout) {
-            ParseUser.logOut();
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(intent);
-            finish();
-
-        } else if (id == R.id.nav_settings) {
-            Intent settingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
-            startActivity(settingsIntent);
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        switch (id) {
+            case (R.id.nav_my_profile):
+                break;
+            case (R.id.nav_logout):
+                ParseUser.logOut();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case (R.id.nav_settings):
+                Intent settingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(settingsIntent);
+                break;
+            case (R.id.nav_share):
+                break;
+            case (R.id.nav_donate):
+                Intent donateIntent = new Intent(getApplicationContext(), DonateActivity.class);
+                startActivity(donateIntent);
+                break;
+            case (R.id.nav_send):
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("text/plain");
+                share.putExtra(Intent.EXTRA_TEXT, "Hey check out the {{ EVENT_NAME }} - sent from WrestleChat");
+                startActivity(Intent.createChooser(share, "Share Text"));
+                break;
+            case (R.id.nav_legal):
+                Intent legalIntent = new Intent(getApplicationContext(), LegalActivity.class);
+                startActivity(legalIntent);
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
