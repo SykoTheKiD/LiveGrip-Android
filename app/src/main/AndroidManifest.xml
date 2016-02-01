@@ -11,6 +11,7 @@
     <permission
         android:name="com.jaysyko.wrestlechat.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="com.jaysyko.wrestlechat.permission.C2D_MESSAGE" />
 
     <application
@@ -26,6 +27,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -42,7 +44,6 @@
             android:name=".activities.EventInfoActivity"
             android:label="@string/activity_event_info"
             android:theme="@style/NoActionBar" />
-
         <activity
             android:name=".activities.SettingsActivity"
             android:label="@string/activity_settings"
@@ -80,6 +81,25 @@
                 <category android:name="com.jaysyko.wrestlechat" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".activities.DonateActivity"
+            android:label="@string/title_activity_donate"
+            android:parentActivityName=".activities.EventListActivity"
+            android:theme="@style/NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jaysyko.wrestlechat.activities.EventListActivity" />
+        </activity>
+        <activity
+            android:name=".activities.LegalActivity"
+            android:label="@string/title_activity_legal"
+            android:parentActivityName=".activities.EventListActivity"
+            android:theme="@style/NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jaysyko.wrestlechat.activities.EventListActivity" />
+        </activity>
     </application>
 
 </manifest>
