@@ -36,7 +36,6 @@ import java.util.List;
 public class EventListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String ERROR_LOADING_EVENTS = "Error loading events";
     private ArrayList<Event> events;
 
     @Override
@@ -53,12 +52,10 @@ public class EventListActivity extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-    }
+        View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_event_list);
+        TextView headerUsername = (TextView) headerLayout.findViewById(R.id.drawer_username);
+        headerUsername.setText(ParseUser.getCurrentUser().get(User.USERNAME_KEY).toString());
 
-    private void setDrawerHeaderUsername(String username) {
-        View drawerNavHeader = getLayoutInflater().inflate(R.layout.nav_header_event_list, null);
-        TextView userNameTV = (TextView) drawerNavHeader.findViewById(R.id.drawer_username);
-        userNameTV.setText(username);
     }
 
     @Override
@@ -112,7 +109,7 @@ public class EventListActivity extends AppCompatActivity
             case (R.id.nav_send):
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType("text/plain");
-                share.putExtra(Intent.EXTRA_TEXT, "Hey check out the {{ EVENT_NAME }} - sent from WrestleChat");
+                share.putExtra(Intent.EXTRA_TEXT, "Hey come chat with other wrestling fans on WrestleChat!");
                 startActivity(Intent.createChooser(share, "Share Text"));
                 break;
             case (R.id.nav_legal):
@@ -170,7 +167,7 @@ public class EventListActivity extends AppCompatActivity
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                 } else {
                     Toast.makeText(getApplicationContext(),
-                            ERROR_LOADING_EVENTS,
+                            R.string.error_loading_events,
                             Toast.LENGTH_LONG).show();
                 }
             }
@@ -192,7 +189,6 @@ public class EventListActivity extends AppCompatActivity
 
     @Override
     public void onResume() {
-        setDrawerHeaderUsername(ParseUser.getCurrentUser().get(User.USERNAME_KEY).toString());
         super.onResume();
     }
 }
