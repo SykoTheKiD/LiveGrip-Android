@@ -18,7 +18,7 @@ public class EventInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_info);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle(getIntent().getStringExtra(IntentKeys.EVENT_NAME_INTENT_KEY));
+        setTitle(getIntent().getStringExtra(IntentKeys.EVENT_NAME));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
