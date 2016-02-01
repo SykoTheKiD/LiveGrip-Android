@@ -92,7 +92,11 @@ public class EventListActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.nav_my_profile) {
 
-        } else if (id == R.id.nav_events) {
+        } else if (id == R.id.nav_logout) {
+            ParseUser.logOut();
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
 
         } else if (id == R.id.nav_settings) {
             Intent settingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
@@ -120,11 +124,11 @@ public class EventListActivity extends AppCompatActivity
                         current = eventList.get(i);
                         events.add(
                                 new Event(
-                                        current.get(Events.EVENT_NAME_KEY).toString(),
-                                        current.get(Events.EVENT_LOCATION_KEY).toString(),
-                                        current.get(Events.EVENT_START_TIME_KEY).toString(),
-                                        current.get(Events.EVENT_END_TIME_KEY).toString(),
-                                        current.get(Events.EVENT_IMAGE_ID_KEY).toString()
+                                        current.get(Events.EVENT_NAME).toString(),
+                                        current.get(Events.EVENT_LOCATION).toString(),
+                                        current.get(Events.EVENT_START_TIME).toString(),
+                                        current.get(Events.EVENT_END_TIME).toString(),
+                                        current.get(Events.EVENT_IMAGE_ID).toString()
                                 )
                         );
                     }
@@ -161,16 +165,15 @@ public class EventListActivity extends AppCompatActivity
 
     private void openConversation(ParseObject event) {
         Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
-        intent.putExtra(IntentKeys.EVENT_ID_INTENT_KEY, event.getObjectId());
-        intent.putExtra(IntentKeys.EVENT_NAME_INTENT_KEY, event.get(Events.EVENT_NAME_KEY).toString());
+        intent.putExtra(IntentKeys.EVENT_ID, event.getObjectId());
+        intent.putExtra(IntentKeys.EVENT_NAME, event.get(Events.EVENT_NAME).toString());
         startActivity(intent);
     }
 
     private void openEventInfo(ParseObject event) {
         Intent intent = new Intent(getApplicationContext(), EventInfoActivity.class);
-        Intent eventInfoIntent = new Intent(getApplicationContext(), EventInfoActivity.class);
-        intent.putExtra(IntentKeys.EVENT_NAME_INTENT_KEY, event.get(Events.EVENT_NAME_KEY).toString());
-        startActivity(eventInfoIntent);
+        intent.putExtra(IntentKeys.EVENT_NAME, event.get(Events.EVENT_NAME).toString());
+        startActivity(intent);
     }
 
     @Override

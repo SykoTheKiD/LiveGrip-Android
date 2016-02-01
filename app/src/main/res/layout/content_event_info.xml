@@ -42,7 +42,7 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:text="Fastlane (2016) is an upcoming professional wrestling pay-per-view (PPV) event produced by WWE. It will take place on February 21, 2016 at the Quicken Loans Arena in Cleveland, Ohio. It will be the second event in the Fastlane chronology."
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:textStyle="bold|normal"
                 android:typeface="sans" />
         </TableRow>
@@ -109,9 +109,10 @@
                 android:layout_column="1"
                 android:elegantTextHeight="true"
                 android:gravity="center"
+                android:paddingEnd="20dp"
                 android:paddingLeft="20dp"
-
                 android:paddingRight="20dp"
+                android:paddingStart="20dp"
                 android:text="Amway Center - Orlando, Florida" />
         </TableRow>
 
@@ -124,8 +125,10 @@
                 android:layout_height="wrap_content"
                 android:layout_column="1"
                 android:paddingBottom="10dp"
+                android:paddingEnd="20dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="20dp"
+                android:paddingStart="10dp"
                 android:paddingTop="10dp"
                 android:text="Match Card"
                 android:textColor="#616161"
@@ -145,7 +148,8 @@
                 android:gravity="center"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:text="Dean Ambrose vs. Kevin Owens\nThe New Day vs. The Usos\nKalisto vs. Alberto Delrio\nCharlotte(with Ric Flair) vs. Becky Lynch\n30-Man Royal Rumble\n" />
+                android:text="Dean Ambrose vs. Kevin Owens\nThe New Day vs. The Usos\nKalisto vs. Alberto Delrio\nCharlotte(with Ric Flair) vs. Becky Lynch\n30-Man Royal Rumble\n"
+                android:textSize="@dimen/general_font" />
         </TableRow>
 
     </TableLayout>
