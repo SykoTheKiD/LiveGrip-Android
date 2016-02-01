@@ -3,9 +3,9 @@
 
     <!-- Strings related to Activity Names -->
     <string name="activity_login">Login</string>
-    <string name="activity_event_info">EventInfo</string>
-    <string name="activity_event_list">EventList</string>
-    <string name="activity_messaging">Messaging</string>
+    <string name="activity_event_info">Event Info</string>
+    <string name="activity_event_list">Events</string>
+    <string name="activity_messaging">Message</string>
     <string name="activity_settings">Settings</string>
 
     <!-- Strings related to Login Screen -->
