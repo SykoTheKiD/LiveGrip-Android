@@ -111,7 +111,7 @@ public class MessagingActivity extends AppCompatActivity {
         Query<Message> query = new Query<>(Message.class);
         query.whereEqualTo(Events.EVENT_ID, sEventId);
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-        query.orderByASC(Message.CREATED_AT_KEY);
+        query.orderByASC(Message.CREATED_AT);
         query.getQuery().findInBackground(new FindCallback<Message>() {
             public void done(List<Message> messages, ParseException e) {
                 if (e == null) {
