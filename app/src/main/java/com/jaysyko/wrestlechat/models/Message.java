@@ -7,37 +7,28 @@ import com.parse.ParseObject;
 public class Message extends ParseObject {
 
     public static final String PARSE_MESSAGE_TABLE = "Message";
-    public static final String USER_ID_KEY = "userId";
-    public static final String USERNAME_KEY = "username";
-    public static final String EVENT_ID_KEY = "eventId";
-    public static final String MSG_BODY_KEY = "body";
-    public static final String CREATED_AT_KEY = "createdAt";
+    public static final String USERNAME = "username";
+    public static final String EVENT_ID = "eventId";
+    public static final String MSG_BODY = "body";
+    public static final String CREATED_AT = "createdAt";
 
     public String getUsername() {
-        return getString(USERNAME_KEY);
+        return getString(USERNAME);
     }
 
     public void setUsername(String username) {
-        put(USERNAME_KEY, username);
-    }
-
-    public String getUserId() {
-        return getString(USER_ID_KEY);
-    }
-
-    public void setUserId(String userId) {
-        put(USER_ID_KEY, userId);
+        put(USERNAME, username);
     }
 
     public void setEventId(String eventId) {
-        put(EVENT_ID_KEY, eventId);
+        put(EVENT_ID, eventId);
     }
 
     public String getBody() {
-        return getString(MSG_BODY_KEY);
+        return getString(MSG_BODY);
     }
 
     public void setBody(String body) {
-        put(MSG_BODY_KEY, body);
+        put(MSG_BODY, body);
     }
 }
