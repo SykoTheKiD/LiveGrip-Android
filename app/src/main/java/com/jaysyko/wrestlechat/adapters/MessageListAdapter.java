@@ -52,7 +52,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
             holder.body.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
         }
         final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
-        Picasso.with(getContext()).load(User.getProfileUrl(message.getUserId())).into(profileView);
+        Picasso.with(getContext()).load(User.getProfileUrl(message.getUsername())).into(profileView);
         holder.body.setText(message.getBody());
         return convertView;
     }
