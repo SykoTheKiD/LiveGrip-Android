@@ -17,6 +17,10 @@ public class Message extends ParseObject {
         return getString(USERNAME_KEY);
     }
 
+    public void setUsername(String username) {
+        put(USERNAME_KEY, username);
+    }
+
     public String getUserId() {
         return getString(USER_ID_KEY);
     }
