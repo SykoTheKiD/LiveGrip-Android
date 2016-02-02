@@ -22,7 +22,6 @@ import com.jaysyko.wrestlechat.models.Query;
 import com.jaysyko.wrestlechat.models.intentKeys.IntentKeys;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -36,7 +35,7 @@ public class MessagingActivity extends AppCompatActivity {
     public static final String ERROR_KEY = "Error: ";
     public static final int FETCH_MSG_DELAY_MILLIS = 100;
     private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
-    private String sUserId;
+    private String userName;
     private String sEventId;
     private String eventName;
     private EditText etMessage;
@@ -64,8 +63,8 @@ public class MessagingActivity extends AppCompatActivity {
         setTitle(eventName);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        ParseObject currentUser = ParseUser.getCurrentUser();
-        sUserId = currentUser.getObjectId();
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        userName = currentUser.getUsername();
         // User login
         // start with existing user
         saveMessage();
@@ -81,7 +80,7 @@ public class MessagingActivity extends AppCompatActivity {
         // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen. Don't scroll to the bottom otherwise.
         lvChat.setTranscriptMode(1);
         mFirstLoad = true;
-        mAdapter = new MessageListAdapter(MessagingActivity.this, sUserId, messages);
+        mAdapter = new MessageListAdapter(MessagingActivity.this, userName, messages);
         lvChat.setAdapter(mAdapter);
         btSend.setOnClickListener(new View.OnClickListener() {
 
@@ -92,7 +91,7 @@ public class MessagingActivity extends AppCompatActivity {
                     body = body.trim();
                     // Use Message model to create new messages now
                     Message message = new Message();
-                    message.setUserId(sUserId);
+                    message.setUsername(userName);
                     message.setEventId(sEventId);
                     message.setBody(body);
                     message.saveInBackground(new SaveCallback() {
