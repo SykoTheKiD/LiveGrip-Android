@@ -3,11 +3,11 @@ package com.jaysyko.wrestlechat.dataObjects;
 public class Event {
     private String eventName;
     private String location;
-    private String startTime;
-    private String endTime;
+    private Long startTime;
+    private Long endTime;
     private String imageLink;
 
-    public Event(String eventName, String location, String startTime, String endTime, String imageLink) {
+    public Event(String eventName, String location, Long startTime, Long endTime, String imageLink) {
         this.eventName = eventName;
         this.location = location;
         this.startTime = startTime;
@@ -27,11 +27,11 @@ public class Event {
         return this.location;
     }
 
-    public String getStartTime() {
+    public Long getStartTime() {
         return this.startTime;
     }
 
-    public String getEndTime() {
+    public Long getEndTime() {
         return this.endTime;
     }
 }
