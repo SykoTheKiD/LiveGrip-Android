@@ -136,8 +136,8 @@ public class EventListActivity extends AppCompatActivity
                                 new Event(
                                         current.get(Events.EVENT_NAME).toString(),
                                         current.get(Events.EVENT_LOCATION).toString(),
-                                        current.get(Events.EVENT_START_TIME).toString(),
-                                        current.get(Events.EVENT_END_TIME).toString(),
+                                        current.getLong(Events.EVENT_START_TIME),
+                                        current.getLong(Events.EVENT_END_TIME),
                                         current.get(Events.EVENT_IMAGE_ID).toString()
                                 )
                         );
