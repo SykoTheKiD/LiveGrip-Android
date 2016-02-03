@@ -48,7 +48,8 @@
                 android:id="@+id/event_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.9"
+                android:layout_weight="0.60"
+                android:gravity="center_horizontal"
                 android:maxLines="3"
                 android:paddingBottom="35dp"
                 android:paddingLeft="20dp"
@@ -59,32 +60,18 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <!--<TextView-->
-            <!--android:id="@+id/event_live"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="0.1"-->
-            <!--android:maxLines="3"-->
-            <!--android:paddingBottom="35dp"-->
-            <!--android:paddingLeft="20dp"-->
-            <!--android:paddingRight="20dp"-->
-            <!--android:paddingTop="10dp"-->
-            <!--android:text="@string/lorem_date"-->
-            <!--android:textColor="#bdbdbd"-->
-            <!--android:textSize="20sp"-->
-            <!--android:textStyle="bold" />-->
-
             <TextView
                 android:id="@+id/event_live"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:maxLines="3"
+                android:layout_weight="0.30"
+                android:gravity="right"
+                android:maxLines="2"
                 android:paddingBottom="35dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:paddingTop="10dp"
-                android:text="@string/online_status"
+                android:text="@string/online_status_live"
                 android:textAllCaps="true"
                 android:textColor="#64dd17"
                 android:textSize="20sp"
