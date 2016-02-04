@@ -12,12 +12,11 @@ import android.widget.TextView;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.dataObjects.Event;
 import com.jaysyko.wrestlechat.utils.DateChecker;
+import com.jaysyko.wrestlechat.utils.Resources;
 import com.squareup.picasso.Picasso;
-
 import java.util.List;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {
-    private static final String IMGUR_LINK = "http://i.imgur.com/";
     private static final String NON_LIVE_TEXT_COLOUR = "#bdbdbd";
     private static final int NON_LIVE_TEXT_SIZE = 15;
     private List<Event> itemsData;
@@ -50,10 +49,11 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         Event currentCard = itemsData.get(position);
         viewHolder.txtViewTitle.setText(currentCard.getEventName());
         viewHolder.txtViewLocation.setText(currentCard.getLocation());
-        Picasso.with(this.context).load(IMGUR_LINK.concat(currentCard.getImageLink())).into(viewHolder.imgViewIcon);
+        Picasso.with(this.context).load(Resources.IMGUR_LINK.concat(currentCard.getImageLink())).into(viewHolder.imgViewIcon);
 
         if (DateChecker.goLive(currentCard.getStartTime())) {
             viewHolder.txtViewLiveStatus.setText(R.string.online_status_live);
+//            viewHolder.txtViewLiveStatus.setGravity(Gravity.CENTER);
         } else {
             String eventDate = DateChecker.format(currentCard.getStartTime());
             viewHolder.txtViewLiveStatus.setTextColor(Color.parseColor(NON_LIVE_TEXT_COLOUR));

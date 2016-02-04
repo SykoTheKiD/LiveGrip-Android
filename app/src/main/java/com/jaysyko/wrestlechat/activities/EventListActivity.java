@@ -25,6 +25,8 @@ import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.models.Query;
 import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.models.intentKeys.IntentKeys;
+import com.jaysyko.wrestlechat.utils.DateChecker;
+import com.jaysyko.wrestlechat.utils.Resources;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -36,6 +38,7 @@ public class EventListActivity extends AppCompatActivity
 
     private static final String SHARE_TEXT = "Share Text";
     private ArrayList<Event> events;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,6 @@ public class EventListActivity extends AppCompatActivity
         View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_event_list);
         TextView headerUsername = (TextView) headerLayout.findViewById(R.id.drawer_username);
         headerUsername.setText(ParseUser.getCurrentUser().get(User.USERNAME_KEY).toString());
-
     }
 
     @Override
@@ -107,7 +109,7 @@ public class EventListActivity extends AppCompatActivity
                 break;
             case (R.id.nav_send):
                 Intent share = new Intent(Intent.ACTION_SEND);
-                share.setType("text/plain");
+                share.setType(Resources.PLAIN_CONTENT_TYPE);
                 share.putExtra(Intent.EXTRA_TEXT, R.string.app_share);
                 startActivity(Intent.createChooser(share, SHARE_TEXT));
                 break;
@@ -138,7 +140,7 @@ public class EventListActivity extends AppCompatActivity
                                         current.get(Events.EVENT_LOCATION).toString(),
                                         current.getLong(Events.EVENT_START_TIME),
                                         current.getLong(Events.EVENT_END_TIME),
-                                        current.get(Events.EVENT_IMAGE_ID).toString()
+                                        current.get(Events.EVENT_IMAGE).toString()
                                 )
                         );
                     }
@@ -174,20 +176,27 @@ public class EventListActivity extends AppCompatActivity
     }
 
     private void openConversation(ParseObject event) {
-        Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
-        intent.putExtra(IntentKeys.EVENT_ID, event.getObjectId());
-        intent.putExtra(IntentKeys.EVENT_NAME, event.get(Events.EVENT_NAME).toString());
-        startActivity(intent);
+        if(DateChecker.goLive(event.getLong("startTime"))){
+            Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
+            intent.putExtra(IntentKeys.EVENT_ID, event.getObjectId());
+            intent.putExtra(IntentKeys.EVENT_NAME, event.get(Events.EVENT_NAME).toString());
+            startActivity(intent);
+        }else{
+            Toast.makeText(getApplicationContext(),
+                    R.string.online_status_not_live,
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     private void openEventInfo(ParseObject event) {
         Intent intent = new Intent(getApplicationContext(), EventInfoActivity.class);
         intent.putExtra(IntentKeys.EVENT_NAME, event.get(Events.EVENT_NAME).toString());
+        intent.putExtra(IntentKeys.EVENT_INFO, event.get(Events.EVENT_INFO).toString());
+        intent.putExtra(IntentKeys.EVENT_CARD, event.get(Events.EVENT_MATCH_CARD).toString());
+        intent.putExtra(IntentKeys.EVENT_IMAGE, event.get(Events.EVENT_IMAGE).toString());
+        intent.putExtra(IntentKeys.EVENT_START_TIME, event.getLong(Events.EVENT_START_TIME));
+        intent.putExtra(IntentKeys.EVENT_LOCATION, event.get(Events.EVENT_LOCATION).toString());
         startActivity(intent);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 }

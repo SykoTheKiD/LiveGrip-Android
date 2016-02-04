@@ -23,9 +23,11 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
+                android:id="@+id/event_info_photo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
+                android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
                 android:src="@drawable/wwe_logo" />
 
