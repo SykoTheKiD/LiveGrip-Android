@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.dataObjects.Event;
@@ -26,9 +27,11 @@ import com.jaysyko.wrestlechat.models.Query;
 import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.models.intentKeys.IntentKeys;
 import com.jaysyko.wrestlechat.utils.DateChecker;
+import com.jaysyko.wrestlechat.utils.Resources;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +40,7 @@ public class EventListActivity extends AppCompatActivity
 
     private static final String SHARE_TEXT = "Share Text";
     private ArrayList<Event> events;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +59,6 @@ public class EventListActivity extends AppCompatActivity
         View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_event_list);
         TextView headerUsername = (TextView) headerLayout.findViewById(R.id.drawer_username);
         headerUsername.setText(ParseUser.getCurrentUser().get(User.USERNAME_KEY).toString());
-
     }
 
     @Override
@@ -108,7 +111,7 @@ public class EventListActivity extends AppCompatActivity
                 break;
             case (R.id.nav_send):
                 Intent share = new Intent(Intent.ACTION_SEND);
-                share.setType("text/plain");
+                share.setType(Resources.PLAIN_CONTENT_TYPE);
                 share.putExtra(Intent.EXTRA_TEXT, R.string.app_share);
                 startActivity(Intent.createChooser(share, SHARE_TEXT));
                 break;

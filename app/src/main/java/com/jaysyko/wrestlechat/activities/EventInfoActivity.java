@@ -18,7 +18,6 @@ import com.squareup.picasso.Picasso;
 
 public class EventInfoActivity extends AppCompatActivity {
 
-    private static final String CONTENT_TYPE = "text/plain";
     private static final String SHARE_DIALOG_TITLE = "Share Event";
     private String eventInfo, matchCardText, location, imageLink;
     private long startTime;
@@ -41,7 +40,7 @@ public class EventInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent share = new Intent(Intent.ACTION_SEND);
-                share.setType(CONTENT_TYPE);
+                share.setType(Resources.PLAIN_CONTENT_TYPE);
                 share.putExtra(Intent.EXTRA_TEXT, "Hey check out the {{ EVENT_NAME }} - sent from WrestleChat");
                 startActivity(Intent.createChooser(share, SHARE_DIALOG_TITLE));
             }
