@@ -23,9 +23,9 @@ import com.jaysyko.wrestlechat.models.intentKeys.IntentKeys;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MessagingActivity extends AppCompatActivity {
@@ -42,6 +42,7 @@ public class MessagingActivity extends AppCompatActivity {
     private ListView lvChat;
     private ArrayList<Message> messages;
     private MessageListAdapter mAdapter;
+    private Button btSend;
     // Keep track of initial load to scroll to the bottom of the ListView
     private boolean mFirstLoad;
     private Handler handler = new Handler();
@@ -65,8 +66,7 @@ public class MessagingActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         ParseUser currentUser = ParseUser.getCurrentUser();
         userName = currentUser.getUsername();
-        // User login
-        // start with existing user
+        btSend = (Button) findViewById(R.id.btSend);
         saveMessage();
         handler.postDelayed(runnable, FETCH_MSG_DELAY_MILLIS);
     }
@@ -74,7 +74,6 @@ public class MessagingActivity extends AppCompatActivity {
     // Setup message field and posting
     private void saveMessage() {
         etMessage = (EditText) findViewById(R.id.etMessage);
-        Button btSend = (Button) findViewById(R.id.btSend);
         lvChat = (ListView) findViewById(R.id.lvChat);
         messages = new ArrayList<>();
         // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen. Don't scroll to the bottom otherwise.
@@ -89,17 +88,13 @@ public class MessagingActivity extends AppCompatActivity {
                 String body = etMessage.getText().toString();
                 if (!body.isEmpty()) {
                     body = body.trim();
+                    btSend.setEnabled(false);
                     // Use Message model to create new messages now
                     Message message = new Message();
                     message.setUsername(userName);
                     message.setEventId(sEventId);
                     message.setBody(body);
-                    message.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            fetchNewMessages();
-                        }
-                    });
+                    message.saveInBackground();
                     etMessage.setText(NULL_TEXT);
                 }
             }
@@ -107,14 +102,15 @@ public class MessagingActivity extends AppCompatActivity {
     }
 
     // Query messages from Parse so we can load them into the chat adapter
-    private void fetchNewMessages() {
+    private synchronized void fetchNewMessages() {
         Query<Message> query = new Query<>(Message.class);
         query.whereEqualTo(Events.EVENT_ID, sEventId);
+        query.orderByDESC(Message.CREATED_AT);
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-        query.orderByASC(Message.CREATED_AT);
         query.getQuery().findInBackground(new FindCallback<Message>() {
             public void done(List<Message> messages, ParseException e) {
                 if (e == null) {
+                    Collections.reverse(messages);
                     MessagingActivity.this.messages.clear();
                     MessagingActivity.this.messages.addAll(messages);
                     mAdapter.notifyDataSetChanged(); // update adapter
@@ -128,6 +124,7 @@ public class MessagingActivity extends AppCompatActivity {
                 }
             }
         });
+        btSend.setEnabled(true);
     }
 
     @Override

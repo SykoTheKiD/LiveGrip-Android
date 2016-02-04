@@ -285,4 +285,5 @@
     </string>
     <string name="lorem_username">JaySyko</string>
     <string name="app_share">Hey come chat with other wrestling fans on WrestleChat!</string>
+    <string name="online_status_not_live">The event hasn\'t started yet</string>
 </resources>
