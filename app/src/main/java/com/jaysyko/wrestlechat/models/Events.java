@@ -11,6 +11,8 @@ public class Events extends ParseObject {
     public static final String EVENT_LOCATION = "location";
     public static final String EVENT_START_TIME = "startTime";
     public static final String EVENT_END_TIME = "endTime";
-    public static final String EVENT_IMAGE_ID = "imgurId";
+    public static final String EVENT_IMAGE = "imgurId";
+    public static final String EVENT_INFO = "eventInfo";
+    public static final String EVENT_MATCH_CARD = "matchCard";
 
 }
