@@ -139,7 +139,7 @@ public class EventListActivity extends AppCompatActivity
                                         current.get(Events.EVENT_LOCATION).toString(),
                                         current.getLong(Events.EVENT_START_TIME),
                                         current.getLong(Events.EVENT_END_TIME),
-                                        current.get(Events.EVENT_IMAGE_ID).toString()
+                                        current.get(Events.EVENT_IMAGE).toString()
                                 )
                         );
                     }
@@ -190,6 +190,11 @@ public class EventListActivity extends AppCompatActivity
     private void openEventInfo(ParseObject event) {
         Intent intent = new Intent(getApplicationContext(), EventInfoActivity.class);
         intent.putExtra(IntentKeys.EVENT_NAME, event.get(Events.EVENT_NAME).toString());
+        intent.putExtra(IntentKeys.EVENT_INFO, event.get(Events.EVENT_INFO).toString());
+        intent.putExtra(IntentKeys.EVENT_CARD, event.get(Events.EVENT_MATCH_CARD).toString());
+        intent.putExtra(IntentKeys.EVENT_IMAGE, event.get(Events.EVENT_IMAGE).toString());
+        intent.putExtra(IntentKeys.EVENT_START_TIME, event.getLong(Events.EVENT_START_TIME));
+        intent.putExtra(IntentKeys.EVENT_LOCATION, event.get(Events.EVENT_LOCATION).toString());
         startActivity(intent);
     }
 
