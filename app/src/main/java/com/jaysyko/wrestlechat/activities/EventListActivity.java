@@ -25,6 +25,7 @@ import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.models.Query;
 import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.models.intentKeys.IntentKeys;
+import com.jaysyko.wrestlechat.utils.DateChecker;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -174,10 +175,16 @@ public class EventListActivity extends AppCompatActivity
     }
 
     private void openConversation(ParseObject event) {
-        Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
-        intent.putExtra(IntentKeys.EVENT_ID, event.getObjectId());
-        intent.putExtra(IntentKeys.EVENT_NAME, event.get(Events.EVENT_NAME).toString());
-        startActivity(intent);
+        if(DateChecker.goLive(event.getLong("startTime"))){
+            Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
+            intent.putExtra(IntentKeys.EVENT_ID, event.getObjectId());
+            intent.putExtra(IntentKeys.EVENT_NAME, event.get(Events.EVENT_NAME).toString());
+            startActivity(intent);
+        }else{
+            Toast.makeText(getApplicationContext(),
+                    R.string.online_status_not_live,
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     private void openEventInfo(ParseObject event) {
@@ -186,8 +193,4 @@ public class EventListActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 }
