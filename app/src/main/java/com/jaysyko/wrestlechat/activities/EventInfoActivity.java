@@ -9,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.models.intentKeys.IntentKeys;
 import com.jaysyko.wrestlechat.utils.DateChecker;

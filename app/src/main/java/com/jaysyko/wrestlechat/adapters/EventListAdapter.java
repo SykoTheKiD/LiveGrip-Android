@@ -9,13 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.dataObjects.Event;
 import com.jaysyko.wrestlechat.utils.DateChecker;
 import com.jaysyko.wrestlechat.utils.Resources;
 import com.squareup.picasso.Picasso;
-
 import java.util.List;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {

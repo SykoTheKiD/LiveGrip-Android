@@ -3,7 +3,6 @@ package com.jaysyko.wrestlechat.application;
 import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
-
 import com.jaysyko.wrestlechat.models.Message;
 import com.parse.Parse;
 import com.parse.ParseObject;
