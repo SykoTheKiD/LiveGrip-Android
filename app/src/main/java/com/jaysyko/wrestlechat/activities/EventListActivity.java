@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
@@ -25,12 +26,13 @@ import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.models.Query;
-import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.DateChecker;
+import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.Resources;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,21 +101,18 @@ public class EventListActivity extends AppCompatActivity
                 startActivity(intent);
                 finish();
                 break;
-            case (R.id.nav_settings):
-                Intent settingsIntent = new Intent(applicationContext, SettingsActivity.class);
-                startActivity(settingsIntent);
-                break;
             case (R.id.nav_share):
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType(Resources.PLAIN_CONTENT_TYPE);
+                share.putExtra(Intent.EXTRA_TEXT, R.string.app_share);
+                startActivity(Intent.createChooser(share, SHARE_TEXT));
                 break;
             case (R.id.nav_donate):
                 Intent donateIntent = new Intent(applicationContext, DonateActivity.class);
                 startActivity(donateIntent);
                 break;
             case (R.id.nav_send):
-                Intent share = new Intent(Intent.ACTION_SEND);
-                share.setType(Resources.PLAIN_CONTENT_TYPE);
-                share.putExtra(Intent.EXTRA_TEXT, R.string.app_share);
-                startActivity(Intent.createChooser(share, SHARE_TEXT));
+
                 break;
             case (R.id.nav_legal):
                 Intent legalIntent = new Intent(applicationContext, LegalActivity.class);
