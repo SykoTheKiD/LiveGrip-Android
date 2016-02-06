@@ -60,8 +60,6 @@ public class LoginActivity extends AppCompatActivity {
                     username = usernameField.getText().toString();
                     password = passwordField.getText().toString();
                     CurrentActiveUser currentActiveUser = CurrentActiveUser.getInstance(username, password);
-                    currentActiveUser.setUsername(username);
-                    currentActiveUser.setPassword(password);
                     if (currentActiveUser.signUpUser()) {
                         startActivity(intent);
                     } else {

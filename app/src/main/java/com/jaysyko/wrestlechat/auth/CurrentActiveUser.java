@@ -61,21 +61,10 @@ public class CurrentActiveUser implements ActiveUser {
         return activeCurrentActiveUser.profileImageURL;
     }
 
-    public void setPassword(String password) {
-        if (activeCurrentActiveUser.password == null) {
-            activeCurrentActiveUser.password = password;
-        }
-    }
-
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        if (activeCurrentActiveUser.username == null) {
-            activeCurrentActiveUser.username = username;
-        }
-    }
 
     public boolean loginUser() {
         try {
