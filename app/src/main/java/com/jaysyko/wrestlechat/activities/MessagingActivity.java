@@ -13,9 +13,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
+import com.jaysyko.wrestlechat.application.Initializer;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.models.Message;
@@ -23,7 +23,6 @@ import com.jaysyko.wrestlechat.models.Query;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -56,6 +55,7 @@ public class MessagingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Initializer.setInternetCheck(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messaging);
         Intent intent = getIntent();
@@ -82,9 +82,9 @@ public class MessagingActivity extends AppCompatActivity {
         mAdapter = new MessageListAdapter(MessagingActivity.this, userName, messages);
         lvChat.setAdapter(mAdapter);
         btSend.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
+                Initializer.setInternetCheck(true);
                 String body = etMessage.getText().toString();
                 if (!body.isEmpty()) {
                     body = body.trim();
@@ -97,8 +97,9 @@ public class MessagingActivity extends AppCompatActivity {
                     message.saveInBackground();
                     etMessage.setText(NULL_TEXT);
                 }
-            }
+                }
         });
+
     }
 
     // Query messages from Parse so we can load them into the chat adapter

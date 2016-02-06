@@ -11,7 +11,7 @@ public final class ImageBitmapper {
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
                                                          int reqWidth, int reqHeight) {
 
-        // First decode with inJustDecodeBounds=true to check dimensions
+        // First decode with inJustDecodeBounds=true to internetCheck dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeResource(res, resId, options);
