@@ -13,15 +13,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
+import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.models.Query;
-import com.jaysyko.wrestlechat.models.intentKeys.IntentKeys;
+import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseUser;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -62,7 +64,7 @@ public class MessagingActivity extends AppCompatActivity {
         setTitle(eventName);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        ParseUser currentUser = ParseUser.getCurrentUser();
+        CurrentActiveUser currentUser = CurrentActiveUser.getInstance();
         userName = currentUser.getUsername();
         btSend = (Button) findViewById(R.id.btSend);
         saveMessage();

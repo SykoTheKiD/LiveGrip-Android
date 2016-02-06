@@ -15,8 +15,8 @@ public class NetworkTools {
         return networkInfo != null && networkInfo.isConnected();
     }
 
-    public static void networkDialog(Context context){
-        if(!networkConnectivity(context)){
+    public static void networkDialog(Context context) {
+        if (!networkConnectivity(context)) {
             new AlertDialog.Builder(context)
                     .setTitle("Delete entry")
                     .setMessage("Are you sure you want to delete this entry?")
