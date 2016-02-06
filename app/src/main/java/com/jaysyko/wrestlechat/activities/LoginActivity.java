@@ -6,11 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 import com.jaysyko.wrestlechat.R;
-import com.parse.LogInCallback;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
+import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
+import com.jaysyko.wrestlechat.dialogs.Dialog;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -21,19 +19,15 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordField;
     private String username;
     private String password;
-    private String createdDate;
-    private String userId;
     private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         // Redirect to Events page if logged in;
         intent = new Intent(getApplicationContext(), EventListActivity.class);
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        if (currentUser != null) {
+        if (CurrentActiveUser.getInstance().getCurrentUser()) {
             startActivity(intent);
             finish();
         } else {
@@ -46,45 +40,29 @@ public class LoginActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     username = usernameField.getText().toString();
                     password = passwordField.getText().toString();
-                    ParseUser.logInInBackground(username, password, new LogInCallback() {
-                        public void done(ParseUser user, com.parse.ParseException e) {
-                            if (user != null) {
-                                Toast.makeText(getApplicationContext(),
-                                        WELCOME_BACK_MESSAGE.concat(username),
-                                        Toast.LENGTH_LONG).show();
-                                startActivity(intent);
-                            } else {
-                                Toast.makeText(getApplicationContext(),
-                                        FAILED_LOGIN_MSG,
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+                    CurrentActiveUser currentActiveUser = CurrentActiveUser.getInstance(username, password);
+                    if (currentActiveUser.loginUser()) {
+                        Dialog.makeToast(getApplicationContext(), WELCOME_BACK_MESSAGE.concat(username));
+                        startActivity(intent);
+                    } else {
+                        Dialog.makeToast(getApplicationContext(), FAILED_LOGIN_MSG);
+                    }
                 }
             });
 
             signUpButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     username = usernameField.getText().toString();
                     password = passwordField.getText().toString();
-
-                    ParseUser user = new ParseUser();
-                    user.setUsername(username);
-                    user.setPassword(password);
-
-                    user.signUpInBackground(new SignUpCallback() {
-                        public void done(com.parse.ParseException e) {
-                            if (e == null) {
-                                startActivity(intent);
-                            } else {
-                                Toast.makeText(getApplicationContext(),
-                                        SIGN_UP_ERROR_MSG
-                                        , Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+                    CurrentActiveUser currentActiveUser = CurrentActiveUser.getInstance(username, password);
+                    currentActiveUser.setUsername(username);
+                    currentActiveUser.setPassword(password);
+                    if (currentActiveUser.signUpUser()) {
+                        startActivity(intent);
+                    } else {
+                        Dialog.makeToast(getApplicationContext(), SIGN_UP_ERROR_MSG);
+                    }
                 }
             });
         }

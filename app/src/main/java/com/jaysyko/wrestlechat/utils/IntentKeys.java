@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat.models.intentKeys;
+package com.jaysyko.wrestlechat.utils;
 
 public class IntentKeys {
     public static final String EVENT_ID = "EVENT_ID";

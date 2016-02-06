@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.dataObjects.Event;
+import com.jaysyko.wrestlechat.dataObjects.EventObject;
 import com.jaysyko.wrestlechat.utils.DateChecker;
 import com.jaysyko.wrestlechat.utils.Resources;
 import com.squareup.picasso.Picasso;
@@ -19,11 +19,11 @@ import java.util.List;
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {
     private static final String NON_LIVE_TEXT_COLOUR = "#bdbdbd";
     private static final int NON_LIVE_TEXT_SIZE = 15;
-    private List<Event> itemsData;
+    private List<EventObject> itemsData;
     private Context context;
 
 
-    public EventListAdapter(List<Event> itemsData, Context context) {
+    public EventListAdapter(List<EventObject> itemsData, Context context) {
         this.itemsData = itemsData;
         this.context = context;
     }
@@ -46,7 +46,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         // - get data from your itemsData at this position
         // - replace the contents of the view with that itemsData
-        Event currentCard = itemsData.get(position);
+        EventObject currentCard = itemsData.get(position);
         viewHolder.txtViewTitle.setText(currentCard.getEventName());
         viewHolder.txtViewLocation.setText(currentCard.getLocation());
         Picasso.with(this.context).load(Resources.IMGUR_LINK.concat(currentCard.getImageLink())).into(viewHolder.imgViewIcon);
