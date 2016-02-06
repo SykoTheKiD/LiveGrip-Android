@@ -19,12 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
-import com.jaysyko.wrestlechat.dataObjects.Event;
+import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
+import com.jaysyko.wrestlechat.dataObjects.EventObject;
+import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.models.Query;
-import com.jaysyko.wrestlechat.models.User;
-import com.jaysyko.wrestlechat.models.intentKeys.IntentKeys;
+import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.DateChecker;
 import com.jaysyko.wrestlechat.utils.Resources;
 import com.parse.FindCallback;
@@ -37,7 +38,7 @@ public class EventListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String SHARE_TEXT = "Share Text";
-    private ArrayList<Event> events;
+    private ArrayList<EventObject> eventObjects;
 
 
     @Override
@@ -56,7 +57,7 @@ public class EventListActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_event_list);
         TextView headerUsername = (TextView) headerLayout.findViewById(R.id.drawer_username);
-        headerUsername.setText(ParseUser.getCurrentUser().get(User.USERNAME_KEY).toString());
+        headerUsername.setText(ParseUser.getCurrentUser().get(CurrentActiveUser.USERNAME_KEY).toString());
     }
 
     @Override
@@ -88,23 +89,24 @@ public class EventListActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation vie.w item clicks here.
         int id = item.getItemId();
+        Context applicationContext = getApplicationContext();
         switch (id) {
             case (R.id.nav_my_profile):
                 break;
             case (R.id.nav_logout):
-                ParseUser.logOut();
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                CurrentActiveUser.getInstance().logout();
+                Intent intent = new Intent(applicationContext, LoginActivity.class);
                 startActivity(intent);
                 finish();
                 break;
             case (R.id.nav_settings):
-                Intent settingsIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+                Intent settingsIntent = new Intent(applicationContext, SettingsActivity.class);
                 startActivity(settingsIntent);
                 break;
             case (R.id.nav_share):
                 break;
             case (R.id.nav_donate):
-                Intent donateIntent = new Intent(getApplicationContext(), DonateActivity.class);
+                Intent donateIntent = new Intent(applicationContext, DonateActivity.class);
                 startActivity(donateIntent);
                 break;
             case (R.id.nav_send):
@@ -114,7 +116,7 @@ public class EventListActivity extends AppCompatActivity
                 startActivity(Intent.createChooser(share, SHARE_TEXT));
                 break;
             case (R.id.nav_legal):
-                Intent legalIntent = new Intent(getApplicationContext(), LegalActivity.class);
+                Intent legalIntent = new Intent(applicationContext, LegalActivity.class);
                 startActivity(legalIntent);
                 break;
         }
@@ -126,7 +128,7 @@ public class EventListActivity extends AppCompatActivity
 
     //display clickable a list of all users
     private void updateEventCards() {
-        events = new ArrayList<>();
+        eventObjects = new ArrayList<>();
         Query<ParseObject> query = new Query<>(Events.class);
         query.getQuery().findInBackground(new FindCallback<ParseObject>() {
             public void done(final List<ParseObject> eventList, com.parse.ParseException e) {
@@ -134,8 +136,8 @@ public class EventListActivity extends AppCompatActivity
                 if (e == null) {
                     for (int i = 0; i < eventList.size(); i++) {
                         current = eventList.get(i);
-                        events.add(
-                                new Event(
+                        eventObjects.add(
+                                new EventObject(
                                         current.get(Events.EVENT_NAME).toString(),
                                         current.get(Events.EVENT_LOCATION).toString(),
                                         current.getLong(Events.EVENT_START_TIME),
@@ -163,13 +165,11 @@ public class EventListActivity extends AppCompatActivity
                                             openEventInfo(eventList.get(position));
                                         }
                                     }));
-                    EventListAdapter mAdapter = new EventListAdapter(events, getApplicationContext());
+                    EventListAdapter mAdapter = new EventListAdapter(eventObjects, getApplicationContext());
                     recyclerView.setAdapter(mAdapter);
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                 } else {
-                    Toast.makeText(getApplicationContext(),
-                            R.string.error_loading_events,
-                            Toast.LENGTH_LONG).show();
+                    Dialog.makeToast(getApplicationContext(), getString(R.string.error_loading_events));
                 }
             }
         });

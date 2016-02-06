@@ -1,13 +1,13 @@
 package com.jaysyko.wrestlechat.dataObjects;
 
-public class Event {
+public class EventObject {
     private String eventName;
     private String location;
     private Long startTime;
     private Long endTime;
     private String imageLink;
 
-    public Event(String eventName, String location, Long startTime, Long endTime, String imageLink) {
+    public EventObject(String eventName, String location, Long startTime, Long endTime, String imageLink) {
         this.eventName = eventName;
         this.location = location;
         this.startTime = startTime;
