@@ -97,9 +97,8 @@ public class MessagingActivity extends AppCompatActivity {
                     message.saveInBackground();
                     etMessage.setText(NULL_TEXT);
                 }
-                }
+            }
         });
-
     }
 
     // Query messages from Parse so we can load them into the chat adapter

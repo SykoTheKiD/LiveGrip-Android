@@ -192,8 +192,8 @@
     <string name="drawer_legal">Legal</string>
     <string name="action_profile">Profile</string>
     <string name="drawer_donate">Donate</string>
-    <string name="title_activity_donate">DonateActivity</string>
-    <string name="title_activity_legal">LegalActivity</string>
+    <string name="title_activity_donate">Donate</string>
+    <string name="title_activity_legal">Legal</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -290,4 +290,5 @@
     <string name="event_info_location_title">Location</string>
     <string name="event_info_time_title">Time</string>
     <string name="event_info_details_title">Event Details</string>
+    <string name="legal_info">\nWrestleChat was developed in Toronto, Canada\n\nNames, images and titles all belong to their respective owners.\n\nWrestling event info content belongs to Wikipedia and the WikiMedia Foundation.\n\nThank you to the r/SquaredCircle community for inspiring this app.</string>
 </resources>
