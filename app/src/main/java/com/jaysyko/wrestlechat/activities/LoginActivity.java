@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.application.Initializer;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
@@ -18,9 +20,11 @@ public class LoginActivity extends AppCompatActivity {
     public static final String SIGN_UP_ERROR_MSG = "There was an error signing up.";
     private EditText usernameField;
     private EditText passwordField;
+    private TextView signUpText;
     private String username;
     private String password;
     private Intent intent;
+    private boolean signin = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +37,11 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            Button loginButton = (Button) findViewById(R.id.signIn);
-            Button signUpButton = (Button) findViewById(R.id.signUp);
+            final Button loginButton = (Button) findViewById(R.id.signIn);
+            final Button signUpButton = (Button) findViewById(R.id.signUp);
             usernameField = (EditText) findViewById(R.id.usernameEV);
             passwordField = (EditText) findViewById(R.id.loginPasswordEV);
+            signUpText = (TextView) findViewById(R.id.signUpText);
             loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -47,9 +52,27 @@ public class LoginActivity extends AppCompatActivity {
                     if (currentActiveUser.loginUser()) {
                         Dialog.makeToast(getApplicationContext(), WELCOME_BACK_MESSAGE.concat(username));
                         startActivity(intent);
+                        finish();
                     } else {
                         Dialog.makeToast(getApplicationContext(), FAILED_LOGIN_MSG);
                     }
+                }
+            });
+
+            signUpText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (signin) {
+                        loginButton.setVisibility(View.GONE);
+                        signUpButton.setVisibility(View.VISIBLE);
+                        signUpText.setText("Already have an account? Sign In");
+                    } else {
+                        loginButton.setVisibility(View.VISIBLE);
+                        signUpButton.setVisibility(View.GONE);
+                        signUpText.setText("Don't have an account? Sign Up");
+                    }
+                    signin ^= true;
+
                 }
             });
 
