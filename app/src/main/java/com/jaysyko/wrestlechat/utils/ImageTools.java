@@ -1,13 +1,18 @@
 package com.jaysyko.wrestlechat.utils;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.widget.ImageView;
+
+import com.squareup.picasso.Picasso;
+
 import java.io.InputStream;
 import java.net.URL;
 
-public final class ImageBitmapper {
+public final class ImageTools {
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
                                                          int reqWidth, int reqHeight) {
 
@@ -54,4 +59,9 @@ public final class ImageBitmapper {
         }
         return inSampleSize;
     }
+
+    public static void loadImage(Context context, String link, ImageView imageview) {
+        Picasso.with(context).load(link).into(imageview);
+    }
+
 }
