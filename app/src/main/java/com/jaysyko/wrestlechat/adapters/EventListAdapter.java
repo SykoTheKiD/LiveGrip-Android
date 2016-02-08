@@ -9,11 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.dataObjects.EventObject;
 import com.jaysyko.wrestlechat.utils.DateChecker;
+import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.jaysyko.wrestlechat.utils.Resources;
-import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {
@@ -49,11 +51,10 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         EventObject currentCard = itemsData.get(position);
         viewHolder.txtViewTitle.setText(currentCard.getEventName());
         viewHolder.txtViewLocation.setText(currentCard.getLocation());
-        Picasso.with(this.context).load(Resources.IMGUR_LINK.concat(currentCard.getImageLink())).into(viewHolder.imgViewIcon);
+        ImageTools.loadImage(this.context, Resources.IMGUR_LINK.concat(currentCard.getImageLink()), viewHolder.imgViewIcon);
 
         if (DateChecker.goLive(currentCard.getStartTime())) {
             viewHolder.txtViewLiveStatus.setText(R.string.online_status_live);
-//            viewHolder.txtViewLiveStatus.setGravity(Gravity.CENTER);
         } else {
             String eventDate = DateChecker.format(currentCard.getStartTime());
             viewHolder.txtViewLiveStatus.setTextColor(Color.parseColor(NON_LIVE_TEXT_COLOUR));

@@ -28,7 +28,7 @@ public class DateChecker {
         // get Current time in UTC in a Date Object
         Date currentTime = new Date();
         // return currentTime.after(string date)
-        return date.after(currentTime);
+        return currentTime.after(date);
     }
 
     public static String format(Long millis) {
