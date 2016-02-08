@@ -9,7 +9,7 @@
         android:id="@+id/ivProfileLeft"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_gravity="bottom|left"
+        android:layout_gravity="bottom|start"
         android:contentDescription="@string/description_other_profile_image"
         android:src="@mipmap/ic_launcher" />
 
@@ -28,7 +28,7 @@
         android:id="@+id/ivProfileRight"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="bottom|end"
         android:contentDescription="@string/description_my_profile_image"
         android:src="@mipmap/ic_launcher" />
 
