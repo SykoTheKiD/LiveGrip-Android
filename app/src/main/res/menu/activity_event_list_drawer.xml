@@ -5,12 +5,12 @@
 
         <item
             android:id="@+id/nav_my_profile"
-            android:icon="@android:drawable/ic_menu_myplaces"
+            android:icon="@drawable/ic_face_black_18dp"
             android:title="@string/action_profile" />
 
         <item
             android:id="@+id/nav_logout"
-            android:icon="@android:drawable/ic_lock_idle_lock"
+            android:icon="@drawable/ic_lock_outline_black_18dp"
             android:title="@string/action_logout" />
     </group>
 
@@ -18,12 +18,12 @@
         <menu>
             <item
                 android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/ic_lock_outline_black_18dp"
                 android:title="@string/drawer_share" />
 
             <item
                 android:id="@+id/nav_donate"
-                android:icon="@android:drawable/ic_menu_add"
+                android:icon="@drawable/ic_favorite_border_black_18dp"
                 android:title="@string/drawer_donate" />
 
             <item
@@ -33,7 +33,7 @@
 
             <item
                 android:id="@+id/nav_send"
-                android:icon="@android:drawable/ic_menu_info_details"
+                android:icon="@drawable/ic_account_balance_black_18dp"
                 android:title="@string/drawer_about" />
         </menu>
     </item>
