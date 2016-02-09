@@ -1,7 +1,9 @@
 package com.jaysyko.wrestlechat.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import com.jaysyko.wrestlechat.R;
 
 public class AboutActivity extends AppCompatActivity {
 

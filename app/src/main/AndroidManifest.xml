@@ -109,7 +109,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jaysyko.wrestlechat.activities.EventListActivity" />
         </activity>
-        <activity android:name=".activities.AboutActivity"></activity>
+        <activity
+            android:name=".activities.AboutActivity"
+            android:label="About"></activity>
     </application>
 
 </manifest>
