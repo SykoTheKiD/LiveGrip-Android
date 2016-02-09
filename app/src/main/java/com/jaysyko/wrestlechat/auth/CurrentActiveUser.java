@@ -38,7 +38,7 @@ public class CurrentActiveUser implements ActiveUser {
     }
 
     public String getProfileImage() {
-        String customProfileImageURL = activeCurrentActiveUser.getCustomProfileImageURL();
+        String customProfileImageURL = null; //activeCurrentActiveUser.getCustomProfileImageURL();
         if (customProfileImageURL != null) {
             return customProfileImageURL;
         } else {
