@@ -100,6 +100,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.jaysyko.wrestlechat.activities.EventListActivity" />
         </activity>
+        <activity
+            android:name=".activities.NewDonateActivity"
+            android:label="@string/title_activity_new_donate"
+            android:parentActivityName=".activities.EventListActivity"
+            android:theme="@style/NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.jaysyko.wrestlechat.activities.EventListActivity" />
+        </activity>
+        <activity android:name=".activities.AboutActivity"></activity>
     </application>
 
 </manifest>

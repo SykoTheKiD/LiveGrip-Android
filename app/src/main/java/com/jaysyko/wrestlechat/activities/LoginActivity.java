@@ -1,5 +1,6 @@
 package com.jaysyko.wrestlechat.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,18 +14,22 @@ import com.jaysyko.wrestlechat.application.Initializer;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 
+import static com.jaysyko.wrestlechat.utils.FormValidation.formIsClean;
+
 public class LoginActivity extends AppCompatActivity {
 
     public static final String WELCOME_BACK_MESSAGE = "Welcome Back, ";
     public static final String FAILED_LOGIN_MSG = "Wrong username/password combo";
     public static final String SIGN_UP_ERROR_MSG = "There was an error signing up.";
+    private static final String ERROR_MSG_BLANK = "Username/Password cannot be blank";
     private EditText usernameField;
     private EditText passwordField;
     private TextView signUpText;
     private String username;
     private String password;
     private Intent intent;
-    private boolean signin = true;
+    private boolean signIn = true;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +37,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         // Redirect to Events page if logged in;
         Initializer.setInternetCheck(true);
-        intent = new Intent(getApplicationContext(), EventListActivity.class);
+        context = getApplicationContext();
+        intent = new Intent(context, EventListActivity.class);
+
         if (CurrentActiveUser.getInstance() != null) {
             startActivity(intent);
             finish();
@@ -48,13 +55,17 @@ public class LoginActivity extends AppCompatActivity {
                     Initializer.setInternetCheck(true);
                     username = usernameField.getText().toString();
                     password = passwordField.getText().toString();
-                    CurrentActiveUser currentActiveUser = CurrentActiveUser.getInstance(username, password);
-                    if (currentActiveUser.loginUser()) {
-                        Dialog.makeToast(getApplicationContext(), WELCOME_BACK_MESSAGE.concat(username));
-                        startActivity(intent);
-                        finish();
+                    if (formIsClean(username, password)) {
+                        CurrentActiveUser currentActiveUser = CurrentActiveUser.getInstance(username, password);
+                        if (currentActiveUser.loginUser()) {
+                            Dialog.makeToast(context, WELCOME_BACK_MESSAGE.concat(username));
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Dialog.makeToast(context, FAILED_LOGIN_MSG);
+                        }
                     } else {
-                        Dialog.makeToast(getApplicationContext(), FAILED_LOGIN_MSG);
+                        Dialog.makeToast(context, ERROR_MSG_BLANK);
                     }
                 }
             });
@@ -62,16 +73,16 @@ public class LoginActivity extends AppCompatActivity {
             signUpText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (signin) {
+                    if (signIn) {
                         loginButton.setVisibility(View.GONE);
                         signUpButton.setVisibility(View.VISIBLE);
-                        signUpText.setText("Already have an account? Sign In");
+                        signUpText.setText(R.string.have_account_login);
                     } else {
                         loginButton.setVisibility(View.VISIBLE);
                         signUpButton.setVisibility(View.GONE);
-                        signUpText.setText("Don't have an account? Sign Up");
+                        signUpText.setText(R.string.no_account_dialog);
                     }
-                    signin ^= true;
+                    signIn ^= true;
 
                 }
             });
@@ -86,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (currentActiveUser.signUpUser()) {
                         startActivity(intent);
                     } else {
-                        Dialog.makeToast(getApplicationContext(), SIGN_UP_ERROR_MSG);
+                        Dialog.makeToast(context, SIGN_UP_ERROR_MSG);
                     }
 
                 }

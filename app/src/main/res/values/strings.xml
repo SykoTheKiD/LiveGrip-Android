@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WrestleChat</string>
+    <string name="app_name">Wrestle Chat</string>
 
     <!-- Strings related to Activity Names -->
     <string name="activity_login">Login</string>
@@ -291,4 +291,7 @@
     <string name="event_info_time_title">Time</string>
     <string name="event_info_details_title">Event Details</string>
     <string name="legal_info">\nWrestleChat was developed in Toronto, Canada\n\nNames, images and titles all belong to their respective owners.\n\nWrestling event info content belongs to Wikipedia and the WikiMedia Foundation.\n\nThank you to the r/SquaredCircle community for inspiring this app.</string>
+    <string name="no_account_dialog">Don\'t have an account? Sign Up</string>
+    <string name="have_account_login">Already have an account? Sign In</string>
+    <string name="title_activity_new_donate">NewDonateActivity</string>
 </resources>
