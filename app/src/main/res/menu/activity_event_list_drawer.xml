@@ -32,7 +32,7 @@
                 android:title="@string/drawer_legal" />
 
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_about"
                 android:icon="@drawable/ic_account_balance_black_18dp"
                 android:title="@string/drawer_about" />
         </menu>
