@@ -37,7 +37,7 @@
 
     <!-- Strings related to Login Screen -->
     <string name="blank_username">Username/Password cannot be blank</string>
-    <string name="login_error">There was an error signing up</string>
+    <string name="username_taken">Sorry that username has been taken</string>
     <string name="incorrect_login_info">Wrong username/password combo</string>
     <string name="welcome_back">Welcome Back, </string>
 
