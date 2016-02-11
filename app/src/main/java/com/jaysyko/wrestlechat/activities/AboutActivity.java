@@ -29,7 +29,9 @@ public class AboutActivity extends AppCompatActivity {
         tweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent tweetIntent = new Intent(Intent.ACTION_SEND);
+                tweetIntent.putExtra(Intent.EXTRA_TEXT, "Test; please ignore");
+                tweetIntent.setType("application/twitter");
             }
         });
     }

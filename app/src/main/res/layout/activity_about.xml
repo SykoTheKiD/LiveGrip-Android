@@ -26,19 +26,15 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/about_text"
-        android:layout_marginLeft="48dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="59dp"
+        android:layout_marginTop="60dp"
         android:text="@string/about_donate" />
 
     <Button
         android:id="@+id/about_tweet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/about_text"
-        android:layout_alignRight="@+id/about_text"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/about_donate"
-        android:layout_marginEnd="53dp"
-        android:layout_marginRight="53dp"
         android:text="@string/about_tweet" />
 </RelativeLayout>
