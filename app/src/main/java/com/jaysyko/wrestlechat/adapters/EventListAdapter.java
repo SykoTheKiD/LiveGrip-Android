@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.dataObjects.EventObject;
-import com.jaysyko.wrestlechat.utils.DateChecker;
+import com.jaysyko.wrestlechat.utils.DateVerifier;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.jaysyko.wrestlechat.utils.Resources;
 
@@ -53,10 +53,10 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         viewHolder.txtViewLocation.setText(currentCard.getLocation());
         ImageTools.loadImage(this.context, Resources.IMGUR_LINK.concat(currentCard.getImageLink()), viewHolder.imgViewIcon);
 
-        if (DateChecker.goLive(currentCard.getStartTime())) {
+        if (DateVerifier.goLive(currentCard.getStartTime())) {
             viewHolder.txtViewLiveStatus.setText(R.string.online_status_live);
         } else {
-            String eventDate = DateChecker.format(currentCard.getStartTime());
+            String eventDate = DateVerifier.format(currentCard.getStartTime());
             viewHolder.txtViewLiveStatus.setTextColor(Color.parseColor(NON_LIVE_TEXT_COLOUR));
             viewHolder.txtViewLiveStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, NON_LIVE_TEXT_SIZE);
             viewHolder.txtViewLiveStatus.setText(eventDate);

@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.application.Initializer;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 
@@ -18,10 +17,6 @@ import static com.jaysyko.wrestlechat.utils.FormValidation.formIsClean;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public static final String WELCOME_BACK_MESSAGE = "Welcome Back, ";
-    public static final String FAILED_LOGIN_MSG = "Wrong username/password combo";
-    public static final String SIGN_UP_ERROR_MSG = "There was an error signing up.";
-    private static final String ERROR_MSG_BLANK = "Username/Password cannot be blank";
     private EditText usernameField;
     private EditText passwordField;
     private TextView signUpText;
@@ -36,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Redirect to Events page if logged in;
-        Initializer.setInternetCheck(true);
         context = getApplicationContext();
         intent = new Intent(context, EventListActivity.class);
 
@@ -52,20 +46,19 @@ public class LoginActivity extends AppCompatActivity {
             loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Initializer.setInternetCheck(true);
                     username = usernameField.getText().toString();
                     password = passwordField.getText().toString();
                     if (formIsClean(username, password)) {
                         CurrentActiveUser currentActiveUser = CurrentActiveUser.getInstance(username, password);
                         if (currentActiveUser.loginUser()) {
-                            Dialog.makeToast(context, WELCOME_BACK_MESSAGE.concat(username));
+                            Dialog.makeToast(context, getString(R.string.welcome_back).concat(username));
                             startActivity(intent);
                             finish();
                         } else {
-                            Dialog.makeToast(context, FAILED_LOGIN_MSG);
+                            Dialog.makeToast(context, getString(R.string.incorrect_login_info));
                         }
                     } else {
-                        Dialog.makeToast(context, ERROR_MSG_BLANK);
+                        Dialog.makeToast(context, getString(R.string.blank_username));
                     }
                 }
             });
@@ -83,23 +76,24 @@ public class LoginActivity extends AppCompatActivity {
                         signUpText.setText(R.string.no_account_dialog);
                     }
                     signIn ^= true;
-
                 }
             });
 
             signUpButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Initializer.setInternetCheck(true);
                     username = usernameField.getText().toString();
                     password = passwordField.getText().toString();
-                    CurrentActiveUser currentActiveUser = CurrentActiveUser.getInstance(username, password);
-                    if (currentActiveUser.signUpUser()) {
-                        startActivity(intent);
+                    if (formIsClean(username, password)) {
+                        CurrentActiveUser currentActiveUser = CurrentActiveUser.getInstance(username, password);
+                        if (currentActiveUser.signUpUser()) {
+                            startActivity(intent);
+                        } else {
+                            Dialog.makeToast(context, getString(R.string.login_error));
+                        }
                     } else {
-                        Dialog.makeToast(context, SIGN_UP_ERROR_MSG);
+                        Dialog.makeToast(context, getString(R.string.blank_username));
                     }
-
                 }
             });
         }

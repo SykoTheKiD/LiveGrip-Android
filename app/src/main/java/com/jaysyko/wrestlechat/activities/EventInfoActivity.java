@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
-import com.jaysyko.wrestlechat.utils.DateChecker;
+import com.jaysyko.wrestlechat.utils.DateVerifier;
 import com.jaysyko.wrestlechat.utils.Resources;
 import com.squareup.picasso.Picasso;
 
@@ -60,7 +60,7 @@ public class EventInfoActivity extends AppCompatActivity {
         matchCardText = matchCardText.replace("\\n", System.getProperty("line.separator"));
         matchCard.setText(matchCardText);
         TextView startTimeTV = (TextView) findViewById(R.id.event_info_start_time);
-        startTimeTV.setText(DateChecker.format(startTime));
+        startTimeTV.setText(DateVerifier.format(startTime));
         TextView locationTV = (TextView) findViewById(R.id.event_info_location);
         locationTV.setText(location);
         ImageView eventImage = (ImageView)findViewById(R.id.event_info_photo);
