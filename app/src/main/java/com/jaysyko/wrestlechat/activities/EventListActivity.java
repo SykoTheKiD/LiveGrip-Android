@@ -26,7 +26,7 @@ import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.models.Query;
-import com.jaysyko.wrestlechat.utils.DateChecker;
+import com.jaysyko.wrestlechat.utils.DateVerifier;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.Resources;
 import com.parse.FindCallback;
@@ -39,7 +39,7 @@ import java.util.List;
 public class EventListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String SHARE_TEXT = "Share Text";
+    private static final String SHARE_TEXT = "Share Event";
     private ArrayList<EventObject> eventObjects;
 
 
@@ -175,7 +175,7 @@ public class EventListActivity extends AppCompatActivity
     }
 
     private void openConversation(ParseObject event) {
-        if(DateChecker.goLive(event.getLong("startTime"))){
+        if (DateVerifier.goLive(event.getLong("startTime"))) {
             Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
             intent.putExtra(IntentKeys.EVENT_ID, event.getObjectId());
             intent.putExtra(IntentKeys.EVENT_NAME, event.get(Events.EVENT_NAME).toString());

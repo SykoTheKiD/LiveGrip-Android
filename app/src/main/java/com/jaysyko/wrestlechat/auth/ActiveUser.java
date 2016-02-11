@@ -10,8 +10,6 @@ public interface ActiveUser {
 
     boolean loginUser();
 
-    boolean signUpUser();
-
     void logout();
 
 }

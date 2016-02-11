@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class DateChecker {
+public class DateVerifier {
     private static final String STRING_DATE_FORMAT = "EEE, dd MMM HH:mm a";
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat(STRING_DATE_FORMAT);
     private static final String TIME_ZONE = "UTC";

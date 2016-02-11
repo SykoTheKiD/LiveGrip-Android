@@ -37,6 +37,20 @@ public class CurrentActiveUser implements ActiveUser {
         return activeCurrentActiveUser;
     }
 
+    public static boolean signUpUser(String username, String password) {
+        ParseUser user = new ParseUser();
+        user.setUsername(username);
+        user.setPassword(password);
+        try {
+            user.signUp();
+            CurrentActiveUser.getInstance(username, password);
+            return true;
+        } catch (ParseException e) {
+            Log.d("Login", e.getMessage());
+            return false;
+        }
+    }
+
     public String getProfileImage() {
         String customProfileImageURL = null; //activeCurrentActiveUser.getCustomProfileImageURL();
         if (customProfileImageURL != null) {
@@ -65,7 +79,6 @@ public class CurrentActiveUser implements ActiveUser {
         return username;
     }
 
-
     public boolean loginUser() {
         try {
             ParseUser.logIn(activeCurrentActiveUser.username, activeCurrentActiveUser.password);
@@ -74,18 +87,6 @@ public class CurrentActiveUser implements ActiveUser {
             return false;
         }
 
-    }
-
-    public boolean signUpUser() {
-        ParseUser user = new ParseUser();
-        user.setUsername(activeCurrentActiveUser.username);
-        user.setPassword(activeCurrentActiveUser.password);
-        try {
-            user.signUp();
-            return true;
-        } catch (ParseException e) {
-            return false;
-        }
     }
 
     @Override
