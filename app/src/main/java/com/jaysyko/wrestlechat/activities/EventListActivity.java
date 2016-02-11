@@ -101,7 +101,7 @@ public class EventListActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation vie.w item clicks here.
+        // Handle navigation view item clicks here.
         int id = item.getItemId();
         Context applicationContext = getApplicationContext();
         switch (id) {
@@ -123,8 +123,9 @@ public class EventListActivity extends AppCompatActivity
                 Intent donateIntent = new Intent(applicationContext, DonateActivity.class);
                 startActivity(donateIntent);
                 break;
-            case (R.id.nav_send):
-
+            case (R.id.nav_about):
+                Intent aboutIntent = new Intent(applicationContext, AboutActivity.class);
+                startActivity(aboutIntent);
                 break;
             case (R.id.nav_legal):
                 Intent legalIntent = new Intent(applicationContext, LegalActivity.class);
