@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -60,6 +62,16 @@ public class EventListActivity extends AppCompatActivity
         View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_event_list);
         TextView headerUsername = (TextView) headerLayout.findViewById(R.id.drawer_username);
         headerUsername.setText(ParseUser.getCurrentUser().get(CurrentActiveUser.USERNAME_KEY).toString());
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.refresh_events);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateEventCards();
+                Snackbar.make(view, "Refreshing Events...", Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
     @Override
@@ -197,5 +209,4 @@ public class EventListActivity extends AppCompatActivity
         intent.putExtra(IntentKeys.EVENT_LOCATION, event.get(Events.EVENT_LOCATION).toString());
         startActivity(intent);
     }
-
 }
