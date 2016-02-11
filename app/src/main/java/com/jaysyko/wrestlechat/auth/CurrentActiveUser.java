@@ -39,7 +39,7 @@ public class CurrentActiveUser implements ActiveUser {
 
     public static boolean signUpUser(String username, String password) {
         ParseUser user = new ParseUser();
-        user.setUsername(username);
+        user.setUsername(username.toLowerCase());
         user.setPassword(password);
         try {
             user.signUp();
