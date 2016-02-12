@@ -12,4 +12,42 @@
     tools:context="com.jaysyko.wrestlechat.activities.DonateActivity"
     tools:showIn="@layout/activity_donate">
 
+    <EditText
+        android:id="@+id/donation_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="175dp"
+        android:ems="10"
+        android:gravity="center_vertical"
+        android:hint="@string/donate_edittext_hint"
+        android:inputType="numberDecimal" />
+
+    <Button
+        android:id="@+id/donate_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/donate_button_text" />
+
+    <TextView
+        android:id="@+id/donate_thank_you"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/donate_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="46dp"
+        android:text="New Text" />
+
+    <TextView
+        android:id="@+id/donate_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/donate_thank_you"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/donate_thank_you"
+        android:layout_marginTop="90dp"
+        android:text="@string/donate_amount_title" />
 </RelativeLayout>

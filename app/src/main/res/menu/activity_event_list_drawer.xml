@@ -21,10 +21,10 @@
                 android:icon="@drawable/ic_lock_outline_black_18dp"
                 android:title="@string/drawer_share" />
 
-            <item
-                android:id="@+id/nav_donate"
-                android:icon="@drawable/ic_favorite_border_black_18dp"
-                android:title="@string/drawer_donate" />
+            <!--<item-->
+            <!--android:id="@+id/nav_donate"-->
+            <!--android:icon="@drawable/ic_favorite_border_black_18dp"-->
+            <!--android:title="@string/drawer_donate" />-->
 
             <item
                 android:id="@+id/nav_legal"
