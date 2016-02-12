@@ -13,8 +13,8 @@ import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 
-import static com.jaysyko.wrestlechat.utils.FormValidation.isValidUsername;
 import static com.jaysyko.wrestlechat.utils.FormValidation.formIsClean;
+import static com.jaysyko.wrestlechat.utils.FormValidation.isValidUsername;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     username = usernameField.getText().toString();
                     password = passwordField.getText().toString();
-                    if (formIsClean(username, password) && isValidUsername(username)) {
+                    if (formIsClean(username, password)) {
                         CurrentActiveUser currentActiveUser = CurrentActiveUser.getInstance(username, password);
                         if (currentActiveUser.loginUser()) {
                             Dialog.makeToast(context, getString(R.string.welcome_back).concat(username));
@@ -90,10 +90,14 @@ public class LoginActivity extends AppCompatActivity {
                     username = usernameField.getText().toString();
                     password = passwordField.getText().toString();
                     if (formIsClean(username, password)) {
-                        if (CurrentActiveUser.signUpUser(username, password)) {
-                            startActivity(intent);
-                        } else {
-                            Dialog.makeToast(context, getString(R.string.username_taken));
+                        if(isValidUsername(username)){
+                            if (CurrentActiveUser.signUpUser(username, password)) {
+                                startActivity(intent);
+                            } else {
+                                Dialog.makeToast(context, getString(R.string.username_taken));
+                            }
+                        }else{
+                            Dialog.makeToast(context, getString(R.string.invalid_username));
                         }
                     } else {
                         Dialog.makeToast(context, getString(R.string.blank_username));

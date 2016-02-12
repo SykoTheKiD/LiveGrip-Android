@@ -3,7 +3,7 @@ package com.jaysyko.wrestlechat.utils;
 public class FormValidation {
 
     private static final int MIN_MESSAGE_LENGTH = 1;
-    private static final int MAX_MESSAGE_LENGTH = 22;
+    private static final int MAX_MESSAGE_LENGTH = 112;
     private static final int MAX_USERNAME_LENGTH = 10;
 
     public static boolean formIsClean(String... strings) {
