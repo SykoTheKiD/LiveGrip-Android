@@ -139,4 +139,7 @@
     <string name="sign_up_to_app">Sign Up to Wrestle Chat</string>
     <string name="about_donate">Buy me a coffee?</string>
     <string name="about_tweet">Tweet Me</string>
+    <string name="donate_amount_title">Amount</string>
+    <string name="donate_button_text">Donate</string>
+    <string name="donate_edittext_hint">\t\t\t\t\tDonation Amount</string>
 </resources>
