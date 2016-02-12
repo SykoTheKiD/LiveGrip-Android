@@ -13,6 +13,7 @@ import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 
+import static com.jaysyko.wrestlechat.utils.FormValidation.isValidUsername;
 import static com.jaysyko.wrestlechat.utils.FormValidation.formIsClean;
 
 public class LoginActivity extends AppCompatActivity {
@@ -50,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     username = usernameField.getText().toString();
                     password = passwordField.getText().toString();
-                    if (formIsClean(username, password)) {
+                    if (formIsClean(username, password) && isValidUsername(username)) {
                         CurrentActiveUser currentActiveUser = CurrentActiveUser.getInstance(username, password);
                         if (currentActiveUser.loginUser()) {
                             Dialog.makeToast(context, getString(R.string.welcome_back).concat(username));

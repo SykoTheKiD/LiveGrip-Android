@@ -17,9 +17,11 @@ import android.widget.ListView;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
+import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.models.Query;
+import com.jaysyko.wrestlechat.utils.FormValidation;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -85,7 +87,7 @@ public class MessagingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String body = etMessage.getText().toString();
-                if (!body.isEmpty()) {
+                if (!body.isEmpty() && FormValidation.isValidMessage(body)) {
                     body = body.trim();
                     btSend.setEnabled(false);
                     // Use Message model to create new messages now
@@ -95,6 +97,8 @@ public class MessagingActivity extends AppCompatActivity {
                     message.setBody(body);
                     message.saveInBackground();
                     etMessage.setText(NULL_TEXT);
+                } else {
+                    Dialog.makeToast(getApplicationContext(), getString(R.string.message_too_short));
                 }
             }
         });
