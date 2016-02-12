@@ -5,12 +5,15 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.net.URL;
+import java.security.MessageDigest;
 
 public final class ImageTools {
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
@@ -62,6 +65,19 @@ public final class ImageTools {
 
     public static void loadImage(Context context, String link, ImageView imageview) {
         Picasso.with(context).load(link).into(imageview);
+    }
+
+    public static String getProfileImage(String userId) {
+        String hex = "";
+        try {
+            final MessageDigest digest = MessageDigest.getInstance("MD5");
+            final byte[] hash = digest.digest(userId.getBytes());
+            final BigInteger bigInt = new BigInteger(hash);
+            hex = bigInt.abs().toString(16);
+        } catch (Exception e) {
+            Log.d("Profile Image", "Default profile image generator error");
+        }
+        return "http://www.gravatar.com/avatar/".concat(hex).concat("?d=identicon");
     }
 
 }

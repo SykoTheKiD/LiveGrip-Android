@@ -35,9 +35,8 @@ public class MessagingActivity extends AppCompatActivity {
     public static final String NULL_TEXT = "";
     public static final String LOG_KEY = "message";
     public static final String ERROR_KEY = "Error: ";
-    public static final int FETCH_MSG_DELAY_MILLIS = 100;
+    public static final int FETCH_MSG_DELAY_MILLIS = 1000;
     private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
-    private static final int SEND_ENABLE_DELAY = 10000000;
     private String userName;
     private String sEventId;
     private String eventName;
@@ -49,7 +48,7 @@ public class MessagingActivity extends AppCompatActivity {
     // Keep track of initial load to scroll to the bottom of the ListView
     private boolean mFirstLoad;
     private Handler handler = new Handler();
-    private Runnable runnable = new Runnable() {
+    private Runnable fetchNewMessagesRunnable = new Runnable() {
         @Override
         public void run() {
             fetchNewMessages();
@@ -71,7 +70,7 @@ public class MessagingActivity extends AppCompatActivity {
         userName = currentUser.getUsername();
         btSend = (Button) findViewById(R.id.btSend);
         saveMessage();
-        handler.postDelayed(runnable, FETCH_MSG_DELAY_MILLIS);
+        handler.postDelayed(fetchNewMessagesRunnable, FETCH_MSG_DELAY_MILLIS);
     }
 
     // Setup message field and posting
@@ -88,12 +87,6 @@ public class MessagingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 btSend.setEnabled(false);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        btSend.setEnabled(true);
-                    }
-                }, SEND_ENABLE_DELAY);
                 String body = etMessage.getText().toString();
                 if (!body.isEmpty() && FormValidation.isValidMessage(body)) {
                     body = body.trim();
@@ -109,6 +102,7 @@ public class MessagingActivity extends AppCompatActivity {
                 }
             }
         });
+        btSend.setEnabled(true);
     }
 
     // Query messages from Parse so we can load them into the chat adapter
