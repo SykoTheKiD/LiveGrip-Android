@@ -6,9 +6,6 @@ import com.jaysyko.wrestlechat.utils.Resources;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-
 public class CurrentActiveUser implements ActiveUser {
     public static final String USERNAME_KEY = "username";
     private static final String IMG_ID = "imgID";
@@ -48,25 +45,6 @@ public class CurrentActiveUser implements ActiveUser {
         } catch (ParseException e) {
             Log.d("Login", e.getMessage());
             return false;
-        }
-    }
-
-    public String getProfileImage() {
-        String customProfileImageURL = null; //activeCurrentActiveUser.getCustomProfileImageURL();
-        if (customProfileImageURL != null) {
-            return customProfileImageURL;
-        } else {
-            String userId = activeCurrentActiveUser.getUsername();
-            String hex = "";
-            try {
-                final MessageDigest digest = MessageDigest.getInstance("MD5");
-                final byte[] hash = digest.digest(userId.getBytes());
-                final BigInteger bigInt = new BigInteger(hash);
-                hex = bigInt.abs().toString(16);
-            } catch (Exception e) {
-                Log.d("Profile Image", "Default profile image generator error");
-            }
-            return "http://www.gravatar.com/avatar/".concat(hex).concat("?d=identicon");
         }
     }
 
