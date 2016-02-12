@@ -37,6 +37,7 @@ public class MessagingActivity extends AppCompatActivity {
     public static final String ERROR_KEY = "Error: ";
     public static final int FETCH_MSG_DELAY_MILLIS = 100;
     private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
+    private static final int SEND_ENABLE_DELAY = 10000000;
     private String userName;
     private String sEventId;
     private String eventName;
@@ -86,10 +87,16 @@ public class MessagingActivity extends AppCompatActivity {
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btSend.setEnabled(false);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        btSend.setEnabled(true);
+                    }
+                }, SEND_ENABLE_DELAY);
                 String body = etMessage.getText().toString();
                 if (!body.isEmpty() && FormValidation.isValidMessage(body)) {
                     body = body.trim();
-                    btSend.setEnabled(false);
                     // Use Message model to create new messages now
                     Message message = new Message();
                     message.setUsername(userName);
