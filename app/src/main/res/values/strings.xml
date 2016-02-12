@@ -142,4 +142,5 @@
     <string name="donate_amount_title">Amount</string>
     <string name="donate_button_text">Donate</string>
     <string name="donate_edittext_hint">\t\t\t\t\tDonation Amount</string>
+    <string name="message_too_short">Message too short</string>
 </resources>
