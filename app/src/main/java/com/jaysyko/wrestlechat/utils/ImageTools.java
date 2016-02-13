@@ -67,7 +67,7 @@ public final class ImageTools {
         Picasso.with(context).load(link).into(imageview);
     }
 
-    public static String getProfileImage(String userId) {
+    public static String defaultProfileImage(String userId) {
         String hex = "";
         try {
             final MessageDigest digest = MessageDigest.getInstance("MD5");
