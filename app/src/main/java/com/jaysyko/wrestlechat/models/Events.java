@@ -3,9 +3,9 @@ package com.jaysyko.wrestlechat.models;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
-@ParseClassName(Events.PARSE_EVENTS_TABLE)
+@ParseClassName(Events.TABLE_NAME)
 public class Events extends ParseObject {
-    public static final String PARSE_EVENTS_TABLE = "Events";
+    public static final String TABLE_NAME = "Events";
     public static final String ID = "eventId";
     public static final String NAME = "eventName";
     public static final String LOCATION = "location";

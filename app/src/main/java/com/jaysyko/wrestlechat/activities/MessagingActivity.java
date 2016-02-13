@@ -20,7 +20,7 @@ import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.models.Message;
-import com.jaysyko.wrestlechat.models.Query;
+import com.jaysyko.wrestlechat.query.Query;
 import com.jaysyko.wrestlechat.utils.FormValidation;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.parse.FindCallback;
@@ -111,7 +111,7 @@ public class MessagingActivity extends AppCompatActivity {
         query.whereEqualTo(Events.ID, sEventId);
         query.orderByDESC(Message.CREATED_AT);
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-        query.getQuery().findInBackground(new FindCallback<Message>() {
+        query.build().findInBackground(new FindCallback<Message>() {
             public void done(List<Message> messages, ParseException e) {
                 if (e == null) {
                     Collections.reverse(messages);
