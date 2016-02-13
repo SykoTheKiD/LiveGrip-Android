@@ -1,18 +1,23 @@
-package com.jaysyko.wrestlechat.models;
+package com.jaysyko.wrestlechat.query;
 
+import com.jaysyko.wrestlechat.cache.AppCache;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-public class Query<T extends ParseObject> {
+import java.util.List;
+
+public final class Query<T extends ParseObject> {
 
     private ParseQuery query;
+    private String label;
 
     public Query(Class model) {
         this.query = ParseQuery.getQuery(model);
+        this.label = model.getSimpleName();
     }
 
-    public ParseQuery getQuery() {
-        return query;
+    public ParseQuery build() {
+        return this.query;
     }
 
     final public Query whereEqualTo(String column, String toCompare) {
@@ -33,5 +38,9 @@ public class Query<T extends ParseObject> {
     final public Query orderByDESC(String orderKey) {
         this.query.orderByDescending(orderKey);
         return this;
+    }
+
+    final public List execute() {
+        return new AppCache(this).queryCache(this.label);
     }
 }

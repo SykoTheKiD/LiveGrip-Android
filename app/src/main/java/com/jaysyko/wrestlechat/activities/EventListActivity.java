@@ -3,6 +3,7 @@ package com.jaysyko.wrestlechat.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -15,11 +16,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
@@ -28,13 +27,11 @@ import com.jaysyko.wrestlechat.dataObjects.EventObject;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Events;
-import com.jaysyko.wrestlechat.models.Query;
+import com.jaysyko.wrestlechat.query.Query;
 import com.jaysyko.wrestlechat.utils.DateVerifier;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.Resources;
-import com.parse.FindCallback;
 import com.parse.ParseObject;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +39,9 @@ import java.util.List;
 public class EventListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String SHARE_TEXT = "Share Event";
-    private ArrayList<EventObject> eventObjects;
+    private static final int VIBRATE_MILLISECONDS = 50;
     private Context applicationContext;
+    private List<ParseObject> eventList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +49,14 @@ public class EventListActivity extends AppCompatActivity
         setContentView(R.layout.activity_event_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        updateEventCards();
+        final Handler updateEventsHandler = new Handler();
+        Runnable updateEventsThread = new Runnable() {
+            @Override
+            public void run() {
+                updateEventCards();
+            }
+        };
+        updateEventsHandler.post(updateEventsThread);
         applicationContext = getApplicationContext();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -63,7 +67,7 @@ public class EventListActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_event_list);
         TextView headerUsername = (TextView) headerLayout.findViewById(R.id.drawer_username);
-        headerUsername.setText(ParseUser.getCurrentUser().getString(CurrentActiveUser.USERNAME_KEY));
+        headerUsername.setText(CurrentActiveUser.getInstance().getUsername());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.refresh_events);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +122,7 @@ public class EventListActivity extends AppCompatActivity
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType(Resources.PLAIN_CONTENT_TYPE);
                 share.putExtra(Intent.EXTRA_TEXT, R.string.app_share);
-                startActivity(Intent.createChooser(share, SHARE_TEXT));
+                startActivity(Intent.createChooser(share, getString(R.string.app_share_title)));
                 break;
 //            case (R.id.nav_donate):
 //                Intent donateIntent = new Intent(applicationContext, DonateActivity.class);
@@ -140,53 +144,53 @@ public class EventListActivity extends AppCompatActivity
     }
 
     //display clickable a list of all users
+    @SuppressWarnings("unchecked")
     private void updateEventCards() {
-        eventObjects = new ArrayList<>();
+        ArrayList<EventObject> eventObjects = new ArrayList<>();
         Query<ParseObject> query = new Query<>(Events.class);
-        query.getQuery().findInBackground(new FindCallback<ParseObject>() {
-            public void done(final List<ParseObject> eventList, com.parse.ParseException e) {
-                ParseObject current;
-                if (e == null) {
-                    for (int i = 0; i < eventList.size(); i++) {
-                        current = eventList.get(i);
-                        eventObjects.add(
-                                new EventObject(
-                                        current.getString(Events.NAME),
-                                        current.getString(Events.LOCATION),
-                                        current.getLong(Events.START_TIME),
-                                        current.getLong(Events.END_TIME),
-                                        current.getString(Events.IMAGE)
-                                )
-                        );
-                    }
-                    RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(applicationContext));
-                    recyclerView.addOnItemTouchListener(
-                            new RecyclerItemClickListener(
-                                    EventListActivity.this,
-                                    recyclerView,
-                                    new RecyclerItemClickListener.OnItemClickListener() {
-                                        @Override
-                                        public void onItemClick(View view, int position) {
-                                            openConversation(eventList.get(position));
-                                        }
-
-                                        @Override
-                                        public void onItemLongClick(View view, int position) {
-                                            Vibrator vibe = (Vibrator) applicationContext.getSystemService(Context.VIBRATOR_SERVICE);
-                                            vibe.vibrate(50);
-                                            openEventInfo(eventList.get(position));
-                                        }
-                                    }));
-                    EventListAdapter mAdapter = new EventListAdapter(eventObjects, applicationContext);
-                    recyclerView.setAdapter(mAdapter);
-                    recyclerView.setItemAnimator(new DefaultItemAnimator());
-                } else {
-                    Log.d(getClass().getSimpleName(), e.getMessage());
-                    Dialog.makeToast(applicationContext, getString(R.string.error_loading_events));
+        eventList = query.execute();
+        ParseObject current;
+        if (eventList != null) {
+            if (eventList.size() > 0) {
+                for (int i = 0; i < eventList.size(); i++) {
+                    current = eventList.get(i);
+                    eventObjects.add(
+                            new EventObject(
+                                    current.getString(Events.NAME),
+                                    current.getString(Events.LOCATION),
+                                    current.getLong(Events.START_TIME),
+                                    current.getLong(Events.END_TIME),
+                                    current.getString(Events.IMAGE)
+                            )
+                    );
                 }
+                RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+                recyclerView.setLayoutManager(new LinearLayoutManager(applicationContext));
+                recyclerView.addOnItemTouchListener(
+                        new RecyclerItemClickListener(
+                                EventListActivity.this, recyclerView,
+                                new RecyclerItemClickListener.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(View view, int position) {
+                                        openConversation(eventList.get(position));
+                                    }
+
+                                    @Override
+                                    public void onItemLongClick(View view, int position) {
+                                        Vibrator vibe = (Vibrator) applicationContext.getSystemService(Context.VIBRATOR_SERVICE);
+                                        vibe.vibrate(VIBRATE_MILLISECONDS);
+                                        openEventInfo(eventList.get(position));
+                                    }
+                                }));
+                EventListAdapter mAdapter = new EventListAdapter(eventObjects, applicationContext);
+                recyclerView.setAdapter(mAdapter);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+            } else {
+                Dialog.makeToast(applicationContext, getString(R.string.no_events));
             }
-        });
+        } else {
+            Dialog.makeToast(applicationContext, getString(R.string.error_loading_events));
+        }
     }
 
     private void openConversation(ParseObject event) {
@@ -196,9 +200,7 @@ public class EventListActivity extends AppCompatActivity
             intent.putExtra(IntentKeys.EVENT_NAME, event.getString(Events.NAME));
             startActivity(intent);
         }else{
-            Toast.makeText(getApplicationContext(),
-                    R.string.online_status_not_live,
-                    Toast.LENGTH_LONG).show();
+            Dialog.makeToast(applicationContext, getString(R.string.online_status_not_live));
         }
     }
 
