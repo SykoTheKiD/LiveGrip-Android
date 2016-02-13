@@ -108,7 +108,7 @@ public class MessagingActivity extends AppCompatActivity {
     // Query messages from Parse so we can load them into the chat adapter
     private synchronized void fetchNewMessages() {
         Query<Message> query = new Query<>(Message.class);
-        query.whereEqualTo(Events.EVENT_ID, sEventId);
+        query.whereEqualTo(Events.ID, sEventId);
         query.orderByDESC(Message.CREATED_AT);
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
         query.getQuery().findInBackground(new FindCallback<Message>() {

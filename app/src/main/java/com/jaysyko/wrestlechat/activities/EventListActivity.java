@@ -15,6 +15,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -43,7 +44,7 @@ public class EventListActivity extends AppCompatActivity
 
     private static final String SHARE_TEXT = "Share Event";
     private ArrayList<EventObject> eventObjects;
-
+    private Context applicationContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class EventListActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         updateEventCards();
+        applicationContext = getApplicationContext();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -68,7 +70,7 @@ public class EventListActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 updateEventCards();
-                Snackbar.make(view, "Refreshing Events...", Snackbar.LENGTH_SHORT)
+                Snackbar.make(view, getString(R.string.refreshing_events), Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
             }
         });
@@ -103,7 +105,6 @@ public class EventListActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Context applicationContext = getApplicationContext();
         switch (id) {
             case (R.id.nav_my_profile):
                 break;
@@ -150,16 +151,16 @@ public class EventListActivity extends AppCompatActivity
                         current = eventList.get(i);
                         eventObjects.add(
                                 new EventObject(
-                                        current.get(Events.EVENT_NAME).toString(),
-                                        current.get(Events.EVENT_LOCATION).toString(),
-                                        current.getLong(Events.EVENT_START_TIME),
-                                        current.getLong(Events.EVENT_END_TIME),
-                                        current.get(Events.EVENT_IMAGE).toString()
+                                        current.get(Events.NAME).toString(),
+                                        current.get(Events.LOCATION).toString(),
+                                        current.getLong(Events.START_TIME),
+                                        current.getLong(Events.END_TIME),
+                                        current.get(Events.IMAGE).toString()
                                 )
                         );
                     }
                     RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    recyclerView.setLayoutManager(new LinearLayoutManager(applicationContext));
                     recyclerView.addOnItemTouchListener(
                             new RecyclerItemClickListener(
                                     EventListActivity.this,
@@ -172,26 +173,27 @@ public class EventListActivity extends AppCompatActivity
 
                                         @Override
                                         public void onItemLongClick(View view, int position) {
-                                            Vibrator vibe = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                                            Vibrator vibe = (Vibrator) applicationContext.getSystemService(Context.VIBRATOR_SERVICE);
                                             vibe.vibrate(50);
                                             openEventInfo(eventList.get(position));
                                         }
                                     }));
-                    EventListAdapter mAdapter = new EventListAdapter(eventObjects, getApplicationContext());
+                    EventListAdapter mAdapter = new EventListAdapter(eventObjects, applicationContext);
                     recyclerView.setAdapter(mAdapter);
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                 } else {
-                    Dialog.makeToast(getApplicationContext(), getString(R.string.error_loading_events));
+                    Log.d(getClass().getSimpleName(), e.getMessage());
+                    Dialog.makeToast(applicationContext, getString(R.string.error_loading_events));
                 }
             }
         });
     }
 
     private void openConversation(ParseObject event) {
-        if (DateVerifier.goLive(event.getLong("startTime"))) {
-            Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
+        if (DateVerifier.goLive(event.getLong(Events.START_TIME))) {
+            Intent intent = new Intent(applicationContext, MessagingActivity.class);
             intent.putExtra(IntentKeys.EVENT_ID, event.getObjectId());
-            intent.putExtra(IntentKeys.EVENT_NAME, event.get(Events.EVENT_NAME).toString());
+            intent.putExtra(IntentKeys.EVENT_NAME, event.get(Events.NAME).toString());
             startActivity(intent);
         }else{
             Toast.makeText(getApplicationContext(),
@@ -201,13 +203,13 @@ public class EventListActivity extends AppCompatActivity
     }
 
     private void openEventInfo(ParseObject event) {
-        Intent intent = new Intent(getApplicationContext(), EventInfoActivity.class);
-        intent.putExtra(IntentKeys.EVENT_NAME, event.get(Events.EVENT_NAME).toString());
-        intent.putExtra(IntentKeys.EVENT_INFO, event.get(Events.EVENT_INFO).toString());
-        intent.putExtra(IntentKeys.EVENT_CARD, event.get(Events.EVENT_MATCH_CARD).toString());
-        intent.putExtra(IntentKeys.EVENT_IMAGE, event.get(Events.EVENT_IMAGE).toString());
-        intent.putExtra(IntentKeys.EVENT_START_TIME, event.getLong(Events.EVENT_START_TIME));
-        intent.putExtra(IntentKeys.EVENT_LOCATION, event.get(Events.EVENT_LOCATION).toString());
+        Intent intent = new Intent(applicationContext, EventInfoActivity.class);
+        intent.putExtra(IntentKeys.EVENT_NAME, event.get(Events.NAME).toString());
+        intent.putExtra(IntentKeys.EVENT_INFO, event.get(Events.INFO).toString());
+        intent.putExtra(IntentKeys.EVENT_CARD, event.get(Events.MATCH_CARD).toString());
+        intent.putExtra(IntentKeys.EVENT_IMAGE, event.get(Events.IMAGE).toString());
+        intent.putExtra(IntentKeys.EVENT_START_TIME, event.getLong(Events.START_TIME));
+        intent.putExtra(IntentKeys.EVENT_LOCATION, event.get(Events.LOCATION).toString());
         startActivity(intent);
     }
 }
