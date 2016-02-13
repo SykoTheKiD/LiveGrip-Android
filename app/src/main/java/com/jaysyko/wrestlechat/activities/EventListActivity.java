@@ -63,7 +63,7 @@ public class EventListActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_event_list);
         TextView headerUsername = (TextView) headerLayout.findViewById(R.id.drawer_username);
-        headerUsername.setText(ParseUser.getCurrentUser().get(CurrentActiveUser.USERNAME_KEY).toString());
+        headerUsername.setText(ParseUser.getCurrentUser().getString(CurrentActiveUser.USERNAME_KEY));
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.refresh_events);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -151,11 +151,11 @@ public class EventListActivity extends AppCompatActivity
                         current = eventList.get(i);
                         eventObjects.add(
                                 new EventObject(
-                                        current.get(Events.NAME).toString(),
-                                        current.get(Events.LOCATION).toString(),
+                                        current.getString(Events.NAME),
+                                        current.getString(Events.LOCATION),
                                         current.getLong(Events.START_TIME),
                                         current.getLong(Events.END_TIME),
-                                        current.get(Events.IMAGE).toString()
+                                        current.getString(Events.IMAGE)
                                 )
                         );
                     }
@@ -193,7 +193,7 @@ public class EventListActivity extends AppCompatActivity
         if (DateVerifier.goLive(event.getLong(Events.START_TIME))) {
             Intent intent = new Intent(applicationContext, MessagingActivity.class);
             intent.putExtra(IntentKeys.EVENT_ID, event.getObjectId());
-            intent.putExtra(IntentKeys.EVENT_NAME, event.get(Events.NAME).toString());
+            intent.putExtra(IntentKeys.EVENT_NAME, event.getString(Events.NAME));
             startActivity(intent);
         }else{
             Toast.makeText(getApplicationContext(),
@@ -204,12 +204,12 @@ public class EventListActivity extends AppCompatActivity
 
     private void openEventInfo(ParseObject event) {
         Intent intent = new Intent(applicationContext, EventInfoActivity.class);
-        intent.putExtra(IntentKeys.EVENT_NAME, event.get(Events.NAME).toString());
-        intent.putExtra(IntentKeys.EVENT_INFO, event.get(Events.INFO).toString());
-        intent.putExtra(IntentKeys.EVENT_CARD, event.get(Events.MATCH_CARD).toString());
-        intent.putExtra(IntentKeys.EVENT_IMAGE, event.get(Events.IMAGE).toString());
+        intent.putExtra(IntentKeys.EVENT_NAME, event.getString(Events.NAME));
+        intent.putExtra(IntentKeys.EVENT_INFO, event.getString(Events.INFO));
+        intent.putExtra(IntentKeys.EVENT_CARD, event.getString(Events.MATCH_CARD));
+        intent.putExtra(IntentKeys.EVENT_IMAGE, event.getString(Events.IMAGE));
         intent.putExtra(IntentKeys.EVENT_START_TIME, event.getLong(Events.START_TIME));
-        intent.putExtra(IntentKeys.EVENT_LOCATION, event.get(Events.LOCATION).toString());
+        intent.putExtra(IntentKeys.EVENT_LOCATION, event.getString(Events.LOCATION));
         startActivity(intent);
     }
 }
