@@ -19,6 +19,8 @@ import com.squareup.picasso.Picasso;
 public class EventInfoActivity extends AppCompatActivity {
 
     private static final String SHARE_DIALOG_TITLE = "Share Event";
+    private static final long DEAFULT_START_TIME = 0L;
+    private static final String LINE_SEPARATOR = "line.separator";
     private String eventName, eventInfo, matchCardText, location, imageLink;
     private long startTime;
     @Override
@@ -33,7 +35,7 @@ public class EventInfoActivity extends AppCompatActivity {
         eventInfo = intent.getStringExtra(IntentKeys.EVENT_INFO);
         imageLink = intent.getStringExtra(IntentKeys.EVENT_IMAGE);
         matchCardText = intent.getStringExtra(IntentKeys.EVENT_CARD);
-        startTime = intent.getLongExtra(IntentKeys.EVENT_START_TIME, 0L);
+        startTime = intent.getLongExtra(IntentKeys.EVENT_START_TIME, DEAFULT_START_TIME);
         location = intent.getStringExtra(IntentKeys.EVENT_LOCATION);
         prepareEventInfoContent(getApplicationContext());
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -42,22 +44,22 @@ public class EventInfoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType(Resources.PLAIN_CONTENT_TYPE);
-                share.putExtra(Intent.EXTRA_TEXT, getSharemessage(eventName));
+                share.putExtra(Intent.EXTRA_TEXT, getShareMessage(eventName));
                 startActivity(Intent.createChooser(share, SHARE_DIALOG_TITLE));
             }
         });
     }
 
     @NonNull
-    private String getSharemessage(String eventName) {
-        return "Hey check out the".concat(eventName).concat(" - sent from WrestleChat");
+    private String getShareMessage(String eventName) {
+        return getString(R.string.hey_check_out).concat(eventName).concat(getString(R.string.sent_from_wrestlechat));
     }
 
     private void prepareEventInfoContent(Context context) {
         TextView eventDescription = (TextView) findViewById(R.id.event_info_description);
         eventDescription.setText(eventInfo);
         TextView matchCard = (TextView) findViewById(R.id.event_info_match_card);
-        matchCardText = matchCardText.replace("\\n", System.getProperty("line.separator"));
+        matchCardText = matchCardText.replace("\\n", System.getProperty(LINE_SEPARATOR));
         matchCard.setText(matchCardText);
         TextView startTimeTV = (TextView) findViewById(R.id.event_info_start_time);
         startTimeTV.setText(DateVerifier.format(startTime));
