@@ -50,7 +50,8 @@ public class CurrentActiveUser implements ActiveUser {
     }
 
     public String getCustomProfileImageURL() {
-        String userImage = ParseUser.getCurrentUser().getString(IMG_ID);
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        String userImage = currentUser.getString(IMG_ID);
         if (userImage != null) {
             activeCurrentActiveUser.profileImageURL = Resources.IMGUR_LINK.concat(userImage);
         } else {
