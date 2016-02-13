@@ -28,11 +28,10 @@ import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.query.Query;
+import com.jaysyko.wrestlechat.query.QueryResult;
 import com.jaysyko.wrestlechat.utils.DateVerifier;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.Resources;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +67,7 @@ public class EventListActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_event_list);
         TextView headerUsername = (TextView) headerLayout.findViewById(R.id.drawer_username);
-        headerUsername.setText(ParseUser.getCurrentUser().getString(CurrentActiveUser.USERNAME_KEY));
+        headerUsername.setText(CurrentActiveUser.getInstance().getUsername());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.refresh_events);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -144,11 +143,12 @@ public class EventListActivity extends AppCompatActivity
     }
 
     //display clickable a list of all users
+    @SuppressWarnings("unchecked")
     private void updateEventCards() {
         ArrayList<EventObject> eventObjects = new ArrayList<>();
-        Query<ParseObject> query = new Query<>(Events.class);
-        final List<ParseObject> eventList = query.execute();
-        ParseObject current;
+        Query<QueryResult> query = new Query<>(Events.class);
+        final List<QueryResult> eventList = query.execute();
+        QueryResult current;
         if (eventList != null) {
             for (int i = 0; i < eventList.size(); i++) {
                 current = eventList.get(i);
@@ -189,7 +189,7 @@ public class EventListActivity extends AppCompatActivity
         }
     }
 
-    private void openConversation(ParseObject event) {
+    private void openConversation(QueryResult event) {
         if (DateVerifier.goLive(event.getLong(Events.START_TIME))) {
             Intent intent = new Intent(applicationContext, MessagingActivity.class);
             intent.putExtra(IntentKeys.EVENT_ID, event.getObjectId());
@@ -200,7 +200,7 @@ public class EventListActivity extends AppCompatActivity
         }
     }
 
-    private void openEventInfo(ParseObject event) {
+    private void openEventInfo(QueryResult event) {
         Intent intent = new Intent(applicationContext, EventInfoActivity.class);
         intent.putExtra(IntentKeys.EVENT_NAME, event.getString(Events.NAME));
         intent.putExtra(IntentKeys.EVENT_INFO, event.getString(Events.INFO));
