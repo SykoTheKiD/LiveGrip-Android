@@ -35,6 +35,7 @@ public class Initializer extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Parse.enableLocalDatastore(this);
         ParseObject.registerSubclass(Message.class);
         Parse.initialize(this);
         internetHandler.postDelayed(internetChecker, 1000);
