@@ -45,7 +45,7 @@ public class FormValidation {
         return ret;
     }
 
-    public static Form validateMessage(String... args) {
-        return null;
+    public static Form validateMessage(String message) {
+        return isValidMessage(message);
     }
 }

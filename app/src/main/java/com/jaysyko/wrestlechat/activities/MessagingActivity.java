@@ -18,10 +18,11 @@ import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
+import com.jaysyko.wrestlechat.forms.Form;
+import com.jaysyko.wrestlechat.forms.FormValidation;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.query.Query;
-import com.jaysyko.wrestlechat.forms.FormValidation;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
@@ -82,7 +83,8 @@ public class MessagingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 btSend.setEnabled(false);
                 String body = etMessage.getText().toString();
-                if (!body.isEmpty() && FormValidation.isValidMessage(body)) {
+                Form form = FormValidation.validateMessage(body);
+                if (form.valid) {
                     body = body.trim();
                     // Use Message model to create new messages now
                     Message message = new Message();
@@ -93,7 +95,7 @@ public class MessagingActivity extends AppCompatActivity {
                     etMessage.setText(StringResources.NULL_TEXT);
                 } else {
                     applicationContext = getApplicationContext();
-                    Dialog.makeToast(applicationContext, getString(R.string.message_too_short));
+                    Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.reason)));
                 }
             }
         });
