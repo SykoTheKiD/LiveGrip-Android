@@ -18,6 +18,7 @@ import java.util.List;
 
 public class MessageListAdapter extends ArrayAdapter<Message> {
     private String mUserId;
+    private Context context = getContext();
 
     public MessageListAdapter(Context context, String userId, List<Message> messages) {
         super(context, 0, messages);
@@ -27,7 +28,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).
+            convertView = LayoutInflater.from(context).
                     inflate(R.layout.message_bubble, parent, false);
             final ViewHolder holder = new ViewHolder();
             holder.imageLeft = (ImageView) convertView.findViewById(R.id.ivProfileLeft);
@@ -40,8 +41,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         final ViewHolder holder = (ViewHolder) convertView.getTag();
         final boolean isMe = message.getUsername().equals(mUserId);
         final String messageBody = message.getBody();
-        TextView messageBodytv;
-        TextView usernametv;
+        TextView messageBodytv, usernametv;
         // Show-hide image based on the logged-in user.
         // Display the profile image to the right for our user, left for other users.
         if (isMe) {
@@ -64,15 +64,13 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
 
         }
         final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
-        Picasso.with(getContext()).load(CurrentActiveUser.getInstance().getCustomProfileImageURL()).into(profileView);
+        Picasso.with(context).load(CurrentActiveUser.getInstance().getCustomProfileImageURL()).into(profileView);
         return convertView;
     }
 
     final class ViewHolder {
-        public ImageView imageLeft;
-        public ImageView imageRight;
-        public RelativeLayout sender;
-        public RelativeLayout user;
+        public ImageView imageLeft, imageRight;
+        public RelativeLayout sender, user;
     }
 
 }
