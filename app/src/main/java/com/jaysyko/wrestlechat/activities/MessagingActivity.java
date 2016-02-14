@@ -23,6 +23,7 @@ import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.query.Query;
 import com.jaysyko.wrestlechat.utils.FormValidation;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
+import com.jaysyko.wrestlechat.utils.StringResources;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,7 +31,6 @@ import java.util.List;
 
 public class MessagingActivity extends AppCompatActivity {
 
-    public static final String NULL_TEXT = "";
     public static final int FETCH_MSG_DELAY_MILLIS = 1000, MAX_CHAT_MESSAGES_TO_SHOW = 50;
     private String userName, sEventId, eventName;
     private EditText etMessage;
@@ -90,7 +90,7 @@ public class MessagingActivity extends AppCompatActivity {
                     message.setEventId(sEventId);
                     message.setBody(body);
                     message.saveInBackground();
-                    etMessage.setText(NULL_TEXT);
+                    etMessage.setText(StringResources.NULL_TEXT);
                 } else {
                     applicationContext = getApplicationContext();
                     Dialog.makeToast(applicationContext, getString(R.string.message_too_short));
@@ -107,17 +107,19 @@ public class MessagingActivity extends AppCompatActivity {
         query.whereEqualTo(Events.ID, sEventId);
         query.orderByDESC(Message.CREATED_AT);
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-        List messages = query.execute();
-        Collections.reverse(messages);
-        MessagingActivity.this.messages.clear();
-        MessagingActivity.this.messages.addAll(messages);
-        mAdapter.notifyDataSetChanged(); // update adapter
-        // Scroll to the bottom of the list on initial load
-        if (mFirstLoad) {
-            lvChat.setSelection(mAdapter.getCount() - 1);
-            mFirstLoad = false;
+        List messages = query.executeHard();
+        if (messages != null) {
+            Collections.reverse(messages);
+            MessagingActivity.this.messages.clear();
+            MessagingActivity.this.messages.addAll(messages);
+            mAdapter.notifyDataSetChanged(); // update adapter
+            // Scroll to the bottom of the list on initial load
+            if (mFirstLoad) {
+                lvChat.setSelection(mAdapter.getCount() - 1);
+                mFirstLoad = false;
+            }
+            btSend.setEnabled(true);
         }
-        btSend.setEnabled(true);
     }
 
     @Override
@@ -129,6 +131,7 @@ public class MessagingActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
+
         switch (item.getItemId()) {
             case R.id.action_event_info:
                 Intent eventInfoIntent = new Intent(getApplicationContext(), EventInfoActivity.class);

@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
+import com.jaysyko.wrestlechat.network.NetworkState;
+import com.jaysyko.wrestlechat.utils.StringResources;
 
 import static com.jaysyko.wrestlechat.utils.FormValidation.formIsClean;
 import static com.jaysyko.wrestlechat.utils.FormValidation.isValidUsername;
@@ -48,18 +50,22 @@ public class LoginActivity extends AppCompatActivity {
                     username = usernameField.getText().toString();
                     password = passwordField.getText().toString();
                     showLoadPanel(true, loginButton);
-                    if (formIsClean(username, password)) {
-                        CurrentActiveUser currentActiveUser = CurrentActiveUser.getInstance(username, password);
-                        if (currentActiveUser.loginUser()) {
-                            Dialog.makeToast(context, getString(R.string.welcome_back).concat(" ").concat(username));
-                            startActivity(intent);
-                            finish();
+                    if (NetworkState.isConnected(context)) {
+                        if (formIsClean(username, password)) {
+                            CurrentActiveUser currentActiveUser = CurrentActiveUser.getInstance(username, password);
+                            if (currentActiveUser.loginUser()) {
+                                Dialog.makeToast(context, getString(R.string.welcome_back).concat(StringResources.BLANK_SPACE).concat(username));
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                showLoadPanel(false, loginButton);
+                                Dialog.makeToast(context, getString(R.string.incorrect_login_info));
+                            }
                         } else {
-                            showLoadPanel(false, loginButton);
-                            Dialog.makeToast(context, getString(R.string.incorrect_login_info));
+                            Dialog.makeToast(context, getString(R.string.blank_username));
                         }
                     } else {
-                        Dialog.makeToast(context, getString(R.string.blank_username));
+                        Dialog.makeToast(context, getString(R.string.no_network));
                     }
                     showLoadPanel(false, loginButton);
                 }
@@ -71,20 +77,24 @@ public class LoginActivity extends AppCompatActivity {
                     username = usernameField.getText().toString();
                     password = passwordField.getText().toString();
                     showLoadPanel(true, loginButton);
-                    if (formIsClean(username, password)) {
-                        if (isValidUsername(username)) {
-                            if (CurrentActiveUser.signUpUser(username, password)) {
-                                startActivity(intent);
+                    if (NetworkState.isConnected(context)) {
+                        if (formIsClean(username, password)) {
+                            if (isValidUsername(username)) {
+                                if (CurrentActiveUser.signUpUser(username, password)) {
+                                    startActivity(intent);
+                                } else {
+                                    Dialog.makeToast(context, getString(R.string.username_taken));
+                                }
                             } else {
-                                Dialog.makeToast(context, getString(R.string.username_taken));
+                                Dialog.makeToast(context, getString(R.string.invalid_username));
                             }
                         } else {
-                            Dialog.makeToast(context, getString(R.string.invalid_username));
+                            Dialog.makeToast(context, getString(R.string.blank_username));
                         }
+                        showLoadPanel(false, loginButton);
                     } else {
-                        Dialog.makeToast(context, getString(R.string.blank_username));
+                        Dialog.makeToast(context, getString(R.string.no_network));
                     }
-                    showLoadPanel(false, loginButton);
                 }
             });
 

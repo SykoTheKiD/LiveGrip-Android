@@ -3,7 +3,7 @@ package com.jaysyko.wrestlechat.auth;
 import android.util.Log;
 
 import com.jaysyko.wrestlechat.utils.ImageTools;
-import com.jaysyko.wrestlechat.utils.Resources;
+import com.jaysyko.wrestlechat.utils.StringResources;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
@@ -53,7 +53,7 @@ public class CurrentActiveUser implements ActiveUser {
         ParseUser currentUser = ParseUser.getCurrentUser();
         String userImage = currentUser.getString(IMG_ID);
         if (userImage != null) {
-            activeCurrentActiveUser.profileImageURL = Resources.IMGUR_LINK.concat(userImage);
+            activeCurrentActiveUser.profileImageURL = StringResources.IMGUR_LINK.concat(userImage);
         } else {
             activeCurrentActiveUser.profileImageURL = ImageTools.defaultProfileImage(activeCurrentActiveUser.getUsername());
         }
