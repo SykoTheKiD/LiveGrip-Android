@@ -35,8 +35,9 @@ public class AppCache {
         }
     }
 
-    private List queryDB(String label) {
+    public List queryDB(String label) {
         try {
+            Log.d("DB HIT", "HIT");
             List results = this.query.build().find();
             ParseObject.pinAll(label, results);
             return results;

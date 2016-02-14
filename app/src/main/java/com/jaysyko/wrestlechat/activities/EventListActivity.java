@@ -30,7 +30,7 @@ import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.query.Query;
 import com.jaysyko.wrestlechat.utils.DateVerifier;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
-import com.jaysyko.wrestlechat.utils.Resources;
+import com.jaysyko.wrestlechat.utils.StringResources;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
@@ -120,7 +120,7 @@ public class EventListActivity extends AppCompatActivity
                 break;
             case (R.id.nav_share):
                 Intent share = new Intent(Intent.ACTION_SEND);
-                share.setType(Resources.PLAIN_CONTENT_TYPE);
+                share.setType(StringResources.PLAIN_CONTENT_TYPE);
                 share.putExtra(Intent.EXTRA_TEXT, R.string.app_share);
                 startActivity(Intent.createChooser(share, getString(R.string.app_share_title)));
                 break;

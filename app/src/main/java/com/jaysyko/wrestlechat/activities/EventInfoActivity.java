@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.DateVerifier;
-import com.jaysyko.wrestlechat.utils.Resources;
+import com.jaysyko.wrestlechat.utils.StringResources;
 import com.squareup.picasso.Picasso;
 
 public class EventInfoActivity extends AppCompatActivity {
@@ -43,7 +43,7 @@ public class EventInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent share = new Intent(Intent.ACTION_SEND);
-                share.setType(Resources.PLAIN_CONTENT_TYPE);
+                share.setType(StringResources.PLAIN_CONTENT_TYPE);
                 share.putExtra(Intent.EXTRA_TEXT, getShareMessage(eventName));
                 startActivity(Intent.createChooser(share, SHARE_DIALOG_TITLE));
             }
@@ -66,6 +66,6 @@ public class EventInfoActivity extends AppCompatActivity {
         TextView locationTV = (TextView) findViewById(R.id.event_info_location);
         locationTV.setText(location);
         ImageView eventImage = (ImageView)findViewById(R.id.event_info_photo);
-        Picasso.with(context).load(Resources.IMGUR_LINK.concat(imageLink)).into(eventImage);
+        Picasso.with(context).load(StringResources.IMGUR_LINK.concat(imageLink)).into(eventImage);
     }
 }

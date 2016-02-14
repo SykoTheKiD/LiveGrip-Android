@@ -43,4 +43,8 @@ public final class Query<T extends ParseObject> {
     final public List execute() {
         return new AppCache(this).queryCache(this.label);
     }
+
+    final public List executeHard() {
+        return new AppCache(this).queryDB(this.label);
+    }
 }
