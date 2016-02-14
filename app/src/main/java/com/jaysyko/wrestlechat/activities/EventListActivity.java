@@ -199,7 +199,7 @@ public class EventListActivity extends AppCompatActivity
             intent.putExtra(IntentKeys.EVENT_ID, event.getObjectId());
             intent.putExtra(IntentKeys.EVENT_NAME, event.getString(Events.NAME));
             startActivity(intent);
-        }else{
+        } else {
             Dialog.makeToast(applicationContext, getString(R.string.online_status_not_live));
         }
     }

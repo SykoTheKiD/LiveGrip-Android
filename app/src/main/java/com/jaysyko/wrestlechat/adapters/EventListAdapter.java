@@ -74,8 +74,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
         public TextView txtViewTitle;
         public ImageView imgViewIcon;
-        public TextView txtViewLocation;
-        public TextView txtViewLiveStatus;
+        public TextView txtViewLocation, txtViewLiveStatus;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
