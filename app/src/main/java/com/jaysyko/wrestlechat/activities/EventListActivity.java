@@ -27,6 +27,7 @@ import com.jaysyko.wrestlechat.dataObjects.EventObject;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Events;
+import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.query.Query;
 import com.jaysyko.wrestlechat.utils.DateVerifier;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
@@ -146,51 +147,59 @@ public class EventListActivity extends AppCompatActivity
     //display clickable a list of all users
     @SuppressWarnings("unchecked")
     private void updateEventCards() {
-        ArrayList<EventObject> eventObjects = new ArrayList<>();
-        Query<ParseObject> query = new Query<>(Events.class);
-        eventList = query.execute();
-        ParseObject current;
-        if (eventList != null) {
-            if (eventList.size() > 0) {
-                for (int i = 0; i < eventList.size(); i++) {
-                    current = eventList.get(i);
-                    eventObjects.add(
-                            new EventObject(
-                                    current.getString(Events.NAME),
-                                    current.getString(Events.LOCATION),
-                                    current.getLong(Events.START_TIME),
-                                    current.getLong(Events.END_TIME),
-                                    current.getString(Events.IMAGE)
-                            )
-                    );
+        if (NetworkState.isConnected(applicationContext)) {
+            ArrayList<EventObject> eventObjects = new ArrayList<>();
+            Query<ParseObject> query = new Query<>(Events.class);
+            eventList = query.execute();
+            ParseObject current;
+            if (eventList != null) {
+                if (eventList.size() > 0) {
+                    for (int i = 0; i < eventList.size(); i++) {
+                        current = eventList.get(i);
+                        eventObjects.add(
+                                new EventObject(
+                                        current.getString(Events.NAME),
+                                        current.getString(Events.LOCATION),
+                                        current.getLong(Events.START_TIME),
+                                        current.getLong(Events.END_TIME),
+                                        current.getString(Events.IMAGE)
+                                )
+                        );
+                    }
+                    attachToEventListAdapter(eventObjects);
+                } else {
+                    Dialog.makeToast(applicationContext, getString(R.string.no_events));
                 }
-                RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-                recyclerView.setLayoutManager(new LinearLayoutManager(applicationContext));
-                recyclerView.addOnItemTouchListener(
-                        new RecyclerItemClickListener(
-                                EventListActivity.this, recyclerView,
-                                new RecyclerItemClickListener.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(View view, int position) {
-                                        openConversation(eventList.get(position));
-                                    }
-
-                                    @Override
-                                    public void onItemLongClick(View view, int position) {
-                                        Vibrator vibe = (Vibrator) applicationContext.getSystemService(Context.VIBRATOR_SERVICE);
-                                        vibe.vibrate(VIBRATE_MILLISECONDS);
-                                        openEventInfo(eventList.get(position));
-                                    }
-                                }));
-                EventListAdapter mAdapter = new EventListAdapter(eventObjects, applicationContext);
-                recyclerView.setAdapter(mAdapter);
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
             } else {
-                Dialog.makeToast(applicationContext, getString(R.string.no_events));
+                Dialog.makeToast(applicationContext, getString(R.string.error_loading_events));
             }
         } else {
-            Dialog.makeToast(applicationContext, getString(R.string.error_loading_events));
+            Dialog.makeToast(applicationContext, getString(R.string.no_network));
         }
+    }
+
+    private void attachToEventListAdapter(ArrayList<EventObject> eventObjects) {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(applicationContext));
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(
+                        EventListActivity.this, recyclerView,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                openConversation(eventList.get(position));
+                            }
+
+                            @Override
+                            public void onItemLongClick(View view, int position) {
+                                Vibrator vibe = (Vibrator) applicationContext.getSystemService(Context.VIBRATOR_SERVICE);
+                                vibe.vibrate(VIBRATE_MILLISECONDS);
+                                openEventInfo(eventList.get(position));
+                            }
+                        }));
+        EventListAdapter mAdapter = new EventListAdapter(eventObjects, applicationContext);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
     private void openConversation(ParseObject event) {
