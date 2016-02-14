@@ -14,14 +14,15 @@ public class AppCache {
         this.query = query;
     }
 
-    public List queryCache() {
+    public List queryCache(String label) {
         Query cacheQuery = this.query;
         cacheQuery.build().fromLocalDatastore();
         try {
             return cacheQuery.build().find();
-        } catch (ParseException e) {
-            return queryDB();
+        } catch (ParseException ignored) {
+            return queryDB(label);
         }
+
     }
 
     public void deleteFromCache(List objs) {
@@ -31,10 +32,10 @@ public class AppCache {
         }
     }
 
-    private List queryDB() {
+    private List queryDB(String label) {
         try {
             List results = this.query.build().find();
-            ParseObject.pinAll(results);
+            ParseObject.pinAll(label, results);
             return results;
         } catch (ParseException e) {
             return null;

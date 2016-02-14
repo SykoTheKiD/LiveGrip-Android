@@ -28,10 +28,10 @@ import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.query.Query;
-import com.jaysyko.wrestlechat.query.QueryResult;
 import com.jaysyko.wrestlechat.utils.DateVerifier;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.Resources;
+import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +39,9 @@ import java.util.List;
 public class EventListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final String SHARE_TEXT = "Share Event";
     private static final int VIBRATE_MILLISECONDS = 50;
     private Context applicationContext;
+    private List<ParseObject> eventList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +73,7 @@ public class EventListActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                updateEventCards();
                 Snackbar.make(view, getString(R.string.refreshing_events), Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
             }
@@ -121,7 +122,7 @@ public class EventListActivity extends AppCompatActivity
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType(Resources.PLAIN_CONTENT_TYPE);
                 share.putExtra(Intent.EXTRA_TEXT, R.string.app_share);
-                startActivity(Intent.createChooser(share, SHARE_TEXT));
+                startActivity(Intent.createChooser(share, getString(R.string.app_share_title)));
                 break;
 //            case (R.id.nav_donate):
 //                Intent donateIntent = new Intent(applicationContext, DonateActivity.class);
@@ -146,50 +147,53 @@ public class EventListActivity extends AppCompatActivity
     @SuppressWarnings("unchecked")
     private void updateEventCards() {
         ArrayList<EventObject> eventObjects = new ArrayList<>();
-        Query<QueryResult> query = new Query<>(Events.class);
-        final List<QueryResult> eventList = query.execute();
-        QueryResult current;
+        Query<ParseObject> query = new Query<>(Events.class);
+        eventList = query.execute();
+        ParseObject current;
         if (eventList != null) {
-            for (int i = 0; i < eventList.size(); i++) {
-                current = eventList.get(i);
-                eventObjects.add(
-                        new EventObject(
-                                current.getString(Events.NAME),
-                                current.getString(Events.LOCATION),
-                                current.getLong(Events.START_TIME),
-                                current.getLong(Events.END_TIME),
-                                current.getString(Events.IMAGE)
-                        )
-                );
-            }
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-            recyclerView.setLayoutManager(new LinearLayoutManager(applicationContext));
-            recyclerView.addOnItemTouchListener(
-                    new RecyclerItemClickListener(
-                            EventListActivity.this,
-                            recyclerView,
-                            new RecyclerItemClickListener.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(View view, int position) {
-                                    openConversation(eventList.get(position));
-                                }
+            if (eventList.size() > 0) {
+                for (int i = 0; i < eventList.size(); i++) {
+                    current = eventList.get(i);
+                    eventObjects.add(
+                            new EventObject(
+                                    current.getString(Events.NAME),
+                                    current.getString(Events.LOCATION),
+                                    current.getLong(Events.START_TIME),
+                                    current.getLong(Events.END_TIME),
+                                    current.getString(Events.IMAGE)
+                            )
+                    );
+                }
+                RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+                recyclerView.setLayoutManager(new LinearLayoutManager(applicationContext));
+                recyclerView.addOnItemTouchListener(
+                        new RecyclerItemClickListener(
+                                EventListActivity.this, recyclerView,
+                                new RecyclerItemClickListener.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(View view, int position) {
+                                        openConversation(eventList.get(position));
+                                    }
 
-                                @Override
-                                public void onItemLongClick(View view, int position) {
-                                    Vibrator vibe = (Vibrator) applicationContext.getSystemService(Context.VIBRATOR_SERVICE);
-                                    vibe.vibrate(VIBRATE_MILLISECONDS);
-                                    openEventInfo(eventList.get(position));
-                                }
-                            }));
-            EventListAdapter mAdapter = new EventListAdapter(eventObjects, applicationContext);
-            recyclerView.setAdapter(mAdapter);
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
+                                    @Override
+                                    public void onItemLongClick(View view, int position) {
+                                        Vibrator vibe = (Vibrator) applicationContext.getSystemService(Context.VIBRATOR_SERVICE);
+                                        vibe.vibrate(VIBRATE_MILLISECONDS);
+                                        openEventInfo(eventList.get(position));
+                                    }
+                                }));
+                EventListAdapter mAdapter = new EventListAdapter(eventObjects, applicationContext);
+                recyclerView.setAdapter(mAdapter);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+            } else {
+                Dialog.makeToast(applicationContext, getString(R.string.no_events));
+            }
         } else {
             Dialog.makeToast(applicationContext, getString(R.string.error_loading_events));
         }
     }
 
-    private void openConversation(QueryResult event) {
+    private void openConversation(ParseObject event) {
         if (DateVerifier.goLive(event.getLong(Events.START_TIME))) {
             Intent intent = new Intent(applicationContext, MessagingActivity.class);
             intent.putExtra(IntentKeys.EVENT_ID, event.getObjectId());
@@ -200,7 +204,7 @@ public class EventListActivity extends AppCompatActivity
         }
     }
 
-    private void openEventInfo(QueryResult event) {
+    private void openEventInfo(ParseObject event) {
         Intent intent = new Intent(applicationContext, EventInfoActivity.class);
         intent.putExtra(IntentKeys.EVENT_NAME, event.getString(Events.NAME));
         intent.putExtra(IntentKeys.EVENT_INFO, event.getString(Events.INFO));

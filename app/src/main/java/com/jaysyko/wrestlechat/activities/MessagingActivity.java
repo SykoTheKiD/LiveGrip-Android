@@ -1,11 +1,11 @@
 package com.jaysyko.wrestlechat.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,8 +23,6 @@ import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.query.Query;
 import com.jaysyko.wrestlechat.utils.FormValidation;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
-import com.parse.FindCallback;
-import com.parse.ParseException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,18 +31,14 @@ import java.util.List;
 public class MessagingActivity extends AppCompatActivity {
 
     public static final String NULL_TEXT = "";
-    public static final String LOG_KEY = "message";
-    public static final String ERROR_KEY = "Error: ";
-    public static final int FETCH_MSG_DELAY_MILLIS = 1000;
-    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
-    private String userName;
-    private String sEventId;
-    private String eventName;
+    public static final int FETCH_MSG_DELAY_MILLIS = 1000, MAX_CHAT_MESSAGES_TO_SHOW = 50;
+    private String userName, sEventId, eventName;
     private EditText etMessage;
     private ListView lvChat;
     private ArrayList<Message> messages;
     private MessageListAdapter mAdapter;
     private Button btSend;
+    private Context applicationContext;
     // Keep track of initial load to scroll to the bottom of the ListView
     private boolean mFirstLoad;
     private Handler handler = new Handler();
@@ -98,7 +92,8 @@ public class MessagingActivity extends AppCompatActivity {
                     message.saveInBackground();
                     etMessage.setText(NULL_TEXT);
                 } else {
-                    Dialog.makeToast(getApplicationContext(), getString(R.string.message_too_short));
+                    applicationContext = getApplicationContext();
+                    Dialog.makeToast(applicationContext, getString(R.string.message_too_short));
                 }
             }
         });
@@ -106,28 +101,22 @@ public class MessagingActivity extends AppCompatActivity {
     }
 
     // Query messages from Parse so we can load them into the chat adapter
+    @SuppressWarnings("unchecked")
     private synchronized void fetchNewMessages() {
         Query<Message> query = new Query<>(Message.class);
         query.whereEqualTo(Events.ID, sEventId);
         query.orderByDESC(Message.CREATED_AT);
         query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-        query.build().findInBackground(new FindCallback<Message>() {
-            public void done(List<Message> messages, ParseException e) {
-                if (e == null) {
-                    Collections.reverse(messages);
-                    MessagingActivity.this.messages.clear();
-                    MessagingActivity.this.messages.addAll(messages);
-                    mAdapter.notifyDataSetChanged(); // update adapter
-                    // Scroll to the bottom of the list on initial load
-                    if (mFirstLoad) {
-                        lvChat.setSelection(mAdapter.getCount() - 1);
-                        mFirstLoad = false;
-                    }
-                } else {
-                    Log.d(LOG_KEY, ERROR_KEY + e.getMessage());
-                }
-            }
-        });
+        List messages = query.execute();
+        Collections.reverse(messages);
+        MessagingActivity.this.messages.clear();
+        MessagingActivity.this.messages.addAll(messages);
+        mAdapter.notifyDataSetChanged(); // update adapter
+        // Scroll to the bottom of the list on initial load
+        if (mFirstLoad) {
+            lvChat.setSelection(mAdapter.getCount() - 1);
+            mFirstLoad = false;
+        }
         btSend.setEnabled(true);
     }
 

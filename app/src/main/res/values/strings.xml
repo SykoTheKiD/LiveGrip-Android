@@ -148,4 +148,6 @@
     <string name="refreshing_events">Refreshing Events...</string>
     <string name="hey_check_out">Hey check out the</string>
     <string name="sent_from_wrestlechat">- sent from WrestleChat</string>
+    <string name="app_share_title">Share Wrestle Chat</string>
+    <string name="no_events">No Events Right Now</string>
 </resources>

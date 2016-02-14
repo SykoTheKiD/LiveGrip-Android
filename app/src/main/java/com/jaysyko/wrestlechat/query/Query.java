@@ -9,9 +9,11 @@ import java.util.List;
 public final class Query<T extends ParseObject> {
 
     private ParseQuery query;
+    private String label;
 
     public Query(Class model) {
         this.query = ParseQuery.getQuery(model);
+        this.label = model.getSimpleName();
     }
 
     public ParseQuery build() {
@@ -39,6 +41,6 @@ public final class Query<T extends ParseObject> {
     }
 
     final public List execute() {
-        return new AppCache(this).queryCache();
+        return new AppCache(this).queryCache(this.label);
     }
 }
