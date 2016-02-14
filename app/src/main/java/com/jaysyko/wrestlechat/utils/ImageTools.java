@@ -4,15 +4,12 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.InputStream;
 import java.math.BigInteger;
-import java.net.URL;
 import java.security.MessageDigest;
 
 public final class ImageTools {
@@ -30,15 +27,6 @@ public final class ImageTools {
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeResource(res, resId, options);
-    }
-
-    public static Drawable loadImageFromURL(String url) {
-        try {
-            InputStream is = (InputStream) new URL(url).getContent();
-            return Drawable.createFromStream(is, null);
-        } catch (Exception e) {
-            return null;
-        }
     }
 
     private static int calculateInSampleSize(
