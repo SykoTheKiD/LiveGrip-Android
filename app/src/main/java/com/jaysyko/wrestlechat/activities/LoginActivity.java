@@ -13,11 +13,10 @@ import android.widget.TextView;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
+import com.jaysyko.wrestlechat.forms.Form;
+import com.jaysyko.wrestlechat.forms.FormValidation;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.utils.StringResources;
-
-import static com.jaysyko.wrestlechat.utils.FormValidation.formIsClean;
-import static com.jaysyko.wrestlechat.utils.FormValidation.isValidUsername;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -51,7 +50,8 @@ public class LoginActivity extends AppCompatActivity {
                     password = passwordField.getText().toString();
                     showLoadPanel(true, loginButton);
                     if (NetworkState.isConnected(context)) {
-                        if (formIsClean(username, password)) {
+                        Form form = FormValidation.validateLogin(username, password);
+                        if (form.valid) {
                             CurrentActiveUser currentActiveUser = CurrentActiveUser.getInstance(username, password);
                             if (currentActiveUser.loginUser()) {
                                 Dialog.makeToast(context, getString(R.string.welcome_back).concat(StringResources.BLANK_SPACE).concat(username));
@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Dialog.makeToast(context, getString(R.string.incorrect_login_info));
                             }
                         } else {
-                            Dialog.makeToast(context, getString(R.string.blank_username));
+                            Dialog.makeToast(context, getString(Form.getSimpleMessage(form.reason)));
                         }
                     } else {
                         Dialog.makeToast(context, getString(R.string.no_network));
@@ -78,18 +78,15 @@ public class LoginActivity extends AppCompatActivity {
                     password = passwordField.getText().toString();
                     showLoadPanel(true, loginButton);
                     if (NetworkState.isConnected(context)) {
-                        if (formIsClean(username, password)) {
-                            if (isValidUsername(username)) {
-                                if (CurrentActiveUser.signUpUser(username, password)) {
-                                    startActivity(intent);
-                                } else {
-                                    Dialog.makeToast(context, getString(R.string.username_taken));
-                                }
+                        Form form = FormValidation.validateSignUp(username, password);
+                        if (form.valid) {
+                            if (CurrentActiveUser.signUpUser(username, password)) {
+                                startActivity(intent);
                             } else {
-                                Dialog.makeToast(context, getString(R.string.invalid_username));
+                                Dialog.makeToast(context, getString(R.string.username_taken));
                             }
                         } else {
-                            Dialog.makeToast(context, getString(R.string.blank_username));
+                            Dialog.makeToast(context, getString(Form.getSimpleMessage(form.reason)));
                         }
                         showLoadPanel(false, loginButton);
                     } else {
