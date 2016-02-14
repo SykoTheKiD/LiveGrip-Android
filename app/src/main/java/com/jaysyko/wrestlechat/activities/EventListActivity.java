@@ -125,10 +125,6 @@ public class EventListActivity extends AppCompatActivity
                 share.putExtra(Intent.EXTRA_TEXT, R.string.app_share);
                 startActivity(Intent.createChooser(share, getString(R.string.app_share_title)));
                 break;
-//            case (R.id.nav_donate):
-//                Intent donateIntent = new Intent(applicationContext, DonateActivity.class);
-//                startActivity(donateIntent);
-//                break;
             case (R.id.nav_about):
                 Intent aboutIntent = new Intent(applicationContext, AboutActivity.class);
                 startActivity(aboutIntent);

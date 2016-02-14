@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.models.Message;
-import com.squareup.picasso.Picasso;
+import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import java.util.List;
 
@@ -64,7 +64,8 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
 
         }
         final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
-        Picasso.with(context).load(CurrentActiveUser.getInstance().getCustomProfileImageURL()).into(profileView);
+        ImageTools.loadImage(context, CurrentActiveUser.getInstance().getCustomProfileImageURL(), profileView);
+//        Picasso.with(context).load(CurrentActiveUser.getInstance().getCustomProfileImageURL()).into(profileView);
         return convertView;
     }
 
