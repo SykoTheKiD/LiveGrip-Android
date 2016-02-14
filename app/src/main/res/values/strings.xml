@@ -150,4 +150,6 @@
     <string name="sent_from_wrestlechat">- sent from WrestleChat</string>
     <string name="app_share_title">Share Wrestle Chat</string>
     <string name="no_events">No Events Right Now</string>
+    <string name="no_network">No Network Access</string>
+    <string name="valid">Valid</string>
 </resources>
