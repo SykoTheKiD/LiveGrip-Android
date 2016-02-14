@@ -22,6 +22,7 @@ import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.FormValidation;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.models.Message;
+import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.query.Query;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.StringResources;
@@ -105,22 +106,26 @@ public class MessagingActivity extends AppCompatActivity {
     // Query messages from Parse so we can load them into the chat adapter
     @SuppressWarnings("unchecked")
     private synchronized void fetchNewMessages() {
-        Query<Message> query = new Query<>(Message.class);
-        query.whereEqualTo(Events.ID, sEventId);
-        query.orderByDESC(Message.CREATED_AT);
-        query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-        List messages = query.executeHard();
-        if (messages != null) {
-            Collections.reverse(messages);
-            MessagingActivity.this.messages.clear();
-            MessagingActivity.this.messages.addAll(messages);
-            mAdapter.notifyDataSetChanged(); // update adapter
-            // Scroll to the bottom of the list on initial load
-            if (mFirstLoad) {
-                lvChat.setSelection(mAdapter.getCount() - 1);
-                mFirstLoad = false;
+        if (NetworkState.isConnected(applicationContext)) {
+            Query<Message> query = new Query<>(Message.class);
+            query.whereEqualTo(Events.ID, sEventId);
+            query.orderByDESC(Message.CREATED_AT);
+            query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
+            List messages = query.executeHard();
+            if (messages != null) {
+                Collections.reverse(messages);
+                MessagingActivity.this.messages.clear();
+                MessagingActivity.this.messages.addAll(messages);
+                mAdapter.notifyDataSetChanged(); // update adapter
+                // Scroll to the bottom of the list on initial load
+                if (mFirstLoad) {
+                    lvChat.setSelection(mAdapter.getCount() - 1);
+                    mFirstLoad = false;
+                }
+                btSend.setEnabled(true);
             }
-            btSend.setEnabled(true);
+        } else {
+            Dialog.makeToast(applicationContext, getString(R.string.no_network));
         }
     }
 

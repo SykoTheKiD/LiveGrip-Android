@@ -9,6 +9,6 @@ public class NetworkState {
     public static boolean isConnected(Context context) {
         ConnectivityManager cn = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo nf = cn.getActiveNetworkInfo();
-        return !(nf != null && nf.isConnected());
+        return nf != null && nf.isConnected();
     }
 }
