@@ -67,6 +67,7 @@ public class MessagingActivity extends AppCompatActivity {
         btSend = (Button) findViewById(R.id.btSend);
         saveMessage();
         handler.postDelayed(fetchNewMessagesRunnable, FETCH_MSG_DELAY_MILLIS);
+        applicationContext = getApplicationContext();
     }
 
     // Setup message field and posting
@@ -95,7 +96,6 @@ public class MessagingActivity extends AppCompatActivity {
                     message.saveInBackground();
                     etMessage.setText(StringResources.NULL_TEXT);
                 } else {
-                    applicationContext = getApplicationContext();
                     Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.reason)));
                 }
             }
@@ -106,7 +106,7 @@ public class MessagingActivity extends AppCompatActivity {
     // Query messages from Parse so we can load them into the chat adapter
     @SuppressWarnings("unchecked")
     private synchronized void fetchNewMessages() {
-        if (NetworkState.isConnected(applicationContext)) {
+        if (NetworkState.isConnected(getApplicationContext())) {
             Query<Message> query = new Query<>(Message.class);
             query.whereEqualTo(Events.ID, sEventId);
             query.orderByDESC(Message.CREATED_AT);
