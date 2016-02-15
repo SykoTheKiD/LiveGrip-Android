@@ -51,6 +51,12 @@ public class MessagingActivity extends AppCompatActivity {
             handler.postDelayed(this, FETCH_MSG_DELAY_MILLIS);
         }
     };
+    private Runnable initMessageaAdapter = new Runnable() {
+        @Override
+        public void run() {
+            saveMessage();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +71,7 @@ public class MessagingActivity extends AppCompatActivity {
         CurrentActiveUser currentUser = CurrentActiveUser.getInstance();
         userName = currentUser.getUsername();
         btSend = (Button) findViewById(R.id.btSend);
-        saveMessage();
+        handler.post(initMessageaAdapter);
         handler.postDelayed(fetchNewMessagesRunnable, FETCH_MSG_DELAY_MILLIS);
         applicationContext = getApplicationContext();
     }
@@ -105,7 +111,7 @@ public class MessagingActivity extends AppCompatActivity {
 
     // Query messages from Parse so we can load them into the chat adapter
     @SuppressWarnings("unchecked")
-    private synchronized void fetchNewMessages() {
+    private void fetchNewMessages() {
         if (NetworkState.isConnected(getApplicationContext())) {
             Query<Message> query = new Query<>(Message.class);
             query.whereEqualTo(Events.ID, sEventId);
