@@ -61,6 +61,7 @@
         android:inputType="textPassword"
         android:maxLines="1"
         android:paddingLeft="15dp"
+        android:paddingStart="15dp"
         android:singleLine="true" />
 
     <RelativeLayout
@@ -99,7 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:paddingTop="20dp"
-        android:text="Don’t Have an Account? Sign Up"
+        android:text="@string/no_account_question"
         android:textColor="#ffffff"
         android:textSize="15sp" />
 </LinearLayout>
