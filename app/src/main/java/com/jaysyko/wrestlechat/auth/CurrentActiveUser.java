@@ -69,6 +69,7 @@ public class CurrentActiveUser implements ActiveUser {
             ParseUser.logIn(activeCurrentActiveUser.username, activeCurrentActiveUser.password);
             return true;
         } catch (ParseException e) {
+            activeCurrentActiveUser = null;
             return false;
         }
 
