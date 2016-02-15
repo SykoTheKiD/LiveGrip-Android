@@ -81,7 +81,7 @@ public class EventListActivity extends AppCompatActivity
                         updateEventCards(true);
                         swipeView.setRefreshing(false);
                     }
-                }, 1000);
+                }, 3000);
             }
         });
     }
@@ -151,6 +151,7 @@ public class EventListActivity extends AppCompatActivity
         if (NetworkState.isConnected(applicationContext)) {
             ArrayList<EventObject> eventObjects = new ArrayList<>();
             Query<ParseObject> query = new Query<>(Events.class);
+            query.orderByASC(Events.START_TIME);
             if (hard) {
                 eventList = query.executeHard();
             } else {
