@@ -1,6 +1,7 @@
 package com.jaysyko.wrestlechat.adapters;
 
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,31 +41,45 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         final ViewHolder holder = (ViewHolder) convertView.getTag();
         final boolean isMe = message.getUsername().equals(mUserId);
         final String messageBody = message.getBody();
-        TextView messageBodytv, usernametv;
+        Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
+                ImageTools.loadImage(context, ImageTools.defaultProfileImage(message.getUsername()), profileView);
+            }
+        });
         // Show-hide image based on the logged-in user.
         // Display the profile image to the right for our user, left for other users.
         if (isMe) {
-            holder.imageRight.setVisibility(View.VISIBLE);
-            holder.imageLeft.setVisibility(View.GONE);
-            holder.sender.setVisibility(View.GONE);
-            holder.user.setVisibility(View.VISIBLE);
-            messageBodytv = (TextView) holder.user.findViewById(R.id.my_message_body);
-            messageBodytv.setText(messageBody);
-
+            setUserView(holder, messageBody);
         } else {
-            holder.imageLeft.setVisibility(View.VISIBLE);
-            holder.imageRight.setVisibility(View.GONE);
-            holder.user.setVisibility(View.GONE);
-            holder.sender.setVisibility(View.VISIBLE);
-            messageBodytv = (TextView) holder.sender.findViewById(R.id.sender_message_body);
-            messageBodytv.setText(messageBody);
-            usernametv = (TextView) holder.sender.findViewById(R.id.sender_username);
-            usernametv.setText(message.getUsername());
-
+            senderView(message, holder, messageBody);
         }
-        final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
-        ImageTools.loadImage(context, ImageTools.defaultProfileImage(message.getUsername()), profileView);
         return convertView;
+    }
+
+    private void senderView(Message message, ViewHolder holder, String messageBody) {
+        TextView messageBodytv;
+        TextView usernametv;
+        holder.imageLeft.setVisibility(View.VISIBLE);
+        holder.imageRight.setVisibility(View.GONE);
+        holder.user.setVisibility(View.GONE);
+        holder.sender.setVisibility(View.VISIBLE);
+        messageBodytv = (TextView) holder.sender.findViewById(R.id.sender_message_body);
+        messageBodytv.setText(messageBody);
+        usernametv = (TextView) holder.sender.findViewById(R.id.sender_username);
+        usernametv.setText(message.getUsername());
+    }
+
+    private void setUserView(ViewHolder holder, String messageBody) {
+        TextView messageBodytv;
+        holder.imageRight.setVisibility(View.VISIBLE);
+        holder.imageLeft.setVisibility(View.GONE);
+        holder.sender.setVisibility(View.GONE);
+        holder.user.setVisibility(View.VISIBLE);
+        messageBodytv = (TextView) holder.user.findViewById(R.id.my_message_body);
+        messageBodytv.setText(messageBody);
     }
 
     final class ViewHolder {

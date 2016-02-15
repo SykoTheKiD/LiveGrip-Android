@@ -5,11 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -54,7 +53,7 @@ public class EventListActivity extends AppCompatActivity
         Runnable updateEventsThread = new Runnable() {
             @Override
             public void run() {
-                updateEventCards();
+                updateEventCards(false);
             }
         };
         updateEventsHandler.post(updateEventsThread);
@@ -70,13 +69,19 @@ public class EventListActivity extends AppCompatActivity
         TextView headerUsername = (TextView) headerLayout.findViewById(R.id.drawer_username);
         headerUsername.setText(CurrentActiveUser.getInstance().getUsername());
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.refresh_events);
-        fab.setOnClickListener(new View.OnClickListener() {
+        final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+        swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
+        swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View view) {
-                updateEventCards();
-                Snackbar.make(view, getString(R.string.refreshing_events), Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
+            public void onRefresh() {
+                swipeView.setRefreshing(true);
+                (new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateEventCards(true);
+                        swipeView.setRefreshing(false);
+                    }
+                }, 1000);
             }
         });
     }
@@ -142,11 +147,15 @@ public class EventListActivity extends AppCompatActivity
 
     //display clickable a list of all users
     @SuppressWarnings("unchecked")
-    private void updateEventCards() {
+    private void updateEventCards(Boolean hard) {
         if (NetworkState.isConnected(applicationContext)) {
             ArrayList<EventObject> eventObjects = new ArrayList<>();
             Query<ParseObject> query = new Query<>(Events.class);
-            eventList = query.execute();
+            if (hard) {
+                eventList = query.executeHard();
+            } else {
+                eventList = query.execute();
+            }
             ParseObject current;
             if (eventList != null) {
                 if (eventList.size() > 0) {
