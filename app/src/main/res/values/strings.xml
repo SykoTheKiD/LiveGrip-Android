@@ -154,4 +154,6 @@
     <string name="valid">Valid</string>
     <string name="no_account_question">Don’t Have an Account? Sign Up</string>
     <string name="action_done">Done</string>
+    <string name="upcoming">Upcoming Feature</string>
+    <string name="profile_upcoming">Profile options such as username changes and profile pictures will be available in a future release. Stay tuned!</string>
 </resources>

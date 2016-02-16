@@ -104,7 +104,7 @@
             android:name=".activities.AboutActivity"
             android:label="About" />
         <activity android:name=".activities.WelcomeActivity" />
-        <activity android:name=".activities.UserProfileActivity"></activity>
+        <activity android:name=".activities.UserProfileActivity" />
     </application>
 
 </manifest>
