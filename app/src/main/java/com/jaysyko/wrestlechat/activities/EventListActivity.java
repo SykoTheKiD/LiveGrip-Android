@@ -119,6 +119,8 @@ public class EventListActivity extends AppCompatActivity
         int id = item.getItemId();
         switch (id) {
             case (R.id.nav_my_profile):
+                Dialog.makeDialog(EventListActivity.this, getString(R.string.upcoming),
+                        getString(R.string.profile_upcoming));
                 break;
             case (R.id.nav_logout):
                 CurrentActiveUser.getInstance().logout();
