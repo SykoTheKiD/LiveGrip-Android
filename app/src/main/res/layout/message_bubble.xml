@@ -28,7 +28,7 @@
             android:layout_alignRight="@+id/ivProfileLeft"
             android:layout_below="@+id/ivProfileLeft"
             android:ellipsize="marquee"
-            android:gravity="start"
+            android:gravity="left"
             android:lines="1"
             android:paddingLeft="5dp"
             android:paddingStart="5dp"
