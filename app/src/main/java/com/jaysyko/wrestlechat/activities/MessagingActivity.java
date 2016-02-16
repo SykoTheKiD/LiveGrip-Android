@@ -147,7 +147,7 @@ public class MessagingActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.action_event_info:
-                Intent eventInfoIntent = new Intent(getApplicationContext(), EventInfoActivity.class);
+                Intent eventInfoIntent = new Intent(applicationContext, EventInfoActivity.class);
                 eventInfoIntent.putExtra(IntentKeys.EVENT_NAME, eventName);
                 startActivity(eventInfoIntent);
                 return true;
@@ -169,5 +169,13 @@ public class MessagingActivity extends AppCompatActivity {
     private void closeAllThreads() {
         handler.removeCallbacks(fetchNewMessagesRunnable);
         handler.removeCallbacks(initMessageaAdapter);
+    }
+
+    public void onBackPressed() {
+        super.onBackPressed();
+        System.gc();
+        Intent i = new Intent(applicationContext, EventListActivity.class);
+        startActivity(i);
+        finish();
     }
 }
