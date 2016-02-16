@@ -2,6 +2,7 @@ package com.jaysyko.wrestlechat.adapters;
 
 import android.content.Context;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import java.util.List;
 public class MessageListAdapter extends ArrayAdapter<Message> {
     private String mUserId;
     private Context context = getContext();
+    private Handler handler = new Handler();
 
     public MessageListAdapter(Context context, String userId, List<Message> messages) {
         super(context, 0, messages);
@@ -28,14 +30,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).
-                    inflate(R.layout.message_bubble, parent, false);
-            final ViewHolder holder = new ViewHolder();
-            holder.imageLeft = (ImageView) convertView.findViewById(R.id.ivProfileLeft);
-            holder.imageRight = (ImageView) convertView.findViewById(R.id.ivProfileRight);
-            holder.sender = (RelativeLayout) convertView.findViewById(R.id.sender_message);
-            holder.user = (RelativeLayout) convertView.findViewById(R.id.my_message);
-            convertView.setTag(holder);
+            convertView = getView(parent);
         }
         final Message message = getItem(position);
         final ViewHolder holder = (ViewHolder) convertView.getTag();
@@ -52,22 +47,49 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         // Show-hide image based on the logged-in user.
         // Display the profile image to the right for our user, left for other users.
         if (isMe) {
-            setUserView(holder, messageBody);
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    setUserView(holder, messageBody);
+                }
+            });
         } else {
-            senderView(message, holder, messageBody);
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    senderView(message, holder, messageBody);
+                }
+            });
         }
         return convertView;
     }
 
+    @NonNull
+    private View getView(ViewGroup parent) {
+        View convertView;
+        convertView = LayoutInflater.from(context).
+                inflate(R.layout.message_bubble, parent, false);
+        final ViewHolder holder = new ViewHolder();
+        holder.imageLeft = (ImageView) convertView.findViewById(R.id.ivProfileLeft);
+        holder.imageRight = (ImageView) convertView.findViewById(R.id.ivProfileRight);
+        holder.sender = (RelativeLayout) convertView.findViewById(R.id.sender_message);
+        holder.senderMessage = (TextView) convertView.findViewById(R.id.sender_message_body);
+        holder.user = (RelativeLayout) convertView.findViewById(R.id.my_message);
+        convertView.setTag(holder);
+        return convertView;
+    }
+
+
+    //sender senderpic, senderusername
+    //
     private void senderView(Message message, ViewHolder holder, String messageBody) {
-        TextView messageBodytv;
         TextView usernametv;
         holder.imageLeft.setVisibility(View.VISIBLE);
         holder.imageRight.setVisibility(View.GONE);
         holder.user.setVisibility(View.GONE);
         holder.sender.setVisibility(View.VISIBLE);
-        messageBodytv = (TextView) holder.sender.findViewById(R.id.sender_message_body);
-        messageBodytv.setText(messageBody);
+        holder.senderMessage.setVisibility(View.VISIBLE);
+        holder.senderMessage.setText(messageBody);
         usernametv = (TextView) holder.sender.findViewById(R.id.sender_username);
         usernametv.setText(message.getUsername());
     }
@@ -77,6 +99,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         holder.imageRight.setVisibility(View.VISIBLE);
         holder.imageLeft.setVisibility(View.GONE);
         holder.sender.setVisibility(View.GONE);
+        holder.senderMessage.setVisibility(View.GONE);
         holder.user.setVisibility(View.VISIBLE);
         messageBodytv = (TextView) holder.user.findViewById(R.id.my_message_body);
         messageBodytv.setText(messageBody);
@@ -84,6 +107,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
 
     final class ViewHolder {
         public ImageView imageLeft, imageRight;
+        public TextView senderMessage;
         public RelativeLayout sender, user;
     }
 }

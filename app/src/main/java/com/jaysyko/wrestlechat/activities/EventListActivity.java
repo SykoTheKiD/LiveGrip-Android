@@ -53,16 +53,18 @@ public class EventListActivity extends AppCompatActivity
         Runnable updateEventsThread = new Runnable() {
             @Override
             public void run() {
-                updateEventCards(false);
+                updateEventCards(true);
             }
         };
         updateEventsHandler.post(updateEventsThread);
         applicationContext = getApplicationContext();
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_event_list);
@@ -148,8 +150,8 @@ public class EventListActivity extends AppCompatActivity
     //display clickable a list of all users
     @SuppressWarnings("unchecked")
     private void updateEventCards(Boolean hard) {
+        ArrayList<EventObject> eventObjects = new ArrayList<>();
         if (NetworkState.isConnected(applicationContext)) {
-            ArrayList<EventObject> eventObjects = new ArrayList<>();
             Query<ParseObject> query = new Query<>(Events.class);
             query.orderByASC(Events.START_TIME);
             if (hard) {
@@ -172,7 +174,6 @@ public class EventListActivity extends AppCompatActivity
                                 )
                         );
                     }
-                    attachToEventListAdapter(eventObjects);
                 } else {
                     Dialog.makeToast(applicationContext, getString(R.string.no_events));
                 }
@@ -182,6 +183,7 @@ public class EventListActivity extends AppCompatActivity
         } else {
             Dialog.makeToast(applicationContext, getString(R.string.no_network));
         }
+        attachToEventListAdapter(eventObjects);
     }
 
     private void attachToEventListAdapter(ArrayList<EventObject> eventObjects) {
@@ -228,5 +230,10 @@ public class EventListActivity extends AppCompatActivity
         intent.putExtra(IntentKeys.EVENT_START_TIME, event.getLong(Events.START_TIME));
         intent.putExtra(IntentKeys.EVENT_LOCATION, event.getString(Events.LOCATION));
         startActivity(intent);
+    }
+
+    public void onStart(){
+        super.onStart();
+        updateEventCards(false);
     }
 }

@@ -155,4 +155,19 @@ public class MessagingActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public void onDestroy() {
+        super.onDestroy();
+        closeAllThreads();
+    }
+
+    public void onPause() {
+        super.onPause();
+        closeAllThreads();
+    }
+
+    private void closeAllThreads() {
+        handler.removeCallbacks(fetchNewMessagesRunnable);
+        handler.removeCallbacks(initMessageaAdapter);
+    }
 }
