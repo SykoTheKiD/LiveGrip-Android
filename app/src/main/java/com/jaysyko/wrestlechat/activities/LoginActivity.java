@@ -50,10 +50,8 @@ public class LoginActivity extends AppCompatActivity {
                     username = usernameField.getText().toString();
                     password = passwordField.getText().toString();
                     showLoadPanel(true, loginButton);
-                    Log.d(username,password);
                     if (NetworkState.isConnected(context)) {
                         Form form = FormValidation.validateLogin(username, password);
-                        Log.d(username,password);
                         if (form.valid) {
                             CurrentActiveUser currentActiveUser = CurrentActiveUser.getInstance(username, password);
                             if (currentActiveUser.loginUser()) {
