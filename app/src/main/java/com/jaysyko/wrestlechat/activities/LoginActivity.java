@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void run() {
                     setupLoginListener(context, intent, loginButton, usernameField, passwordField);
 
-                    setupSignUpListener(context, intent, loginButton, signUpButton, usernameField, passwordField);
+                    setupSignUpListener(context, intent, signUpButton, usernameField, passwordField);
 
                     setupSignUpTextListener(loginButton, signUpButton, signUpText, signUpPrompt);
                 }
@@ -77,13 +77,13 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void setupSignUpListener(final Context context, final Intent intent, final Button loginButton, Button signUpButton, final EditText usernameField, final EditText passwordField) {
+    private void setupSignUpListener(final Context context, final Intent intent, final Button signUpButton, final EditText usernameField, final EditText passwordField) {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 username = usernameField.getText().toString();
                 password = passwordField.getText().toString();
-                showLoadPanel(true, loginButton);
+                showLoadPanel(true, signUpButton);
                 if (NetworkState.isConnected(context)) {
                     Form form = FormValidation.validateSignUp(username, password);
                     if (form.isValid()) {
@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         Dialog.makeToast(context, getString(Form.getSimpleMessage(form.getReason())));
                     }
-                    showLoadPanel(false, loginButton);
+                    showLoadPanel(false, signUpButton);
                 } else {
                     Dialog.makeToast(context, getString(R.string.no_network));
                 }
