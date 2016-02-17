@@ -164,10 +164,19 @@ public class EventListActivity extends AppCompatActivity
                         getString(R.string.profile_upcoming));
                 break;
             case (R.id.nav_logout):
-                CurrentActiveUser.getInstance().logout();
-                Intent intent = new Intent(applicationContext, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                if (NetworkState.isConnected(applicationContext)) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            CurrentActiveUser.getInstance().logout();
+                            Intent intent = new Intent(applicationContext, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+                } else {
+                    Dialog.makeToast(applicationContext, getString(R.string.no_network));
+                }
                 break;
             case (R.id.nav_share):
                 Intent share = new Intent(Intent.ACTION_SEND);
