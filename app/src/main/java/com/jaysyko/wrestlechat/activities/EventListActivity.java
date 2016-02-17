@@ -41,7 +41,7 @@ import java.util.List;
 public class EventListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final int VIBRATE_MILLISECONDS = 50;
+    private static final int VIBRATE_MILLISECONDS = 25;
     private static final int REFRESH_ANI_MILLIS = 2500;
     final Handler handler = new Handler();
     private Context applicationContext;

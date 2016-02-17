@@ -22,6 +22,8 @@ public class Form {
                 return R.string.valid;
             case INVALID_MESSAGE:
                 return R.string.message_too_short;
+            case SPECIAL_CHARACTERS:
+                return R.string.special_chars_username;
         }
         return R.string.valid;
     }
