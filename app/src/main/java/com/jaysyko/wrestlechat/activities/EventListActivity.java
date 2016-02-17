@@ -114,13 +114,17 @@ public class EventListActivity extends AppCompatActivity
             @Override
             public void onRefresh() {
                 swipeView.setRefreshing(true);
-                (new Handler()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        updateEventCards(true);
-                        swipeView.setRefreshing(false);
-                    }
-                }, REFRESH_ANI_MILLIS);
+                if (NetworkState.isConnected(applicationContext)) {
+                    (new Handler()).postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateEventCards(true);
+                        }
+                    }, REFRESH_ANI_MILLIS);
+                } else {
+                    Dialog.makeToast(applicationContext, getString(R.string.no_network));
+                }
+                swipeView.setRefreshing(false);
             }
         });
     }
@@ -258,7 +262,6 @@ public class EventListActivity extends AppCompatActivity
             Intent intent = new Intent(applicationContext, MessagingActivity.class);
             intent.putExtra(IntentKeys.EVENT_ID, event.getObjectId());
             intent.putExtra(IntentKeys.EVENT_NAME, event.getString(Events.NAME));
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         } else {
             Dialog.makeToast(applicationContext, String.valueOf(System.currentTimeMillis() % 1000));
