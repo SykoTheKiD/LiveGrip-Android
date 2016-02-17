@@ -42,8 +42,22 @@ public class EventListActivity extends AppCompatActivity
 
     private static final int VIBRATE_MILLISECONDS = 50;
     private static final int REFRESH_ANI_MILLIS = 2500;
+    final Handler updateEventsHandler = new Handler();
     private Context applicationContext;
     private List<ParseObject> eventList;
+    final Runnable updateEventsHard = new Runnable() {
+        @Override
+        public void run() {
+            updateEventCards(true);
+        }
+    };
+
+    final Runnable updateEventsSoft = new Runnable() {
+        @Override
+        public void run() {
+            updateEventCards(false);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +65,7 @@ public class EventListActivity extends AppCompatActivity
         setContentView(R.layout.activity_event_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        final Handler updateEventsHandler = new Handler();
-        Runnable updateEventsThread = new Runnable() {
-            @Override
-            public void run() {
-                updateEventCards(true);
-            }
-        };
-        updateEventsHandler.post(updateEventsThread);
+        updateEventsHandler.post(updateEventsHard);
         applicationContext = getApplicationContext();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -241,7 +248,12 @@ public class EventListActivity extends AppCompatActivity
 
     public void onStart(){
         super.onStart();
-        updateEventCards(false);
+        updateEventsHandler.post(updateEventsSoft);
+    }
+
+    public void onResume() {
+        super.onResume();
+        updateEventsHandler.post(updateEventsSoft);
     }
 
 }
