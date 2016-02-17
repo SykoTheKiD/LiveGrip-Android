@@ -51,12 +51,14 @@ public class MessagingActivity extends AppCompatActivity {
             handler.postDelayed(this, FETCH_MSG_DELAY_MILLIS);
         }
     };
+    boolean initMessages = handler.postDelayed(fetchNewMessagesRunnable, FETCH_MSG_DELAY_MILLIS);
     private Runnable initMessageaAdapter = new Runnable() {
         @Override
         public void run() {
             saveMessage();
         }
     };
+    boolean initAdapter = handler.post(initMessageaAdapter);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +73,6 @@ public class MessagingActivity extends AppCompatActivity {
         CurrentActiveUser currentUser = CurrentActiveUser.getInstance();
         userName = currentUser.getUsername();
         btSend = (Button) findViewById(R.id.btSend);
-        handler.post(initMessageaAdapter);
-        handler.postDelayed(fetchNewMessagesRunnable, FETCH_MSG_DELAY_MILLIS);
         applicationContext = getApplicationContext();
     }
 

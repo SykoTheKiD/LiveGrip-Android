@@ -20,8 +20,6 @@ import java.util.List;
 public class MessageListAdapter extends ArrayAdapter<Message> {
     private String mUserId;
     private Context context = getContext();
-    private Handler handler = new Handler();
-
     public MessageListAdapter(Context context, String userId, List<Message> messages) {
         super(context, 0, messages);
         this.mUserId = userId;
