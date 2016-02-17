@@ -77,6 +77,20 @@ public class EventListActivity extends AppCompatActivity
 
         applicationContext = getApplicationContext();
 
+        handler.post(initSwipeRefresh);
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+                recyclerView.setLayoutManager(new LinearLayoutManager(applicationContext));
+                eventListClickListener(recyclerView);
+                mAdapter = new EventListAdapter(new ArrayList<EventObject>(), applicationContext);
+                recyclerView.setAdapter(mAdapter);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+            }
+        });
+
+
         handler.post(updateEventsHard);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -91,9 +105,6 @@ public class EventListActivity extends AppCompatActivity
         TextView headerUsername = (TextView) headerLayout.findViewById(R.id.drawer_username);
         headerUsername.setText(CurrentActiveUser.getInstance().getUsername());
 
-        handler.post(initSwipeRefresh);
-
-        attachToEventListAdapter(new ArrayList<EventObject>());
     }
 
     private void initSwipeRefresh() {
@@ -211,18 +222,13 @@ public class EventListActivity extends AppCompatActivity
         } else {
             Dialog.makeToast(applicationContext, getString(R.string.no_network));
         }
+        updateRecyclerView(eventObjects);
+    }
+
+    private synchronized void updateRecyclerView(ArrayList<EventObject> eventObjects) {
         mAdapter.itemsData.clear();
         mAdapter.itemsData.addAll(eventObjects);
         mAdapter.notifyDataSetChanged();
-    }
-
-    private void attachToEventListAdapter(ArrayList<EventObject> eventObjects) {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(applicationContext));
-        eventListClickListener(recyclerView);
-        mAdapter = new EventListAdapter(eventObjects, applicationContext);
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
 
@@ -267,7 +273,6 @@ public class EventListActivity extends AppCompatActivity
         intent.putExtra(IntentKeys.EVENT_IMAGE, event.getString(Events.IMAGE));
         intent.putExtra(IntentKeys.EVENT_START_TIME, event.getLong(Events.START_TIME));
         intent.putExtra(IntentKeys.EVENT_LOCATION, event.getString(Events.LOCATION));
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
