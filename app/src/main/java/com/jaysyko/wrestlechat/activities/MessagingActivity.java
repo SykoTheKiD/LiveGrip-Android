@@ -55,7 +55,7 @@ public class MessagingActivity extends AppCompatActivity {
     private Runnable initMessageaAdapter = new Runnable() {
         @Override
         public void run() {
-            saveMessage();
+            initMesssageAdapter();
         }
     };
     boolean initAdapter = handler.post(initMessageaAdapter);
@@ -74,10 +74,36 @@ public class MessagingActivity extends AppCompatActivity {
         userName = currentUser.getUsername();
         btSend = (Button) findViewById(R.id.btSend);
         applicationContext = getApplicationContext();
+
+        btSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btSend.setEnabled(false);
+                String body = etMessage.getText().toString();
+                Form form = FormValidation.validateMessage(body);
+                if (NetworkState.isConnected(applicationContext)) {
+                    if (form.isValid()) {
+                        body = body.trim();
+                        // Use Message model to create new messages now
+                        Message message = new Message();
+                        message.setUsername(userName);
+                        message.setEventId(sEventId);
+                        message.setBody(body);
+                        message.saveInBackground();
+                        etMessage.setText(StringResources.NULL_TEXT);
+                    } else {
+                        Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.getReason())));
+                    }
+                } else {
+                    Dialog.makeToast(applicationContext, getString(R.string.no_network));
+                }
+                btSend.setEnabled(true);
+            }
+        });
     }
 
     // Setup message field and posting
-    private void saveMessage() {
+    private void initMesssageAdapter() {
         etMessage = (EditText) findViewById(R.id.etMessage);
         lvChat = (ListView) findViewById(R.id.lvChat);
         messages = new ArrayList<>();
@@ -86,27 +112,6 @@ public class MessagingActivity extends AppCompatActivity {
         mFirstLoad = true;
         mAdapter = new MessageListAdapter(MessagingActivity.this, userName, messages);
         lvChat.setAdapter(mAdapter);
-        btSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btSend.setEnabled(false);
-                String body = etMessage.getText().toString();
-                Form form = FormValidation.validateMessage(body);
-                if (form.isValid()) {
-                    body = body.trim();
-                    // Use Message model to create new messages now
-                    Message message = new Message();
-                    message.setUsername(userName);
-                    message.setEventId(sEventId);
-                    message.setBody(body);
-                    message.saveInBackground();
-                    etMessage.setText(StringResources.NULL_TEXT);
-                } else {
-                    Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.getReason())));
-                }
-            }
-        });
-        btSend.setEnabled(true);
     }
 
     // Query messages from Parse so we can load them into the chat adapter
@@ -128,10 +133,7 @@ public class MessagingActivity extends AppCompatActivity {
                     lvChat.setSelection(mAdapter.getCount() - 1);
                     mFirstLoad = false;
                 }
-                btSend.setEnabled(true);
             }
-        } else {
-            Dialog.makeToast(applicationContext, getString(R.string.no_network));
         }
     }
 
