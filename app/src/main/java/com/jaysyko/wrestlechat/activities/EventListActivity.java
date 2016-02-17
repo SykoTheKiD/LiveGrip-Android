@@ -217,6 +217,7 @@ public class EventListActivity extends AppCompatActivity
             Intent intent = new Intent(applicationContext, MessagingActivity.class);
             intent.putExtra(IntentKeys.EVENT_ID, event.getObjectId());
             intent.putExtra(IntentKeys.EVENT_NAME, event.getString(Events.NAME));
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         } else {
             Dialog.makeToast(applicationContext, getString(R.string.online_status_not_live));
@@ -231,11 +232,16 @@ public class EventListActivity extends AppCompatActivity
         intent.putExtra(IntentKeys.EVENT_IMAGE, event.getString(Events.IMAGE));
         intent.putExtra(IntentKeys.EVENT_START_TIME, event.getLong(Events.START_TIME));
         intent.putExtra(IntentKeys.EVENT_LOCATION, event.getString(Events.LOCATION));
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
     public void onStart(){
         super.onStart();
         updateEventCards(false);
+    }
+
+    public void onResume() {
+        super.onResume();
     }
 }
