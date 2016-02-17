@@ -80,8 +80,6 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
     }
 
 
-    //sender senderpic, senderusername
-    //
     private void senderView(Message message, ViewHolder holder, String messageBody) {
         TextView usernametv;
         holder.imageLeft.setVisibility(View.VISIBLE);

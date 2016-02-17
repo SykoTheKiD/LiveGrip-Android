@@ -7,9 +7,9 @@ import java.util.Date;
 public class DateVerifier {
     private static final String STRING_DATE_FORMAT = "EEE, MMM dd hh:mm a";
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat(STRING_DATE_FORMAT);
-    private static final String TIME_ZONE = "UTC";
+//    private static final String TIME_ZONE = "UTC";
 
-//    public static boolean goLive(String date) {
+//    public static Long goLive(String date) {
 //        DATE_FORMAT.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
 //        try {
 //            Date dateObj = DATE_FORMAT.parse(date);

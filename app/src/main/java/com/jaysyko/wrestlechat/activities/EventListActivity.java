@@ -41,6 +41,7 @@ public class EventListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int VIBRATE_MILLISECONDS = 50;
+    private static final int REFRESH_ANI_MILLIS = 2500;
     private Context applicationContext;
     private List<ParseObject> eventList;
 
@@ -84,7 +85,7 @@ public class EventListActivity extends AppCompatActivity
                         updateEventCards(true);
                         swipeView.setRefreshing(false);
                     }
-                }, 3000);
+                }, REFRESH_ANI_MILLIS);
             }
         });
     }
@@ -242,4 +243,5 @@ public class EventListActivity extends AppCompatActivity
         super.onStart();
         updateEventCards(false);
     }
+
 }

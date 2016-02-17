@@ -112,7 +112,7 @@ public class MessagingActivity extends AppCompatActivity {
     // Query messages from Parse so we can load them into the chat adapter
     @SuppressWarnings("unchecked")
     private void fetchNewMessages() {
-        if (NetworkState.isConnected(getApplicationContext())) {
+        if (NetworkState.isConnected(applicationContext)) {
             Query<Message> query = new Query<>(Message.class);
             query.whereEqualTo(Events.ID, sEventId);
             query.orderByDESC(Message.CREATED_AT);
