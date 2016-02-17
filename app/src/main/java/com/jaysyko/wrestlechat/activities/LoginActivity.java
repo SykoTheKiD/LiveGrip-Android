@@ -99,6 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Dialog.makeToast(context, getString(R.string.no_network));
                 }
+                showLoadPanel(false, signUpButton);
             }
         });
     }
