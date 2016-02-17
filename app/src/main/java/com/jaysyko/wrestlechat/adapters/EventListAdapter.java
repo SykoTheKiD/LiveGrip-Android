@@ -21,7 +21,7 @@ import java.util.List;
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {
     private static final String NON_LIVE_TEXT_COLOUR = "#bdbdbd";
     private static final int NON_LIVE_TEXT_SIZE = 15;
-    private List<EventObject> itemsData;
+    public List<EventObject> itemsData;
     private Context context;
 
 

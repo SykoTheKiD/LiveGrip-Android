@@ -43,9 +43,10 @@ public class EventListActivity extends AppCompatActivity
 
     private static final int VIBRATE_MILLISECONDS = 50;
     private static final int REFRESH_ANI_MILLIS = 2500;
-    final Handler updateEventsHandler = new Handler();
+    final Handler handler = new Handler();
     private Context applicationContext;
     private List<ParseObject> eventList;
+    private EventListAdapter mAdapter;
     final Runnable updateEventsHard = new Runnable() {
         @Override
         public void run() {
@@ -60,14 +61,37 @@ public class EventListActivity extends AppCompatActivity
         }
     };
 
+    final Runnable initSwipeRefresh = new Runnable() {
+        @Override
+        public void run() {
+            initSwipeRefresh();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        updateEventsHandler.post(updateEventsHard);
+
         applicationContext = getApplicationContext();
+
+        handler.post(initSwipeRefresh);
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+                recyclerView.setLayoutManager(new LinearLayoutManager(applicationContext));
+                eventListClickListener(recyclerView);
+                mAdapter = new EventListAdapter(new ArrayList<EventObject>(), applicationContext);
+                recyclerView.setAdapter(mAdapter);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+            }
+        });
+
+
+        handler.post(updateEventsHard);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -81,6 +105,9 @@ public class EventListActivity extends AppCompatActivity
         TextView headerUsername = (TextView) headerLayout.findViewById(R.id.drawer_username);
         headerUsername.setText(CurrentActiveUser.getInstance().getUsername());
 
+    }
+
+    private void initSwipeRefresh() {
         final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
         swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -176,7 +203,6 @@ public class EventListActivity extends AppCompatActivity
                 if (eventList.size() > 0) {
                     for (int i = 0; i < eventList.size(); i++) {
                         current = eventList.get(i);
-                        Log.d("EVENT", String.valueOf(current.getLong("startTime")));
                         eventObjects.add(
                                 new EventObject(
                                         current.getString(Events.NAME),
@@ -196,18 +222,24 @@ public class EventListActivity extends AppCompatActivity
         } else {
             Dialog.makeToast(applicationContext, getString(R.string.no_network));
         }
-        attachToEventListAdapter(eventObjects);
+        updateRecyclerView(eventObjects);
     }
 
-    private void attachToEventListAdapter(ArrayList<EventObject> eventObjects) {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(applicationContext));
+    private synchronized void updateRecyclerView(ArrayList<EventObject> eventObjects) {
+        mAdapter.itemsData.clear();
+        mAdapter.itemsData.addAll(eventObjects);
+        mAdapter.notifyDataSetChanged();
+    }
+
+
+    private void eventListClickListener(RecyclerView recyclerView) {
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(
                         EventListActivity.this, recyclerView,
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
+                                Log.d("Click", "Quick");
                                 openConversation(eventList.get(position));
                             }
 
@@ -218,9 +250,6 @@ public class EventListActivity extends AppCompatActivity
                                 openEventInfo(eventList.get(position));
                             }
                         }));
-        EventListAdapter mAdapter = new EventListAdapter(eventObjects, applicationContext);
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
     private void openConversation(ParseObject event) {
@@ -232,7 +261,7 @@ public class EventListActivity extends AppCompatActivity
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         } else {
-            Dialog.makeToast(applicationContext, getString(status.getReason()));
+            Dialog.makeToast(applicationContext, String.valueOf(System.currentTimeMillis() % 1000));
         }
     }
 
@@ -244,18 +273,16 @@ public class EventListActivity extends AppCompatActivity
         intent.putExtra(IntentKeys.EVENT_IMAGE, event.getString(Events.IMAGE));
         intent.putExtra(IntentKeys.EVENT_START_TIME, event.getLong(Events.START_TIME));
         intent.putExtra(IntentKeys.EVENT_LOCATION, event.getString(Events.LOCATION));
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
     public void onStart(){
         super.onStart();
-        updateEventsHandler.post(updateEventsSoft);
+        handler.post(updateEventsSoft);
     }
 
     public void onResume() {
         super.onResume();
-        updateEventsHandler.post(updateEventsSoft);
+        handler.post(updateEventsSoft);
     }
-
 }
