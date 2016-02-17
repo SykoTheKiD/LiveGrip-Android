@@ -34,7 +34,6 @@
             android:paddingLeft="5dp"
             android:paddingStart="5dp"
             android:singleLine="false"
-            android:text="@string/lorem_username"
             android:textSize="12sp"
             android:visibility="invisible" />
 
@@ -46,7 +45,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/out_message_bg"
         android:gravity="center|center_vertical"
-        android:text="@string/app_name"
         android:textSize="14sp"
         android:visibility="invisible" />
 
@@ -65,7 +63,6 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/in_message_bg"
             android:gravity="center|center_vertical"
-            android:text="@string/app_name"
             android:textSize="14sp" />
 
     </RelativeLayout>
