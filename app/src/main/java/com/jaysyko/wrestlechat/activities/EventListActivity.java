@@ -15,6 +15,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -23,13 +24,13 @@ import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dataObjects.EventObject;
+import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.date.Live;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.query.Query;
-import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.StringResources;
 import com.parse.ParseObject;
@@ -175,6 +176,7 @@ public class EventListActivity extends AppCompatActivity
                 if (eventList.size() > 0) {
                     for (int i = 0; i < eventList.size(); i++) {
                         current = eventList.get(i);
+                        Log.d("EVENT", String.valueOf(current.getLong("startTime")));
                         eventObjects.add(
                                 new EventObject(
                                         current.getString(Events.NAME),
