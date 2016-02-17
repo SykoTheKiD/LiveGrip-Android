@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                     showLoadPanel(true, loginButton);
                     if (NetworkState.isConnected(context)) {
                         Form form = FormValidation.validateLogin(username, password);
-                        if (form.valid) {
+                        if (form.isValid()) {
                             CurrentActiveUser currentActiveUser = CurrentActiveUser.getInstance(username, password);
                             if (currentActiveUser.loginUser()) {
                                 Dialog.makeToast(context, getString(R.string.welcome_back).concat(StringResources.BLANK_SPACE).concat(username));
@@ -63,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Dialog.makeToast(context, getString(R.string.incorrect_login_info));
                             }
                         } else {
-                            Dialog.makeToast(context, getString(Form.getSimpleMessage(form.reason)));
+                            Dialog.makeToast(context, getString(Form.getSimpleMessage(form.getReason())));
                         }
                     } else {
                         Dialog.makeToast(context, getString(R.string.no_network));
@@ -80,14 +79,14 @@ public class LoginActivity extends AppCompatActivity {
                     showLoadPanel(true, loginButton);
                     if (NetworkState.isConnected(context)) {
                         Form form = FormValidation.validateSignUp(username, password);
-                        if (form.valid) {
+                        if (form.isValid()) {
                             if (CurrentActiveUser.signUpUser(username, password)) {
                                 startActivity(intent);
                             } else {
                                 Dialog.makeToast(context, getString(R.string.username_taken));
                             }
                         } else {
-                            Dialog.makeToast(context, getString(Form.getSimpleMessage(form.reason)));
+                            Dialog.makeToast(context, getString(Form.getSimpleMessage(form.getReason())));
                         }
                         showLoadPanel(false, loginButton);
                     } else {

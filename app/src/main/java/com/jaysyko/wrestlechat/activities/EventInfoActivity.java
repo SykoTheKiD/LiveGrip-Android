@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
-import com.jaysyko.wrestlechat.utils.DateVerifier;
+import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.utils.StringResources;
 import com.squareup.picasso.Picasso;
 
