@@ -35,11 +35,11 @@ public class FormValidation {
 
     public static Form validateSignUp(String username, String password) {
         Form ret = isNotBlank(username, password);
-        if (!(ret.valid)) {
+        if (!(ret.isValid())) {
             return ret;
         }
         ret = isValidUsername(username);
-        if (!(ret.valid)) {
+        if (!(ret.isValid())) {
             return ret;
         }
         return ret;

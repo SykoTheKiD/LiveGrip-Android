@@ -92,7 +92,7 @@ public class MessagingActivity extends AppCompatActivity {
                 btSend.setEnabled(false);
                 String body = etMessage.getText().toString();
                 Form form = FormValidation.validateMessage(body);
-                if (form.valid) {
+                if (form.isValid()) {
                     body = body.trim();
                     // Use Message model to create new messages now
                     Message message = new Message();
@@ -102,7 +102,7 @@ public class MessagingActivity extends AppCompatActivity {
                     message.saveInBackground();
                     etMessage.setText(StringResources.NULL_TEXT);
                 } else {
-                    Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.reason)));
+                    Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.getReason())));
                 }
             }
         });
@@ -112,7 +112,7 @@ public class MessagingActivity extends AppCompatActivity {
     // Query messages from Parse so we can load them into the chat adapter
     @SuppressWarnings("unchecked")
     private void fetchNewMessages() {
-        if (NetworkState.isConnected(getApplicationContext())) {
+        if (NetworkState.isConnected(applicationContext)) {
             Query<Message> query = new Query<>(Message.class);
             query.whereEqualTo(Events.ID, sEventId);
             query.orderByDESC(Message.CREATED_AT);
