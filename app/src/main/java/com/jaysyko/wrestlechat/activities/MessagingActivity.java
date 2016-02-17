@@ -92,7 +92,7 @@ public class MessagingActivity extends AppCompatActivity {
                 btSend.setEnabled(false);
                 String body = etMessage.getText().toString();
                 Form form = FormValidation.validateMessage(body);
-                if (form.valid) {
+                if (form.isValid()) {
                     body = body.trim();
                     // Use Message model to create new messages now
                     Message message = new Message();
@@ -102,7 +102,7 @@ public class MessagingActivity extends AppCompatActivity {
                     message.saveInBackground();
                     etMessage.setText(StringResources.NULL_TEXT);
                 } else {
-                    Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.reason)));
+                    Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.getReason())));
                 }
             }
         });

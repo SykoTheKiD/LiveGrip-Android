@@ -23,12 +23,13 @@ import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dataObjects.EventObject;
+import com.jaysyko.wrestlechat.date.Live;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.query.Query;
-import com.jaysyko.wrestlechat.utils.DateVerifier;
+import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.StringResources;
 import com.parse.ParseObject;
@@ -213,14 +214,15 @@ public class EventListActivity extends AppCompatActivity
     }
 
     private void openConversation(ParseObject event) {
-        if (DateVerifier.goLive(event.getLong(Events.START_TIME))) {
+        Live status = DateVerifier.goLive(event.getLong(Events.START_TIME), event.getLong(Events.END_TIME));
+        if (status.goLive()) {
             Intent intent = new Intent(applicationContext, MessagingActivity.class);
             intent.putExtra(IntentKeys.EVENT_ID, event.getObjectId());
             intent.putExtra(IntentKeys.EVENT_NAME, event.getString(Events.NAME));
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         } else {
-            Dialog.makeToast(applicationContext, getString(R.string.online_status_not_live));
+            Dialog.makeToast(applicationContext, getString(status.getReason()));
         }
     }
 
@@ -239,9 +241,5 @@ public class EventListActivity extends AppCompatActivity
     public void onStart(){
         super.onStart();
         updateEventCards(false);
-    }
-
-    public void onResume() {
-        super.onResume();
     }
 }

@@ -4,8 +4,8 @@ import com.jaysyko.wrestlechat.R;
 
 public class Form {
 
-    public FormStatus reason;
-    public Boolean valid;
+    private FormStatus reason;
+    private Boolean valid;
 
     public Form(Boolean valid, FormStatus reason) {
         this.valid = valid;
@@ -24,5 +24,13 @@ public class Form {
                 return R.string.message_too_short;
         }
         return R.string.valid;
+    }
+
+    public FormStatus getReason() {
+        return this.reason;
+    }
+
+    public Boolean isValid() {
+        return this.valid;
     }
 }

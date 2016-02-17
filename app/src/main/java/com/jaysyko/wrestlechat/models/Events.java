@@ -14,5 +14,4 @@ public class Events extends ParseObject {
     public static final String IMAGE = "imgurId";
     public static final String INFO = "eventInfo";
     public static final String MATCH_CARD = "matchCard";
-
 }

@@ -11,7 +11,7 @@ import com.jaysyko.wrestlechat.R;
 
 public class Dialog {
     public static void makeToast(Context context, String msg) {
-        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
     public static void makeSnackBar(View view, String message) {
