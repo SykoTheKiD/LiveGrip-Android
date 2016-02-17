@@ -170,12 +170,4 @@ public class MessagingActivity extends AppCompatActivity {
         handler.removeCallbacks(fetchNewMessagesRunnable);
         handler.removeCallbacks(initMessageaAdapter);
     }
-
-    public void onBackPressed() {
-        super.onBackPressed();
-        System.gc();
-        Intent i = new Intent(applicationContext, EventListActivity.class);
-        startActivity(i);
-        finish();
-    }
 }
