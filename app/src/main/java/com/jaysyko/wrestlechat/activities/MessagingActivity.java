@@ -34,6 +34,7 @@ import java.util.List;
 public class MessagingActivity extends AppCompatActivity {
 
     public static final int FETCH_MSG_DELAY_MILLIS = 1000, MAX_CHAT_MESSAGES_TO_SHOW = 50;
+    private static final int SEND_DELAY = 1500;
     private String userName, sEventId, eventName;
     private EditText etMessage;
     private ListView lvChat;
@@ -79,25 +80,35 @@ public class MessagingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 btSend.setEnabled(false);
-                String body = etMessage.getText().toString();
-                Form form = FormValidation.validateMessage(body);
-                if (NetworkState.isConnected(applicationContext)) {
-                    if (form.isValid()) {
-                        body = body.trim();
-                        // Use Message model to create new messages now
-                        Message message = new Message();
-                        message.setUsername(userName);
-                        message.setEventId(sEventId);
-                        message.setBody(body);
-                        message.saveInBackground();
-                        etMessage.setText(StringResources.NULL_TEXT);
-                    } else {
-                        Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.getReason())));
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        String body = etMessage.getText().toString();
+                        Form form = FormValidation.validateMessage(body);
+                        if (NetworkState.isConnected(applicationContext)) {
+                            if (form.isValid()) {
+                                body = body.trim();
+                                // Use Message model to create new messages now
+                                Message message = new Message();
+                                message.setUsername(userName);
+                                message.setEventId(sEventId);
+                                message.setBody(body);
+                                message.saveInBackground();
+                                etMessage.setText(StringResources.NULL_TEXT);
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        btSend.setEnabled(true);
+                                    }
+                                }, SEND_DELAY);
+                            } else {
+                                Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.getReason())));
+                            }
+                        } else {
+                            Dialog.makeToast(applicationContext, getString(R.string.no_network));
+                        }
                     }
-                } else {
-                    Dialog.makeToast(applicationContext, getString(R.string.no_network));
-                }
-                btSend.setEnabled(true);
+                });
             }
         });
     }
