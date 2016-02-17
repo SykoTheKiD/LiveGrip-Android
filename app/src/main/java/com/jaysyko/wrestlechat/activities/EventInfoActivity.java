@@ -10,11 +10,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.date.DateVerifier;
+import com.jaysyko.wrestlechat.utils.ImageTools;
+import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.StringResources;
-import com.squareup.picasso.Picasso;
 
 public class EventInfoActivity extends AppCompatActivity {
 
@@ -45,14 +46,14 @@ public class EventInfoActivity extends AppCompatActivity {
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType(StringResources.PLAIN_CONTENT_TYPE);
                 share.putExtra(Intent.EXTRA_TEXT, getShareMessage(eventName));
-                startActivity(Intent.createChooser(share, SHARE_DIALOG_TITLE));
+                startActivity(Intent.createChooser(share, getString(R.string.app_share_title)));
             }
         });
     }
 
     @NonNull
     private String getShareMessage(String eventName) {
-        return getString(R.string.hey_check_out).concat(eventName).concat(getString(R.string.sent_from_wrestlechat));
+        return getString(R.string.hey_check_out).concat(StringResources.BLANK_SPACE).concat(eventName).concat(getString(R.string.sent_from_wrestlechat));
     }
 
     private void prepareEventInfoContent(Context context) {
@@ -66,6 +67,7 @@ public class EventInfoActivity extends AppCompatActivity {
         TextView locationTV = (TextView) findViewById(R.id.event_info_location);
         locationTV.setText(location);
         ImageView eventImage = (ImageView)findViewById(R.id.event_info_photo);
-        Picasso.with(context).load(StringResources.IMGUR_LINK.concat(imageLink)).into(eventImage);
+        ImageTools.loadImage(context, StringResources.IMGUR_LINK.concat(imageLink), eventImage);
+//        Picasso.with(context).load(StringResources.IMGUR_LINK.concat(imageLink)).into(eventImage);
     }
 }
