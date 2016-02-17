@@ -41,7 +41,7 @@ import java.util.List;
 public class EventListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final int VIBRATE_MILLISECONDS = 25;
+    private static final int VIBRATE_MILLISECONDS = 40;
     private static final int REFRESH_ANI_MILLIS = 2500;
     final Handler handler = new Handler();
     private Context applicationContext;
@@ -74,7 +74,7 @@ public class EventListActivity extends AppCompatActivity
         setContentView(R.layout.activity_event_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        Log.d("METHOD", "onCreate()");
         applicationContext = getApplicationContext();
 
         handler.post(initSwipeRefresh);
@@ -90,8 +90,6 @@ public class EventListActivity extends AppCompatActivity
             }
         });
 
-
-        handler.post(updateEventsHard);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -290,11 +288,13 @@ public class EventListActivity extends AppCompatActivity
 
     public void onStart(){
         super.onStart();
-        handler.post(updateEventsSoft);
+        Log.d("METHOD", "onStart()");
+        handler.post(updateEventsHard);
     }
 
-    public void onResume() {
-        super.onResume();
+    public void onRestart() {
+        super.onRestart();
+        Log.d("METHOD", "onRestart()");
         handler.post(updateEventsSoft);
     }
 }
