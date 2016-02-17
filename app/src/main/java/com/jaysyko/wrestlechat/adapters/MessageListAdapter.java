@@ -18,10 +18,11 @@ import com.jaysyko.wrestlechat.utils.ImageTools;
 import java.util.List;
 
 public class MessageListAdapter extends ArrayAdapter<Message> {
+    Handler handler1 = new Handler();
+    Handler handler2 = new Handler();
+    Handler handler3 = new Handler();
     private String mUserId;
     private Context context = getContext();
-    private Handler handler = new Handler();
-
     public MessageListAdapter(Context context, String userId, List<Message> messages) {
         super(context, 0, messages);
         this.mUserId = userId;
@@ -36,8 +37,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         final ViewHolder holder = (ViewHolder) convertView.getTag();
         final boolean isMe = message.getUsername().equals(mUserId);
         final String messageBody = message.getBody();
-        Handler handler = new Handler();
-        handler.post(new Runnable() {
+        handler1.post(new Runnable() {
             @Override
             public void run() {
                 final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
@@ -47,14 +47,14 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         // Show-hide image based on the logged-in user.
         // Display the profile image to the right for our user, left for other users.
         if (isMe) {
-            handler.post(new Runnable() {
+            handler2.post(new Runnable() {
                 @Override
                 public void run() {
                     setUserView(holder, messageBody);
                 }
             });
         } else {
-            handler.post(new Runnable() {
+            handler3.post(new Runnable() {
                 @Override
                 public void run() {
                     senderView(message, holder, messageBody);
