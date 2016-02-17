@@ -1,5 +1,10 @@
 package com.jaysyko.wrestlechat.forms;
 
+import com.jaysyko.wrestlechat.utils.StringResources;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class FormValidation {
 
     private static final int MIN_MESSAGE_LENGTH = 1;
@@ -25,6 +30,12 @@ public class FormValidation {
     private static Form isValidUsername(String username) {
         if (!(username.length() < MAX_USERNAME_LENGTH)) {
             return new Form(false, FormStatus.INVALID_USERNAME);
+        }
+        String patternToMatch = "[\\\\!\"#$%&()*+,./:;<=>?@\\[\\]^_{|}~]+";
+        Pattern p = Pattern.compile(patternToMatch);
+        Matcher m = p.matcher(username);
+        if (m.find() && username.contains(StringResources.BLANK_SPACE)) {
+            return new Form(false, FormStatus.SPECIAL_CHARACTERS);
         }
         return new Form(true, FormStatus.VALID);
     }
