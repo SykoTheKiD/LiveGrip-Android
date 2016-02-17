@@ -21,7 +21,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7a8a10f5-4885-4e0e-a2b6-9e884a6f279a" name="Default" comment="Fixed special characters and spaces in username signup">
+    <list default="true" id="7a8a10f5-4885-4e0e-a2b6-9e884a6f279a" name="Default" comment="Fixed button show login screen bug">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/activities/LoginActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/activities/LoginActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -47,9 +47,12 @@
       <file leaf-file-name="LoginActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/activities/LoginActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.17218544">
-              <caret line="102" column="11" selection-start-line="102" selection-start-column="11" selection-end-line="102" selection-end-column="11" />
-              <folding />
+            <state vertical-scroll-proportion="0.8013245">
+              <caret line="101" column="35" selection-start-line="101" selection-start-column="35" selection-end-line="101" selection-end-column="35" />
+              <folding>
+                <element signature="e#3595#4738#0" expanded="true" />
+                <element signature="e#4737#4738#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -2128,12 +2131,6 @@
       <option name="number" value="Default" />
       <updated>1454079562825</updated>
     </task>
-    <task id="LOCAL-00010" summary="Added username in Nav Drawer">
-      <created>1454358111659</created>
-      <option name="number" value="00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1454358111659</updated>
-    </task>
     <task id="LOCAL-00011" summary="Added username to message model">
       <created>1454373296993</created>
       <option name="number" value="00011" />
@@ -2422,7 +2419,13 @@
       <option name="project" value="LOCAL" />
       <updated>1455741335232</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="Fixed button show login screen bug">
+      <created>1455743163638</created>
+      <option name="number" value="00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1455743163638</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2477,7 +2480,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Added Profile Edit" />
     <MESSAGE value="Added more form validation" />
     <MESSAGE value="Username Messaging UI Fix" />
     <MESSAGE value="More Refactoring" />
@@ -2502,7 +2504,8 @@
     <MESSAGE value="Fixed logout no network bug" />
     <MESSAGE value="Fixed about me share twitter" />
     <MESSAGE value="Fixed special characters and spaces in username signup" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed special characters and spaces in username signup" />
+    <MESSAGE value="Fixed button show login screen bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed button show login screen bug" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -2941,9 +2944,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/activities/LoginActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17218544">
-          <caret line="102" column="11" selection-start-line="102" selection-start-column="11" selection-end-line="102" selection-end-column="11" />
-          <folding />
+        <state vertical-scroll-proportion="0.8013245">
+          <caret line="101" column="35" selection-start-line="101" selection-start-column="35" selection-end-line="101" selection-end-column="35" />
+          <folding>
+            <element signature="e#3595#4738#0" expanded="true" />
+            <element signature="e#4737#4738#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
