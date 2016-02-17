@@ -1,6 +1,7 @@
 package com.jaysyko.wrestlechat.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -29,9 +30,10 @@ public class AboutActivity extends AppCompatActivity {
         tweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent tweetIntent = new Intent(Intent.ACTION_SEND);
-                tweetIntent.putExtra(Intent.EXTRA_TEXT, "Test; please ignore");
-                tweetIntent.setType("application/twitter");
+                String url = "http://www.twitter.com/intent/tweet?text=".concat(getString(R.string.app_share));
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
             }
         });
     }
