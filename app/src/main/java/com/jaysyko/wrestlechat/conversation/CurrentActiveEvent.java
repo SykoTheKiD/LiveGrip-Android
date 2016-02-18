@@ -48,7 +48,4 @@ public class CurrentActiveEvent {
         this.currentEvent = currentEvent;
     }
 
-    public void destorySession() {
-        setCurrentEvent(null);
-    }
 }
