@@ -264,7 +264,7 @@ public class EventListActivity extends AppCompatActivity
             intent.putExtra(IntentKeys.EVENT_NAME, event.getString(Events.NAME));
             startActivity(intent);
         } else {
-            Dialog.makeToast(applicationContext, String.valueOf(System.currentTimeMillis() % 1000));
+            Dialog.makeToast(applicationContext, getString(status.getReason()));
         }
     }
 
@@ -281,7 +281,11 @@ public class EventListActivity extends AppCompatActivity
 
     public void onStart(){
         super.onStart();
-        Log.d("METHOD", "onStart()");
+        handler.post(updateEventsHard);
+    }
+
+    public void onResume(){
+        super.onResume();
         handler.post(updateEventsSoft);
     }
 
