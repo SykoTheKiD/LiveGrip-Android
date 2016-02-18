@@ -45,20 +45,24 @@ public class EventListActivity extends AppCompatActivity
     private static final int REFRESH_ANI_MILLIS = 2500;
     final Handler handler = new Handler();
     private Context applicationContext;
+    final Runnable initSwipeRefresh = new Runnable() {
+        @Override
+        public void run() {
+            initSwipeRefresh();
+        }
+    };
     private List<ParseObject> eventList;
     private EventListAdapter mAdapter;
-
     final Runnable updateEventsSoft = new Runnable() {
         @Override
         public void run() {
             updateEventCards(false);
         }
     };
-
-    final Runnable initSwipeRefresh = new Runnable() {
+    final Runnable updateEventsHard = new Runnable() {
         @Override
         public void run() {
-            initSwipeRefresh();
+            updateEventCards(true);
         }
     };
 
@@ -107,12 +111,7 @@ public class EventListActivity extends AppCompatActivity
             public void onRefresh() {
                 swipeView.setRefreshing(true);
                 if (NetworkState.isConnected(applicationContext)) {
-                    (new Handler()).postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            updateEventCards(true);
-                        }
-                    }, REFRESH_ANI_MILLIS);
+                    (new Handler()).postDelayed(updateEventsHard, REFRESH_ANI_MILLIS);
                 } else {
                     Dialog.makeToast(applicationContext, getString(R.string.no_network));
                 }
