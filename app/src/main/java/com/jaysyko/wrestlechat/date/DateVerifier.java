@@ -20,7 +20,7 @@ public class DateVerifier {
 //        return false;
 //    }
 
-    public static Live goLive(Long startTime, Long endTime) {
+    public static LiveStatus goLive(Long startTime, Long endTime) {
         // String UTC to Date object
         Date startTimeDate = new Date(startTime);
         Date endTimeDate = new Date(endTime);
@@ -29,12 +29,12 @@ public class DateVerifier {
         Boolean started = currentTime.before(startTimeDate);
         Boolean ended = currentTime.after(endTimeDate);
         if (started) {
-            return new Live(false, Live.EVENT_NOT_STARTED);
+            return new LiveStatus(false, LiveStatus.EVENT_NOT_STARTED);
         }
         if (ended) {
-            return new Live(false, Live.EVENT_OVER);
+            return new LiveStatus(false, LiveStatus.EVENT_OVER);
         }
-        return new Live(true, Live.EVENT_STARTED);
+        return new LiveStatus(true, LiveStatus.EVENT_STARTED);
     }
 
     public static String format(Long millis) {

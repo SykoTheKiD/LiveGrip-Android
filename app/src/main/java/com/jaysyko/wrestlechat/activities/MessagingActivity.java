@@ -17,6 +17,7 @@ import android.widget.ListView;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
+import com.jaysyko.wrestlechat.conversation.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.FormValidation;
@@ -24,7 +25,6 @@ import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.query.Query;
-import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 import java.util.ArrayList;
@@ -52,22 +52,21 @@ public class MessagingActivity extends AppCompatActivity {
             handler.postDelayed(this, FETCH_MSG_DELAY_MILLIS);
         }
     };
-    boolean initMessages = handler.postDelayed(fetchNewMessagesRunnable, FETCH_MSG_DELAY_MILLIS);
+    private boolean initMessages = handler.postDelayed(fetchNewMessagesRunnable, FETCH_MSG_DELAY_MILLIS);
     private Runnable initMessageaAdapter = new Runnable() {
         @Override
         public void run() {
             initMesssageAdapter();
         }
     };
-    boolean initAdapter = handler.post(initMessageaAdapter);
+    private boolean initAdapter = handler.post(initMessageaAdapter);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messaging);
-        Intent intent = getIntent();
-        sEventId = intent.getStringExtra(IntentKeys.EVENT_ID);
-        eventName = intent.getStringExtra(IntentKeys.EVENT_NAME);
+        sEventId = CurrentActiveEvent.getInstance().getEventID();
+        eventName = CurrentActiveEvent.getInstance().getEventName();
         setTitle(eventName);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -87,6 +86,7 @@ public class MessagingActivity extends AppCompatActivity {
                         Form form = FormValidation.validateMessage(body);
                         if (NetworkState.isConnected(applicationContext)) {
                             if (form.isValid()) {
+                                fetchNewMessages();
                                 body = body.trim();
                                 // Use Message model to create new messages now
                                 Message message = new Message();
@@ -127,9 +127,9 @@ public class MessagingActivity extends AppCompatActivity {
 
     // Query messages from Parse so we can load them into the chat adapter
     @SuppressWarnings("unchecked")
-    private void fetchNewMessages() {
+    private synchronized void fetchNewMessages() {
         if (NetworkState.isConnected(applicationContext)) {
-            Query<Message> query = new Query<>(Message.class);
+            Query query = new Query(Message.class);
             query.whereEqualTo(Events.ID, sEventId);
             query.orderByDESC(Message.CREATED_AT);
             query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
@@ -161,7 +161,6 @@ public class MessagingActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_event_info:
                 Intent eventInfoIntent = new Intent(applicationContext, EventInfoActivity.class);
-                eventInfoIntent.putExtra(IntentKeys.EVENT_NAME, eventName);
                 startActivity(eventInfoIntent);
                 return true;
             default:
@@ -181,6 +180,5 @@ public class MessagingActivity extends AppCompatActivity {
 
     private void closeAllThreads() {
         handler.removeCallbacks(fetchNewMessagesRunnable);
-        handler.removeCallbacks(initMessageaAdapter);
     }
 }
