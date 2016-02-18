@@ -5,7 +5,7 @@ import com.parse.ParseObject;
 
 public class CurrentActiveEvent {
     private static CurrentActiveEvent event = new CurrentActiveEvent(null);
-    ParseObject currentEvent;
+    private ParseObject currentEvent;
 
     private CurrentActiveEvent(ParseObject currentEvent) {
         this.currentEvent = currentEvent;
