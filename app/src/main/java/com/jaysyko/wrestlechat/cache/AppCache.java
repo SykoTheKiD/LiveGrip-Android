@@ -50,6 +50,7 @@ public class AppCache {
             ParseObject.pinAll(label, results);
             return results;
         } catch (ParseException e) {
+            Log.d("DB", "FAIL");
             return null;
         }
     }
