@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
+import com.jaysyko.wrestlechat.conversation.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.dataObjects.EventObject;
 import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.date.Live;
@@ -31,7 +32,6 @@ import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.query.Query;
-import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.StringResources;
 import com.parse.ParseObject;
 
@@ -45,12 +45,6 @@ public class EventListActivity extends AppCompatActivity
     private static final int REFRESH_ANI_MILLIS = 2500;
     final Handler handler = new Handler();
     private Context applicationContext;
-    final Runnable initSwipeRefresh = new Runnable() {
-        @Override
-        public void run() {
-            initSwipeRefresh();
-        }
-    };
     private List<ParseObject> eventList;
     private EventListAdapter mAdapter;
     final Runnable updateEventsSoft = new Runnable() {
@@ -63,6 +57,12 @@ public class EventListActivity extends AppCompatActivity
         @Override
         public void run() {
             updateEventCards(true);
+        }
+    };
+    final Runnable initSwipeRefresh = new Runnable() {
+        @Override
+        public void run() {
+            initSwipeRefresh();
         }
     };
 
@@ -258,14 +258,8 @@ public class EventListActivity extends AppCompatActivity
     private void openConversation(ParseObject event) {
         Live status = DateVerifier.goLive(event.getLong(Events.START_TIME), event.getLong(Events.END_TIME));
         if (status.goLive()) {
+            CurrentActiveEvent.getInstance().setCurrentEvent(event);
             Intent intent = new Intent(applicationContext, MessagingActivity.class);
-            intent.putExtra(IntentKeys.EVENT_ID, event.getObjectId());
-            intent.putExtra(IntentKeys.EVENT_NAME, event.getString(Events.NAME));
-            intent.putExtra(IntentKeys.EVENT_INFO, event.getString(Events.INFO));
-            intent.putExtra(IntentKeys.EVENT_CARD, event.getString(Events.MATCH_CARD));
-            intent.putExtra(IntentKeys.EVENT_IMAGE, event.getString(Events.IMAGE));
-            intent.putExtra(IntentKeys.EVENT_START_TIME, event.getLong(Events.START_TIME));
-            intent.putExtra(IntentKeys.EVENT_LOCATION, event.getString(Events.LOCATION));
             startActivity(intent);
         } else {
             Dialog.makeToast(applicationContext, getString(status.getReason()));
@@ -273,13 +267,8 @@ public class EventListActivity extends AppCompatActivity
     }
 
     private void openEventInfo(ParseObject event) {
+        CurrentActiveEvent.getInstance().setCurrentEvent(event);
         Intent intent = new Intent(applicationContext, EventInfoActivity.class);
-        intent.putExtra(IntentKeys.EVENT_NAME, event.getString(Events.NAME));
-        intent.putExtra(IntentKeys.EVENT_INFO, event.getString(Events.INFO));
-        intent.putExtra(IntentKeys.EVENT_CARD, event.getString(Events.MATCH_CARD));
-        intent.putExtra(IntentKeys.EVENT_IMAGE, event.getString(Events.IMAGE));
-        intent.putExtra(IntentKeys.EVENT_START_TIME, event.getLong(Events.START_TIME));
-        intent.putExtra(IntentKeys.EVENT_LOCATION, event.getString(Events.LOCATION));
         startActivity(intent);
     }
 
@@ -290,6 +279,7 @@ public class EventListActivity extends AppCompatActivity
 
     public void onResume(){
         super.onResume();
+        CurrentActiveEvent.getInstance().destorySession();
         handler.post(updateEventsSoft);
     }
 

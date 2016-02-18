@@ -17,6 +17,7 @@ import android.widget.ListView;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
+import com.jaysyko.wrestlechat.conversation.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.FormValidation;
@@ -24,7 +25,6 @@ import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.query.Query;
-import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 import java.util.ArrayList;
@@ -60,15 +60,13 @@ public class MessagingActivity extends AppCompatActivity {
         }
     };
     private boolean initAdapter = handler.post(initMessageaAdapter);
-    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messaging);
-        intent = getIntent();
-        sEventId = intent.getStringExtra(IntentKeys.EVENT_ID);
-        eventName = intent.getStringExtra(IntentKeys.EVENT_NAME);
+        sEventId = CurrentActiveEvent.getInstance().getEventID();
+        eventName = CurrentActiveEvent.getInstance().getEventName();
         setTitle(eventName);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -162,12 +160,6 @@ public class MessagingActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_event_info:
                 Intent eventInfoIntent = new Intent(applicationContext, EventInfoActivity.class);
-                eventInfoIntent.putExtra(IntentKeys.EVENT_NAME, eventName);
-                eventInfoIntent.putExtra(IntentKeys.EVENT_INFO, intent.getStringExtra(IntentKeys.EVENT_INFO));
-                eventInfoIntent.putExtra(IntentKeys.EVENT_CARD, intent.getStringExtra(IntentKeys.EVENT_CARD));
-                eventInfoIntent.putExtra(IntentKeys.EVENT_IMAGE, intent.getStringExtra(IntentKeys.EVENT_IMAGE));
-                eventInfoIntent.putExtra(IntentKeys.EVENT_START_TIME, intent.getStringExtra(IntentKeys.EVENT_START_TIME));
-                eventInfoIntent.putExtra(IntentKeys.EVENT_LOCATION, intent.getStringExtra(IntentKeys.EVENT_LOCATION));
                 startActivity(eventInfoIntent);
                 return true;
             default:

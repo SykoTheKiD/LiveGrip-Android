@@ -12,31 +12,31 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.conversation.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.utils.ImageTools;
-import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 public class EventInfoActivity extends AppCompatActivity {
 
-    private static final long DEAFULT_START_TIME = 0L;
     private static final String LINE_SEPARATOR = "line.separator";
+    private final CurrentActiveEvent currentActiveEvent = CurrentActiveEvent.getInstance();
     private String eventName, eventInfo, matchCardText, location, imageLink;
     private long startTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_info);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        eventName = getIntent().getStringExtra(IntentKeys.EVENT_NAME);
+        eventName = CurrentActiveEvent.getInstance().getEventName();
         setTitle(StringResources.NULL_TEXT);
-        Intent intent = getIntent();
-        eventInfo = intent.getStringExtra(IntentKeys.EVENT_INFO);
-        imageLink = intent.getStringExtra(IntentKeys.EVENT_IMAGE);
-        matchCardText = intent.getStringExtra(IntentKeys.EVENT_CARD);
-        startTime = intent.getLongExtra(IntentKeys.EVENT_START_TIME, DEAFULT_START_TIME);
-        location = intent.getStringExtra(IntentKeys.EVENT_LOCATION);
+        eventInfo = currentActiveEvent.getEventInfo();
+        imageLink = currentActiveEvent.getEventImage();
+        matchCardText = currentActiveEvent.getMatchCard();
+        startTime = currentActiveEvent.getEventStartTime();
+        location = currentActiveEvent.getEventLocation();
         prepareEventInfoContent(getApplicationContext());
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
