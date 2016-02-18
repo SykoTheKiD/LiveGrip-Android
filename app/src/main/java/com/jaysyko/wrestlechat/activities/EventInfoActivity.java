@@ -19,7 +19,6 @@ import com.jaysyko.wrestlechat.utils.StringResources;
 
 public class EventInfoActivity extends AppCompatActivity {
 
-    private static final String SHARE_DIALOG_TITLE = "Share Event";
     private static final long DEAFULT_START_TIME = 0L;
     private static final String LINE_SEPARATOR = "line.separator";
     private String eventName, eventInfo, matchCardText, location, imageLink;
@@ -31,7 +30,7 @@ public class EventInfoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         eventName = getIntent().getStringExtra(IntentKeys.EVENT_NAME);
-        setTitle(eventName);
+        setTitle(StringResources.NULL_TEXT);
         Intent intent = getIntent();
         eventInfo = intent.getStringExtra(IntentKeys.EVENT_INFO);
         imageLink = intent.getStringExtra(IntentKeys.EVENT_IMAGE);

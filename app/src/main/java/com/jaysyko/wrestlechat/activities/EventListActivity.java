@@ -45,12 +45,6 @@ public class EventListActivity extends AppCompatActivity
     private static final int REFRESH_ANI_MILLIS = 2500;
     final Handler handler = new Handler();
     private Context applicationContext;
-    final Runnable initSwipeRefresh = new Runnable() {
-        @Override
-        public void run() {
-            initSwipeRefresh();
-        }
-    };
     private List<ParseObject> eventList;
     private EventListAdapter mAdapter;
     final Runnable updateEventsSoft = new Runnable() {
@@ -63,6 +57,12 @@ public class EventListActivity extends AppCompatActivity
         @Override
         public void run() {
             updateEventCards(true);
+        }
+    };
+    final Runnable initSwipeRefresh = new Runnable() {
+        @Override
+        public void run() {
+            initSwipeRefresh();
         }
     };
 
@@ -243,7 +243,6 @@ public class EventListActivity extends AppCompatActivity
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                Log.d("Click", "Quick");
                                 openConversation(eventList.get(position));
                             }
 
@@ -264,7 +263,7 @@ public class EventListActivity extends AppCompatActivity
             intent.putExtra(IntentKeys.EVENT_NAME, event.getString(Events.NAME));
             startActivity(intent);
         } else {
-            Dialog.makeToast(applicationContext, String.valueOf(System.currentTimeMillis() % 1000));
+            Dialog.makeToast(applicationContext, getString(status.getReason()));
         }
     }
 
@@ -281,7 +280,11 @@ public class EventListActivity extends AppCompatActivity
 
     public void onStart(){
         super.onStart();
-        Log.d("METHOD", "onStart()");
+        handler.post(updateEventsHard);
+    }
+
+    public void onResume(){
+        super.onResume();
         handler.post(updateEventsSoft);
     }
 
