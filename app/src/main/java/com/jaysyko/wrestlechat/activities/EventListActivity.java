@@ -45,26 +45,24 @@ public class EventListActivity extends AppCompatActivity
     private static final int REFRESH_ANI_MILLIS = 2500;
     final Handler handler = new Handler();
     private Context applicationContext;
-    private List<ParseObject> eventList;
-    private EventListAdapter mAdapter;
-    final Runnable updateEventsHard = new Runnable() {
+    final Runnable initSwipeRefresh = new Runnable() {
         @Override
         public void run() {
-            updateEventCards(true);
+            initSwipeRefresh();
         }
     };
-
+    private List<ParseObject> eventList;
+    private EventListAdapter mAdapter;
     final Runnable updateEventsSoft = new Runnable() {
         @Override
         public void run() {
             updateEventCards(false);
         }
     };
-
-    final Runnable initSwipeRefresh = new Runnable() {
+    final Runnable updateEventsHard = new Runnable() {
         @Override
         public void run() {
-            initSwipeRefresh();
+            updateEventCards(true);
         }
     };
 
@@ -113,12 +111,7 @@ public class EventListActivity extends AppCompatActivity
             public void onRefresh() {
                 swipeView.setRefreshing(true);
                 if (NetworkState.isConnected(applicationContext)) {
-                    (new Handler()).postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            updateEventCards(true);
-                        }
-                    }, REFRESH_ANI_MILLIS);
+                    (new Handler()).postDelayed(updateEventsHard, REFRESH_ANI_MILLIS);
                 } else {
                     Dialog.makeToast(applicationContext, getString(R.string.no_network));
                 }
@@ -201,7 +194,6 @@ public class EventListActivity extends AppCompatActivity
     @SuppressWarnings("unchecked")
     private void updateEventCards(Boolean hard) {
         ArrayList<EventObject> eventObjects = new ArrayList<>();
-        if (NetworkState.isConnected(applicationContext)) {
             Query<ParseObject> query = new Query<>(Events.class);
             query.orderByASC(Events.START_TIME);
             if (hard) {
@@ -230,9 +222,7 @@ public class EventListActivity extends AppCompatActivity
             } else {
                 Dialog.makeToast(applicationContext, getString(R.string.error_loading_events));
             }
-        } else {
-            Dialog.makeToast(applicationContext, getString(R.string.no_network));
-        }
+
         updateRecyclerView(eventObjects);
     }
 
@@ -289,12 +279,7 @@ public class EventListActivity extends AppCompatActivity
     public void onStart(){
         super.onStart();
         Log.d("METHOD", "onStart()");
-        handler.post(updateEventsHard);
-    }
-
-    public void onRestart() {
-        super.onRestart();
-        Log.d("METHOD", "onRestart()");
         handler.post(updateEventsSoft);
     }
+
 }
