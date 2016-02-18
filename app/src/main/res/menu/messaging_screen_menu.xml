@@ -3,20 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_event_info"
-        android:icon="@android:drawable/ic_menu_view"
+        android:icon="@drawable/ic_info_black_24dp"
         android:title="@string/action_event_info"
         app:showAsAction="ifRoom" />
 
     <!-- Settings, should always be in the overflow -->
 
-    <item
-        android:id="@+id/action_rules"
-        android:title="@string/action_rules"
-        app:showAsAction="never" />
+    <!--<item-->
+    <!--android:id="@+id/action_rules"-->
+    <!--android:title="@string/action_rules"-->
+    <!--app:showAsAction="never" />-->
 
-    <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+    <!--<item-->
+    <!--android:id="@+id/action_settings"-->
+    <!--android:title="@string/action_settings"-->
+    <!--app:showAsAction="never" />-->
 
 </menu>

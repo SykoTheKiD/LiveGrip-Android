@@ -63,6 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:drawableRight="@drawable/ic_send_black_18dp"
             android:text="@string/message_button_send"
             android:textSize="18sp" />
     </RelativeLayout>

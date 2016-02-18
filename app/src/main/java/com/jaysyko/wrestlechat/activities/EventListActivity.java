@@ -15,7 +15,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -23,15 +22,15 @@ import android.widget.TextView;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
+import com.jaysyko.wrestlechat.conversation.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.dataObjects.EventObject;
 import com.jaysyko.wrestlechat.date.DateVerifier;
-import com.jaysyko.wrestlechat.date.Live;
+import com.jaysyko.wrestlechat.date.LiveStatus;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.query.Query;
-import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.StringResources;
 import com.parse.ParseObject;
 
@@ -72,7 +71,6 @@ public class EventListActivity extends AppCompatActivity
         setContentView(R.layout.activity_event_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Log.d("METHOD", "onCreate()");
         applicationContext = getApplicationContext();
 
         handler.post(initSwipeRefresh);
@@ -97,7 +95,7 @@ public class EventListActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_event_list);
+        final View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_event_list);
         TextView headerUsername = (TextView) headerLayout.findViewById(R.id.drawer_username);
         headerUsername.setText(CurrentActiveUser.getInstance().getUsername());
 
@@ -195,7 +193,7 @@ public class EventListActivity extends AppCompatActivity
     private void updateEventCards(Boolean hard) {
         ArrayList<EventObject> eventObjects = new ArrayList<>();
         if (NetworkState.isConnected(applicationContext)) {
-            Query<ParseObject> query = new Query<>(Events.class);
+            Query query = new Query(Events.class);
             query.orderByASC(Events.START_TIME);
             if (hard) {
                 eventList = query.executeHard();
@@ -256,11 +254,10 @@ public class EventListActivity extends AppCompatActivity
     }
 
     private void openConversation(ParseObject event) {
-        Live status = DateVerifier.goLive(event.getLong(Events.START_TIME), event.getLong(Events.END_TIME));
+        LiveStatus status = DateVerifier.goLive(event.getLong(Events.START_TIME), event.getLong(Events.END_TIME));
         if (status.goLive()) {
+            CurrentActiveEvent.getInstance().setCurrentEvent(event);
             Intent intent = new Intent(applicationContext, MessagingActivity.class);
-            intent.putExtra(IntentKeys.EVENT_ID, event.getObjectId());
-            intent.putExtra(IntentKeys.EVENT_NAME, event.getString(Events.NAME));
             startActivity(intent);
         } else {
             Dialog.makeToast(applicationContext, getString(status.getReason()));
@@ -268,13 +265,8 @@ public class EventListActivity extends AppCompatActivity
     }
 
     private void openEventInfo(ParseObject event) {
+        CurrentActiveEvent.getInstance().setCurrentEvent(event);
         Intent intent = new Intent(applicationContext, EventInfoActivity.class);
-        intent.putExtra(IntentKeys.EVENT_NAME, event.getString(Events.NAME));
-        intent.putExtra(IntentKeys.EVENT_INFO, event.getString(Events.INFO));
-        intent.putExtra(IntentKeys.EVENT_CARD, event.getString(Events.MATCH_CARD));
-        intent.putExtra(IntentKeys.EVENT_IMAGE, event.getString(Events.IMAGE));
-        intent.putExtra(IntentKeys.EVENT_START_TIME, event.getLong(Events.START_TIME));
-        intent.putExtra(IntentKeys.EVENT_LOCATION, event.getString(Events.LOCATION));
         startActivity(intent);
     }
 

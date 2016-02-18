@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         // Redirect to Events page if logged in;
         final Context context = getApplicationContext();
         final Intent intent = new Intent(context, EventListActivity.class);
-        if (CurrentActiveUser.getInstance() != null) {
+        if (CurrentActiveUser.getInstance().isLoggedIn()) {
             startActivity(intent);
             finish();
         } else {
@@ -89,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (form.isValid()) {
                         if (CurrentActiveUser.signUpUser(username, password)) {
                             startActivity(intent);
+                            finish();
                         } else {
                             Dialog.makeToast(context, getString(R.string.username_taken));
                         }

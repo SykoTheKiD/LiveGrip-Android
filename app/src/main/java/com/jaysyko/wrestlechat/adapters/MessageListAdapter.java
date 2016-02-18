@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.adapters.viewholders.MessageViewHolder;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
@@ -34,7 +35,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
             convertView = getView(parent);
         }
         final Message message = getItem(position);
-        final ViewHolder holder = (ViewHolder) convertView.getTag();
+        final MessageViewHolder holder = (MessageViewHolder) convertView.getTag();
         final boolean isMe = message.getUsername().equals(mUserId);
         final String messageBody = message.getBody();
         handler1.post(new Runnable() {
@@ -69,7 +70,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         View convertView;
         convertView = LayoutInflater.from(context).
                 inflate(R.layout.message_bubble, parent, false);
-        final ViewHolder holder = new ViewHolder();
+        final MessageViewHolder holder = new MessageViewHolder();
         holder.imageLeft = (ImageView) convertView.findViewById(R.id.ivProfileLeft);
         holder.imageRight = (ImageView) convertView.findViewById(R.id.ivProfileRight);
         holder.sender = (RelativeLayout) convertView.findViewById(R.id.sender_message);
@@ -80,7 +81,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
     }
 
 
-    private void senderView(Message message, ViewHolder holder, String messageBody) {
+    private void senderView(Message message, MessageViewHolder holder, String messageBody) {
         TextView usernametv;
         holder.imageLeft.setVisibility(View.VISIBLE);
         holder.imageRight.setVisibility(View.GONE);
@@ -92,7 +93,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         usernametv.setText(message.getUsername());
     }
 
-    private void setUserView(ViewHolder holder, String messageBody) {
+    private void setUserView(MessageViewHolder holder, String messageBody) {
         TextView messageBodytv;
         holder.imageRight.setVisibility(View.VISIBLE);
         holder.imageLeft.setVisibility(View.GONE);
@@ -101,11 +102,5 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         holder.user.setVisibility(View.VISIBLE);
         messageBodytv = (TextView) holder.user.findViewById(R.id.my_message_body);
         messageBodytv.setText(messageBody);
-    }
-
-    final class ViewHolder {
-        public ImageView imageLeft, imageRight;
-        public TextView senderMessage;
-        public RelativeLayout sender, user;
     }
 }

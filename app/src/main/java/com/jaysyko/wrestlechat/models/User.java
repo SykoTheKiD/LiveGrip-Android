@@ -5,5 +5,5 @@ import com.parse.ParseClassName;
 @ParseClassName(User.TABLE_NAME)
 public class User {
     public static final String TABLE_NAME = "User";
-    public static final String USERNAME = "username";
+    public static final String IMG_ID = "imgID";
 }
