@@ -52,20 +52,21 @@ public class MessagingActivity extends AppCompatActivity {
             handler.postDelayed(this, FETCH_MSG_DELAY_MILLIS);
         }
     };
-    boolean initMessages = handler.postDelayed(fetchNewMessagesRunnable, FETCH_MSG_DELAY_MILLIS);
+    private boolean initMessages = handler.postDelayed(fetchNewMessagesRunnable, FETCH_MSG_DELAY_MILLIS);
     private Runnable initMessageaAdapter = new Runnable() {
         @Override
         public void run() {
             initMesssageAdapter();
         }
     };
-    boolean initAdapter = handler.post(initMessageaAdapter);
+    private boolean initAdapter = handler.post(initMessageaAdapter);
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messaging);
-        Intent intent = getIntent();
+        intent = getIntent();
         sEventId = intent.getStringExtra(IntentKeys.EVENT_ID);
         eventName = intent.getStringExtra(IntentKeys.EVENT_NAME);
         setTitle(eventName);
@@ -162,6 +163,11 @@ public class MessagingActivity extends AppCompatActivity {
             case R.id.action_event_info:
                 Intent eventInfoIntent = new Intent(applicationContext, EventInfoActivity.class);
                 eventInfoIntent.putExtra(IntentKeys.EVENT_NAME, eventName);
+                eventInfoIntent.putExtra(IntentKeys.EVENT_INFO, intent.getStringExtra(IntentKeys.EVENT_INFO));
+                eventInfoIntent.putExtra(IntentKeys.EVENT_CARD, intent.getStringExtra(IntentKeys.EVENT_CARD));
+                eventInfoIntent.putExtra(IntentKeys.EVENT_IMAGE, intent.getStringExtra(IntentKeys.EVENT_IMAGE));
+                eventInfoIntent.putExtra(IntentKeys.EVENT_START_TIME, intent.getStringExtra(IntentKeys.EVENT_START_TIME));
+                eventInfoIntent.putExtra(IntentKeys.EVENT_LOCATION, intent.getStringExtra(IntentKeys.EVENT_LOCATION));
                 startActivity(eventInfoIntent);
                 return true;
             default:

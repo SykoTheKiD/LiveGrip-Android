@@ -47,6 +47,7 @@ public class AppCache {
         try {
             Log.d("DB", "HIT");
             List results = this.query.build().find();
+            ParseObject.unpinAll(label);
             ParseObject.pinAll(label, results);
             return results;
         } catch (ParseException e) {

@@ -56,6 +56,8 @@ public class EventInfoActivity extends AppCompatActivity {
     }
 
     private void prepareEventInfoContent(Context context) {
+        TextView eventTitle = (TextView) findViewById(R.id.event_title);
+        eventTitle.setText(eventName);
         TextView eventDescription = (TextView) findViewById(R.id.event_info_description);
         eventDescription.setText(eventInfo);
         TextView matchCard = (TextView) findViewById(R.id.event_info_match_card);
@@ -67,6 +69,5 @@ public class EventInfoActivity extends AppCompatActivity {
         locationTV.setText(location);
         ImageView eventImage = (ImageView)findViewById(R.id.event_info_photo);
         ImageTools.loadImage(context, StringResources.IMGUR_LINK.concat(imageLink), eventImage);
-//        Picasso.with(context).load(StringResources.IMGUR_LINK.concat(imageLink)).into(eventImage);
     }
 }

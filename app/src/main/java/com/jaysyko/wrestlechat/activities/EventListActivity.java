@@ -45,6 +45,12 @@ public class EventListActivity extends AppCompatActivity
     private static final int REFRESH_ANI_MILLIS = 2500;
     final Handler handler = new Handler();
     private Context applicationContext;
+    final Runnable initSwipeRefresh = new Runnable() {
+        @Override
+        public void run() {
+            initSwipeRefresh();
+        }
+    };
     private List<ParseObject> eventList;
     private EventListAdapter mAdapter;
     final Runnable updateEventsSoft = new Runnable() {
@@ -57,12 +63,6 @@ public class EventListActivity extends AppCompatActivity
         @Override
         public void run() {
             updateEventCards(true);
-        }
-    };
-    final Runnable initSwipeRefresh = new Runnable() {
-        @Override
-        public void run() {
-            initSwipeRefresh();
         }
     };
 
@@ -261,6 +261,11 @@ public class EventListActivity extends AppCompatActivity
             Intent intent = new Intent(applicationContext, MessagingActivity.class);
             intent.putExtra(IntentKeys.EVENT_ID, event.getObjectId());
             intent.putExtra(IntentKeys.EVENT_NAME, event.getString(Events.NAME));
+            intent.putExtra(IntentKeys.EVENT_INFO, event.getString(Events.INFO));
+            intent.putExtra(IntentKeys.EVENT_CARD, event.getString(Events.MATCH_CARD));
+            intent.putExtra(IntentKeys.EVENT_IMAGE, event.getString(Events.IMAGE));
+            intent.putExtra(IntentKeys.EVENT_START_TIME, event.getLong(Events.START_TIME));
+            intent.putExtra(IntentKeys.EVENT_LOCATION, event.getString(Events.LOCATION));
             startActivity(intent);
         } else {
             Dialog.makeToast(applicationContext, getString(status.getReason()));
