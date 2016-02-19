@@ -2,14 +2,13 @@ package com.jaysyko.wrestlechat.auth;
 
 import android.util.Log;
 
+import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.jaysyko.wrestlechat.utils.StringResources;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
-public class CurrentActiveUser implements ActiveUser {
-    public static final String USERNAME_KEY = "username";
-    private static final String IMG_ID = "imgID";
+public class CurrentActiveUser {
     private static CurrentActiveUser activeCurrentActiveUser;
     private String username;
     private String password;
@@ -51,7 +50,7 @@ public class CurrentActiveUser implements ActiveUser {
 
     public String getCustomProfileImageURL() {
         ParseUser currentUser = ParseUser.getCurrentUser();
-        String userImage = currentUser.getString(IMG_ID);
+        String userImage = currentUser.getString(User.IMG_ID);
         if (userImage != null) {
             activeCurrentActiveUser.profileImageURL = StringResources.IMGUR_LINK.concat(userImage);
         } else {
@@ -75,16 +74,13 @@ public class CurrentActiveUser implements ActiveUser {
 
     }
 
-    @Override
     public void logout() {
         activeCurrentActiveUser = null;
         ParseUser.logOut();
     }
 
-    public boolean getCurrentUser() {
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        return currentUser != null;
+    public boolean isLoggedIn() {
+        return activeCurrentActiveUser != null;
     }
-
 
 }
