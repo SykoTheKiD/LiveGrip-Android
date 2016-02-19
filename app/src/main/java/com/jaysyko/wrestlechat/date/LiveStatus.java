@@ -2,7 +2,7 @@ package com.jaysyko.wrestlechat.date;
 
 import com.jaysyko.wrestlechat.R;
 
-public class LiveStatus {
+public final class LiveStatus {
 
     public static final int EVENT_NOT_STARTED = R.string.online_status_not_live;
     public static final int EVENT_OVER = R.string.event_over;
