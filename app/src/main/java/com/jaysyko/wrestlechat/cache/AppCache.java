@@ -28,14 +28,7 @@ public class AppCache {
         return queryDB(label);
     }
 
-    public void deleteFromCache(List objs) {
-        try {
-            ParseObject.unpinAll(objs);
-        } catch (ParseException ignored) {
-        }
-    }
-
-    public void deleteFromCache(String label) {
+    private void deleteFromCache(String label) {
         try {
             ParseObject.unpinAll(label);
         } catch (ParseException e) {
@@ -47,7 +40,7 @@ public class AppCache {
         try {
             Log.d("DB", "HIT");
             List results = this.query.build().find();
-            ParseObject.unpinAll(label);
+            deleteFromCache(label);
             ParseObject.pinAll(label, results);
             return results;
         } catch (ParseException e) {
