@@ -20,6 +20,8 @@ import java.util.List;
 public class EventListAdapter extends RecyclerView.Adapter<EventListViewHolder> {
     private static final String NON_LIVE_TEXT_COLOUR = "#bdbdbd";
     private static final int NON_LIVE_TEXT_SIZE = 15;
+    private static final String LIVE_TEXT_COLOUR = "#64dd17";
+    private static final int LIVE_TEXT_SIZE = 20;
     public List<EventObject> itemsData;
     private Context context;
 
@@ -54,6 +56,8 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListViewHolder> 
 
         if (DateVerifier.goLive(currentCard.getStartTime(), currentCard.getEndTime()).goLive()) {
             viewHolder.txtViewLiveStatus.setText(R.string.online_status_live);
+            viewHolder.txtViewLiveStatus.setTextColor(Color.parseColor(LIVE_TEXT_COLOUR));
+            viewHolder.txtViewLiveStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, LIVE_TEXT_SIZE);
         } else {
             String eventDate = DateVerifier.format(currentCard.getStartTime());
             viewHolder.txtViewLiveStatus.setTextColor(Color.parseColor(NON_LIVE_TEXT_COLOUR));

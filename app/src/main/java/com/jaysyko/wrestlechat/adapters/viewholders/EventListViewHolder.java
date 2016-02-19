@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 
-public class EventListViewHolder extends RecyclerView.ViewHolder {
+public final class EventListViewHolder extends RecyclerView.ViewHolder {
     public TextView txtViewTitle;
     public ImageView imgViewIcon;
     public TextView txtViewLocation, txtViewLiveStatus;
