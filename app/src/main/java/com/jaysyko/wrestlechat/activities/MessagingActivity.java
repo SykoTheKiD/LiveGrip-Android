@@ -86,6 +86,7 @@ public class MessagingActivity extends AppCompatActivity {
                         Form form = FormValidation.validateMessage(body);
                         if (NetworkState.isConnected(applicationContext)) {
                             if (form.isValid()) {
+                                fetchNewMessages();
                                 body = body.trim();
                                 // Use Message model to create new messages now
                                 Message message = new Message();
@@ -126,7 +127,7 @@ public class MessagingActivity extends AppCompatActivity {
 
     // Query messages from Parse so we can load them into the chat adapter
     @SuppressWarnings("unchecked")
-    private void fetchNewMessages() {
+    private synchronized void fetchNewMessages() {
         if (NetworkState.isConnected(applicationContext)) {
             Query query = new Query(Message.class);
             query.whereEqualTo(Events.ID, sEventId);
@@ -179,6 +180,5 @@ public class MessagingActivity extends AppCompatActivity {
 
     private void closeAllThreads() {
         handler.removeCallbacks(fetchNewMessagesRunnable);
-        handler.removeCallbacks(initMessageaAdapter);
     }
 }

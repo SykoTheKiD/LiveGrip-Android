@@ -89,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (form.isValid()) {
                         if (CurrentActiveUser.signUpUser(username, password)) {
                             startActivity(intent);
+                            finish();
                         } else {
                             Dialog.makeToast(context, getString(R.string.username_taken));
                         }
