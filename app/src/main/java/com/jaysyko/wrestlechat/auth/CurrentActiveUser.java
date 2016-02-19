@@ -1,7 +1,5 @@
 package com.jaysyko.wrestlechat.auth;
 
-import android.util.Log;
-
 import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.jaysyko.wrestlechat.utils.StringResources;
@@ -43,7 +41,6 @@ public class CurrentActiveUser {
             CurrentActiveUser.getInstance(username, password);
             return true;
         } catch (ParseException e) {
-            Log.d("Login", e.getMessage());
             return false;
         }
     }
