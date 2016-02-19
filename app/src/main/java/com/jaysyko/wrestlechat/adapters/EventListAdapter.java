@@ -7,10 +7,9 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.adapters.viewholders.EventListViewHolder;
 import com.jaysyko.wrestlechat.dataObjects.EventObject;
 import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.utils.ImageTools;
@@ -18,7 +17,7 @@ import com.jaysyko.wrestlechat.utils.StringResources;
 
 import java.util.List;
 
-public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {
+public class EventListAdapter extends RecyclerView.Adapter<EventListViewHolder> {
     private static final String NON_LIVE_TEXT_COLOUR = "#bdbdbd";
     private static final int NON_LIVE_TEXT_SIZE = 15;
     public List<EventObject> itemsData;
@@ -32,7 +31,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
     // Create new views (invoked by the layout manager)
     @Override
-    public EventListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+    public EventListViewHolder onCreateViewHolder(ViewGroup parent,
                                                           int viewType) {
         // create a new view
         View itemLayoutView = LayoutInflater.from(parent.getContext())
@@ -40,12 +39,12 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
         // create ViewHolder
 
-        return new ViewHolder(itemLayoutView);
+        return new EventListViewHolder(itemLayoutView);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(EventListViewHolder viewHolder, int position) {
         // - get data from your itemsData at this position
         // - replace the contents of the view with that itemsData
         EventObject currentCard = itemsData.get(position);
@@ -67,21 +66,5 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
     @Override
     public int getItemCount() {
         return this.itemsData.size();
-    }
-
-    // inner class to hold a reference to each item of RecyclerView
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView txtViewTitle;
-        public ImageView imgViewIcon;
-        public TextView txtViewLocation, txtViewLiveStatus;
-
-        public ViewHolder(View itemLayoutView) {
-            super(itemLayoutView);
-            txtViewTitle = (TextView) itemLayoutView.findViewById(R.id.event_name);
-            imgViewIcon = (ImageView) itemLayoutView.findViewById(R.id.event_image);
-            txtViewLocation = (TextView) itemLayoutView.findViewById(R.id.event_location);
-            txtViewLiveStatus = (TextView) itemLayoutView.findViewById(R.id.event_live);
-        }
     }
 }
