@@ -1,12 +1,11 @@
 package com.jaysyko.wrestlechat.query;
 
 import com.jaysyko.wrestlechat.cache.AppCache;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.List;
 
-public final class Query<T extends ParseObject> {
+public final class Query {
 
     private ParseQuery query;
     private String label;

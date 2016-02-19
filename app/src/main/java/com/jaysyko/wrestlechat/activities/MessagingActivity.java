@@ -128,7 +128,7 @@ public class MessagingActivity extends AppCompatActivity {
     @SuppressWarnings("unchecked")
     private void fetchNewMessages() {
         if (NetworkState.isConnected(applicationContext)) {
-            Query<Message> query = new Query<>(Message.class);
+            Query query = new Query(Message.class);
             query.whereEqualTo(Events.ID, sEventId);
             query.orderByDESC(Message.CREATED_AT);
             query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);

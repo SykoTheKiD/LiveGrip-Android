@@ -26,7 +26,7 @@ import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.conversation.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.dataObjects.EventObject;
 import com.jaysyko.wrestlechat.date.DateVerifier;
-import com.jaysyko.wrestlechat.date.Live;
+import com.jaysyko.wrestlechat.date.LiveStatus;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Events;
@@ -45,12 +45,6 @@ public class EventListActivity extends AppCompatActivity
     private static final int REFRESH_ANI_MILLIS = 2500;
     final Handler handler = new Handler();
     private Context applicationContext;
-    final Runnable initSwipeRefresh = new Runnable() {
-        @Override
-        public void run() {
-            initSwipeRefresh();
-        }
-    };
     private List<ParseObject> eventList;
     private EventListAdapter mAdapter;
     final Runnable updateEventsSoft = new Runnable() {
@@ -63,6 +57,12 @@ public class EventListActivity extends AppCompatActivity
         @Override
         public void run() {
             updateEventCards(true);
+        }
+    };
+    final Runnable initSwipeRefresh = new Runnable() {
+        @Override
+        public void run() {
+            initSwipeRefresh();
         }
     };
 
@@ -195,7 +195,7 @@ public class EventListActivity extends AppCompatActivity
     private void updateEventCards(Boolean hard) {
         ArrayList<EventObject> eventObjects = new ArrayList<>();
         if (NetworkState.isConnected(applicationContext)) {
-            Query<ParseObject> query = new Query<>(Events.class);
+            Query query = new Query(Events.class);
             query.orderByASC(Events.START_TIME);
             if (hard) {
                 eventList = query.executeHard();
@@ -256,7 +256,7 @@ public class EventListActivity extends AppCompatActivity
     }
 
     private void openConversation(ParseObject event) {
-        Live status = DateVerifier.goLive(event.getLong(Events.START_TIME), event.getLong(Events.END_TIME));
+        LiveStatus status = DateVerifier.goLive(event.getLong(Events.START_TIME), event.getLong(Events.END_TIME));
         if (status.goLive()) {
             CurrentActiveEvent.getInstance().setCurrentEvent(event);
             Intent intent = new Intent(applicationContext, MessagingActivity.class);
