@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
+import com.jaysyko.wrestlechat.ads.AdBuilder;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.conversation.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.dataObjects.EventObject;
@@ -44,6 +45,12 @@ public class EventListActivity extends AppCompatActivity
     private static final int REFRESH_ANI_MILLIS = 2500;
     final Handler handler = new Handler();
     private Context applicationContext;
+    final Runnable initSwipeRefresh = new Runnable() {
+        @Override
+        public void run() {
+            initSwipeRefresh();
+        }
+    };
     private List<ParseObject> eventList;
     private EventListAdapter mAdapter;
     final Runnable updateEventsSoft = new Runnable() {
@@ -56,12 +63,6 @@ public class EventListActivity extends AppCompatActivity
         @Override
         public void run() {
             updateEventCards(true);
-        }
-    };
-    final Runnable initSwipeRefresh = new Runnable() {
-        @Override
-        public void run() {
-            initSwipeRefresh();
         }
     };
 
@@ -99,7 +100,15 @@ public class EventListActivity extends AppCompatActivity
         TextView headerUsername = (TextView) headerLayout.findViewById(R.id.drawer_username);
         headerUsername.setText(CurrentActiveUser.getInstance().getUsername());
 
+        // Load an ad into the AdMob banner view.
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                new AdBuilder(EventListActivity.this).buildAd();
+            }
+        });
     }
+
 
     private void initSwipeRefresh() {
         final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) findViewById(R.id.swipe_container);

@@ -8,7 +8,7 @@ android {
         applicationId "com.jaysyko.wrestlechat"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 3
+        versionCode 5
         versionName "Alpha"
     }
     buildTypes {
@@ -30,4 +30,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.parse.bolts:bolts-android:1.4.0'
+    compile 'com.google.android.gms:play-services-ads:8.4.0'
 }

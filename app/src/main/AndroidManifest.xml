@@ -55,10 +55,10 @@
 
         <meta-data
             android:name="com.parse.APPLICATION_ID"
-            android:value="yM8G4t0atwmyM2372XHhb4xAqvUdUMiwKB5YCyAV" />
+            android:value="Mxd4JFRxbgt565O6ToiSoUBwpKSg8Vff7k43BEAy" />
         <meta-data
             android:name="com.parse.CLIENT_KEY"
-            android:value="ySpg33jzOI3YKAQqJPJv7lfzFJMqbZlGhgtxGqg9" />
+            android:value="1XDPEZxupHzzsifMf4r0L7soFXAlstgmTaeC5clb" />
 
         <service android:name="com.parse.PushService" />
 
@@ -105,6 +105,19 @@
             android:label="About" />
         <activity android:name=".activities.WelcomeActivity" />
         <activity android:name=".activities.UserProfileActivity" />
+        <!-- This meta-data tag is required to use Google Play Services. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".ads.AdvertisementActivity"
+            android:label="@string/title_activity_advertisement"></activity>
+        <!-- Include the AdActivity configChanges and theme. -->
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" />
     </application>
 
 </manifest>

@@ -3,6 +3,7 @@ package com.jaysyko.wrestlechat.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.ads.AdBuilder;
 import com.jaysyko.wrestlechat.conversation.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.utils.ImageTools;
@@ -23,6 +25,7 @@ public class EventInfoActivity extends AppCompatActivity {
     private final CurrentActiveEvent currentActiveEvent = CurrentActiveEvent.getInstance();
     private String eventName, eventInfo, matchCardText, location, imageLink;
     private long startTime;
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,13 @@ public class EventInfoActivity extends AppCompatActivity {
                 share.setType(StringResources.PLAIN_CONTENT_TYPE);
                 share.putExtra(Intent.EXTRA_TEXT, getShareMessage(eventName));
                 startActivity(Intent.createChooser(share, getString(R.string.app_share_title)));
+            }
+        });
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                new AdBuilder(EventInfoActivity.this).buildAd();
             }
         });
     }
