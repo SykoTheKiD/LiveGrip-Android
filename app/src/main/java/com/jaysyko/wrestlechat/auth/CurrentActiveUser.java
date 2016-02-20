@@ -76,8 +76,4 @@ public class CurrentActiveUser {
         ParseUser.logOut();
     }
 
-    public boolean isLoggedIn() {
-        return activeCurrentActiveUser != null;
-    }
-
 }
