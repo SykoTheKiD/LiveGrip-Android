@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         // Redirect to Events page if logged in;
         final Context context = getApplicationContext();
         final Intent intent = new Intent(context, EventListActivity.class);
-        if (CurrentActiveUser.getInstance().isLoggedIn()) {
+        if (CurrentActiveUser.getInstance() != null) {
             startActivity(intent);
             finish();
         } else {

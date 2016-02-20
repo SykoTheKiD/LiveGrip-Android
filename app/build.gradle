@@ -8,7 +8,7 @@ android {
         applicationId "com.jaysyko.wrestlechat"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 5
+        versionCode 6
         versionName "Alpha"
     }
     buildTypes {
