@@ -125,7 +125,7 @@
     <string name="title_activity_donate">Donate</string>
     <string name="title_activity_legal">Legal</string>
     <string name="lorem_username">JaySyko</string>
-    <string name="app_share">Hey come chat with other wrestling fans on WrestleChat!</string>
+    <string name="app_share">Hey come chat with other wrestling fans on WrestleChat! https://goo.gl/al7ZIK</string>
     <string name="online_status_not_live">The event hasn\'t started yet</string>
     <string name="event_info_match_card_title">Match Card</string>
     <string name="event_info_location_title">Location</string>
@@ -147,7 +147,7 @@
     <string name="invalid_username">Username cannot exceed 10 charaters</string>
     <string name="refreshing_events">Refreshing Events…</string>
     <string name="hey_check_out">Hey check out the</string>
-    <string name="sent_from_wrestlechat">- sent from WrestleChat</string>
+    <string name="sent_from_wrestlechat">- sent from WrestleChat @ https://goo.gl/al7ZIK</string>
     <string name="app_share_title">Share Wrestle Chat</string>
     <string name="no_events">No Events Right Now</string>
     <string name="no_network">No Network Access</string>
@@ -158,4 +158,13 @@
     <string name="profile_upcoming">Profile options such as username changes and profile pictures will be available in a future release. Stay tuned!</string>
     <string name="event_over">The event is over</string>
     <string name="special_chars_username">Username can only contain letters numbers and underscores</string>
+    <string name="title_activity_advertisement">AdvertisementActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <!-- -
+        This is an ad unit ID for a banner test ad. Replace with your own banner ad unit id.
+        For more information, see https://support.google.com/admob/answer/3052638
+    <!- -->
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="banner_ad_unit_id_prod">ca-app-pub-5139358082902358/5020745028</string>
 </resources>
