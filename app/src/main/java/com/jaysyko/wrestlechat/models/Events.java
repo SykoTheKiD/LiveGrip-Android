@@ -3,6 +3,14 @@ package com.jaysyko.wrestlechat.models;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+/**
+ * Events.java
+ * Model for the Event object in the database
+ * Contains all the keys in the database table
+ *
+ * @author Jay Syko
+ */
+
 @ParseClassName(Events.TABLE_NAME)
 public class Events extends ParseObject {
     public static final String TABLE_NAME = "Events";

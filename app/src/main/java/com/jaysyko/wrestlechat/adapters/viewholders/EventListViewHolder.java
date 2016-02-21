@@ -7,6 +7,12 @@ import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 
+/**
+ * EventListViewHolder.java
+ * ViewHolder for the event list object
+ *
+ * @author Jay Syko
+ */
 public final class EventListViewHolder extends RecyclerView.ViewHolder {
     public TextView txtViewTitle;
     public ImageView imgViewIcon;

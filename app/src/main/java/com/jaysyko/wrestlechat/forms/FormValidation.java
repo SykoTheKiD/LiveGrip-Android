@@ -5,12 +5,23 @@ import com.jaysyko.wrestlechat.utils.StringResources;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * FormValidation.java
+ * Contains the validation rules for fields
+ *
+ * @author Jay Syko
+ */
 public class FormValidation {
 
     private static final int MIN_MESSAGE_LENGTH = 1;
     private static final int MAX_MESSAGE_LENGTH = 112;
     private static final int MAX_USERNAME_LENGTH = 10;
 
+    /**
+     * Verifies if a String is blank or null
+     * @param strings String
+     * @return Form status
+     */
     private static Form isNotBlank(String... strings) {
         for (String str : strings) {
             if (str == null || str.isEmpty()) {

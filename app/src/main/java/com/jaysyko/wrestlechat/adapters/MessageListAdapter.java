@@ -18,10 +18,14 @@ import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import java.util.List;
 
+/**
+ * MessageListAdapter.java
+ * Adapter to hold all messages in a conversation
+ *
+ * @author Jay Syko
+ */
 public class MessageListAdapter extends ArrayAdapter<Message> {
-    Handler handler1 = new Handler();
-    Handler handler2 = new Handler();
-    Handler handler3 = new Handler();
+    private Handler handler = new Handler();
     private String mUserId;
     private Context context = getContext();
     public MessageListAdapter(Context context, String userId, List<Message> messages) {
@@ -29,6 +33,13 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         this.mUserId = userId;
     }
 
+    /**
+     * Gets the current view the adapter is working under
+     * @param position int
+     * @param convertView View
+     * @param parent ViewGroup
+     * @return View
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
@@ -38,7 +49,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         final MessageViewHolder holder = (MessageViewHolder) convertView.getTag();
         final boolean isMe = message.getUsername().equals(mUserId);
         final String messageBody = message.getBody();
-        handler1.post(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
                 final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
@@ -48,14 +59,14 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         // Show-hide image based on the logged-in user.
         // Display the profile image to the right for our user, left for other users.
         if (isMe) {
-            handler2.post(new Runnable() {
+            handler.post(new Runnable() {
                 @Override
                 public void run() {
                     setUserView(holder, messageBody);
                 }
             });
         } else {
-            handler3.post(new Runnable() {
+            handler.post(new Runnable() {
                 @Override
                 public void run() {
                     senderView(message, holder, messageBody);
@@ -65,6 +76,11 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         return convertView;
     }
 
+    /**
+     * Inflates the current view
+     * @param parent ViewGroup
+     * @return View
+     */
     @NonNull
     private View getView(ViewGroup parent) {
         View convertView;
@@ -80,7 +96,12 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         return convertView;
     }
 
-
+    /**
+     * Constructs the sender's side of the message
+     * @param message Message
+     * @param holder MessageViewHolder
+     * @param messageBody String
+     */
     private void senderView(Message message, MessageViewHolder holder, String messageBody) {
         TextView usernametv;
         holder.imageLeft.setVisibility(View.VISIBLE);
@@ -93,6 +114,11 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         usernametv.setText(message.getUsername());
     }
 
+    /**
+     * Constructs the user's side of the message
+     * @param holder MessageViewHolder
+     * @param messageBody String
+     */
     private void setUserView(MessageViewHolder holder, String messageBody) {
         TextView messageBodytv;
         holder.imageRight.setVisibility(View.VISIBLE);

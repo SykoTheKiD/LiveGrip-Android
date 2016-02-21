@@ -1,5 +1,12 @@
 package com.jaysyko.wrestlechat.utils;
 
+/**
+ * ImageTools.java
+ * Various methods for handling images
+ *
+ * @author Jay Syko
+ */
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -51,21 +58,34 @@ public final class ImageTools {
         return inSampleSize;
     }
 
+    /**
+     * Loads an image from a URL into an ImageView
+     *
+     * @param context   Context
+     * @param link      String
+     * @param imageview ImageView
+     */
     public static void loadImage(Context context, String link, ImageView imageview) {
         Picasso.with(context).load(link).into(imageview);
     }
 
+    /**
+     * Generates a unique Image based off of an input string
+     *
+     * @param userId String
+     * @return defaultProfileImageURL
+     */
     public static String defaultProfileImage(String userId) {
-        String hex = "";
+        StringBuilder hex = new StringBuilder();
         try {
             final MessageDigest digest = MessageDigest.getInstance("MD5");
             final byte[] hash = digest.digest(userId.getBytes());
             final BigInteger bigInt = new BigInteger(hash);
-            hex = bigInt.abs().toString(16);
+            hex.append(bigInt.abs().toString(16));
         } catch (Exception e) {
             Log.d("Profile Image", "Default profile image generator error");
         }
-        return "http://www.gravatar.com/avatar/".concat(hex).concat("?d=identicon");
+        return "http://www.gravatar.com/avatar/".concat(hex.toString()).concat("?d=identicon");
     }
 
 }

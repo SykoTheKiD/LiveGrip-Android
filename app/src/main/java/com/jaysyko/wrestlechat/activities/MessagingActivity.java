@@ -15,12 +15,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
-import com.jaysyko.wrestlechat.conversation.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
-import com.jaysyko.wrestlechat.forms.FormValidation;
+import com.jaysyko.wrestlechat.forms.formValidators.MessageValidator;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.network.NetworkState;
@@ -83,7 +83,7 @@ public class MessagingActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         String body = etMessage.getText().toString();
-                        Form form = FormValidation.validateMessage(body);
+                        Form form = new MessageValidator(body).validate();
                         if (NetworkState.isConnected(applicationContext)) {
                             if (form.isValid()) {
                                 fetchNewMessages();

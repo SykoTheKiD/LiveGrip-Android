@@ -6,6 +6,13 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+/**
+ * RecyclerItemClickListener.java
+ * Click listener for the cards on the EventList page
+ *
+ * @author Jay Syko
+ */
+
 public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
     private OnItemClickListener mListener;
     private GestureDetector mGestureDetector;
@@ -30,6 +37,12 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
         });
     }
 
+    /**
+     * Get current touch position
+     * @param view RecyclerView
+     * @param e MotionEvent
+     * @return boolean
+     */
     @Override
     public boolean onInterceptTouchEvent(RecyclerView view, MotionEvent e) {
         View childView = view.findChildViewUnder(e.getX(), e.getY());
