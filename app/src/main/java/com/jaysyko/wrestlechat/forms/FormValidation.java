@@ -8,8 +8,8 @@ import java.util.regex.Pattern;
 public class FormValidation {
 
     private static final int MIN_MESSAGE_LENGTH = 1;
-    private static final int MAX_MESSAGE_LENGTH = 112;
-    private static final int MAX_USERNAME_LENGTH = 10;
+    private static final int MAX_MESSAGE_LENGTH = 180;// 182
+    private static final int MAX_USERNAME_LENGTH = 25;
 
     private static Form isNotBlank(String... strings) {
         for (String str : strings) {
@@ -28,7 +28,7 @@ public class FormValidation {
     }
 
     private static Form isValidUsername(String username) {
-        if (!(username.length() < MAX_USERNAME_LENGTH)) {
+        if (username.length() > MAX_USERNAME_LENGTH) {
             return new Form(false, FormStatus.INVALID_USERNAME);
         }
         String patternToMatch = "[\\\\!\"#$%&()*+,./:;<=>?@\\[\\]^_{|}~]+";

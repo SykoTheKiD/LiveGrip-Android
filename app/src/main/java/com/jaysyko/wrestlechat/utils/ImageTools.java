@@ -52,7 +52,7 @@ public final class ImageTools {
     }
 
     public static void loadImage(Context context, String link, ImageView imageview) {
-        Picasso.with(context).load(link).into(imageview);
+        Picasso.with(context).load(link).fit().into(imageview);
     }
 
     public static String defaultProfileImage(String userId) {

@@ -54,15 +54,14 @@
         android:layout_weight="1.00"
         android:visibility="gone">
 
-        <TextView
+        <com.jaysyko.wrestlechat.textview.AutoResizeTextView
             android:id="@+id/my_message_body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:background="@drawable/in_message_bg"
-            android:gravity="center|center_vertical"
-            android:textSize="14sp" />
+            android:gravity="center|left" />
 
     </RelativeLayout>
 

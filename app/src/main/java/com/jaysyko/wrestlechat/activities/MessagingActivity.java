@@ -52,14 +52,13 @@ public class MessagingActivity extends AppCompatActivity {
             handler.postDelayed(this, FETCH_MSG_DELAY_MILLIS);
         }
     };
-    private boolean initMessages = handler.postDelayed(fetchNewMessagesRunnable, FETCH_MSG_DELAY_MILLIS);
-    private Runnable initMessageaAdapter = new Runnable() {
+    private Runnable initMessageAdapter = new Runnable() {
         @Override
         public void run() {
-            initMesssageAdapter();
+            initMessageAdapter();
         }
     };
-    private boolean initAdapter = handler.post(initMessageaAdapter);
+    private boolean initAdapter = handler.post(initMessageAdapter);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +113,7 @@ public class MessagingActivity extends AppCompatActivity {
     }
 
     // Setup message field and posting
-    private void initMesssageAdapter() {
+    private void initMessageAdapter() {
         etMessage = (EditText) findViewById(R.id.etMessage);
         lvChat = (ListView) findViewById(R.id.lvChat);
         messages = new ArrayList<>();
@@ -176,6 +175,11 @@ public class MessagingActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         closeAllThreads();
+    }
+
+    public void onResume() {
+        super.onResume();
+        handler.post(fetchNewMessagesRunnable);
     }
 
     private void closeAllThreads() {
