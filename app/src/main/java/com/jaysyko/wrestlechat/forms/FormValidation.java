@@ -28,7 +28,7 @@ public class FormValidation {
     }
 
     private static Form isValidUsername(String username) {
-        if (!(username.length() < MAX_USERNAME_LENGTH)) {
+        if (!(username.length() <= MAX_USERNAME_LENGTH)) {
             return new Form(false, FormStatus.INVALID_USERNAME);
         }
         String patternToMatch = "[\\\\!\"#$%&()*+,./:;<=>?@\\[\\]^_{|}~]+";
