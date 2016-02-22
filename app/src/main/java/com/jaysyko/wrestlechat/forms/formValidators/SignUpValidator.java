@@ -42,7 +42,7 @@ public class SignUpValidator extends FormValidator {
         String patternToMatch = "[\\\\!\"#$%&()*+,./:;<=>?@\\[\\]^_{|}~]+";
         Pattern p = Pattern.compile(patternToMatch);
         Matcher m = p.matcher(username);
-        if (m.find() && username.contains(StringResources.BLANK_SPACE)) {
+        if (m.find() || username.contains(StringResources.BLANK_SPACE)) {
             return new Form(false, FormStatus.SPECIAL_CHARACTERS);
         }
         return new Form(true, FormStatus.VALID);

@@ -1,10 +1,15 @@
 package com.jaysyko.wrestlechat.auth;
 
+import android.os.Handler;
+import android.util.Log;
+
 import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.utils.ImageTools;
-import com.jaysyko.wrestlechat.utils.StringResources;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * CurrentActiveUser.java
@@ -75,7 +80,7 @@ public class CurrentActiveUser {
         ParseUser currentUser = ParseUser.getCurrentUser();
         String userImage = currentUser.getString(User.IMG_ID);
         if (userImage != null) {
-            activeCurrentActiveUser.profileImageURL = StringResources.IMGUR_LINK.concat(userImage);
+            activeCurrentActiveUser.profileImageURL = userImage;
         } else {
             activeCurrentActiveUser.profileImageURL = ImageTools.defaultProfileImage(activeCurrentActiveUser.getUsername());
         }
@@ -111,6 +116,30 @@ public class CurrentActiveUser {
     public void logout() {
         activeCurrentActiveUser = null;
         ParseUser.logOut();
+    }
+
+    public boolean setProfileImageURL(final String url) {
+        String patternToMatch = "\\.jpg|\\.png*";
+        Pattern p = Pattern.compile(patternToMatch);
+        Matcher m = p.matcher(url);
+        if (m.find()) {
+            activeCurrentActiveUser.profileImageURL = url;
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    ParseUser currentUser = ParseUser.getCurrentUser();
+                    currentUser.put(User.IMG_ID, url);
+                    try {
+                        currentUser.save();
+                    } catch (ParseException e) {
+                        Log.e("FAIL IMAGE", e.getMessage());
+                    }
+                }
+            });
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
