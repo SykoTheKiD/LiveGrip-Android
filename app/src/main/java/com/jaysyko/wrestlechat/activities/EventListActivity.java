@@ -23,7 +23,7 @@ import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.ads.AdBuilder;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
-import com.jaysyko.wrestlechat.conversation.CurrentActiveEvent;
+import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.dataObjects.EventObject;
 import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.date.LiveStatus;
@@ -45,12 +45,6 @@ public class EventListActivity extends AppCompatActivity
     private static final int REFRESH_ANI_MILLIS = 2500;
     final Handler handler = new Handler();
     private Context applicationContext;
-    final Runnable initSwipeRefresh = new Runnable() {
-        @Override
-        public void run() {
-            initSwipeRefresh();
-        }
-    };
     private List<ParseObject> eventList;
     private EventListAdapter mAdapter;
     final Runnable updateEventsSoft = new Runnable() {
@@ -63,6 +57,12 @@ public class EventListActivity extends AppCompatActivity
         @Override
         public void run() {
             updateEventCards(true);
+        }
+    };
+    final Runnable initSwipeRefresh = new Runnable() {
+        @Override
+        public void run() {
+            initSwipeRefresh();
         }
     };
 

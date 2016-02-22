@@ -15,7 +15,8 @@ import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
-import com.jaysyko.wrestlechat.forms.FormValidation;
+import com.jaysyko.wrestlechat.forms.formValidators.LoginValidator;
+import com.jaysyko.wrestlechat.forms.formValidators.SignUpValidator;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
@@ -85,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                 password = passwordField.getText().toString();
                 showLoadPanel(true, signUpButton);
                 if (NetworkState.isConnected(context)) {
-                    Form form = FormValidation.validateSignUp(username, password);
+                    Form form = new SignUpValidator(username, password).validate();
                     if (form.isValid()) {
                         if (CurrentActiveUser.signUpUser(username, password)) {
                             startActivity(intent);
@@ -113,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                 password = passwordField.getText().toString();
                 showLoadPanel(true, loginButton);
                 if (NetworkState.isConnected(context)) {
-                    Form form = FormValidation.validateLogin(username, password);
+                    Form form = new LoginValidator(username, password).validate();
                     if (form.isValid()) {
                         CurrentActiveUser currentActiveUser = CurrentActiveUser.getInstance(username, password);
                         if (currentActiveUser.loginUser()) {

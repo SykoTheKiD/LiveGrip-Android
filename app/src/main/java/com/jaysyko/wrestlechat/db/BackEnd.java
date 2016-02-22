@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat.cache;
+package com.jaysyko.wrestlechat.db;
 
 import android.util.Log;
 
@@ -8,14 +8,25 @@ import com.parse.ParseObject;
 
 import java.util.List;
 
-public class AppCache {
+/**
+ * BackEnd.java
+ * Contains the code for the backend of the app
+ *
+ * @author Jay Syko
+ */
+public class BackEnd {
 
     private Query query;
 
-    public AppCache(Query query) {
+    public BackEnd(Query query) {
         this.query = query;
     }
 
+    /**
+     * Query the app's cache
+     * @param label String
+     * @return List of results
+     */
     public List queryCache(String label) {
         Query cacheQuery = this.query;
         cacheQuery.build().fromLocalDatastore();
@@ -28,6 +39,10 @@ public class AppCache {
         return queryDB(label);
     }
 
+    /**
+     * Delete a set from the cache
+     * @param label String
+     */
     private void deleteFromCache(String label) {
         try {
             ParseObject.unpinAll(label);
@@ -36,6 +51,11 @@ public class AppCache {
         }
     }
 
+    /**
+     * Query for results in the database
+     * @param label String
+     * @return List of results
+     */
     public List queryDB(String label) {
         try {
             Log.d("DB", "HIT");

@@ -17,6 +17,12 @@ import com.jaysyko.wrestlechat.utils.StringResources;
 
 import java.util.List;
 
+/**
+ * EventListAdapter.java
+ * Adapter that holds the event list items
+ *
+ * @author Jay Syko
+ */
 public class EventListAdapter extends RecyclerView.Adapter<EventListViewHolder> {
     private static final String NON_LIVE_TEXT_COLOUR = "#bdbdbd";
     private static final int NON_LIVE_TEXT_SIZE = 15;
@@ -31,7 +37,12 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListViewHolder> 
         this.context = context;
     }
 
-    // Create new views (invoked by the layout manager)
+    /**
+     * Create new views (invoked by the layout manager)
+     * @param parent ViewGroup
+     * @param viewType int
+     * @return EventListViewHolder
+     */
     @Override
     public EventListViewHolder onCreateViewHolder(ViewGroup parent,
                                                           int viewType) {
@@ -44,7 +55,11 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListViewHolder> 
         return new EventListViewHolder(itemLayoutView);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+    /**
+     * Replace the contents of a view (invoked by the layout manager)
+     * @param viewHolder EventListViewHolder
+     * @param position int
+     */
     @Override
     public void onBindViewHolder(EventListViewHolder viewHolder, int position) {
         // - get data from your itemsData at this position
@@ -66,7 +81,10 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListViewHolder> 
         }
     }
 
-    // Return the size of your itemsData (invoked by the layout manager)
+    /**
+     * Return the size of your itemsData (invoked by the layout manager)
+     * @return int
+     */
     @Override
     public int getItemCount() {
         return this.itemsData.size();
