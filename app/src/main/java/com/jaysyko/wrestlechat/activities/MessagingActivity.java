@@ -95,18 +95,18 @@ public class MessagingActivity extends AppCompatActivity {
                                 message.setUserImage(CurrentActiveUser.getInstance().getCustomProfileImageURL());
                                 message.saveInBackground();
                                 etMessage.setText(StringResources.NULL_TEXT);
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        btSend.setEnabled(true);
-                                    }
-                                }, SEND_DELAY);
                             } else {
                                 Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.getReason())));
                             }
                         } else {
                             Dialog.makeToast(applicationContext, getString(R.string.no_network));
                         }
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                btSend.setEnabled(true);
+                            }
+                        }, SEND_DELAY);
                     }
                 });
             }
