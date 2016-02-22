@@ -118,6 +118,11 @@ public class CurrentActiveUser {
         ParseUser.logOut();
     }
 
+    /**
+     * Set Custom User Image
+     * @param url String
+     * @return String
+     */
     public boolean setProfileImageURL(final String url) {
         String patternToMatch = "\\.jpg|\\.png*";
         Pattern p = Pattern.compile(patternToMatch);

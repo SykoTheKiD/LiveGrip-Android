@@ -162,7 +162,7 @@ public class EventListActivity extends AppCompatActivity
         switch (id) {
             case (R.id.nav_my_profile):
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Set Your Profile Image");
+                builder.setTitle(getString(R.string.custom_image_title));
 
                 // Set up the input
                 final EditText input = new EditText(this);
@@ -170,15 +170,19 @@ public class EventListActivity extends AppCompatActivity
                 builder.setView(input);
 
                 // Set up the buttons
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getString(R.string.ok_dialog), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (!(CurrentActiveUser.getInstance().setProfileImageURL(input.getText().toString()))) {
-                            Dialog.makeToast(applicationContext, "Invalid Image Type");
+                        if(NetworkState.isConnected(applicationContext)){
+                            if (!(CurrentActiveUser.getInstance().setProfileImageURL(input.getText().toString()))) {
+                                Dialog.makeToast(applicationContext, getString(R.string.bad_image_type));
+                            }
+                        }else{
+                            Dialog.makeToast(applicationContext, getString(R.string.no_network));
                         }
                     }
                 });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(getString(R.string.cancel_dialog), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();

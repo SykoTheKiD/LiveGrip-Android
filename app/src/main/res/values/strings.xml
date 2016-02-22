@@ -142,7 +142,8 @@
     <string name="donate_amount_title">Amount</string>
     <string name="donate_button_text">Donate</string>
     <string name="donate_edittext_hint">\t\t\t\t\tDonation Amount</string>
-    <string name="message_too_short">Message too short or too long</string>
+    <string name="message_too_short">Message can't be blank</string>
+    <string name="message_too_long">Message can't exceed 140 characters</string>
     <string name="action_rules">Chat Rules</string>
     <string name="invalid_username">Username cannot exceed 25 characters</string>
     <string name="refreshing_events">Refreshing Events…</string>
@@ -167,4 +168,8 @@
     <!- -->
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="banner_ad_unit_id_prod">ca-app-pub-5139358082902358/5020745028</string>
+    <string name="custom_image_title">Enter Link to .jpg or .png image</string>
+    <string name="bad_image_type">Invalid Image Type</string>
+    <string name="cancel_dialog">Cancel</string>
+    <string name="ok_dialog">Save</string>
 </resources>

@@ -31,8 +31,10 @@ public class Form {
                 return R.string.invalid_username;
             case VALID:
                 return R.string.valid;
-            case INVALID_MESSAGE:
-                return R.string.message_too_short;
+            case MESSAGE_TOO_SHORT:
+                return R.string.message_short;
+            case MESSAGE_TOO_LONG:
+                return R.string.message_long;
             case SPECIAL_CHARACTERS:
                 return R.string.special_chars_username;
         }
