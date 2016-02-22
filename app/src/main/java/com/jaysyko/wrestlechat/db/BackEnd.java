@@ -31,7 +31,6 @@ public class BackEnd {
         Query cacheQuery = this.query;
         cacheQuery.build().fromLocalDatastore();
         try {
-            Log.d("CACHE", "HIT");
             return cacheQuery.build().find();
         } catch (ParseException e) {
             Log.d("CACHE", e.getMessage());
@@ -58,7 +57,6 @@ public class BackEnd {
      */
     public List queryDB(String label) {
         try {
-            Log.d("DB", "HIT");
             List results = this.query.build().find();
             deleteFromCache(label);
             ParseObject.pinAll(label, results);
