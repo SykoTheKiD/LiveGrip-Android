@@ -6,7 +6,7 @@ import com.jaysyko.wrestlechat.forms.FormStatus;
 
 public class MessageValidator extends FormValidator {
     private static final int MIN_MESSAGE_LENGTH = 1;
-    private static final int MAX_MESSAGE_LENGTH = 112;
+    private static final int MAX_MESSAGE_LENGTH = 180;
 
     private Form form;
 
