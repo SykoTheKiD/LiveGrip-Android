@@ -49,12 +49,11 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         final Message message = getItem(position);
         final MessageViewHolder holder = (MessageViewHolder) convertView.getTag();
         final boolean isMe = message.getUsername().equals(mUserId);
-        final String messageBody = message.getBody();
         handler.post(new Runnable() {
             @Override
             public void run() {
                 final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
-                ImageTools.loadImage(context, ImageTools.defaultProfileImage(message.getUsername()), profileView);
+                ImageTools.loadImage(context, message.getUserImage(), profileView);
             }
         });
         // Show-hide image based on the logged-in user.
@@ -63,14 +62,14 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    setUserView(holder, messageBody);
+                    setUserView(holder, message);
                 }
             });
         } else {
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    senderView(message, holder, messageBody);
+                    senderView(holder, message);
                 }
             });
         }
@@ -101,16 +100,15 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
      * Constructs the sender's side of the message
      * @param message Message
      * @param holder MessageViewHolder
-     * @param messageBody String
      */
-    private void senderView(Message message, MessageViewHolder holder, String messageBody) {
+    private void senderView(MessageViewHolder holder, Message message) {
         TextView usernametv;
         holder.imageLeft.setVisibility(View.VISIBLE);
         holder.imageRight.setVisibility(View.GONE);
         holder.user.setVisibility(View.GONE);
         holder.sender.setVisibility(View.VISIBLE);
         holder.senderMessage.setVisibility(View.VISIBLE);
-        holder.senderMessage.setText(messageBody);
+        holder.senderMessage.setText(message.getBody());
         usernametv = (TextView) holder.sender.findViewById(R.id.sender_username);
         usernametv.setText(message.getUsername());
     }
@@ -118,9 +116,9 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
     /**
      * Constructs the user's side of the message
      * @param holder MessageViewHolder
-     * @param messageBody String
+     * @param message String
      */
-    private void setUserView(MessageViewHolder holder, String messageBody) {
+    private void setUserView(MessageViewHolder holder, Message message) {
         AutoResizeTextView messageBodytv;
         holder.imageRight.setVisibility(View.VISIBLE);
         holder.imageLeft.setVisibility(View.GONE);
@@ -128,6 +126,6 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         holder.senderMessage.setVisibility(View.GONE);
         holder.user.setVisibility(View.VISIBLE);
         messageBodytv = (AutoResizeTextView) holder.user.findViewById(R.id.my_message_body);
-        messageBodytv.setText(messageBody);
+        messageBodytv.setText(message.getBody());
     }
 }

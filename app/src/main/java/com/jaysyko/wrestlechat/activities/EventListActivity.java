@@ -1,6 +1,8 @@
 package com.jaysyko.wrestlechat.activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,13 +19,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.ads.AdBuilder;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
-import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.dataObjects.EventObject;
 import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.date.LiveStatus;
@@ -158,8 +161,31 @@ public class EventListActivity extends AppCompatActivity
         int id = item.getItemId();
         switch (id) {
             case (R.id.nav_my_profile):
-                Dialog.makeDialog(EventListActivity.this, getString(R.string.upcoming),
-                        getString(R.string.profile_upcoming));
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Set Your Profile Image");
+
+                // Set up the input
+                final EditText input = new EditText(this);
+                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                builder.setView(input);
+
+                // Set up the buttons
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (!(CurrentActiveUser.getInstance().setProfileImageURL(input.getText().toString()))) {
+                            Dialog.makeToast(applicationContext, "Invalid Image Type");
+                        }
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
                 break;
             case (R.id.nav_logout):
                 if (NetworkState.isConnected(applicationContext)) {

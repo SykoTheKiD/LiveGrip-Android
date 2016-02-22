@@ -18,9 +18,26 @@ public class Message extends ParseObject {
     public static final String EVENT_ID = "eventId";
     public static final String MSG_BODY = "body";
     public static final String CREATED_AT = "createdAt";
+    public static final String USER_IMAGE = "user_image";
+
+    /**
+     *
+     * @return image_url
+     */
+    public String getUserImage() {
+        return getString(USER_IMAGE);
+    }
+
+    /**
+     * @param user_image String
+     */
+    public void setUserImage(String user_image) {
+        put(USER_IMAGE, user_image);
+    }
 
     /**
      * Returns the owner of the message
+     *
      * @return username
      */
     public String getUsername() {
@@ -29,6 +46,7 @@ public class Message extends ParseObject {
 
     /**
      * Set the user's username associated to the message
+     *
      * @param username String
      */
     public void setUsername(String username) {
@@ -37,6 +55,7 @@ public class Message extends ParseObject {
 
     /**
      * Set the event the message was sent to
+     *
      * @param eventId String
      */
     public void setEventId(String eventId) {
@@ -45,6 +64,7 @@ public class Message extends ParseObject {
 
     /**
      * Returns the message contents
+     *
      * @return body String
      */
     public String getBody() {
@@ -53,6 +73,7 @@ public class Message extends ParseObject {
 
     /**
      * Assigns the message some content
+     *
      * @param body String
      */
     public void setBody(String body) {
