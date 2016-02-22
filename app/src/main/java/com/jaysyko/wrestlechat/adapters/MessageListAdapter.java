@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.viewholders.MessageViewHolder;
 import com.jaysyko.wrestlechat.models.Message;
+import com.jaysyko.wrestlechat.textview.AutoResizeTextView;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import java.util.List;
@@ -94,13 +95,13 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
     }
 
     private void setUserView(MessageViewHolder holder, String messageBody) {
-        TextView messageBodytv;
+        AutoResizeTextView messageBodytv;
         holder.imageRight.setVisibility(View.VISIBLE);
         holder.imageLeft.setVisibility(View.GONE);
         holder.sender.setVisibility(View.GONE);
         holder.senderMessage.setVisibility(View.GONE);
         holder.user.setVisibility(View.VISIBLE);
-        messageBodytv = (TextView) holder.user.findViewById(R.id.my_message_body);
+        messageBodytv = (AutoResizeTextView) holder.user.findViewById(R.id.my_message_body);
         messageBodytv.setText(messageBody);
     }
 }
