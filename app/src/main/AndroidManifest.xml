@@ -55,10 +55,10 @@
 
         <meta-data
             android:name="com.parse.APPLICATION_ID"
-            android:value="yM8G4t0atwmyM2372XHhb4xAqvUdUMiwKB5YCyAV" />
+            android:value="Mxd4JFRxbgt565O6ToiSoUBwpKSg8Vff7k43BEAy" />
         <meta-data
             android:name="com.parse.CLIENT_KEY"
-            android:value="ySpg33jzOI3YKAQqJPJv7lfzFJMqbZlGhgtxGqg9" />
+            android:value="1XDPEZxupHzzsifMf4r0L7soFXAlstgmTaeC5clb" />
 
         <service android:name="com.parse.PushService" />
 

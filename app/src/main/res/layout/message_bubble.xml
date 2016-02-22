@@ -33,8 +33,7 @@
             android:paddingLeft="5dp"
             android:paddingStart="5dp"
             android:singleLine="false"
-            android:textSize="12sp"
-            android:visibility="invisible"/>
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/sender_message_body"
