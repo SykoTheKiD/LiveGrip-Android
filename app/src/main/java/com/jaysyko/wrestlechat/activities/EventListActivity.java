@@ -45,6 +45,12 @@ public class EventListActivity extends AppCompatActivity
     private static final int REFRESH_ANI_MILLIS = 2500;
     final Handler handler = new Handler();
     private Context applicationContext;
+    final Runnable initSwipeRefresh = new Runnable() {
+        @Override
+        public void run() {
+            initSwipeRefresh();
+        }
+    };
     private List<ParseObject> eventList;
     private EventListAdapter mAdapter;
     final Runnable updateEventsSoft = new Runnable() {
@@ -57,12 +63,6 @@ public class EventListActivity extends AppCompatActivity
         @Override
         public void run() {
             updateEventCards(true);
-        }
-    };
-    final Runnable initSwipeRefresh = new Runnable() {
-        @Override
-        public void run() {
-            initSwipeRefresh();
         }
     };
 
@@ -158,8 +158,7 @@ public class EventListActivity extends AppCompatActivity
         int id = item.getItemId();
         switch (id) {
             case (R.id.nav_my_profile):
-                Dialog.makeDialog(EventListActivity.this, getString(R.string.upcoming),
-                        getString(R.string.profile_upcoming));
+
                 break;
             case (R.id.nav_logout):
                 if (NetworkState.isConnected(applicationContext)) {

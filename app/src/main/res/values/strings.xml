@@ -144,7 +144,7 @@
     <string name="donate_edittext_hint">\t\t\t\t\tDonation Amount</string>
     <string name="message_too_short">Message too short or too long</string>
     <string name="action_rules">Chat Rules</string>
-    <string name="invalid_username">Username cannot exceed 10 charaters</string>
+    <string name="invalid_username">Username cannot exceed 25 characters</string>
     <string name="refreshing_events">Refreshing Events…</string>
     <string name="hey_check_out">Hey check out the</string>
     <string name="sent_from_wrestlechat">- sent from WrestleChat @ https://goo.gl/al7ZIK</string>

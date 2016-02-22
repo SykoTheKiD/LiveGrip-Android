@@ -92,6 +92,7 @@ public class MessagingActivity extends AppCompatActivity {
                                 message.setUsername(userName);
                                 message.setEventId(sEventId);
                                 message.setBody(body);
+                                message.setUserImage(CurrentActiveUser.getInstance().getCustomProfileImageURL());
                                 message.saveInBackground();
                                 etMessage.setText(StringResources.NULL_TEXT);
                                 handler.postDelayed(new Runnable() {
