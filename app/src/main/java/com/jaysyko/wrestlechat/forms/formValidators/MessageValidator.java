@@ -16,8 +16,10 @@ public class MessageValidator extends FormValidator {
 
 
     private static Form isValidMessage(String message) {
-        if (!(message.length() > MIN_MESSAGE_LENGTH && message.length() < MAX_MESSAGE_LENGTH)) {
-            return new Form(false, FormStatus.INVALID_MESSAGE);
+        if(message.length() < MIN_MESSAGE_LENGTH){
+            return new Form(false, FormStatus.MESSAGE_TOO_SHORT);
+        }else if(message.length() > MAX_MESSAGE_LENGTH){
+            return new Form(false, FormStatus.MESSAGE_TOO_LONG);
         }
         return new Form(true, FormStatus.VALID);
     }
