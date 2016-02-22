@@ -32,9 +32,9 @@ public class Form {
             case VALID:
                 return R.string.valid;
             case MESSAGE_TOO_SHORT:
-                return R.string.message_short;
+                return R.string.message_too_short;
             case MESSAGE_TOO_LONG:
-                return R.string.message_long;
+                return R.string.message_too_long;
             case SPECIAL_CHARACTERS:
                 return R.string.special_chars_username;
         }
