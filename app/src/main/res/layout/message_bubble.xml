@@ -33,7 +33,6 @@
             android:paddingLeft="5dp"
             android:paddingStart="5dp"
             android:singleLine="false"
-            android:text="@string/lorem_username"
             android:textSize="12sp" />
 
         <TextView
