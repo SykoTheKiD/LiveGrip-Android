@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat.textview;
+package com.jaysyko.wrestlechat.customTextView;
 
 import android.content.Context;
 import android.text.Layout.Alignment;
