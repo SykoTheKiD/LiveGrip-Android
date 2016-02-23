@@ -80,6 +80,9 @@ public class CurrentActiveUser {
     }
 
     public void setPassword(String password) {
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        currentUser.setPassword(password);
+        currentUser.saveInBackground();
         activeCurrentActiveUser.password = password;
     }
 
@@ -109,7 +112,9 @@ public class CurrentActiveUser {
     }
 
     public void setUsername(String username) {
-        ParseUser.getCurrentUser().setUsername(username);
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        currentUser.setUsername(username);
+        currentUser.saveInBackground();
         activeCurrentActiveUser.username = username;
     }
 
