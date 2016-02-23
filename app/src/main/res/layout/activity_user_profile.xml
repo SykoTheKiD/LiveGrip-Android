@@ -9,55 +9,69 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.jaysyko.wrestlechat.activities.UserProfileActivity">
 
+    <ImageView
+        android:id="@+id/profilePicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/username_label"
+        android:layout_alignEnd="@+id/usernameChange"
+        android:layout_alignLeft="@+id/usernameChange"
+        android:layout_alignRight="@+id/usernameChange"
+        android:layout_alignStart="@+id/usernameChange"
+        android:layout_below="@+id/clickToChangePicture"
+        android:paddingTop="20dp"
+        android:src="@drawable/ic_lock_outline_black_18dp" />
 
     <TextView
-        android:id="@+id/new_username"
+        android:id="@+id/username_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="51dp"
-        android:layout_marginStart="51dp"
-        android:layout_marginTop="39dp"
-        android:text="New Username" />
+        android:layout_above="@+id/usernameChange"
+        android:layout_alignLeft="@+id/usernameChange"
+        android:layout_alignStart="@+id/usernameChange"
+        android:paddingTop="10dp"
+        android:text="Username" />
 
     <EditText
-        android:id="@+id/editUsername"
+        android:id="@+id/usernameChange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/new_username"
-        android:layout_alignStart="@+id/new_username"
-        android:layout_below="@+id/new_username" />
-
-    <TextView
-        android:id="@+id/new_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editUsername"
-        android:layout_alignStart="@+id/editUsername"
-        android:layout_below="@+id/editUsername"
-        android:layout_marginTop="37dp"
-        android:text="New Password" />
+        android:layout_above="@+id/newPassword"
+        android:layout_alignEnd="@+id/newPassword"
+        android:layout_alignLeft="@+id/newPassword"
+        android:layout_alignRight="@+id/newPassword"
+        android:layout_alignStart="@+id/newPassword"
+        android:layout_marginBottom="20dp"
+        android:paddingTop="10dp" />
 
     <EditText
-        android:id="@+id/editPassword"
+        android:id="@+id/newPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/new_password"
-        android:layout_alignStart="@+id/new_password"
-        android:layout_below="@+id/new_password"
-        android:layout_marginTop="22dp"
+        android:layout_above="@+id/updateProfile"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="29dp"
         android:ems="10"
+        android:hint="New Password"
         android:inputType="textPassword" />
 
-    <ImageView
-        android:id="@+id/profileImage"
+    <Button
+        android:id="@+id/updateProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editPassword"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="160dp"
-        android:contentDescription="Profile Image"
-        android:src="@drawable/ic_face_black_18dp" />
+        android:layout_marginBottom="66dp"
+        android:text="Save" />
+
+    <TextView
+        android:id="@+id/clickToChangePicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/profilePicture"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/profilePicture"
+        android:text="Tap Image to Set a New One" />
+
+    <include layout="@layout/activity_advertisement" />
 </RelativeLayout>
