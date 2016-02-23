@@ -30,6 +30,7 @@ public class CurrentActiveUser {
 
     /**
      * Return's a new instance of a current logged in user
+     *
      * @param username String
      * @param password String
      * @return CurrentActiveUser
@@ -43,6 +44,7 @@ public class CurrentActiveUser {
 
     /**
      * Returns the current instance of the logged in user
+     *
      * @return CurrentActiveUser
      */
     public static CurrentActiveUser getInstance() {
@@ -55,6 +57,7 @@ public class CurrentActiveUser {
 
     /**
      * SignUp the user into the app returns true if successful else returns false
+     *
      * @param username String
      * @param password String
      * @return boolean
@@ -72,8 +75,17 @@ public class CurrentActiveUser {
         }
     }
 
+    public String getPassword() {
+        return activeCurrentActiveUser.password;
+    }
+
+    public void setPassword(String password) {
+        activeCurrentActiveUser.password = password;
+    }
+
     /**
      * Get the user defined imageUrl else return an generic image
+     *
      * @return imageUrl: String
      */
     public String getCustomProfileImageURL() {
@@ -89,6 +101,7 @@ public class CurrentActiveUser {
 
     /**
      * Return the current user's username
+     *
      * @return username: String
      */
     public String getUsername() {
@@ -97,6 +110,7 @@ public class CurrentActiveUser {
 
     /**
      * Login the user; returns true if successful else returns false
+     *
      * @return boolean
      */
     public boolean loginUser() {
@@ -120,6 +134,7 @@ public class CurrentActiveUser {
 
     /**
      * Set Custom User Image
+     *
      * @param url String
      * @return String
      */
