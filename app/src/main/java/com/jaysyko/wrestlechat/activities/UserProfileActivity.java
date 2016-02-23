@@ -25,7 +25,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
     private Context applicationContext;
-    private Handler handler;
+    private Handler handler = new Handler();
     private EditText newPassword, username;
     private CurrentActiveUser currentActiveUser;
     private ImageView profilePicture;
