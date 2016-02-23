@@ -16,9 +16,9 @@
         android:layout_above="@+id/username_label"
         android:layout_alignEnd="@+id/usernameChange"
         android:layout_alignLeft="@+id/usernameChange"
-        android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/usernameChange"
         android:layout_alignStart="@+id/usernameChange"
+        android:layout_below="@+id/clickToChangePicture"
         android:paddingTop="20dp"
         android:src="@drawable/ic_lock_outline_black_18dp" />
 
@@ -63,6 +63,15 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="66dp"
         android:text="Save" />
+
+    <TextView
+        android:id="@+id/clickToChangePicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/profilePicture"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/profilePicture"
+        android:text="Tap Image to Set a New One" />
 
     <include layout="@layout/activity_advertisement" />
 </RelativeLayout>

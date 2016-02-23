@@ -108,6 +108,11 @@ public class CurrentActiveUser {
         return username;
     }
 
+    public void setUsername(String username) {
+        ParseUser.getCurrentUser().setUsername(username);
+        activeCurrentActiveUser.username = username;
+    }
+
     /**
      * Login the user; returns true if successful else returns false
      *
@@ -161,5 +166,4 @@ public class CurrentActiveUser {
             return false;
         }
     }
-
 }
