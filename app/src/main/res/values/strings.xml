@@ -172,4 +172,5 @@
     <string name="bad_image_type">Invalid Image Type</string>
     <string name="cancel_dialog">Cancel</string>
     <string name="ok_dialog">Save</string>
+    <string name="saved_successfully">Profile Updated</string>
 </resources>
