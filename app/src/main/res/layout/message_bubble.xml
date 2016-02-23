@@ -10,8 +10,7 @@
         android:id="@+id/ivProfileLeft"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:contentDescription="@string/description_other_profile_image"
-        android:src="@mipmap/ic_launcher" />
+        android:contentDescription="@string/description_other_profile_image" />
 
     <RelativeLayout
         android:id="@+id/sender_message"
@@ -31,7 +30,6 @@
             android:paddingLeft="5dp"
             android:paddingStart="5dp"
             android:singleLine="false"
-            android:text="@string/lorem_username"
             android:textSize="12sp" />
 
         <TextView
@@ -44,7 +42,8 @@
             android:background="@drawable/bubble_left_brown"
             android:gravity="center|center_vertical"
             android:textColor="#ffffff"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="invisible" />
 
     </RelativeLayout>
 
@@ -53,7 +52,8 @@
         android:id="@+id/my_message"
         android:layout_width="0dp"
         android:layout_height="80dp"
-        android:layout_weight="1.00">
+        android:layout_weight="1.00"
+        android:visibility="invisible">
 
         <com.jaysyko.wrestlechat.textview.AutoResizeTextView
             android:id="@+id/my_message_body"
