@@ -116,8 +116,8 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent" />
         <activity
-            android:name=".activities.TestActivity"
-            android:theme="@style/MyMaterialTheme"></activity>
+            android:name=".activities.MainActivity"
+            android:theme="@style/NoActionBar"></activity>
     </application>
 
 </manifest>
