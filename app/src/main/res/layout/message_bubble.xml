@@ -61,7 +61,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:background="@drawable/bubble_right_white"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bubble_white"
             android:gravity="center|start" />
 
     </RelativeLayout>
