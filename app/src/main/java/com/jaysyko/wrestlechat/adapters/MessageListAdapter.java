@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.viewholders.MessageViewHolder;
 import com.jaysyko.wrestlechat.models.Message;
-import com.jaysyko.wrestlechat.textview.AutoResizeTextView;
+import com.jaysyko.wrestlechat.customTextView.AutoResizeTextView;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import java.util.List;
