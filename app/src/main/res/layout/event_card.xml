@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <com.flaviofaria.kenburnsview.KenBurnsView
             android:id="@+id/event_image"
             android:layout_width="match_parent"
             android:layout_height="250dp"
@@ -28,7 +28,7 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="15dp"
-            android:textColor="#222"
+            android:textColor="#263238"
             android:textSize="25sp"
             android:textStyle="bold" />
 

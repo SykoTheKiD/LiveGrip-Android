@@ -30,9 +30,10 @@
             android:paddingLeft="5dp"
             android:paddingStart="5dp"
             android:singleLine="false"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
-        <TextView
+        <com.jaysyko.wrestlechat.customTextView.AutoResizeTextView
             android:id="@+id/sender_message_body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,8 +41,11 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/sender_username"
             android:background="@drawable/bubble_left_brown"
+            android:elegantTextHeight="true"
             android:gravity="center|center_vertical"
             android:textColor="#ffffff"
+            android:textColorLink="#303f9f"
+            android:textIsSelectable="true"
             android:textSize="14sp"
             android:visibility="invisible" />
 

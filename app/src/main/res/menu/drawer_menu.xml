@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/nav_my_profile"
+        android:icon="@drawable/ic_face_black_18dp"
+        android:title="@string/action_profile" />
+
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_lock_outline_black_18dp"
+        android:title="@string/action_logout" />
+
+    <item android:title="@string/nav_section_others">
+        <menu>
+            <item
+                android:id="@+id/nav_legal"
+                android:icon="@drawable/ic_account_balance_black_18dp"
+                android:title="@string/drawer_legal" />
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_favorite_border_black_18dp"
+                android:title="@string/drawer_share" />
+        </menu>
+    </item>
+
+    <group android:id="@+id/group_settings_id">
+
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_info_black_24dp"
+            android:title="@string/drawer_about" />
+    </group>
+</menu>

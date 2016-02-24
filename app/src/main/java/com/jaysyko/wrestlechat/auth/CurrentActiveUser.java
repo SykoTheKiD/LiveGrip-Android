@@ -99,6 +99,7 @@ public class CurrentActiveUser {
         } else {
             activeCurrentActiveUser.profileImageURL = ImageTools.defaultProfileImage(activeCurrentActiveUser.getUsername());
         }
+        Log.d("IMG_URL", activeCurrentActiveUser.profileImageURL);
         return activeCurrentActiveUser.profileImageURL;
     }
 
