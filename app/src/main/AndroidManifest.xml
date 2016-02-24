@@ -37,20 +37,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".activities.EventListActivity"
-            android:label="@string/activity_event_list"
-            android:theme="@style/NoActionBar" />
-        <activity
             android:name=".activities.EventInfoActivity"
             android:label="@string/activity_event_info"
             android:theme="@style/NoActionBar" />
         <activity
             android:name=".activities.SettingsActivity"
             android:label="@string/activity_settings"
-            android:parentActivityName=".activities.MainActivity">
+            android:parentActivityName=".activities.EventListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jaysyko.wrestlechat.activities.EventListActivity" />
+                android:value=".activities.EventListActivity" />
         </activity>
 
         <meta-data
@@ -85,25 +81,24 @@
         <activity
             android:name=".activities.DonateActivity"
             android:label="@string/title_activity_donate"
-            android:parentActivityName=".activities.MainActivity"
+            android:parentActivityName=".activities.EventListActivity"
             android:theme="@style/NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jaysyko.wrestlechat.activities.EventListActivity" />
+                android:value=".activities.EventListActivity" />
         </activity>
         <activity
             android:name=".activities.LegalActivity"
             android:label="@string/title_activity_legal"
-            android:parentActivityName=".activities.MainActivity"
+            android:parentActivityName=".activities.EventListActivity"
             android:theme="@style/NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.jaysyko.wrestlechat.activities.EventListActivity" />
+                android:value=".activities.EventListActivity" />
         </activity>
         <activity
             android:name=".activities.AboutActivity"
             android:label="About" />
-        <activity android:name=".activities.WelcomeActivity" />
         <activity android:name=".activities.UserProfileActivity" />
         <!-- This meta-data tag is required to use Google Play Services. -->
         <meta-data
@@ -116,7 +111,7 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.EventListActivity"
             android:theme="@style/NoActionBar"></activity>
     </application>
 

@@ -101,7 +101,7 @@ public class UserProfileActivity extends AppCompatActivity {
                             currentActiveUser.setUsername(newUsernameStr);
                             currentActiveUser.setPassword(newPasswordStr);
                             Dialog.makeToast(applicationContext, getString(R.string.saved_successfully));
-                            startActivity(new Intent(applicationContext, MainActivity.class));
+                            startActivity(new Intent(applicationContext, EventListActivity.class));
                         } else {
                             Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.getReason())));
                         }
