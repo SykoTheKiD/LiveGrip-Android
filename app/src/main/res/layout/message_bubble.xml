@@ -6,7 +6,7 @@
     android:orientation="horizontal"
     android:weightSum="1">
 
-    <ImageView
+    <com.jaysyko.wrestlechat.customImageView.RoundedImageView
         android:id="@+id/ivProfileLeft"
         android:layout_width="65dp"
         android:layout_height="65dp"
@@ -55,19 +55,19 @@
         android:layout_weight="1.00"
         android:visibility="invisible">
 
-        <com.jaysyko.wrestlechat.textview.AutoResizeTextView
+        <com.jaysyko.wrestlechat.customTextView.AutoResizeTextView
             android:id="@+id/my_message_body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
             android:background="@drawable/bubble_white"
             android:gravity="center|start" />
 
     </RelativeLayout>
 
-    <ImageView
+    <com.jaysyko.wrestlechat.customImageView.RoundedImageView
         android:id="@+id/ivProfileRight"
         android:layout_width="65dp"
         android:layout_height="65dp"
