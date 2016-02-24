@@ -21,14 +21,14 @@ public class EventListActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_main);
+        setContentView(R.layout.activity_event_list);
 
         /**
          *Setup the DrawerLayout and NavigationView
          */
 
              mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-             mNavigationView = (NavigationView) findViewById(R.id.shitstuff) ;
+        mNavigationView = (NavigationView) findViewById(R.id.navDrawerItems);
 
         /**
          * Lets inflate the very first fragment
