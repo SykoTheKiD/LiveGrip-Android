@@ -45,6 +45,12 @@ public class EventListActivity extends AppCompatActivity
     private static final int REFRESH_ANI_MILLIS = 2500;
     final Handler handler = new Handler();
     private Context applicationContext;
+    final Runnable initSwipeRefresh = new Runnable() {
+        @Override
+        public void run() {
+            initSwipeRefresh();
+        }
+    };
     private List<ParseObject> eventList;
     private EventListAdapter mAdapter;
     final Runnable updateEventsSoft = new Runnable() {
@@ -57,12 +63,6 @@ public class EventListActivity extends AppCompatActivity
         @Override
         public void run() {
             updateEventCards(true);
-        }
-    };
-    final Runnable initSwipeRefresh = new Runnable() {
-        @Override
-        public void run() {
-            initSwipeRefresh();
         }
     };
 
@@ -216,7 +216,7 @@ public class EventListActivity extends AppCompatActivity
                 startActivity(aboutIntent);
                 break;
             case (R.id.nav_legal):
-                startActivity(new Intent(applicationContext, TestActivity.class));
+                startActivity(new Intent(applicationContext, MainActivity.class));
 //                Intent legalIntent = new Intent(applicationContext, LegalActivity.class);
 //                startActivity(legalIntent);
                 break;
