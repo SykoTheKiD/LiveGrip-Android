@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         // Redirect to Events page if logged in;
         final Context context = getApplicationContext();
-        final Intent intent = new Intent(context, EventListActivity.class);
+        final Intent intent = new Intent(context, MainActivity.class);
         if (CurrentActiveUser.getInstance() != null) {
             startActivity(intent);
             finish();
