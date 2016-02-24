@@ -160,35 +160,6 @@ public class EventListActivity extends AppCompatActivity
             case (R.id.nav_my_profile):
                 Intent intent = new Intent(applicationContext, UserProfileActivity.class);
                 startActivity(intent);
-//                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//                builder.setTitle(getString(R.string.custom_image_title));
-//
-//                // Set up the input
-//                final EditText input = new EditText(this);
-//                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-//                builder.setView(input);
-//
-//                // Set up the buttons
-//                builder.setPositiveButton(getString(R.string.ok_dialog), new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        if(NetworkState.isConnected(applicationContext)){
-//                            if (!(CurrentActiveUser.getInstance().setProfileImageURL(input.getText().toString()))) {
-//                                Dialog.makeToast(applicationContext, getString(R.string.bad_image_type));
-//                            }
-//                        }else{
-//                            Dialog.makeToast(applicationContext, getString(R.string.no_network));
-//                        }
-//                    }
-//                });
-//                builder.setNegativeButton(getString(R.string.cancel_dialog), new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.cancel();
-//                    }
-//                });
-//
-//                builder.show();
                 break;
             case (R.id.nav_logout):
                 if (NetworkState.isConnected(applicationContext)) {
@@ -216,7 +187,7 @@ public class EventListActivity extends AppCompatActivity
                 startActivity(aboutIntent);
                 break;
             case (R.id.nav_legal):
-                startActivity(new Intent(applicationContext, TestActivity.class));
+                startActivity(new Intent(applicationContext, MainActivity.class));
 //                Intent legalIntent = new Intent(applicationContext, LegalActivity.class);
 //                startActivity(legalIntent);
                 break;

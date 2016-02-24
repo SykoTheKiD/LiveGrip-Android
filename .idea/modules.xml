@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/WrestleChat.iml" filepath="$PROJECT_DIR$/WrestleChat.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wrestlechat.iml" filepath="$PROJECT_DIR$/wrestlechat.iml" />
     </modules>
   </component>
 </project>
