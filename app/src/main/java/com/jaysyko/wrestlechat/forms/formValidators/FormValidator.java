@@ -5,7 +5,7 @@ import com.jaysyko.wrestlechat.forms.FormStatus;
 
 
 public abstract class FormValidator {
-    final protected Form isNotBlank(String... strings) {
+    public final Form isNotBlank(String... strings) {
         for (String str : strings) {
             if (str == null || str.isEmpty()) {
                 return new Form(false, FormStatus.BLANK_FIELDS);
