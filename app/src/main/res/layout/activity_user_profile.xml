@@ -44,6 +44,8 @@
         android:layout_alignRight="@+id/newPassword"
         android:layout_alignStart="@+id/newPassword"
         android:layout_marginBottom="20dp"
+        android:inputType="textNoSuggestions"
+        android:maxLines="1"
         android:paddingTop="10dp" />
 
     <EditText
