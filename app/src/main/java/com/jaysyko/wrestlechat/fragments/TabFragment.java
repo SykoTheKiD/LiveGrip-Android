@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.date.LiveStatus;
+import com.jaysyko.wrestlechat.utils.Keys;
 
 public class TabFragment extends Fragment {
 
@@ -63,15 +65,17 @@ public class TabFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    return new LiveEventFragment();
-                case 1:
-                    return new UpcomingEventFragment();
-                case 2:
-                    return new EventReplaysFragment();
+            TabContentFragment fragment = new TabContentFragment();
+            Bundle args = new Bundle();
+            if (position == 0) {
+                args.putInt(Keys.STATE_KEY, LiveStatus.EVENT_STARTED);
+            } else if (position == 1) {
+                args.putInt(Keys.STATE_KEY, LiveStatus.EVENT_NOT_STARTED);
+            } else if (position == 2) {
+                args.putInt(Keys.STATE_KEY, LiveStatus.EVENT_OVER);
             }
-            return null;
+            fragment.setArguments(args);
+            return fragment;
         }
 
         @Override
@@ -90,11 +94,11 @@ public class TabFragment extends Fragment {
 
             switch (position) {
                 case 0:
-                    return "LIVE";
+                    return getString(R.string.tab_title_live);
                 case 1:
-                    return "Upcoming";
+                    return getString(R.string.tab_title_upcoming);
                 case 2:
-                    return "Replay";
+                    return getString(R.string.tab_title_replay);
             }
             return null;
         }

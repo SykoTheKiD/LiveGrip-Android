@@ -176,4 +176,8 @@
     <string name="new_password_title">New Passæword</string>
     <string name="save">Save</string>
     <string name="tap_image_set_new">Tap Image to Set a New One</string>
+    <string name="tab_title_live">Live</string>
+    <string name="tab_title_upcoming">Upcoming</string>
+    <string name="tab_title_replay">Replay</string>
+    <string name="nav_section_others">Others</string>
 </resources>

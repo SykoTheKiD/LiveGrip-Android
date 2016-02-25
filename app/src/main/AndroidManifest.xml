@@ -112,7 +112,7 @@
             android:theme="@android:style/Theme.Translucent" />
         <activity
             android:name=".activities.EventListActivity"
-            android:theme="@style/NoActionBar"></activity>
+            android:theme="@style/NoActionBar" />
     </application>
 
 </manifest>

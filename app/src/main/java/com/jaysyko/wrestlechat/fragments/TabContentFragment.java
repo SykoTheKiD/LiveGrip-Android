@@ -19,27 +19,34 @@ import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.dataObjects.EventObject;
 import com.jaysyko.wrestlechat.date.DateVerifier;
-import com.jaysyko.wrestlechat.date.LiveStatus;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.eventManager.OpenEventConversation;
 import com.jaysyko.wrestlechat.eventManager.RetrieveEvents;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.network.NetworkState;
+import com.jaysyko.wrestlechat.utils.Keys;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventReplaysFragment extends Fragment {
+public class TabContentFragment extends Fragment {
 
     private static final int VIBRATE_MILLISECONDS = 40;
     private static final int REFRESH_ANI_MILLIS = 3000;
     final Handler handler = new Handler();
     private Context applicationContext;
     private EventListAdapter mAdapter;
+    private List<ParseObject> liveEvents = new ArrayList<>();
     private RelativeLayout layout;
-    private List<ParseObject> finishedEvents = new ArrayList<>();
+    final Runnable initSwipeRefresh = new Runnable() {
+        @Override
+        public void run() {
+            initSwipeRefresh();
+        }
+    };
+    private int state;
     final Runnable updateEventsSoft = new Runnable() {
         @Override
         public void run() {
@@ -56,18 +63,13 @@ public class EventReplaysFragment extends Fragment {
             }
         }
     };
-    final Runnable initSwipeRefresh = new Runnable() {
-        @Override
-        public void run() {
-            initSwipeRefresh();
-        }
-    };
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layout = (RelativeLayout) inflater.inflate(R.layout.event_list_fragment_layout, null);
         applicationContext = getContext();
+        this.state = getArguments().getInt(Keys.STATE_KEY);
         handler.post(initSwipeRefresh);
         handler.post(new Runnable() {
             @Override
@@ -110,16 +112,16 @@ public class EventReplaysFragment extends Fragment {
                 for (int i = 0; i < eventList.size(); i++) {
                     current = eventList.get(i);
                     Long startTime = current.getLong(Events.START_TIME), endTime = current.getLong(Events.END_TIME);
-                    if (DateVerifier.goLive(startTime, endTime).getReason() == LiveStatus.EVENT_OVER) {
-                        EventObject event = new EventObject(
+                    if (DateVerifier.goLive(startTime, endTime).getReason() == this.state) {
+                        EventObject eventObject = new EventObject(
                                 current.getString(Events.NAME),
                                 current.getString(Events.LOCATION),
                                 startTime,
                                 endTime,
                                 current.getString(Events.IMAGE)
                         );
-                        finishedEvents.add(current);
-                        eventObjects.add(event);
+                        eventObjects.add(eventObject);
+                        liveEvents.add(current);
                     }
                 }
             } else {
@@ -144,14 +146,14 @@ public class EventReplaysFragment extends Fragment {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                OpenEventConversation.openConversation(finishedEvents.get(position), applicationContext);
+                                OpenEventConversation.openConversation(liveEvents.get(position), applicationContext);
                             }
 
                             @Override
                             public void onItemLongClick(View view, int position) {
                                 Vibrator vibe = (Vibrator) applicationContext.getSystemService(Context.VIBRATOR_SERVICE);
                                 vibe.vibrate(VIBRATE_MILLISECONDS);
-                                OpenEventConversation.openEventInfo(finishedEvents.get(position), applicationContext);
+                                OpenEventConversation.openEventInfo(liveEvents.get(position), applicationContext);
                             }
                         }));
     }
