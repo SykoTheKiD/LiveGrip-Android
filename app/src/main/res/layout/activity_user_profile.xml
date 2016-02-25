@@ -70,9 +70,8 @@
         android:id="@+id/clickToChangePicture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/profilePicture"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/profilePicture"
+        android:layout_centerHorizontal="true"
         android:text="@string/tap_image_set_new" />
 
     <include layout="@layout/activity_advertisement" />

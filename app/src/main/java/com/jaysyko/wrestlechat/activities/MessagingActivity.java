@@ -10,8 +10,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.jaysyko.wrestlechat.R;
@@ -40,7 +40,7 @@ public class MessagingActivity extends AppCompatActivity {
     private ListView lvChat;
     private ArrayList<Message> messages;
     private MessageListAdapter mAdapter;
-    private Button btSend;
+    private ImageButton btSend;
     private Context applicationContext;
     // Keep track of initial load to scroll to the bottom of the ListView
     private boolean mFirstLoad;
@@ -71,7 +71,7 @@ public class MessagingActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         CurrentActiveUser currentUser = CurrentActiveUser.getInstance();
         userName = currentUser.getUsername();
-        btSend = (Button) findViewById(R.id.btSend);
+        btSend = (ImageButton) findViewById(R.id.btSend);
         applicationContext = getApplicationContext();
 
         btSend.setOnClickListener(new View.OnClickListener() {

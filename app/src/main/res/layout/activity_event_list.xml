@@ -16,8 +16,7 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginLeft="120dp"
-            android:baselineAlignBottom="false"
+            android:layout_marginLeft="122dp"
             android:contentDescription="@string/app_name"
             android:gravity="center"
             android:src="@drawable/logo" />
@@ -35,7 +34,10 @@
             android:id="@+id/containerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" />
+            android:orientation="vertical">
+
+            <include layout="@layout/activity_advertisement" />
+        </FrameLayout>
 
         <android.support.design.widget.NavigationView
             android:id="@+id/navDrawerItems"
@@ -47,6 +49,7 @@
             app:menu="@menu/drawer_menu">
 
         </android.support.design.widget.NavigationView>
+
 
     </android.support.v4.widget.DrawerLayout>
 

@@ -38,15 +38,9 @@ public class TabContentFragment extends Fragment {
     final Handler handler = new Handler();
     private Context applicationContext;
     private EventListAdapter mAdapter;
-    private List<ParseObject> liveEvents = new ArrayList<>();
     private RelativeLayout layout;
-    final Runnable initSwipeRefresh = new Runnable() {
-        @Override
-        public void run() {
-            initSwipeRefresh();
-        }
-    };
     private int state;
+    private List<ParseObject> liveEvents = new ArrayList<>();
     final Runnable updateEventsSoft = new Runnable() {
         @Override
         public void run() {
@@ -61,6 +55,12 @@ public class TabContentFragment extends Fragment {
             } else {
                 Dialog.makeToast(applicationContext, getString(R.string.no_network));
             }
+        }
+    };
+    final Runnable initSwipeRefresh = new Runnable() {
+        @Override
+        public void run() {
+            initSwipeRefresh();
         }
     };
 
