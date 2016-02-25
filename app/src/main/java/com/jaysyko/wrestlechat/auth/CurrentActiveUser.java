@@ -78,11 +78,16 @@ public class CurrentActiveUser {
         return activeCurrentActiveUser.password;
     }
 
-    public void setPassword(String password) {
+    public boolean setPassword(String password) {
         ParseUser currentUser = ParseUser.getCurrentUser();
         currentUser.setPassword(password);
-        currentUser.saveInBackground();
-        activeCurrentActiveUser.password = password;
+        try {
+            currentUser.save();
+            activeCurrentActiveUser = null;
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
     }
 
     /**
@@ -111,11 +116,16 @@ public class CurrentActiveUser {
         return username;
     }
 
-    public void setUsername(String username) {
+    public boolean setUsername(String username) {
         ParseUser currentUser = ParseUser.getCurrentUser();
         currentUser.setUsername(username);
-        currentUser.saveInBackground();
-        activeCurrentActiveUser.username = username;
+        try {
+            currentUser.save();
+            activeCurrentActiveUser.username = username;
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
     }
 
     /**
@@ -139,7 +149,7 @@ public class CurrentActiveUser {
      */
     public void logout() {
         activeCurrentActiveUser = null;
-        ParseUser.logOut();
+        ParseUser.getCurrentUser().logOut();
     }
 
     /**
