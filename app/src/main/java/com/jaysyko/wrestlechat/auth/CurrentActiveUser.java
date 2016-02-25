@@ -147,7 +147,7 @@ public class CurrentActiveUser {
      */
     public void logout() {
         activeCurrentActiveUser = null;
-        ParseUser.getCurrentUser().logOut();
+        ParseUser.logOut();
     }
 
     /**
