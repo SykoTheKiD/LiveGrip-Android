@@ -2,7 +2,8 @@ package com.jaysyko.wrestlechat.adapters.viewholders;
 
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
+
+import com.jaysyko.wrestlechat.customTextView.AutoResizeTextView;
 
 /**
  * MessageViewHolder.java
@@ -12,6 +13,6 @@ import android.widget.TextView;
  */
 public final class MessageViewHolder {
     public ImageView imageLeft, imageRight;
-    public TextView senderMessage;
+    public AutoResizeTextView senderMessage;
     public RelativeLayout sender, user;
 }

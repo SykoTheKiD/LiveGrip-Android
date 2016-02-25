@@ -25,14 +25,14 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/my_toolbar"
-        android:background="#eeeeee"
+        android:background="#ECEFF1"
         android:divider="#00000000"
         android:dividerHeight="20dp"
         android:padding="15dp"
         android:scrollbars="none"
-        android:transcriptMode="alwaysScroll"
         android:scrollingCache="true"
-        android:smoothScrollbar="true" />
+        android:smoothScrollbar="true"
+        android:transcriptMode="alwaysScroll" />
 
     <RelativeLayout
         android:id="@+id/llSend"
@@ -49,24 +49,34 @@
             android:id="@+id/etMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/btSend"
+            android:layout_alignTop="@+id/btSend"
             android:layout_toLeftOf="@+id/btSend"
-            android:layout_toStartOf="@+id/btSend"
             android:gravity="top"
             android:hint="@string/message_hint"
             android:paddingEnd="0dp"
             android:paddingLeft="10dp"
             android:paddingRight="0dp"
-            android:paddingStart="10dp" />
+            android:paddingStart="10dp"
+            android:textIsSelectable="false" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:drawableRight="@drawable/ic_send_black_18dp"
-            android:text="@string/message_button_send"
-            android:textSize="18sp" />
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/ic_send_black_36dp" />
+        <!--<Button-->
+        <!--android:id="@+id/btSend"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:drawableRight="@drawable/ic_send_black_18dp"-->
+        <!--android:text="@string/message_button_send"-->
+        <!--android:textSize="18sp" />-->
     </RelativeLayout>
 </RelativeLayout>

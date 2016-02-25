@@ -90,7 +90,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         holder.imageLeft = (ImageView) convertView.findViewById(R.id.ivProfileLeft);
         holder.imageRight = (ImageView) convertView.findViewById(R.id.ivProfileRight);
         holder.sender = (RelativeLayout) convertView.findViewById(R.id.sender_message);
-        holder.senderMessage = (TextView) convertView.findViewById(R.id.sender_message_body);
+        holder.senderMessage = (AutoResizeTextView) convertView.findViewById(R.id.sender_message_body);
         holder.user = (RelativeLayout) convertView.findViewById(R.id.my_message);
         convertView.setTag(holder);
         return convertView;
