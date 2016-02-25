@@ -124,7 +124,7 @@
     <string name="drawer_donate">Donate</string>
     <string name="title_activity_donate">Donate</string>
     <string name="title_activity_legal">Legal</string>
-    <string name="lorem_username">JaySyko</string>
+    <string name="lorem_username">Jay Syko</string>
     <string name="app_share">Hey come chat with other wrestling fans on #WrestleChat! https://goo.gl/al7ZIK</string>
     <string name="online_status_not_live">The event hasn\'t started yet</string>
     <string name="event_info_match_card_title">Match Card</string>
@@ -180,4 +180,5 @@
     <string name="tab_title_upcoming">Upcoming</string>
     <string name="tab_title_replay">Replay</string>
     <string name="nav_section_others">Others</string>
+    <string name="password_changed_relogin">Password changed please re-login</string>
 </resources>

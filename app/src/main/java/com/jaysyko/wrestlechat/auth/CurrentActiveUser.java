@@ -1,6 +1,5 @@
 package com.jaysyko.wrestlechat.auth;
 
-import android.os.Handler;
 import android.util.Log;
 
 import com.jaysyko.wrestlechat.models.User;
@@ -155,19 +154,15 @@ public class CurrentActiveUser {
         Matcher m = p.matcher(url);
         if (m.find()) {
             activeCurrentActiveUser.profileImageURL = url;
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    ParseUser currentUser = ParseUser.getCurrentUser();
-                    currentUser.put(User.IMG_ID, url);
-                    try {
-                        currentUser.save();
-                    } catch (ParseException e) {
-                        Log.e("FAIL IMAGE", e.getMessage());
-                    }
-                }
-            });
-            return true;
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            currentUser.put(User.IMG_ID, url);
+            try {
+                currentUser.save();
+                return true;
+            } catch (ParseException e) {
+                Log.e("FAIL IMAGE", e.getMessage());
+                return false;
+            }
         } else {
             return false;
         }

@@ -20,6 +20,7 @@ import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formValidators.SignUpValidator;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.utils.ImageTools;
+import com.jaysyko.wrestlechat.utils.IntentKeys;
 
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -35,6 +36,7 @@ public class UserProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+        setTitle("Manage Profile");
         username = (EditText) findViewById(R.id.usernameChange);
         currentActiveUser = CurrentActiveUser.getInstance();
         username.setText(currentActiveUser.getUsername());
@@ -70,6 +72,8 @@ public class UserProfileActivity extends AppCompatActivity {
                                 if (NetworkState.isConnected(applicationContext)) {
                                     if (!(CurrentActiveUser.getInstance().setProfileImageURL(input.getText().toString()))) {
                                         Dialog.makeToast(applicationContext, getString(R.string.bad_image_type));
+                                    } else {
+                                        ImageTools.loadImage(applicationContext, currentActiveUser.getCustomProfileImageURL(), profilePicture);
                                     }
                                 } else {
                                     Dialog.makeToast(applicationContext, getString(R.string.no_network));
@@ -96,14 +100,40 @@ public class UserProfileActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         String newPasswordStr = newPassword.getText().toString();
                         String newUsernameStr = username.getText().toString();
-                        Form form = new SignUpValidator(newUsernameStr, newPasswordStr).validate();
-                        if (form.isValid()) {
-                            currentActiveUser.setUsername(newUsernameStr);
-                            currentActiveUser.setPassword(newPasswordStr);
-                            Dialog.makeToast(applicationContext, getString(R.string.saved_successfully));
-                            startActivity(new Intent(applicationContext, EventListActivity.class));
-                        } else {
-                            Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.getReason())));
+                        if (!(newUsernameStr.equals(currentActiveUser.getUsername())) && !newPasswordStr.isEmpty()) {
+                            Form form = new SignUpValidator(newUsernameStr, newPasswordStr).validate();
+                            if (form.isValid()) {
+                                currentActiveUser.setUsername(newUsernameStr);
+                                currentActiveUser.setPassword(newPasswordStr);
+                                Dialog.makeToast(applicationContext, getString(R.string.password_changed_relogin));
+                                CurrentActiveUser.getInstance().logout();
+                                Intent intent = new Intent(applicationContext, LoginActivity.class);
+                                intent.putExtra(IntentKeys.USERNAME, currentActiveUser.getUsername());
+                                startActivity(intent);
+                            } else {
+                                Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.getReason())));
+                            }
+                        } else if (!(newUsernameStr.equals(currentActiveUser.getUsername()))) {
+                            Form form = new SignUpValidator(newUsernameStr, "pass").validate();
+                            if (form.isValid()) {
+                                currentActiveUser.setUsername(newUsernameStr);
+                                Dialog.makeToast(applicationContext, getString(R.string.saved_successfully));
+                                startActivity(new Intent(applicationContext, EventListActivity.class));
+                            } else {
+                                Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.getReason())));
+                            }
+                        } else if (!newPasswordStr.isEmpty()) {
+                            Form form = new SignUpValidator(newUsernameStr, newPasswordStr).validate();
+                            if (form.isValid()) {
+                                currentActiveUser.setPassword(newPasswordStr);
+                                Dialog.makeToast(applicationContext, getString(R.string.password_changed_relogin));
+                                CurrentActiveUser.getInstance().logout();
+                                Intent intent = new Intent(applicationContext, LoginActivity.class);
+                                intent.putExtra(IntentKeys.USERNAME, currentActiveUser.getUsername());
+                                startActivity(intent);
+                            } else {
+                                Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.getReason())));
+                            }
                         }
                     }
                 });
