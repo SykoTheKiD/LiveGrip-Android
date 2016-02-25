@@ -18,6 +18,7 @@ import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formValidators.LoginValidator;
 import com.jaysyko.wrestlechat.forms.formValidators.SignUpValidator;
 import com.jaysyko.wrestlechat.network.NetworkState;
+import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 public class LoginActivity extends AppCompatActivity {
@@ -43,15 +44,14 @@ public class LoginActivity extends AppCompatActivity {
             final TextView signUpText = (TextView) findViewById(R.id.signUpText);
             final TextView signUpPrompt = (TextView) findViewById(R.id.sign_in_prompt);
             final EditText usernameField = (EditText) findViewById(R.id.usernameEV);
+            usernameField.setText(getIntent().getStringExtra(IntentKeys.USERNAME));
             final EditText passwordField = (EditText) findViewById(R.id.loginPasswordEV);
             loadingPanel = (RelativeLayout) findViewById(R.id.loadingPanel);
             handler.post(new Runnable() {
                 @Override
                 public void run() {
                     setupLoginListener(context, intent, loginButton, usernameField, passwordField);
-
                     setupSignUpListener(context, intent, signUpButton, usernameField, passwordField);
-
                     setupSignUpTextListener(loginButton, signUpButton, signUpText, signUpPrompt);
                 }
             });
