@@ -38,7 +38,7 @@ public class UserProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-        setTitle("Manage Profile");
+        setTitle(getString(R.string.manage_profile));
         username = (EditText) findViewById(R.id.usernameChange);
         currentActiveUser = CurrentActiveUser.getInstance();
         username.setText(currentActiveUser.getUsername());
@@ -103,15 +103,13 @@ public class UserProfileActivity extends AppCompatActivity {
                         String newPasswordStr = newPassword.getText().toString().trim();
                         String newUsernameStr = username.getText().toString().trim();
                         if (!(newUsernameStr.equals(currentActiveUser.getUsername())) && !newPasswordStr.isEmpty()) {
-                            changeUsername(newUsernameStr);
-                            changePassword(newPasswordStr);
-                            startActivity(reLogin());
+                            if (changeUsername(newUsernameStr) && changePassword(newPasswordStr)) {
+                                startActivity(reLogin());
+                            }
                         } else if (!(newUsernameStr.equals(currentActiveUser.getUsername()))) {
                             if (changeUsername(newUsernameStr)) {
                                 Dialog.makeToast(applicationContext, getString(R.string.saved_successfully));
                                 startActivity(new Intent(applicationContext, EventListActivity.class));
-                            } else {
-                                Dialog.makeToast(applicationContext, getString(R.string.username_taken));
                             }
                         } else if (!newPasswordStr.isEmpty()) {
                             if (changePassword(newPasswordStr)) {
@@ -138,7 +136,12 @@ public class UserProfileActivity extends AppCompatActivity {
     private boolean changeUsername(String newUsernameStr) {
         Form form = new SignUpValidator(newUsernameStr, StringResources.DUMMY_PASSWORD).validate();
         if (form.isValid()) {
-            return currentActiveUser.setUsername(newUsernameStr);
+            if (currentActiveUser.setUsername(newUsernameStr)) {
+                return true;
+            } else {
+                Dialog.makeToast(applicationContext, getString(R.string.username_taken));
+                return false;
+            }
         } else {
             Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.getReason())));
             return false;

@@ -74,10 +74,6 @@ public class CurrentActiveUser {
         }
     }
 
-    public String getPassword() {
-        return activeCurrentActiveUser.password;
-    }
-
     public boolean setPassword(String password) {
         ParseUser currentUser = ParseUser.getCurrentUser();
         currentUser.setPassword(password);
@@ -103,7 +99,6 @@ public class CurrentActiveUser {
         } else {
             activeCurrentActiveUser.profileImageURL = ImageTools.defaultProfileImage(activeCurrentActiveUser.getUsername());
         }
-        Log.d("IMG_URL", activeCurrentActiveUser.profileImageURL);
         return activeCurrentActiveUser.profileImageURL;
     }
 
@@ -118,12 +113,15 @@ public class CurrentActiveUser {
 
     public boolean setUsername(String username) {
         ParseUser currentUser = ParseUser.getCurrentUser();
+        String oldUsername = activeCurrentActiveUser.username;
         currentUser.setUsername(username);
         try {
             currentUser.save();
             activeCurrentActiveUser.username = username;
             return true;
         } catch (ParseException e) {
+            currentUser.setUsername(oldUsername);
+            activeCurrentActiveUser.username = oldUsername;
             return false;
         }
     }

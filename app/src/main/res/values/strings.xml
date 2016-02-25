@@ -182,4 +182,7 @@
     <string name="nav_section_others">Others</string>
     <string name="password_changed_relogin">Password changed please re-login</string>
     <string name="error_has_occured">An error has occured no changes made</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="manage_profile">Manage Profile</string>
 </resources>
