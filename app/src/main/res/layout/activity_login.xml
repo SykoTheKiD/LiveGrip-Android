@@ -82,7 +82,11 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:background="#e0e0e0"
         android:text="@string/action_signup"
+        android:textColor="#263238"
+        android:textSize="17sp"
+        android:textStyle="bold"
         android:visibility="gone" />
 
     <Button
@@ -91,7 +95,11 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/action_login" />
+        android:background="#e0e0e0"
+        android:text="@string/action_login"
+        android:textColor="#263238"
+        android:textSize="17sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/signUpText"
