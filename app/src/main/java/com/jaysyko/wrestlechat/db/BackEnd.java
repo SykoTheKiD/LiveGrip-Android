@@ -16,33 +16,26 @@ import java.util.List;
  */
 public class BackEnd {
 
-    private Query query;
-
-    public BackEnd(Query query) {
-        this.query = query;
-    }
-
     /**
      * Query the app's cache
      * @param label String
      * @return List of results
      */
-    public List queryCache(String label) {
-        Query cacheQuery = this.query;
-        cacheQuery.build().fromLocalDatastore();
+    public static List queryCache(Query query, String label) {
+        query.build().fromLocalDatastore();
         try {
-            return cacheQuery.build().find();
+            return query.build().find();
         } catch (ParseException e) {
             Log.d("CACHE", e.getMessage());
         }
-        return queryDB(label);
+        return queryDB(query, label);
     }
 
     /**
      * Delete a set from the cache
      * @param label String
      */
-    private void deleteFromCache(String label) {
+    private static void deleteFromCache(String label) {
         try {
             ParseObject.unpinAll(label);
         } catch (ParseException e) {
@@ -55,9 +48,9 @@ public class BackEnd {
      * @param label String
      * @return List of results
      */
-    public List queryDB(String label) {
+    public static List queryDB(Query query, String label) {
         try {
-            List results = this.query.build().find();
+            List results = query.build().find();
             deleteFromCache(label);
             ParseObject.pinAll(label, results);
             return results;

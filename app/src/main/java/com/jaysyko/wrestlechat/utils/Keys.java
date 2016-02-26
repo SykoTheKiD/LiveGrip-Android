@@ -1,7 +1,10 @@
 package com.jaysyko.wrestlechat.utils;
 
 /**
- * Created by jarushaan on 2016-02-24.
+ * Keys.java
+ * Bundle args keys for fragments
+ *
+ * @author Jay Syko
  */
 public class Keys {
     public static final String STATE_KEY = "state";

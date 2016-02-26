@@ -28,7 +28,7 @@ public class CurrentActiveUser {
     }
 
     /**
-     * Return's a new instance of a current logged in user
+     * Returns a new instance of a current logged in user
      *
      * @param username String
      * @param password String

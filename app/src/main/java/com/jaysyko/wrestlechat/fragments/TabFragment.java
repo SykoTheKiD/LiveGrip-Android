@@ -32,13 +32,13 @@ public class TabFragment extends Fragment {
         viewPager = (ViewPager) x.findViewById(R.id.viewpager);
 
         /**
-         *Set an Apater for the View Pager
+         *Set an Adapter for the View Pager
          */
         viewPager.setAdapter(new MyAdapter(getChildFragmentManager()));
 
         /**
          * Now , this is a workaround ,
-         * The setupWithViewPager dose't works without the runnable .
+         * The setupWithViewPager doesn't works without the runnable .
          * Maybe a Support Library Bug .
          */
 
