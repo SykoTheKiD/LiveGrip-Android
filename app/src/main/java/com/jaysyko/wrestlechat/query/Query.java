@@ -1,9 +1,6 @@
 package com.jaysyko.wrestlechat.query;
 
-import com.jaysyko.wrestlechat.db.BackEnd;
 import com.parse.ParseQuery;
-
-import java.util.List;
 
 public final class Query {
 
@@ -25,60 +22,36 @@ public final class Query {
     }
 
     /**
-     * Checks if value toCompare is contained in the given coloumn
+     * Checks if value toCompare is contained in the given column
      * @param column String
      * @param toCompare String
-     * @return query
      */
-    final public Query whereEqualTo(String column, String toCompare) {
+    final public void whereEqualTo(String column, String toCompare) {
         this.query.whereEqualTo(column, toCompare);
-        return this;
     }
 
     /**
      * Set maximum number of results to return
      * @param max Integer
-     * @return query
      */
 
-    final public Query setLimit(int max) {
+    final public void setLimit(int max) {
         this.query.setLimit(max);
-        return this;
     }
 
     /**
      * Order results by given parameter in ascending order
      * @param orderKey String
-     * @return query
      */
-    final public Query orderByASC(String orderKey) {
+    final public void orderByASC(String orderKey) {
         this.query.orderByAscending(orderKey);
-        return this;
     }
 
     /**
      * Order results by given parameter in descending order
      * @param orderKey String
-     * @return query
      */
-    final public Query orderByDESC(String orderKey) {
+    final public void orderByDESC(String orderKey) {
         this.query.orderByDescending(orderKey);
-        return this;
-    }
-
-    /**
-     * Run query against app cache
-     * @return List
-     */
-    final public List execute() {
-        return new BackEnd(this).queryCache(this.label);
-    }
-
-    /**
-     * Run query against database
-     * @return List
-     */
-    final public List executeHard() {
-        return new BackEnd(this).queryDB(this.label);
     }
 }

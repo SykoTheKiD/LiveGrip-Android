@@ -1,7 +1,10 @@
 package com.jaysyko.wrestlechat.utils;
 
 /**
- * Created by jarushaan on 2016-02-25.
+ * IntentKeys.java
+ * Keys for the intents used throughout project
+ *
+ * @author Jay Syko
  */
 public class IntentKeys {
     public static final String USERNAME = "username";

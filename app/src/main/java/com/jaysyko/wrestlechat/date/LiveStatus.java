@@ -33,7 +33,7 @@ public final class LiveStatus {
 
     /**
      * Returns reason why an event should not go live
-     * @return int corresponsing to string in strings.xml
+     * @return int corresponding to string in strings.xml
      */
     public int getReason() {
         return reason;

@@ -63,10 +63,10 @@ public final class ImageTools {
      *
      * @param context   Context
      * @param link      String
-     * @param imageview ImageView
+     * @param imageView ImageView
      */
-    public static void loadImage(Context context, String link, ImageView imageview) {
-        Picasso.with(context).load(link).fit().into(imageview);
+    public static void loadImage(Context context, String link, ImageView imageView) {
+        Picasso.with(context).load(link).fit().into(imageView);
     }
 
     /**

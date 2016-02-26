@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.jaysyko.wrestlechat.db.BackEnd.queryDB;
+
 public class MessagingActivity extends AppCompatActivity {
 
     public static final int FETCH_MSG_DELAY_MILLIS = 1000, MAX_CHAT_MESSAGES_TO_SHOW = 50;
@@ -133,7 +135,7 @@ public class MessagingActivity extends AppCompatActivity {
             query.whereEqualTo(Events.ID, sEventId);
             query.orderByDESC(Message.CREATED_AT);
             query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-            List messages = query.executeHard();
+            List messages = queryDB(query, Message.class.getSimpleName());
             if (messages != null) {
                 Collections.reverse(messages);
                 MessagingActivity.this.messages.clear();
