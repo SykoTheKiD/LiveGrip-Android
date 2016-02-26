@@ -102,15 +102,15 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
      * @param holder MessageViewHolder
      */
     private void senderView(MessageViewHolder holder, Message message) {
-        TextView usernametv;
+        TextView usernameTV;
         holder.imageLeft.setVisibility(View.VISIBLE);
         holder.imageRight.setVisibility(View.GONE);
         holder.user.setVisibility(View.GONE);
         holder.sender.setVisibility(View.VISIBLE);
         holder.senderMessage.setVisibility(View.VISIBLE);
         holder.senderMessage.setText(message.getBody());
-        usernametv = (TextView) holder.sender.findViewById(R.id.sender_username);
-        usernametv.setText(message.getUsername());
+        usernameTV = (TextView) holder.sender.findViewById(R.id.sender_username);
+        usernameTV.setText(message.getUsername());
     }
 
     /**
@@ -119,13 +119,13 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
      * @param message String
      */
     private void setUserView(MessageViewHolder holder, Message message) {
-        AutoResizeTextView messageBodytv;
+        AutoResizeTextView messageBodyTV;
         holder.imageRight.setVisibility(View.VISIBLE);
         holder.imageLeft.setVisibility(View.GONE);
         holder.sender.setVisibility(View.GONE);
         holder.senderMessage.setVisibility(View.GONE);
         holder.user.setVisibility(View.VISIBLE);
-        messageBodytv = (AutoResizeTextView) holder.user.findViewById(R.id.my_message_body);
-        messageBodytv.setText(message.getBody());
+        messageBodyTV = (AutoResizeTextView) holder.user.findViewById(R.id.my_message_body);
+        messageBodyTV.setText(message.getBody());
     }
 }

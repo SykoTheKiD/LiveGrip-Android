@@ -22,7 +22,7 @@ public final class Query {
     }
 
     /**
-     * Checks if value toCompare is contained in the given coloumn
+     * Checks if value toCompare is contained in the given column
      * @param column String
      * @param toCompare String
      */

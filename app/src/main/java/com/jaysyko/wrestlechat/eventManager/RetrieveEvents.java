@@ -10,7 +10,10 @@ import static com.jaysyko.wrestlechat.db.BackEnd.queryCache;
 import static com.jaysyko.wrestlechat.db.BackEnd.queryDB;
 
 /**
- * Created by jarushaan on 2016-02-24.
+ * RetrieveEvents.java
+ * Get and hold a list of all the events
+ *
+ * @author Jay Syko
  */
 public class RetrieveEvents {
     private static final Class<Events> EVENT_MODEL = Events.class;
