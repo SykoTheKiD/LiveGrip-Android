@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
@@ -23,7 +22,6 @@ import com.jaysyko.wrestlechat.utils.StringResources;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private RelativeLayout loadingPanel;
     private String username, password;
     private boolean signIn = true;
     private Handler handler = new Handler();
@@ -46,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
             final EditText usernameField = (EditText) findViewById(R.id.usernameEV);
             usernameField.setText(getIntent().getStringExtra(IntentKeys.USERNAME));
             final EditText passwordField = (EditText) findViewById(R.id.loginPasswordEV);
-            loadingPanel = (RelativeLayout) findViewById(R.id.loadingPanel);
             handler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -84,7 +81,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 username = usernameField.getText().toString();
                 password = passwordField.getText().toString();
-                showLoadPanel(true, signUpButton);
                 if (NetworkState.isConnected(context)) {
                     Form form = new SignUpValidator(username, password).validate();
                     if (form.isValid()) {
@@ -97,11 +93,9 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         Dialog.makeToast(context, getString(Form.getSimpleMessage(form.getReason())));
                     }
-                    showLoadPanel(false, signUpButton);
                 } else {
                     Dialog.makeToast(context, getString(R.string.no_network));
                 }
-                showLoadPanel(false, signUpButton);
             }
         });
     }
@@ -112,7 +106,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 username = usernameField.getText().toString();
                 password = passwordField.getText().toString();
-                showLoadPanel(true, loginButton);
                 if (NetworkState.isConnected(context)) {
                     Form form = new LoginValidator(username, password).validate();
                     if (form.isValid()) {
@@ -122,7 +115,6 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         } else {
-                            showLoadPanel(false, loginButton);
                             Dialog.makeToast(context, getString(R.string.incorrect_login_info));
                         }
                     } else {
@@ -131,18 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Dialog.makeToast(context, getString(R.string.no_network));
                 }
-                showLoadPanel(false, loginButton);
             }
         });
-    }
-
-    private void showLoadPanel(Boolean buttonHide, Button button) {
-        if (buttonHide) {
-            loadingPanel.setVisibility(View.VISIBLE);
-            button.setVisibility(View.GONE);
-        } else {
-            loadingPanel.setVisibility(View.GONE);
-            button.setVisibility(View.VISIBLE);
-        }
     }
 }
