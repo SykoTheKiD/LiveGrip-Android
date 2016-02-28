@@ -14,8 +14,4 @@ import com.parse.ParseObject;
 public class User extends ParseObject {
     public static final String TABLE_NAME = "User";
     public static final String IMG_ID = "imgID";
-
-    public void setUserImage(String url) {
-        put(IMG_ID, url);
-    }
 }

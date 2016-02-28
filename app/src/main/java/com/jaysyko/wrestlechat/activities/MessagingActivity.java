@@ -37,7 +37,8 @@ public class MessagingActivity extends AppCompatActivity {
 
     public static final int FETCH_MSG_DELAY_MILLIS = 1000, MAX_CHAT_MESSAGES_TO_SHOW = 50;
     private static final int SEND_DELAY = 1500;
-    private String userName, sEventId, eventName;
+    private String userName;
+    private String sEventId;
     private EditText etMessage;
     private ListView lvChat;
     private ArrayList<Message> messages;
@@ -67,7 +68,7 @@ public class MessagingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messaging);
         sEventId = CurrentActiveEvent.getInstance().getEventID();
-        eventName = CurrentActiveEvent.getInstance().getEventName();
+        String eventName = CurrentActiveEvent.getInstance().getEventName();
         setTitle(eventName);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);

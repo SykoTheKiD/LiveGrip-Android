@@ -5,11 +5,9 @@ import com.parse.ParseQuery;
 public final class Query {
 
     private ParseQuery query;
-    private String label;
 
     public Query(Class model) {
         this.query = ParseQuery.getQuery(model);
-        this.label = model.getSimpleName();
     }
 
     /**

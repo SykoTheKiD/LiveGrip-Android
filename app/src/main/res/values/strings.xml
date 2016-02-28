@@ -2,9 +2,7 @@
     <string name="app_name">Wrestle Chat</string>
 
     <!-- Strings related to Activity Names -->
-    <string name="activity_login">Login</string>
     <string name="activity_event_info">Event Info</string>
-    <string name="activity_event_list">Events</string>
     <string name="activity_messaging">Message</string>
     <string name="activity_settings">Settings</string>
 
@@ -14,23 +12,14 @@
     <string name="action_login">Login</string>
     <string name="action_logout">Logout</string>
 
-    <!-- Strings related to Events List Screen -->
-    <string name="action_event_list">Event List</string>
-
     <!-- Strings related to Messaging Screen -->
     <string name="message_hint">Enter Message</string>
-    <string name="message_button_send">Send</string>
     <string name="description_other_profile_image">Other Profile Image</string>
     <string name="description_my_profile_image">My Profile Image</string>
 
     <!-- Strings related to Home Drawer -->
-    <string name="drawer_username_holder">User Name</string>
-    <string name="user_profile_picture">User profile picture</string>
     <string name="drawer_about">About</string>
     <string name="drawer_share">Share</string>
-    <string name="drawer_section_communicate">Contact</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!-- Strings related to Events Info Screen -->
     <string name="action_event_info">Event Info</string>
@@ -121,7 +110,6 @@
     <string name="action_signup">Sign Up</string>
     <string name="drawer_legal">Legal</string>
     <string name="action_profile">Profile</string>
-    <string name="drawer_donate">Donate</string>
     <string name="title_activity_donate">Donate</string>
     <string name="title_activity_legal">Legal</string>
     <string name="lorem_username">Jay Syko</string>
@@ -134,7 +122,6 @@
     <string name="legal_info">\n\nNames, images and titles all belong to their respective owners.\n\nWrestling event info content belongs to Wikipedia and the WikiMedia Foundation.\n</string>
     <string name="no_account_dialog">Don\'t have an account? Sign Up</string>
     <string name="have_account_login">Already have an account? Sign In</string>
-    <string name="title_activity_new_donate">NewDonateActivity</string>
     <string name="sign_in_to_app">Sign In to Wrestle Chat</string>
     <string name="sign_up_to_app">Sign Up to Wrestle Chat</string>
     <string name="about_donate">Buy me a coffee?</string>
@@ -144,9 +131,7 @@
     <string name="donate_edittext_hint">\t\t\t\t\tDonation Amount</string>
     <string name="message_too_short">Message can\'t be blank</string>
     <string name="message_too_long">Message can\'t exceed 230 characters</string>
-    <string name="action_rules">Chat Rules</string>
     <string name="invalid_username">Username cannot exceed 25 characters</string>
-    <string name="refreshing_events">Refreshing Events…</string>
     <string name="hey_check_out">Hey check out the</string>
     <string name="sent_from_wrestlechat">- sent from #WrestleChatApp @ https://goo.gl/al7ZIK</string>
     <string name="app_share_title">Share Wrestle Chat</string>
@@ -154,14 +139,9 @@
     <string name="no_network">No Network Access</string>
     <string name="valid">Valid</string>
     <string name="no_account_question">Don’t Have an Account? Sign Up</string>
-    <string name="action_done">Done</string>
-    <string name="upcoming">Upcoming Feature</string>
-    <string name="profile_upcoming">Profile options such as username changes and profile pictures will be available in a future release. Stay tuned!</string>
     <string name="event_over">The event is over</string>
     <string name="special_chars_username">Username can only contain letters numbers and underscores</string>
-    <string name="title_activity_advertisement">AdvertisementActivity</string>
 
-    <string name="hello_world">Hello world!</string>
     <!-- -
         This is an ad unit ID for a banner test ad. Replace with your own banner ad unit id.
         For more information, see https://support.google.com/admob/answer/3052638
@@ -182,7 +162,5 @@
     <string name="nav_section_others">Others</string>
     <string name="password_changed_relogin">Password changed please re-login</string>
     <string name="error_has_occured">An error has occurred no changes made</string>
-    <string name="title_activity_welcome">WelcomeActivity</string>
-    <string name="section_format">Hello World from section: %1$d</string>
     <string name="manage_profile">Manage Profile</string>
 </resources>
