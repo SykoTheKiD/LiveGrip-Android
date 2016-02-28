@@ -79,15 +79,6 @@
         </receiver>
 
         <activity
-            android:name=".activities.DonateActivity"
-            android:label="@string/title_activity_donate"
-            android:parentActivityName=".activities.EventListActivity"
-            android:theme="@style/NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.EventListActivity" />
-        </activity>
-        <activity
             android:name=".activities.LegalActivity"
             android:label="@string/title_activity_legal"
             android:parentActivityName=".activities.EventListActivity"

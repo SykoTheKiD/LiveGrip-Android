@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.ads.AdBuilder;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
@@ -47,12 +46,12 @@ public class UserProfileActivity extends AppCompatActivity {
         profilePicture = (ImageView) findViewById(R.id.profilePicture);
         ImageTools.loadImage(getApplicationContext(), currentActiveUser.getCustomProfileImageURL(), profilePicture);
         update = (Button) findViewById(R.id.updateProfile);
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                new AdBuilder(UserProfileActivity.this).buildAd();
-            }
-        });
+//        handler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                new AdBuilder(UserProfileActivity.this).buildAd();
+//            }
+//        });
         handler.post(new Runnable() {
             @Override
             public void run() {

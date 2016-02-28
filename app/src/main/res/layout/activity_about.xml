@@ -20,17 +20,6 @@
         android:text="@string/lorem_ipsum_long" />
 
     <Button
-        android:id="@+id/about_donate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/about_text"
-        android:layout_marginTop="60dp"
-        android:text="@string/about_donate"
-        android:visibility="gone" />
-
-    <Button
         android:id="@+id/about_tweet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
