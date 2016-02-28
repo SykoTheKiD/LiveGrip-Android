@@ -54,26 +54,6 @@ public class CurrentActiveUser {
         return activeCurrentActiveUser;
     }
 
-    /**
-     * SignUp the user into the app returns true if successful else returns false
-     *
-     * @param username String
-     * @param password String
-     * @return boolean
-     */
-    public static boolean signUpUser(String username, String password) {
-        ParseUser user = new ParseUser();
-        user.setUsername(username.toLowerCase());
-        user.setPassword(password);
-        try {
-            user.signUp();
-            CurrentActiveUser.getInstance(username, password);
-            return true;
-        } catch (ParseException e) {
-            return false;
-        }
-    }
-
     public boolean setPassword(String password) {
         ParseUser currentUser = ParseUser.getCurrentUser();
         currentUser.setPassword(password);
