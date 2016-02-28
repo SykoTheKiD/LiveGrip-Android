@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.auth.CreateNewUser;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
@@ -84,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (NetworkState.isConnected(context)) {
                     Form form = new SignUpValidator(username, password).validate();
                     if (form.isValid()) {
-                        if (CurrentActiveUser.signUpUser(username, password)) {
+                        if (CreateNewUser.signUpUser(username, password)) {
                             startActivity(intent);
                             finish();
                         } else {
