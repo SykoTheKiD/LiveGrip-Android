@@ -16,16 +16,7 @@ public class AboutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        final Button donate = (Button) findViewById(R.id.about_donate);
         final Button tweet = (Button) findViewById(R.id.about_tweet);
-
-        donate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent donate = new Intent(getApplicationContext(), DonateActivity.class);
-                startActivity(donate);
-            }
-        });
 
         tweet.setOnClickListener(new View.OnClickListener() {
             @Override
