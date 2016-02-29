@@ -25,6 +25,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/about_text"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="15dp"
         android:text="@string/about_tweet" />
+
+    <include layout="@layout/activity_advertisement" />
 </RelativeLayout>

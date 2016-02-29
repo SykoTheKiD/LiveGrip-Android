@@ -29,4 +29,5 @@ public class AdBuilder {
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
     }
+
 }
