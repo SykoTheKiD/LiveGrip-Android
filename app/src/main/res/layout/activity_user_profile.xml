@@ -16,7 +16,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/clickToChangePicture"
-        android:src="@drawable/nav_header_bg"
         android:contentDescription="@string/app_name" />
 
     <TextView
@@ -95,11 +94,8 @@
         android:id="@+id/memberSinceTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:paddingTop="20dp"
-        android:text="Member Since: January 2016"
-        android:textColor="#ffffff"
         android:visibility="gone" />
+
+    <include layout="@layout/activity_advertisement" />
 
 </RelativeLayout>

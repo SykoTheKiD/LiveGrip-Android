@@ -58,6 +58,12 @@ public class EventInfoActivity extends AppCompatActivity {
                 new AdBuilder(EventInfoActivity.this).buildAd();
             }
         });
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                new AdBuilder(EventInfoActivity.this).buildAd();
+            }
+        });
     }
 
     @NonNull
