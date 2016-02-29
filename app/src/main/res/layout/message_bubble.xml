@@ -46,8 +46,7 @@
             android:textColor="#ffffff"
             android:textColorLink="#303f9f"
             android:textIsSelectable="true"
-            android:textSize="14sp"
-            android:visibility="invisible" />
+            android:textSize="14sp" />
 
     </RelativeLayout>
 
