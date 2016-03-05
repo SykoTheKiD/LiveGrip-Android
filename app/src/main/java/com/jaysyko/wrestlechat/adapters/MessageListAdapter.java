@@ -90,7 +90,6 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         holder.imageLeft = (ImageView) convertView.findViewById(R.id.ivProfileLeft);
         holder.imageRight = (ImageView) convertView.findViewById(R.id.ivProfileRight);
         holder.sender = (RelativeLayout) convertView.findViewById(R.id.sender_message);
-        holder.senderMessage = (AutoResizeTextView) convertView.findViewById(R.id.sender_message_body);
         holder.user = (RelativeLayout) convertView.findViewById(R.id.my_message);
         convertView.setTag(holder);
         return convertView;
@@ -103,12 +102,13 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
      */
     private void senderView(MessageViewHolder holder, Message message) {
         TextView usernameTV;
+        AutoResizeTextView messageBodyTV;
         holder.imageLeft.setVisibility(View.VISIBLE);
         holder.imageRight.setVisibility(View.GONE);
         holder.user.setVisibility(View.GONE);
         holder.sender.setVisibility(View.VISIBLE);
-        holder.senderMessage.setVisibility(View.VISIBLE);
-        holder.senderMessage.setText(message.getBody());
+        messageBodyTV = (AutoResizeTextView) holder.sender.findViewById(R.id.sender_message_body);
+        messageBodyTV.setText(message.getBody());
         usernameTV = (TextView) holder.sender.findViewById(R.id.sender_username);
         usernameTV.setText(message.getUsername());
     }
@@ -123,7 +123,6 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         holder.imageRight.setVisibility(View.VISIBLE);
         holder.imageLeft.setVisibility(View.GONE);
         holder.sender.setVisibility(View.GONE);
-        holder.senderMessage.setVisibility(View.GONE);
         holder.user.setVisibility(View.VISIBLE);
         messageBodyTV = (AutoResizeTextView) holder.user.findViewById(R.id.my_message_body);
         messageBodyTV.setText(message.getBody());
