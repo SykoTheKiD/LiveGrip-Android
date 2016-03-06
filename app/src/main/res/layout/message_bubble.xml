@@ -55,8 +55,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1.00"
-        android:background="@android:color/transparent"
-        android:visibility="invisible">
+        android:background="@android:color/transparent">
 
         <com.jaysyko.wrestlechat.customTextView.AutoResizeTextView
             android:id="@+id/my_message_body"
@@ -75,7 +74,6 @@
         android:id="@+id/ivProfileRight"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:contentDescription="@string/description_my_profile_image"
-        android:visibility="invisible" />
+        android:contentDescription="@string/description_my_profile_image" />
 
 </LinearLayout>

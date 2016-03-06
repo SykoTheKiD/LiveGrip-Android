@@ -1,10 +1,7 @@
 package com.jaysyko.wrestlechat.adapters;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.os.Handler;
-import android.os.Trace;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -103,20 +100,17 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
      * @param message Message
      * @param holder MessageViewHolder
      */
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     private void senderView(MessageViewHolder holder, Message message) {
-        Trace.beginSection("Sender");
         TextView usernameTV;
-        AutoResizeTextView messageBodyTV;
         holder.imageLeft.setVisibility(View.VISIBLE);
         holder.imageRight.setVisibility(View.GONE);
         holder.user.setVisibility(View.GONE);
         holder.sender.setVisibility(View.VISIBLE);
-        messageBodyTV = (AutoResizeTextView) holder.sender.findViewById(R.id.sender_message_body);
-        messageBodyTV.setText(message.getBody());
+        String messageText = message.getBody();
+        AutoResizeTextView messageBodyTV = (AutoResizeTextView) holder.sender.findViewById(R.id.sender_message_body);
+        messageBodyTV.setText(messageText);
         usernameTV = (TextView) holder.sender.findViewById(R.id.sender_username);
         usernameTV.setText(message.getUsername());
-        Trace.endSection();
     }
 
     /**
@@ -125,12 +119,12 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
      * @param message String
      */
     private void setUserView(MessageViewHolder holder, Message message) {
-        AutoResizeTextView messageBodyTV;
         holder.imageRight.setVisibility(View.VISIBLE);
         holder.imageLeft.setVisibility(View.GONE);
         holder.sender.setVisibility(View.GONE);
         holder.user.setVisibility(View.VISIBLE);
-        messageBodyTV = (AutoResizeTextView) holder.user.findViewById(R.id.my_message_body);
+        AutoResizeTextView messageBodyTV = (AutoResizeTextView) holder.user.findViewById(R.id.my_message_body);
         messageBodyTV.setText(message.getBody());
     }
+
 }

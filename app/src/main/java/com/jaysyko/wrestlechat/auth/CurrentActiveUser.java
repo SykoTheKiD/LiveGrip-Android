@@ -7,9 +7,6 @@ import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * CurrentActiveUser.java
  * A single instance for the currently logged in user
@@ -137,10 +134,8 @@ public class CurrentActiveUser {
      * @return String
      */
     public boolean setProfileImageURL(final String url) {
-        String patternToMatch = "\\.jpg|\\.png*";
-        Pattern p = Pattern.compile(patternToMatch);
-        Matcher m = p.matcher(url);
-        if (m.find()) {
+        Boolean isLinkToImage = ImageTools.isLinkToImage(url);
+        if (isLinkToImage) {
             activeCurrentActiveUser.profileImageURL = url;
             ParseUser currentUser = ParseUser.getCurrentUser();
             currentUser.put(User.IMG_ID, url);
