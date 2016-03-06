@@ -37,7 +37,7 @@ public class EventListActivity extends AppCompatActivity{
         /**
          *Setup the DrawerLayout and NavigationView
          */
-
+        getWindow().setBackgroundDrawable(null);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.navDrawerItems);
         final View headerLayout = mNavigationView.inflateHeaderView(R.layout.nav_header_event_list);
