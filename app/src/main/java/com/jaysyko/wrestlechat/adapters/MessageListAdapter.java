@@ -1,8 +1,10 @@
 package com.jaysyko.wrestlechat.adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,7 +110,16 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         holder.sender.setVisibility(View.VISIBLE);
         String messageText = message.getBody();
         AutoResizeTextView messageBodyTV = (AutoResizeTextView) holder.sender.findViewById(R.id.sender_message_body);
-        messageBodyTV.setText(messageText);
+        ImageView imgMsg = (ImageView) holder.sender.findViewById(R.id.image_message_sender);
+        if (ImageTools.isLinkToImage(messageText)) {
+            messageBodyTV.setVisibility(View.GONE);
+            imgMsg.setVisibility(View.VISIBLE);
+            ImageTools.loadImage(context, messageText, imgMsg);
+        } else {
+            imgMsg.setVisibility(View.GONE);
+            messageBodyTV.setVisibility(View.VISIBLE);
+            messageBodyTV.setText(messageText);
+        }
         usernameTV = (TextView) holder.sender.findViewById(R.id.sender_username);
         usernameTV.setText(message.getUsername());
     }
@@ -123,8 +134,34 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         holder.imageLeft.setVisibility(View.GONE);
         holder.sender.setVisibility(View.GONE);
         holder.user.setVisibility(View.VISIBLE);
+        String messageBody = message.getBody();
+        ImageView imgMsg = (ImageView) holder.user.findViewById(R.id.image_message_user);
         AutoResizeTextView messageBodyTV = (AutoResizeTextView) holder.user.findViewById(R.id.my_message_body);
+        if (ImageTools.isLinkToImage(messageBody)) {
+            messageBodyTV.setVisibility(View.GONE);
+            imgMsg.setVisibility(View.VISIBLE);
+            ImageTools.loadImage(context, messageBody, imgMsg);
+        } else {
+            imgMsg.setVisibility(View.GONE);
+            messageBodyTV.setVisibility(View.VISIBLE);
+            messageBodyTV.setText(messageBody);
+        }
         messageBodyTV.setText(message.getBody());
     }
 
+    private AutoResizeTextView textMessage() {
+        AutoResizeTextView textView = new AutoResizeTextView(context);
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            lp.addRule(RelativeLayout.ALIGN_PARENT_START);
+        } else {
+            lp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        }
+        lp.addRule(RelativeLayout.BELOW, R.id.sender_username);
+        textView.setBackgroundResource(R.drawable.bubble_left_brown);
+        textView.setGravity(Gravity.START);
+        textView.setTextSize(14);
+        textView.setLayoutParams(lp);
+        return textView;
+    }
 }

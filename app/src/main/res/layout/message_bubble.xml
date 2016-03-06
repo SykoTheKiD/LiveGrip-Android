@@ -9,7 +9,8 @@
         android:id="@+id/ivProfileLeft"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:contentDescription="@string/description_other_profile_image" />
+        android:contentDescription="@string/description_other_profile_image"
+        android:visibility="invisible" />
 
     <RelativeLayout
         android:id="@+id/sender_message"
@@ -46,7 +47,16 @@
             android:textColor="#ffffff"
             android:textColorLink="#303f9f"
             android:textIsSelectable="true"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/image_message_sender"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_below="@+id/sender_username"
+            android:contentDescription="@string/app_name"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -67,6 +77,14 @@
             android:background="@drawable/bubble_white"
             android:gravity="start"
             android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/image_message_user"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@string/app_name"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
