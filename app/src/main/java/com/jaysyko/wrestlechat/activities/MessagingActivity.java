@@ -76,7 +76,7 @@ public class MessagingActivity extends AppCompatActivity {
         userName = currentUser.getUsername();
         btSend = (ImageButton) findViewById(R.id.btSend);
         applicationContext = getApplicationContext();
-
+        getWindow().setBackgroundDrawable(null);
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

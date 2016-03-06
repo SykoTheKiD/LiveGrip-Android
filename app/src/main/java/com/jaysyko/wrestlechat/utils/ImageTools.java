@@ -18,6 +18,8 @@ import com.squareup.picasso.Picasso;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class ImageTools {
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
@@ -86,6 +88,13 @@ public final class ImageTools {
             Log.d("Profile Image", "Default profile image generator error");
         }
         return "http://www.gravatar.com/avatar/".concat(hex.toString()).concat("?d=identicon");
+    }
+
+    public static Boolean isLinkToImage(String url) {
+        String patternToMatch = "\\.jpg|\\.png*";
+        Pattern p = Pattern.compile(patternToMatch);
+        Matcher m = p.matcher(url);
+        return m.find();
     }
 
 }

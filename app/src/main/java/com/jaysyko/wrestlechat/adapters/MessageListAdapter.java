@@ -13,8 +13,8 @@ import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.viewholders.MessageViewHolder;
-import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.customTextView.AutoResizeTextView;
+import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import java.util.List;
@@ -102,13 +102,13 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
      */
     private void senderView(MessageViewHolder holder, Message message) {
         TextView usernameTV;
-        AutoResizeTextView messageBodyTV;
         holder.imageLeft.setVisibility(View.VISIBLE);
         holder.imageRight.setVisibility(View.GONE);
         holder.user.setVisibility(View.GONE);
         holder.sender.setVisibility(View.VISIBLE);
-        messageBodyTV = (AutoResizeTextView) holder.sender.findViewById(R.id.sender_message_body);
-        messageBodyTV.setText(message.getBody());
+        String messageText = message.getBody();
+        AutoResizeTextView messageBodyTV = (AutoResizeTextView) holder.sender.findViewById(R.id.sender_message_body);
+        messageBodyTV.setText(messageText);
         usernameTV = (TextView) holder.sender.findViewById(R.id.sender_username);
         usernameTV.setText(message.getUsername());
     }
@@ -119,12 +119,12 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
      * @param message String
      */
     private void setUserView(MessageViewHolder holder, Message message) {
-        AutoResizeTextView messageBodyTV;
         holder.imageRight.setVisibility(View.VISIBLE);
         holder.imageLeft.setVisibility(View.GONE);
         holder.sender.setVisibility(View.GONE);
         holder.user.setVisibility(View.VISIBLE);
-        messageBodyTV = (AutoResizeTextView) holder.user.findViewById(R.id.my_message_body);
+        AutoResizeTextView messageBodyTV = (AutoResizeTextView) holder.user.findViewById(R.id.my_message_body);
         messageBodyTV.setText(message.getBody());
     }
+
 }

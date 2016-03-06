@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#eeeeee"
     android:orientation="horizontal"
     android:weightSum="1">
 
@@ -15,7 +14,9 @@
     <RelativeLayout
         android:id="@+id/sender_message"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:visibility="invisible">
 
         <TextView
             android:id="@+id/sender_username"
@@ -41,8 +42,7 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/sender_username"
             android:background="@drawable/bubble_left_brown"
-            android:elegantTextHeight="true"
-            android:gravity="left"
+            android:gravity="start"
             android:textColor="#ffffff"
             android:textColorLink="#303f9f"
             android:textIsSelectable="true"
@@ -52,10 +52,10 @@
 
     <RelativeLayout
         android:id="@+id/my_message"
-        android:layout_width="225dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1.00"
-        android:visibility="invisible">
+        android:background="@android:color/transparent">
 
         <com.jaysyko.wrestlechat.customTextView.AutoResizeTextView
             android:id="@+id/my_message_body"
@@ -65,8 +65,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:background="@drawable/bubble_white"
-            android:elegantTextHeight="true"
-            android:gravity="left"
+            android:gravity="start"
             android:textSize="14sp" />
 
     </RelativeLayout>
@@ -75,7 +74,6 @@
         android:id="@+id/ivProfileRight"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:contentDescription="@string/description_my_profile_image"
-        android:visibility="invisible" />
+        android:contentDescription="@string/description_my_profile_image" />
 
 </LinearLayout>
