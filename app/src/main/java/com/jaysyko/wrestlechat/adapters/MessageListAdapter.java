@@ -1,7 +1,10 @@
 package com.jaysyko.wrestlechat.adapters;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.os.Handler;
+import android.os.Trace;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +16,8 @@ import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.viewholders.MessageViewHolder;
-import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.customTextView.AutoResizeTextView;
+import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import java.util.List;
@@ -100,7 +103,9 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
      * @param message Message
      * @param holder MessageViewHolder
      */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     private void senderView(MessageViewHolder holder, Message message) {
+        Trace.beginSection("Sender");
         TextView usernameTV;
         AutoResizeTextView messageBodyTV;
         holder.imageLeft.setVisibility(View.VISIBLE);
@@ -111,6 +116,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         messageBodyTV.setText(message.getBody());
         usernameTV = (TextView) holder.sender.findViewById(R.id.sender_username);
         usernameTV.setText(message.getUsername());
+        Trace.endSection();
     }
 
     /**
