@@ -17,6 +17,7 @@ import com.jaysyko.wrestlechat.utils.ImageTools;
 public class MessagingUIComponents implements UIGenerator {
 
     private static final int TEXT_SIZE = 14;
+    private static final String WHITE = "#FFFFFF";
     private Context context;
     private MessagingUIPosition position;
     private Message message;
@@ -49,7 +50,7 @@ public class MessagingUIComponents implements UIGenerator {
                 }
                 lp.addRule(RelativeLayout.BELOW, R.id.sender_username);
                 textView.setBackgroundResource(R.drawable.bubble_left_brown);
-                textView.setTextColor(Color.parseColor("#FFFFFF"));
+                textView.setTextColor(Color.parseColor(WHITE));
                 break;
         }
         textView.setGravity(Gravity.START);
@@ -65,13 +66,13 @@ public class MessagingUIComponents implements UIGenerator {
      */
     private ImageView imageMessage() {
         ImageView imgMsg = new ImageView(this.context);
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(250, 250);
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(1000, 1000);
         switch (this.position) {
             case USER:
                 lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
                 break;
             case SENDER:
-                imgMsg.setPadding(5, 0, 0, 0);
+                imgMsg.setPadding(50, 0, 0, 0);
                 break;
         }
         imgMsg.setLayoutParams(lp);
