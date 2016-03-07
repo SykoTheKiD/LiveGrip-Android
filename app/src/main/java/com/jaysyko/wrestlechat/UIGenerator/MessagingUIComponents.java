@@ -1,6 +1,7 @@
 package com.jaysyko.wrestlechat.UIGenerator;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.Gravity;
 import android.view.View;
@@ -48,6 +49,7 @@ public class MessagingUIComponents implements UIGenerator {
                 }
                 lp.addRule(RelativeLayout.BELOW, R.id.sender_username);
                 textView.setBackgroundResource(R.drawable.bubble_left_brown);
+                textView.setTextColor(Color.parseColor("#FFFFFF"));
                 break;
         }
         textView.setGravity(Gravity.START);

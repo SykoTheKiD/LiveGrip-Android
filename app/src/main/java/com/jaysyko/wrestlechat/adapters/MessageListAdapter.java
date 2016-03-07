@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.UIGenerator.MessagingUIComponents;
@@ -31,7 +30,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
     private Handler handler = new Handler();
     private String mUserId;
     private Context context = getContext();
-    private UIGenerator generator = new MessagingUIComponents(context);
+    private final UIGenerator generator = new MessagingUIComponents(context);
     public MessageListAdapter(Context context, String userId, List<Message> messages) {
         super(context, 0, messages);
         this.mUserId = userId;
@@ -104,10 +103,18 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
      * @param holder MessageViewHolder
      */
     private void senderView(MessageViewHolder holder, Message message) {
-        TextView usernameTV = (TextView) holder.sender.findViewById(R.id.sender_username);
-        usernameTV.setText(message.getUsername());
+        RelativeLayout senderContainer = holder.sender;
+        holder.imageLeft.setVisibility(View.VISIBLE);
+        holder.sender.setVisibility(View.VISIBLE);
+
+        holder.imageRight.setVisibility(View.GONE);
+        holder.user.setVisibility(View.GONE);
+
+//        TextView usernameTV = (TextView) senderContainer.findViewById(R.id.sender_username);
+//        usernameTV.setText(message.getUsername());
         View view = generator.generateView(MessagingUIPosition.SENDER, message);
-        holder.sender.addView(view);
+        senderContainer.removeAllViews();
+        senderContainer.addView(view);
     }
 
     /**
@@ -117,6 +124,14 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
      */
     private void setUserView(MessageViewHolder holder, Message message) {
         View view = generator.generateView(MessagingUIPosition.USER, message);
-        holder.user.addView(view);
+        RelativeLayout userContainer = holder.user;
+        userContainer.removeAllViews();
+        holder.imageRight.setVisibility(View.VISIBLE);
+        holder.user.setVisibility(View.VISIBLE);
+
+        holder.imageLeft.setVisibility(View.GONE);
+        holder.sender.setVisibility(View.GONE);
+
+        userContainer.addView(view);
     }
 }
