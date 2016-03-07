@@ -48,7 +48,7 @@ public class MessagingUIComponents implements UIGenerator {
                 } else {
                     lp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                 }
-                lp.addRule(RelativeLayout.BELOW, R.id.sender_username);
+                lp.addRule(RelativeLayout.BELOW, R.id.senderUsernameID);
                 textView.setBackgroundResource(R.drawable.bubble_left_brown);
                 textView.setTextColor(Color.parseColor(WHITE));
                 break;
@@ -73,6 +73,7 @@ public class MessagingUIComponents implements UIGenerator {
                 break;
             case SENDER:
                 imgMsg.setPadding(50, 0, 0, 0);
+                lp.addRule(RelativeLayout.BELOW, R.id.senderUsernameID);
                 break;
         }
         imgMsg.setLayoutParams(lp);
@@ -81,9 +82,17 @@ public class MessagingUIComponents implements UIGenerator {
         return imgMsg;
     }
 
+    /**
+     * @param position
+     * @param message
+     * @return
+     */
     public View generateView(MessagingUIPosition position, Message message) {
         this.position = position;
         this.message = message;
+        if(position.equals(MessagingUIPosition.SENDER)) {
+
+        }
         if (ImageTools.isLinkToImage(this.message.getBody())) {
             return imageMessage();
         }

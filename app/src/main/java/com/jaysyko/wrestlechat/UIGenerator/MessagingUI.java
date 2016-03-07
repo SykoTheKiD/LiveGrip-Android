@@ -25,17 +25,15 @@ public class MessagingUI implements UIGenerator {
         return null;
     }
 
+    /**
+     * @return
+     */
+
     private RoundedImageView profileImage() {
-        switch (position) {
-            case USER:
-                break;
-            case SENDER:
-                break;
-        }
         RoundedImageView profileImageView = new RoundedImageView(this.context, null);
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(65, 65);
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(500, 500);
         profileImageView.setLayoutParams(lp);
-        ImageTools.loadImage(this.context, message.getUserImage(), profileImageView);
+        ImageTools.loadImage(this.context, this.message.getUserImage(), profileImageView);
         return profileImageView;
     }
 
