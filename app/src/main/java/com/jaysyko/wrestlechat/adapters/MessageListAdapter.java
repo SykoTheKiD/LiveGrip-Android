@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.UIGenerator.MessagingUI;
 import com.jaysyko.wrestlechat.UIGenerator.MessagingUIComponents;
 import com.jaysyko.wrestlechat.UIGenerator.MessagingUIPosition;
 import com.jaysyko.wrestlechat.UIGenerator.UIGenerator;
@@ -32,13 +31,14 @@ import java.util.List;
  * @author Jay Syko
  */
 public class MessageListAdapter extends ArrayAdapter<Message> {
+    private static final int USERNAME_PADDING_LEFT = 50;
+    private static final int ZERO = 0;
     private Handler handler = new Handler();
     private String mUserId;
     private Context context = getContext();
     private final UIGenerator uiComponents = new MessagingUIComponents(context);
-    private final UIGenerator messagingUI = new MessagingUI(context);
     public MessageListAdapter(Context context, String userId, List<Message> messages) {
-        super(context, 0, messages);
+        super(context, ZERO, messages);
         this.mUserId = userId;
     }
 
@@ -114,11 +114,9 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         RelativeLayout senderContainer = holder.sender;
         holder.imageLeft.setVisibility(View.VISIBLE);
         holder.sender.setVisibility(View.VISIBLE);
-
         holder.imageRight.setVisibility(View.GONE);
         holder.user.setVisibility(View.GONE);
         TextView usernameTV = generateUsername();
-//        TextView usernameTV = (TextView) senderContainer.findViewById(R.id.sender_username);
         usernameTV.setText(message.getUsername());
         View view = uiComponents.generateView(MessagingUIPosition.SENDER, message);
         senderContainer.removeAllViews();
@@ -145,7 +143,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
     }
 
     /**
-     * @return
+     * @return TextView
      */
     private TextView generateUsername() {
         TextView username = new TextView(context);
@@ -162,7 +160,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         username.setTextSize(12);
         username.setTypeface(null, Typeface.BOLD);
         username.setId(R.id.senderUsernameID);
-        username.setPadding(50, 0, 0, 0);
+        username.setPadding(USERNAME_PADDING_LEFT, ZERO, ZERO, ZERO);
         return username;
     }
 

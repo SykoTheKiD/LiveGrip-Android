@@ -16,7 +16,7 @@ import com.jaysyko.wrestlechat.utils.ImageTools;
 
 public class MessagingUIComponents implements UIGenerator {
 
-    private static final int TEXT_SIZE = 14;
+    private static final int TEXT_SIZE = 14, IMAGE_MSG_WIDTH = 1000, IMAGE_MSG_HEIGHT = 1000, IMAGE_MSG_PADDING_LEFT = 50, ZERO = 0;
     private static final String WHITE = "#FFFFFF";
     private Context context;
     private MessagingUIPosition position;
@@ -66,13 +66,13 @@ public class MessagingUIComponents implements UIGenerator {
      */
     private ImageView imageMessage() {
         ImageView imgMsg = new ImageView(this.context);
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(1000, 1000);
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(IMAGE_MSG_WIDTH, IMAGE_MSG_HEIGHT);
         switch (this.position) {
             case USER:
                 lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
                 break;
             case SENDER:
-                imgMsg.setPadding(50, 0, 0, 0);
+                imgMsg.setPadding(IMAGE_MSG_PADDING_LEFT, ZERO, ZERO, ZERO);
                 lp.addRule(RelativeLayout.BELOW, R.id.senderUsernameID);
                 break;
         }
@@ -83,16 +83,13 @@ public class MessagingUIComponents implements UIGenerator {
     }
 
     /**
-     * @param position
-     * @param message
-     * @return
+     * @param position MessagingUIPosition
+     * @param message Message
+     * @return View
      */
     public View generateView(MessagingUIPosition position, Message message) {
         this.position = position;
         this.message = message;
-        if(position.equals(MessagingUIPosition.SENDER)) {
-
-        }
         if (ImageTools.isLinkToImage(this.message.getBody())) {
             return imageMessage();
         }
