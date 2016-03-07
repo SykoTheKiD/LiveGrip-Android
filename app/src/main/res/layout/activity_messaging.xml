@@ -31,8 +31,7 @@
         android:padding="15dp"
         android:scrollbars="none"
         android:scrollingCache="true"
-        android:smoothScrollbar="true"
-        android:transcriptMode="alwaysScroll" />
+        android:smoothScrollbar="true" />
 
     <RelativeLayout
         android:id="@+id/llSend"
