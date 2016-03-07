@@ -19,23 +19,6 @@
         android:background="@android:color/transparent"
         android:visibility="gone">
 
-        <TextView
-            android:id="@+id/sender_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:ellipsize="marquee"
-            android:gravity="start"
-            android:lines="1"
-            android:paddingLeft="5dp"
-            android:paddingStart="5dp"
-            android:singleLine="false"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:visibility="gone" />
-
     </RelativeLayout>
 
     <RelativeLayout

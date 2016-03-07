@@ -46,7 +46,7 @@ public class MessagingActivity extends AppCompatActivity {
     private ImageButton btSend;
     private Context applicationContext;
     // Keep track of initial load to scroll to the bottom of the ListView
-    private boolean mFirstLoad;
+    private boolean mFirstLoad = true;
     private Handler handler = new Handler();
     private Runnable fetchNewMessagesRunnable = new Runnable() {
         @Override
@@ -61,7 +61,6 @@ public class MessagingActivity extends AppCompatActivity {
             initMessageAdapter();
         }
     };
-    private boolean initAdapter = handler.post(initMessageAdapter);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +76,7 @@ public class MessagingActivity extends AppCompatActivity {
         btSend = (ImageButton) findViewById(R.id.btSend);
         applicationContext = getApplicationContext();
         getWindow().setBackgroundDrawable(null);
+        handler.post(initMessageAdapter);
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,9 +123,9 @@ public class MessagingActivity extends AppCompatActivity {
         messages = new ArrayList<>();
         // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen. Don't scroll to the bottom otherwise.
         lvChat.setTranscriptMode(1);
-        mFirstLoad = true;
         mAdapter = new MessageListAdapter(MessagingActivity.this, userName, messages);
         lvChat.setAdapter(mAdapter);
+        mFirstLoad = true;
     }
 
     // Query messages from Parse so we can load them into the chat adapter
@@ -144,8 +144,8 @@ public class MessagingActivity extends AppCompatActivity {
                 mAdapter.notifyDataSetChanged(); // update adapter
                 // Scroll to the bottom of the list on initial load
                 if (mFirstLoad) {
-                    lvChat.setSelection(mAdapter.getCount() - 1);
                     mFirstLoad = false;
+                    lvChat.setSelection(mAdapter.getCount() - 1);
                 }
             }
         }
