@@ -10,14 +10,13 @@
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:contentDescription="@string/description_other_profile_image"
-        android:visibility="invisible" />
+        android:src="@drawable/ic_launcher" />
 
     <RelativeLayout
         android:id="@+id/sender_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:visibility="invisible">
+        android:background="@android:color/transparent">
 
         <TextView
             android:id="@+id/sender_username"
@@ -32,32 +31,9 @@
             android:paddingLeft="5dp"
             android:paddingStart="5dp"
             android:singleLine="false"
+            android:text="@string/lorem_username"
             android:textSize="12sp"
             android:textStyle="bold" />
-
-        <com.jaysyko.wrestlechat.customTextView.AutoResizeTextView
-            android:id="@+id/sender_message_body"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/sender_username"
-            android:background="@drawable/bubble_left_brown"
-            android:gravity="start"
-            android:textColor="#ffffff"
-            android:textColorLink="#303f9f"
-            android:textIsSelectable="true"
-            android:textSize="14sp"
-            android:visibility="gone" />
-
-        <ImageView
-            android:id="@+id/image_message_sender"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_below="@+id/sender_username"
-            android:contentDescription="@string/app_name"
-            android:paddingLeft="5dp"
-            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -68,32 +44,13 @@
         android:layout_weight="1.00"
         android:background="@android:color/transparent">
 
-        <com.jaysyko.wrestlechat.customTextView.AutoResizeTextView
-            android:id="@+id/my_message_body"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/bubble_white"
-            android:gravity="start"
-            android:textSize="14sp"
-            android:visibility="gone" />
-
-        <ImageView
-            android:id="@+id/image_message_user"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_alignParentTop="true"
-            android:contentDescription="@string/app_name"
-            android:visibility="gone" />
-
     </RelativeLayout>
 
     <com.jaysyko.wrestlechat.customImageView.RoundedImageView
         android:id="@+id/ivProfileRight"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:contentDescription="@string/description_my_profile_image" />
+        android:contentDescription="@string/description_my_profile_image"
+        android:src="@drawable/ic_launcher" />
 
 </LinearLayout>
