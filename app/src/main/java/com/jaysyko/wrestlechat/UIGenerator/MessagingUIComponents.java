@@ -16,7 +16,8 @@ import com.jaysyko.wrestlechat.utils.ImageTools;
 
 public class MessagingUIComponents implements UIGenerator {
 
-    private static final int TEXT_SIZE = 14;
+    private static final int TEXT_SIZE = 14, IMAGE_MSG_WIDTH = 1000, IMAGE_MSG_HEIGHT = 1000, IMAGE_MSG_PADDING_LEFT = 50, ZERO = 0;
+    private static final String WHITE = "#FFFFFF";
     private Context context;
     private MessagingUIPosition position;
     private Message message;
@@ -47,9 +48,9 @@ public class MessagingUIComponents implements UIGenerator {
                 } else {
                     lp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                 }
-                lp.addRule(RelativeLayout.BELOW, R.id.sender_username);
+                lp.addRule(RelativeLayout.BELOW, R.id.senderUsernameID);
                 textView.setBackgroundResource(R.drawable.bubble_left_brown);
-                textView.setTextColor(Color.parseColor("#FFFFFF"));
+                textView.setTextColor(Color.parseColor(WHITE));
                 break;
         }
         textView.setGravity(Gravity.START);
@@ -65,13 +66,14 @@ public class MessagingUIComponents implements UIGenerator {
      */
     private ImageView imageMessage() {
         ImageView imgMsg = new ImageView(this.context);
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(250, 250);
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(IMAGE_MSG_WIDTH, IMAGE_MSG_HEIGHT);
         switch (this.position) {
             case USER:
                 lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
                 break;
             case SENDER:
-                imgMsg.setPadding(5, 0, 0, 0);
+                imgMsg.setPadding(IMAGE_MSG_PADDING_LEFT, ZERO, ZERO, ZERO);
+                lp.addRule(RelativeLayout.BELOW, R.id.senderUsernameID);
                 break;
         }
         imgMsg.setLayoutParams(lp);
@@ -80,6 +82,11 @@ public class MessagingUIComponents implements UIGenerator {
         return imgMsg;
     }
 
+    /**
+     * @param position MessagingUIPosition
+     * @param message Message
+     * @return View
+     */
     public View generateView(MessagingUIPosition position, Message message) {
         this.position = position;
         this.message = message;

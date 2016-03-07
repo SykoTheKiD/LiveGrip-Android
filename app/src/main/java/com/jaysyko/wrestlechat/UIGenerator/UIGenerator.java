@@ -6,6 +6,8 @@ import com.jaysyko.wrestlechat.models.Message;
 
 /**
  * MessageUIGenerator.java
+ * Interface to generate views (UI Components)
+ * @author Jay Syko
  */
 public interface UIGenerator {
 

@@ -1,14 +1,18 @@
 package com.jaysyko.wrestlechat.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.UIGenerator.MessagingUIComponents;
@@ -27,12 +31,14 @@ import java.util.List;
  * @author Jay Syko
  */
 public class MessageListAdapter extends ArrayAdapter<Message> {
+    private static final int USERNAME_PADDING_LEFT = 50;
+    private static final int ZERO = 0;
     private Handler handler = new Handler();
     private String mUserId;
     private Context context = getContext();
-    private final UIGenerator generator = new MessagingUIComponents(context);
+    private final UIGenerator uiComponents = new MessagingUIComponents(context);
     public MessageListAdapter(Context context, String userId, List<Message> messages) {
-        super(context, 0, messages);
+        super(context, ZERO, messages);
         this.mUserId = userId;
     }
 
@@ -106,14 +112,13 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         RelativeLayout senderContainer = holder.sender;
         holder.imageLeft.setVisibility(View.VISIBLE);
         holder.sender.setVisibility(View.VISIBLE);
-
         holder.imageRight.setVisibility(View.GONE);
         holder.user.setVisibility(View.GONE);
-
-//        TextView usernameTV = (TextView) senderContainer.findViewById(R.id.sender_username);
-//        usernameTV.setText(message.getUsername());
-        View view = generator.generateView(MessagingUIPosition.SENDER, message);
+        TextView usernameTV = generateUsername();
+        usernameTV.setText(message.getUsername());
+        View view = uiComponents.generateView(MessagingUIPosition.SENDER, message);
         senderContainer.removeAllViews();
+        senderContainer.addView(usernameTV);
         senderContainer.addView(view);
     }
 
@@ -123,7 +128,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
      * @param message String
      */
     private void setUserView(MessageViewHolder holder, Message message) {
-        View view = generator.generateView(MessagingUIPosition.USER, message);
+        View view = uiComponents.generateView(MessagingUIPosition.USER, message);
         RelativeLayout userContainer = holder.user;
         userContainer.removeAllViews();
         holder.imageRight.setVisibility(View.VISIBLE);
@@ -134,4 +139,28 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
 
         userContainer.addView(view);
     }
+
+    /**
+     * 
+     * @return TextView
+     */
+    private TextView generateUsername() {
+        TextView username = new TextView(context);
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            lp.addRule(RelativeLayout.ALIGN_PARENT_START);
+        } else {
+            lp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        }
+        lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        username.setLayoutParams(lp);
+        username.setGravity(Gravity.START);
+        username.setMaxLines(1);
+        username.setTextSize(12);
+        username.setTypeface(null, Typeface.BOLD);
+        username.setId(R.id.senderUsernameID);
+        username.setPadding(USERNAME_PADDING_LEFT, ZERO, ZERO, ZERO);
+        return username;
+    }
+
 }

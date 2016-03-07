@@ -2,4 +2,5 @@
 <resources>
     <item name="textMessageID" type="id">1</item>
     <item name="imageMessageID" type="id">2</item>
+    <item name="senderUsernameID" type="id">3</item>
 </resources>
