@@ -104,8 +104,6 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
     }
 
     /**
-     *
-     *
      * Constructs the sender's side of the message
      * @param message Message
      * @param holder MessageViewHolder
@@ -143,6 +141,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
     }
 
     /**
+     * 
      * @return TextView
      */
     private TextView generateUsername() {

@@ -27,13 +27,13 @@ public class EventListActivity extends AppCompatActivity{
     NavigationView mNavigationView;
     FragmentManager mFragmentManager;
     FragmentTransaction mFragmentTransaction;
-    Context applicationContext;
+    Context mApplicationContext;
     Handler handler = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_list);
-        applicationContext = getApplicationContext();
+        mApplicationContext = getApplicationContext();
         /**
          *Setup the DrawerLayout and NavigationView
          */
@@ -71,23 +71,23 @@ public class EventListActivity extends AppCompatActivity{
 
                 int itemId = menuItem.getItemId();
                 if (itemId == R.id.nav_my_profile) {
-                    Intent intent = new Intent(applicationContext, UserProfileActivity.class);
+                    Intent intent = new Intent(mApplicationContext, UserProfileActivity.class);
                     startActivity(intent);
                  }
 
                 if (itemId == R.id.nav_logout) {
-                    if (NetworkState.isConnected(applicationContext)) {
+                    if (NetworkState.isConnected(mApplicationContext)) {
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
                                 CurrentActiveUser.getInstance().logout();
-                                Intent intent = new Intent(applicationContext, LoginActivity.class);
+                                Intent intent = new Intent(mApplicationContext, LoginActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
                         });
                     } else {
-                        Dialog.makeToast(applicationContext, getString(R.string.no_network));
+                        Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
                     }
                 }
 
@@ -98,11 +98,11 @@ public class EventListActivity extends AppCompatActivity{
                     startActivity(Intent.createChooser(share, getString(R.string.app_share_title)));
                 }
                 if (itemId == R.id.nav_about) {
-                    Intent aboutIntent = new Intent(applicationContext, AboutActivity.class);
+                    Intent aboutIntent = new Intent(mApplicationContext, AboutActivity.class);
                     startActivity(aboutIntent);
                 }
                 if (itemId == R.id.nav_legal) {
-                    Intent legalIntent = new Intent(applicationContext, LegalActivity.class);
+                    Intent legalIntent = new Intent(mApplicationContext, LegalActivity.class);
                     startActivity(legalIntent);
                 }
                  return false;
@@ -114,10 +114,9 @@ public class EventListActivity extends AppCompatActivity{
          * Setup Drawer Toggle of the Toolbar
          */
 
-                android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name,
-                R.string.app_name);
-                mDrawerLayout.addDrawerListener(mDrawerToggle);
-                mDrawerToggle.syncState();
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
     }
 }

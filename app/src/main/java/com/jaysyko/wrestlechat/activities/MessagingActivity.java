@@ -125,6 +125,7 @@ public class MessagingActivity extends AppCompatActivity {
         lvChat.setTranscriptMode(1);
         mAdapter = new MessageListAdapter(MessagingActivity.this, userName, messages);
         lvChat.setAdapter(mAdapter);
+        mFirstLoad = true;
     }
 
     // Query messages from Parse so we can load them into the chat adapter
@@ -143,8 +144,8 @@ public class MessagingActivity extends AppCompatActivity {
                 mAdapter.notifyDataSetChanged(); // update adapter
                 // Scroll to the bottom of the list on initial load
                 if (mFirstLoad) {
-                    lvChat.setSelection(mAdapter.getCount() - 1);
                     mFirstLoad = false;
+                    lvChat.setSelection(mAdapter.getCount() - 1);
                 }
             }
         }
