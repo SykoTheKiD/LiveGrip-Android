@@ -30,8 +30,7 @@
         android:dividerHeight="20dp"
         android:padding="15dp"
         android:scrollbars="none"
-        android:scrollingCache="true"
-        android:smoothScrollbar="true" />
+        android:scrollingCache="true" />
 
     <RelativeLayout
         android:id="@+id/llSend"
