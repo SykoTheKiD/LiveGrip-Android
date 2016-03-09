@@ -4,16 +4,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.date.LiveStatus;
-import com.jaysyko.wrestlechat.utils.Keys;
+import com.jaysyko.wrestlechat.adapters.TabAdapter;
 
 public class TabFragment extends Fragment {
 
@@ -27,14 +24,14 @@ public class TabFragment extends Fragment {
         /**
          *Inflate tab_layout and setup Views.
          */
-        View x = inflater.inflate(R.layout.tab_layout, null);
-        tabLayout = (TabLayout) x.findViewById(R.id.tabs);
-        viewPager = (ViewPager) x.findViewById(R.id.viewpager);
+        View view = inflater.inflate(R.layout.tab_layout, null);
+        tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        viewPager = (ViewPager) view.findViewById(R.id.viewpager);
 
         /**
          *Set an Adapter for the View Pager
          */
-        viewPager.setAdapter(new MyAdapter(getChildFragmentManager()));
+        viewPager.setAdapter(new TabAdapter(getChildFragmentManager(), getContext()));
 
         /**
          * Now , this is a workaround ,
@@ -49,59 +46,8 @@ public class TabFragment extends Fragment {
             }
         });
 
-        return x;
+        return view;
 
-    }
-
-    class MyAdapter extends FragmentPagerAdapter {
-
-        public MyAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        /**
-         * Return fragment with respect to Position .
-         */
-
-        @Override
-        public Fragment getItem(int position) {
-            TabContentFragment fragment = new TabContentFragment();
-            Bundle args = new Bundle();
-            if (position == 0) {
-                args.putInt(Keys.STATE_KEY, LiveStatus.EVENT_STARTED);
-            } else if (position == 1) {
-                args.putInt(Keys.STATE_KEY, LiveStatus.EVENT_NOT_STARTED);
-            } else if (position == 2) {
-                args.putInt(Keys.STATE_KEY, LiveStatus.EVENT_OVER);
-            }
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public int getCount() {
-
-            return int_items;
-
-        }
-
-        /**
-         * This method returns the title of the tab according to the position.
-         */
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-
-            switch (position) {
-                case 0:
-                    return getString(R.string.tab_title_live);
-                case 1:
-                    return getString(R.string.tab_title_upcoming);
-                case 2:
-                    return getString(R.string.tab_title_replay);
-            }
-            return null;
-        }
     }
 
 }

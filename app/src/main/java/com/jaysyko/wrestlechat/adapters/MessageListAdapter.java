@@ -15,9 +15,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.UIGenerator.MessagingUIComponents;
-import com.jaysyko.wrestlechat.UIGenerator.MessagingUIPosition;
-import com.jaysyko.wrestlechat.UIGenerator.UIGenerator;
+import com.jaysyko.wrestlechat.messageGenerator.MessageType;
+import com.jaysyko.wrestlechat.messageGenerator.MessagePosition;
+import com.jaysyko.wrestlechat.messageGenerator.MessageGenerator;
 import com.jaysyko.wrestlechat.adapters.viewholders.MessageViewHolder;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.utils.ImageTools;
@@ -36,7 +36,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
     private Handler handler = new Handler();
     private String mUserId;
     private Context context = getContext();
-    private final UIGenerator uiComponents = new MessagingUIComponents(context);
+    private final MessageGenerator uiComponents = new MessageType(context);
     public MessageListAdapter(Context context, String userId, List<Message> messages) {
         super(context, ZERO, messages);
         this.mUserId = userId;
@@ -116,7 +116,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         holder.user.setVisibility(View.GONE);
         TextView usernameTV = generateUsername();
         usernameTV.setText(message.getUsername());
-        View view = uiComponents.generateView(MessagingUIPosition.SENDER, message);
+        View view = uiComponents.generateView(MessagePosition.SENDER, message);
         senderContainer.removeAllViews();
         senderContainer.addView(usernameTV);
         senderContainer.addView(view);
@@ -128,7 +128,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
      * @param message String
      */
     private void setUserView(MessageViewHolder holder, Message message) {
-        View view = uiComponents.generateView(MessagingUIPosition.USER, message);
+        View view = uiComponents.generateView(MessagePosition.USER, message);
         RelativeLayout userContainer = holder.user;
         userContainer.removeAllViews();
         holder.imageRight.setVisibility(View.VISIBLE);

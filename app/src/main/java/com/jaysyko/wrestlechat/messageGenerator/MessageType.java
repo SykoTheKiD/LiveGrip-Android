@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat.UIGenerator;
+package com.jaysyko.wrestlechat.messageGenerator;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -14,15 +14,15 @@ import com.jaysyko.wrestlechat.customTextView.AutoResizeTextView;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
-public class MessagingUIComponents implements UIGenerator {
+public class MessageType implements MessageGenerator {
 
     private static final int TEXT_SIZE = 14, IMAGE_MSG_WIDTH = 1000, IMAGE_MSG_HEIGHT = 1000, IMAGE_MSG_PADDING_LEFT = 50, ZERO = 0;
     private static final String WHITE = "#FFFFFF";
     private Context context;
-    private MessagingUIPosition position;
+    private MessagePosition position;
     private Message message;
 
-    public MessagingUIComponents(Context context) {
+    public MessageType(Context context) {
         this.context = context;
     }
 
@@ -87,7 +87,7 @@ public class MessagingUIComponents implements UIGenerator {
      * @param message Message
      * @return View
      */
-    public View generateView(MessagingUIPosition position, Message message) {
+    public View generateView(MessagePosition position, Message message) {
         this.position = position;
         this.message = message;
         if (ImageTools.isLinkToImage(this.message.getBody())) {
