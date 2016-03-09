@@ -163,4 +163,7 @@
     <string name="password_changed_relogin">Password changed please re-login</string>
     <string name="error_has_occured">An error has occurred no changes made</string>
     <string name="manage_profile">Manage Profile</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
