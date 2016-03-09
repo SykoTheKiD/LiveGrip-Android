@@ -1,109 +1,97 @@
 package com.jaysyko.wrestlechat.fragments;
 
 import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
+import com.jaysyko.wrestlechat.ads.AdBuilder;
+import com.jaysyko.wrestlechat.date.DateVerifier;
+import com.jaysyko.wrestlechat.utils.ImageTools;
+import com.jaysyko.wrestlechat.utils.StringResources;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link EventInfoFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link EventInfoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class EventInfoFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
-    public EventInfoFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment EventInfoFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static EventInfoFragment newInstance(String param1, String param2) {
-        EventInfoFragment fragment = new EventInfoFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private static final String LINE_SEPARATOR = "line.separator";
+    private final CurrentActiveEvent currentActiveEvent = CurrentActiveEvent.getInstance();
+    private String eventName, eventInfo, matchCardText, location, imageLink;
+    private long startTime;
+    private Handler handler = new Handler();
+    private View view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_event_info, container, false);
+        view = inflater.inflate(R.layout.fragment_event_info, container, false);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        final FragmentActivity activity = getActivity();
+        ((AppCompatActivity) activity).setSupportActionBar(toolbar);
+        eventName = CurrentActiveEvent.getInstance().getEventName();
+        activity.setTitle(StringResources.NULL_TEXT);
+        eventInfo = currentActiveEvent.getEventInfo();
+        imageLink = currentActiveEvent.getEventImage();
+        matchCardText = currentActiveEvent.getMatchCard();
+        startTime = currentActiveEvent.getEventStartTime();
+        location = currentActiveEvent.getEventLocation();
+        prepareEventInfoContent(getContext());
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType(StringResources.PLAIN_CONTENT_TYPE);
+                share.putExtra(Intent.EXTRA_TEXT, getShareMessage(eventName));
+                startActivity(Intent.createChooser(share, getString(R.string.app_share_title)));
+            }
+        });
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                new AdBuilder(activity).buildAd();
+            }
+        });
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    @NonNull
+    private String getShareMessage(String eventName) {
+        return getString(R.string.hey_check_out).concat(StringResources.BLANK_SPACE).concat(eventName).concat(getString(R.string.sent_from_wrestlechat));
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+    private void prepareEventInfoContent(Context context) {
+        TextView eventTitle = (TextView) view.findViewById(R.id.event_title);
+        eventTitle.setText(eventName);
+        TextView eventDescription = (TextView) view.findViewById(R.id.event_info_description);
+        eventDescription.setText(eventInfo);
+        TextView matchCard = (TextView) view.findViewById(R.id.event_info_match_card);
+        matchCardText = matchCardText.replace("\\n", System.getProperty(LINE_SEPARATOR));
+        matchCard.setText(matchCardText);
+        TextView startTimeTV = (TextView) view.findViewById(R.id.event_info_start_time);
+        startTimeTV.setText(DateVerifier.format(startTime));
+        TextView locationTV = (TextView) view.findViewById(R.id.event_info_location);
+        locationTV.setText(location);
+        ImageView eventImage = (ImageView) view.findViewById(R.id.event_info_photo);
+        ImageTools.loadImage(context, StringResources.IMGUR_LINK.concat(imageLink), eventImage);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }
