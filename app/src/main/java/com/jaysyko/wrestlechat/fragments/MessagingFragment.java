@@ -4,9 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,12 +63,7 @@ public class MessagingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_chat, container, false);
-        String eventName = CurrentActiveEvent.getInstance().getEventName();
-        FragmentActivity activity = getActivity();
-        activity.setTitle(eventName);
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
-        ((AppCompatActivity) activity).setSupportActionBar(toolbar);
+        view = inflater.inflate(R.layout.fragment_messaging, container, false);
         sEventId = CurrentActiveEvent.getInstance().getEventID();
         CurrentActiveUser currentUser = CurrentActiveUser.getInstance();
         userName = currentUser.getUsername();
