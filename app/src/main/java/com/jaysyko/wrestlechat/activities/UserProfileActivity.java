@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.fragments.EventInfoFragment;
+import com.jaysyko.wrestlechat.fragments.UserProfileFragment;
 
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -17,7 +17,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         FragmentManager mFragmentManager = getSupportFragmentManager();
         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.containerView, new EventInfoFragment()).commit();
+        mFragmentTransaction.replace(R.id.containerView, new UserProfileFragment()).commit();
 
     }
 
