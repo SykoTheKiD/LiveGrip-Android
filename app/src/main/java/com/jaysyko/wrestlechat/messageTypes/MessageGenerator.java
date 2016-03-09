@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat.messageGenerator;
+package com.jaysyko.wrestlechat.messageTypes;
 
 import android.view.View;
 

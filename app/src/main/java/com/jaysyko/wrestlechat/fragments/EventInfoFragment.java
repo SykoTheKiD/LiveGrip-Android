@@ -1,13 +1,13 @@
 package com.jaysyko.wrestlechat.fragments;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -26,6 +26,7 @@ import com.jaysyko.wrestlechat.utils.StringResources;
 public class EventInfoFragment extends Fragment {
 
     private static final String LINE_SEPARATOR = "line.separator";
+    private static final String NEW_LINE = "\\n";
     private final CurrentActiveEvent currentActiveEvent = CurrentActiveEvent.getInstance();
     private String eventName, eventInfo, matchCardText, location, imageLink;
     private long startTime;
@@ -43,7 +44,7 @@ public class EventInfoFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_event_info, container, false);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        final FragmentActivity activity = getActivity();
+        final Activity activity = getActivity();
         ((AppCompatActivity) activity).setSupportActionBar(toolbar);
         eventName = CurrentActiveEvent.getInstance().getEventName();
         activity.setTitle(StringResources.NULL_TEXT);
@@ -52,7 +53,7 @@ public class EventInfoFragment extends Fragment {
         matchCardText = currentActiveEvent.getMatchCard();
         startTime = currentActiveEvent.getEventStartTime();
         location = currentActiveEvent.getEventLocation();
-        prepareEventInfoContent(getContext());
+        prepareEventInfoContent(activity);
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +85,7 @@ public class EventInfoFragment extends Fragment {
         TextView eventDescription = (TextView) view.findViewById(R.id.event_info_description);
         eventDescription.setText(eventInfo);
         TextView matchCard = (TextView) view.findViewById(R.id.event_info_match_card);
-        matchCardText = matchCardText.replace("\\n", System.getProperty(LINE_SEPARATOR));
+        matchCardText = matchCardText.replace(NEW_LINE, System.getProperty(LINE_SEPARATOR));
         matchCard.setText(matchCardText);
         TextView startTimeTV = (TextView) view.findViewById(R.id.event_info_start_time);
         startTimeTV.setText(DateVerifier.format(startTime));
