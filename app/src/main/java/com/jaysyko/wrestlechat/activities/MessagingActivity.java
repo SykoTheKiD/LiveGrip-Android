@@ -1,32 +1,26 @@
 package com.jaysyko.wrestlechat.activities;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.fragments.MessagingFragment;
 
-public class MessagingActivity extends AppCompatActivity {
+public class MessagingActivity extends BaseActivity {
 
+    @Override
+    protected Fragment createFragment() {
+        return new MessagingFragment();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messaging);
-        String eventName = CurrentActiveEvent.getInstance().getEventName();
-        setTitle(eventName);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(toolbar);
-        FragmentTransaction mFragmentTransaction = getSupportFragmentManager().beginTransaction();
-        mFragmentTransaction.replace(R.id.container_view, new MessagingFragment()).commit();
-
     }
 
     @Override
