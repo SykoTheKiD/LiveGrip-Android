@@ -104,7 +104,10 @@
         <activity
             android:name=".activities.EventListActivity"
             android:theme="@style/NoActionBar" />
-        <activity android:name=".activities.BaseActivity"></activity>
+
+        <service
+            android:name=".services.MessagingService"
+            android:exported="false" />
     </application>
 
 </manifest>

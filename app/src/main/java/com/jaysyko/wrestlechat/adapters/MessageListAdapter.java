@@ -15,9 +15,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.messageGenerator.MessageType;
-import com.jaysyko.wrestlechat.messageGenerator.MessagePosition;
-import com.jaysyko.wrestlechat.messageGenerator.MessageGenerator;
+import com.jaysyko.wrestlechat.messageTypes.MessageType;
+import com.jaysyko.wrestlechat.messageTypes.MessagePosition;
+import com.jaysyko.wrestlechat.messageTypes.MessageGenerator;
 import com.jaysyko.wrestlechat.adapters.viewholders.MessageViewHolder;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.utils.ImageTools;
