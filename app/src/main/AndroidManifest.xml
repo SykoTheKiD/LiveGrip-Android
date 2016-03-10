@@ -104,6 +104,7 @@
         <activity
             android:name=".activities.EventListActivity"
             android:theme="@style/NoActionBar" />
+        <activity android:name=".activities.BaseActivity"></activity>
     </application>
 
 </manifest>

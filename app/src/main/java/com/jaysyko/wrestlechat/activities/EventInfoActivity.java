@@ -17,6 +17,6 @@ public class EventInfoActivity extends AppCompatActivity {
 
         FragmentManager mFragmentManager = getSupportFragmentManager();
         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.containerView, new EventInfoFragment()).commit();
+        mFragmentTransaction.replace(R.id.container_view, new EventInfoFragment()).commit();
     }
 }

@@ -17,7 +17,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         FragmentManager mFragmentManager = getSupportFragmentManager();
         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.containerView, new UserProfileFragment()).commit();
+        mFragmentTransaction.replace(R.id.container_view, new UserProfileFragment()).commit();
 
     }
 

@@ -26,6 +26,7 @@ import com.jaysyko.wrestlechat.utils.StringResources;
 public class EventInfoFragment extends Fragment {
 
     private static final String LINE_SEPARATOR = "line.separator";
+    private static final String NEW_LINE = "\\n";
     private final CurrentActiveEvent currentActiveEvent = CurrentActiveEvent.getInstance();
     private String eventName, eventInfo, matchCardText, location, imageLink;
     private long startTime;
@@ -84,7 +85,7 @@ public class EventInfoFragment extends Fragment {
         TextView eventDescription = (TextView) view.findViewById(R.id.event_info_description);
         eventDescription.setText(eventInfo);
         TextView matchCard = (TextView) view.findViewById(R.id.event_info_match_card);
-        matchCardText = matchCardText.replace("\\n", System.getProperty(LINE_SEPARATOR));
+        matchCardText = matchCardText.replace(NEW_LINE, System.getProperty(LINE_SEPARATOR));
         matchCard.setText(matchCardText);
         TextView startTimeTV = (TextView) view.findViewById(R.id.event_info_start_time);
         startTimeTV.setText(DateVerifier.format(startTime));
