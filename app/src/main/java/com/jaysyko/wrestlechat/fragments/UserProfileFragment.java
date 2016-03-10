@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +46,7 @@ public class UserProfileFragment extends Fragment {
         username = (EditText) view.findViewById(R.id.usernameChange);
         currentActiveUser = CurrentActiveUser.getInstance();
         username.setText(currentActiveUser.getUsername());
-        applicationContext = getContext();
+        applicationContext = getActivity();
         newPassword = (EditText) view.findViewById(R.id.newPassword);
         profilePicture = (ImageView) view.findViewById(R.id.profilePicture);
         ImageTools.loadImage(applicationContext, currentActiveUser.getCustomProfileImageURL(), profilePicture);

@@ -3,7 +3,7 @@ package com.jaysyko.wrestlechat.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -72,13 +72,13 @@ public class MessagingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_messaging, container, false);
+        applicationContext = getActivity();
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) applicationContext).setSupportActionBar(toolbar);
         sEventId = CurrentActiveEvent.getInstance().getEventID();
         CurrentActiveUser currentUser = CurrentActiveUser.getInstance();
         userName = currentUser.getUsername();
         btSend = (ImageButton) view.findViewById(R.id.btSend);
-        applicationContext = getContext();
         handler.post(initMessageAdapter);
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
