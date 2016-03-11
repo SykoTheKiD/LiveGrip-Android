@@ -26,6 +26,7 @@ import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formValidators.MessageValidator;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.network.NetworkState;
+import com.jaysyko.wrestlechat.services.LocalMessageBinder;
 import com.jaysyko.wrestlechat.services.MessagingService;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
@@ -54,7 +55,7 @@ public class MessagingFragment extends Fragment {
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            MessagingService.LocalMessageBinder binder = (MessagingService.LocalMessageBinder) service;
+            LocalMessageBinder binder = (LocalMessageBinder) service;
             messagingService = binder.getService();
             mServiceBound = true;
         }
