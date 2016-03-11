@@ -10,7 +10,7 @@ import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.date.LiveStatus;
 import com.jaysyko.wrestlechat.fragments.TabContentFragment;
 import com.jaysyko.wrestlechat.fragments.TabFragment;
-import com.jaysyko.wrestlechat.utils.Keys;
+import com.jaysyko.wrestlechat.utils.BundleKeys;
 
 /**
  * Created by jarushaan on 2016-03-09.
@@ -33,11 +33,11 @@ public class TabAdapter extends FragmentPagerAdapter {
         TabContentFragment fragment = new TabContentFragment();
         Bundle args = new Bundle();
         if (position == 0) {
-            args.putInt(Keys.STATE_KEY, LiveStatus.EVENT_STARTED);
+            args.putInt(BundleKeys.STATE_KEY, LiveStatus.EVENT_STARTED);
         } else if (position == 1) {
-            args.putInt(Keys.STATE_KEY, LiveStatus.EVENT_NOT_STARTED);
+            args.putInt(BundleKeys.STATE_KEY, LiveStatus.EVENT_NOT_STARTED);
         } else if (position == 2) {
-            args.putInt(Keys.STATE_KEY, LiveStatus.EVENT_OVER);
+            args.putInt(BundleKeys.STATE_KEY, LiveStatus.EVENT_OVER);
         }
         fragment.setArguments(args);
         return fragment;

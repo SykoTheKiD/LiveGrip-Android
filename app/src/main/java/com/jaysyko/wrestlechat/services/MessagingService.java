@@ -7,11 +7,12 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
+import com.jaysyko.wrestlechat.db.QueryResult;
 import com.jaysyko.wrestlechat.fragments.MessagingFragment;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.network.NetworkState;
-import com.jaysyko.wrestlechat.query.Query;
+import com.jaysyko.wrestlechat.db.Query;
 
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +23,7 @@ import static com.jaysyko.wrestlechat.db.BackEnd.queryDB;
  * Created by jarushaan on 2016-03-09
  */
 public class MessagingService extends Service {
-    public static final String CLASS_NAME = MessagingService.class.getSimpleName();
+    //    public static final String CLASS_NAME = MessagingService.class.getSimpleName();
     private static final int FETCH_MSG_DELAY_MILLIS = 1000, MAX_CHAT_MESSAGES_TO_SHOW = 50;
     private final IBinder mBinder = new LocalMessageBinder(this);
     private Handler handler = new Handler();
@@ -33,19 +34,24 @@ public class MessagingService extends Service {
             handler.postDelayed(this, FETCH_MSG_DELAY_MILLIS);
         }
     };
-    private Intent intent;
+//    private Intent intent;
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        handler.post(fetchMessageRunnable);
         return mBinder;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        intent = new Intent(CLASS_NAME);
+//        intent = new Intent(CLASS_NAME);
+    }
+
+    @Override
+    public boolean onUnbind(Intent intent) {
+        handler.removeCallbacks(fetchMessageRunnable);
+        return false;
     }
 
     @SuppressWarnings("unchecked")
@@ -56,10 +62,11 @@ public class MessagingService extends Service {
             query.whereEqualTo(Events.ID, sEventId);
             query.orderByDESC(Message.CREATED_AT);
             query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-            List messages = queryDB(query, Message.class.getSimpleName());
-            if (messages != null) {
-                Collections.reverse(messages);
-                MessagingFragment.update(messages);
+            QueryResult messages = queryDB(query, Message.class.getSimpleName());
+            List messageList = messages != null ? messages.getResults() : null;
+            if (messageList != null) {
+                Collections.reverse(messageList);
+                MessagingFragment.update(messageList);
 //                MessageListWrapper wrappedMessages = new MessageListWrapper(messages);
 //                intent.putExtra("MSG", wrappedMessages);
 //                sendBroadcast(intent);

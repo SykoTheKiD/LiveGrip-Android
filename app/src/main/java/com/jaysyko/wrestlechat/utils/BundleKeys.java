@@ -6,6 +6,6 @@ package com.jaysyko.wrestlechat.utils;
  *
  * @author Jay Syko
  */
-public class Keys {
+public class BundleKeys {
     public static final String STATE_KEY = "state";
 }
