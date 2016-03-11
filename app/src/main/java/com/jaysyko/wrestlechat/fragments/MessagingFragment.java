@@ -147,6 +147,14 @@ public class MessagingFragment extends Fragment {
         lvChat.setAdapter(mAdapter);
     }
 
+    private void stopMessagingService() {
+        if (mServiceBound) {
+            getActivity().stopService(intent);
+            getActivity().unbindService(mServiceConnection);
+            mServiceBound = false;
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -160,7 +168,7 @@ public class MessagingFragment extends Fragment {
     public void onPause() {
         super.onPause();
 //        getActivity().unregisterReceiver(broadcastReceiver);
-        getActivity().stopService(intent);
+        stopMessagingService();
     }
 
     @Override
@@ -168,14 +176,5 @@ public class MessagingFragment extends Fragment {
         super.onStart();
         Intent intent = new Intent(getActivity(), MessagingService.class);
         getActivity().bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mServiceBound) {
-            getActivity().unbindService(mServiceConnection);
-            mServiceBound = false;
-        }
     }
 }
