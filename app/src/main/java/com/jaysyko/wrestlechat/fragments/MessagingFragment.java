@@ -30,10 +30,13 @@ import com.jaysyko.wrestlechat.services.MessagingService;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MessagingFragment extends Fragment {
 
     private static final int SEND_DELAY = 1500;
+    private static ArrayList<Message> messages = new ArrayList<>();
+    private static MessageListAdapter mAdapter;
     private String userName, sEventId;
     private EditText etMessage;
     private ImageButton btSend;
@@ -42,7 +45,6 @@ public class MessagingFragment extends Fragment {
     private Handler handler = new Handler();
     private MessagingService messagingService;
     private boolean mServiceBound = false;
-    private ArrayList<Message> messages = new ArrayList<>();
     private Runnable initMessageAdapter = new Runnable() {
         @Override
         public void run() {
@@ -62,6 +64,13 @@ public class MessagingFragment extends Fragment {
             mServiceBound = false;
         }
     };
+
+    @SuppressWarnings("unchecked")
+    public static void update(List newMessages) {
+        messages.clear();
+        messages.addAll(newMessages);
+        mAdapter.notifyDataSetChanged();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -126,7 +135,7 @@ public class MessagingFragment extends Fragment {
         ListView lvChat = (ListView) view.findViewById(R.id.lvChat);
         // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen. Don't scroll to the bottom otherwise.
         lvChat.setTranscriptMode(1);
-        MessageListAdapter mAdapter = new MessageListAdapter(applicationContext, userName, messages);
+        mAdapter = new MessageListAdapter(applicationContext, userName, messages);
         lvChat.setAdapter(mAdapter);
     }
 

@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
+import com.jaysyko.wrestlechat.fragments.MessagingFragment;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.network.NetworkState;
@@ -44,7 +44,7 @@ public class MessagingService extends Service {
             List messages = queryDB(query, Message.class.getSimpleName());
             if (messages != null) {
                 Collections.reverse(messages);
-                Log.e("SIZE", String.valueOf(messages.size()));
+                MessagingFragment.update(messages);
             }
         }
     }
