@@ -1,10 +1,13 @@
 package com.jaysyko.wrestlechat.fragments;
 
 import android.app.Fragment;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -37,11 +40,26 @@ public class MessagingFragment extends Fragment {
     private Context applicationContext;
     private View view;
     private Handler handler = new Handler();
+    private MessagingService messagingService;
+    private boolean mServiceBound = false;
     private ArrayList<Message> messages = new ArrayList<>();
     private Runnable initMessageAdapter = new Runnable() {
         @Override
         public void run() {
             initMessageAdapter();
+        }
+    };
+    private ServiceConnection mServiceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            MessagingService.LocalMessageBinder binder = (MessagingService.LocalMessageBinder) service;
+            messagingService = binder.getService();
+            mServiceBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mServiceBound = false;
         }
     };
 
@@ -119,9 +137,19 @@ public class MessagingFragment extends Fragment {
         applicationContext.startService(intent);
     }
 
-//    public static void updateMessages(List<Message> newMessages){
-//        messages.clear();
-//        messages.addAll(newMessages);
-//        mAdapter.notifyDataSetChanged();
-//    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        Intent intent = new Intent(getActivity(), MessagingService.class);
+        getActivity().bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mServiceBound) {
+            getActivity().unbindService(mServiceConnection);
+            mServiceBound = false;
+        }
+    }
 }
