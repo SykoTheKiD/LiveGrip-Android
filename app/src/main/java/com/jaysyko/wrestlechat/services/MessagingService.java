@@ -39,7 +39,6 @@ public class MessagingService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        handler.post(fetchMessageRunnable);
         return mBinder;
     }
 
