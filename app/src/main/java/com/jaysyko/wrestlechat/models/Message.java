@@ -3,6 +3,8 @@ package com.jaysyko.wrestlechat.models;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+import java.io.Serializable;
+
 /**
  * Message.java
  * Model for a message in the database
@@ -11,7 +13,7 @@ import com.parse.ParseObject;
  */
 
 @ParseClassName(Message.PARSE_MESSAGE_TABLE)
-public class Message extends ParseObject {
+public class Message extends ParseObject implements Serializable {
 
     public static final String PARSE_MESSAGE_TABLE = "Message";
     public static final String USERNAME = "username";
@@ -78,5 +80,9 @@ public class Message extends ParseObject {
      */
     public void setBody(String body) {
         put(MSG_BODY, body);
+    }
+
+    public String toString() {
+        return getUsername();
     }
 }

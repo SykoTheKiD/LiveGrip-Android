@@ -26,7 +26,6 @@ import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formValidators.MessageValidator;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.network.NetworkState;
-import com.jaysyko.wrestlechat.services.LocalMessageBinder;
 import com.jaysyko.wrestlechat.services.MessagingService;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
@@ -44,8 +43,8 @@ public class MessagingFragment extends Fragment {
     private Context applicationContext;
     private View view;
     private Handler handler = new Handler();
-    private MessagingService messagingService;
     private boolean mServiceBound = false;
+    private Intent intent;
     private Runnable initMessageAdapter = new Runnable() {
         @Override
         public void run() {
@@ -55,8 +54,6 @@ public class MessagingFragment extends Fragment {
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            LocalMessageBinder binder = (LocalMessageBinder) service;
-            messagingService = binder.getService();
             mServiceBound = true;
         }
 
@@ -66,8 +63,17 @@ public class MessagingFragment extends Fragment {
         }
     };
 
-    @SuppressWarnings("unchecked")
-    public static void update(List newMessages) {
+//    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            MessageListWrapper newMessages = intent.getParcelableExtra(IntentKeys.NEW_MESSAGE_BROADCAST);
+//            MessagingFragment.this.messages.clear();
+//            MessagingFragment.this.messages.addAll(newMessages.getMessages());
+//            mAdapter.notifyDataSetChanged();
+//        }
+//    };
+
+    public static void update(List<Message> newMessages) {
         messages.clear();
         messages.addAll(newMessages);
         mAdapter.notifyDataSetChanged();
@@ -78,6 +84,7 @@ public class MessagingFragment extends Fragment {
         super.onCreate(savedInstanceState);
         String eventName = CurrentActiveEvent.getInstance().getEventName();
         getActivity().setTitle(eventName);
+        intent = new Intent(getActivity(), MessagingService.class);
     }
 
     @Override
@@ -136,15 +143,24 @@ public class MessagingFragment extends Fragment {
         ListView lvChat = (ListView) view.findViewById(R.id.lvChat);
         // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen. Don't scroll to the bottom otherwise.
         lvChat.setTranscriptMode(1);
-        mAdapter = new MessageListAdapter(applicationContext, userName, messages);
+        mAdapter = new MessageListAdapter(applicationContext, messages);
         lvChat.setAdapter(mAdapter);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Intent intent = new Intent(applicationContext, MessagingService.class);
-        applicationContext.startService(intent);
+        if (!mServiceBound) {
+            applicationContext.startService(intent);
+//            getActivity().registerReceiver(broadcastReceiver, new IntentFilter(MessagingService.CLASS_NAME));
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+//        getActivity().unregisterReceiver(broadcastReceiver);
+        getActivity().stopService(intent);
     }
 
     @Override
