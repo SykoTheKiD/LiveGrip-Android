@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
+import com.jaysyko.wrestlechat.db.QueryResult;
 import com.jaysyko.wrestlechat.fragments.MessagingFragment;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.models.Message;
@@ -56,17 +56,17 @@ public class MessagingService extends Service {
 
     @SuppressWarnings("unchecked")
     private void fetchNewMessages() {
-        Log.e("Y", "FETCHING");
         if (NetworkState.isConnected(getApplicationContext())) {
             Query query = new Query(Message.class);
             String sEventId = CurrentActiveEvent.getInstance().getEventID();
             query.whereEqualTo(Events.ID, sEventId);
             query.orderByDESC(Message.CREATED_AT);
             query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-            List messages = queryDB(query, Message.class.getSimpleName());
-            if (messages != null) {
-                Collections.reverse(messages);
-                MessagingFragment.update(messages);
+            QueryResult messages = queryDB(query, Message.class.getSimpleName());
+            List messageList = messages != null ? messages.getResults() : null;
+            if (messageList != null) {
+                Collections.reverse(messageList);
+                MessagingFragment.update(messageList);
 //                MessageListWrapper wrappedMessages = new MessageListWrapper(messages);
 //                intent.putExtra("MSG", wrappedMessages);
 //                sendBroadcast(intent);
