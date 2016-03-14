@@ -1,9 +1,12 @@
 package com.jaysyko.wrestlechat.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,23 +27,25 @@ import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formValidators.MessageValidator;
+import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.network.NetworkState;
+import com.jaysyko.wrestlechat.services.MessageBinder;
 import com.jaysyko.wrestlechat.services.MessagingService;
+import com.jaysyko.wrestlechat.services.chatStream.ChatStream;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MessagingFragment extends Fragment {
 
     private static final int SEND_DELAY = 1500;
-    private static ArrayList<Message> messages = new ArrayList<>();
-    private static MessageListAdapter mAdapter;
-    private String userName, sEventId;
+    private ArrayList<Message> messages = new ArrayList<>();
+    private MessageListAdapter mAdapter;
+    private String userID, sEventId;
     private EditText etMessage;
     private ImageButton btSend;
-    private Context applicationContext;
+    private Activity mApplicationContext;
     private View view;
     private Handler handler = new Handler();
     private boolean mServiceBound = false;
@@ -51,53 +56,52 @@ public class MessagingFragment extends Fragment {
             initMessageAdapter();
         }
     };
+    private Event mCurrentEvent;
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            messages.clear();
+//            messages.add(messages.size()-1, intent.getStringExtra("MSG"));
+            mAdapter.notifyDataSetChanged();
+        }
+    };
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
+            MessageBinder binder = (MessageBinder) service;
+            MessagingService messagingService = binder.getService();
+            messagingService.getMessageList();
+            mApplicationContext.registerReceiver(broadcastReceiver, new IntentFilter(ChatStream.CLASS_NAME));
             mServiceBound = true;
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
+            mApplicationContext.unregisterReceiver(broadcastReceiver);
             mServiceBound = false;
         }
     };
 
-//    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            MessageListWrapper newMessages = intent.getParcelableExtra(IntentKeys.NEW_MESSAGE_BROADCAST);
-//            MessagingFragment.this.messages.clear();
-//            MessagingFragment.this.messages.addAll(newMessages.getMessages());
-//            mAdapter.notifyDataSetChanged();
-//        }
-//    };
-
-    public static void update(List<Message> newMessages) {
-        messages.clear();
-        messages.addAll(newMessages);
-        mAdapter.notifyDataSetChanged();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String eventName = CurrentActiveEvent.getInstance().getEventName();
-        getActivity().setTitle(eventName);
-        intent = new Intent(getActivity(), MessagingService.class);
+        mCurrentEvent = CurrentActiveEvent.getInstance().getCurrentEvent();
+        String eventName = mCurrentEvent.getEventName();
+        mApplicationContext.setTitle(eventName);
+        intent = new Intent(mApplicationContext, MessagingService.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_messaging, container, false);
-        applicationContext = getActivity();
+        mApplicationContext = getActivity();
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
-        ((AppCompatActivity) applicationContext).setSupportActionBar(toolbar);
-        sEventId = CurrentActiveEvent.getInstance().getEventID();
+        ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
+        sEventId = mCurrentEvent.getEventID();
         CurrentActiveUser currentUser = CurrentActiveUser.getInstance();
-        userName = currentUser.getUsername();
-        btSend = (ImageButton) view.findViewById(R.id.btSend);
+        userID = currentUser.getUserID();
+        btSend = (ImageButton) view.findViewById(R.id.send_button);
         handler.post(initMessageAdapter);
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,30 +110,7 @@ public class MessagingFragment extends Fragment {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        String body = etMessage.getText().toString().trim();
-                        Form form = new MessageValidator(body).validate();
-                        if (NetworkState.isConnected(applicationContext)) {
-                            if (form.isValid()) {
-                                // Use Message model to create new messages now
-                                Message message = new Message();
-                                message.setUsername(userName);
-                                message.setEventId(sEventId);
-                                message.setBody(body);
-                                message.setUserImage(CurrentActiveUser.getInstance().getCustomProfileImageURL());
-                                message.saveInBackground();
-                                etMessage.setText(StringResources.NULL_TEXT);
-                            } else {
-                                Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.getReason())));
-                            }
-                        } else {
-                            Dialog.makeToast(applicationContext, getString(R.string.no_network));
-                        }
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                btSend.setEnabled(true);
-                            }
-                        }, SEND_DELAY);
+                        saveMessage(etMessage.getText().toString().trim());
                     }
                 });
             }
@@ -137,13 +118,38 @@ public class MessagingFragment extends Fragment {
         return view;
     }
 
+    private void saveMessage(String body) {
+        Form form = new MessageValidator(body).validate();
+        if (NetworkState.isConnected(mApplicationContext)) {
+            if (form.isValid()) {
+                // Use Message model to create new messages now
+                Message message = new Message();
+                message.setUserID(userID);
+                message.setEventId(sEventId);
+                message.setBody(body);
+                ChatStream.getInstance().send(message);
+                etMessage.setText(StringResources.NULL_TEXT);
+            } else {
+                Dialog.makeToast(mApplicationContext, getString(Form.getSimpleMessage(form.getReason())));
+            }
+        } else {
+            Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
+        }
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                btSend.setEnabled(true);
+            }
+        }, SEND_DELAY);
+    }
+
     // Setup message field and posting
     private void initMessageAdapter() {
-        etMessage = (EditText) view.findViewById(R.id.etMessage);
-        ListView lvChat = (ListView) view.findViewById(R.id.lvChat);
+        etMessage = (EditText) view.findViewById(R.id.new_message_edit_text);
+        ListView lvChat = (ListView) view.findViewById(R.id.chat_list_view);
         // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen. Don't scroll to the bottom otherwise.
         lvChat.setTranscriptMode(1);
-        mAdapter = new MessageListAdapter(applicationContext, messages);
+        mAdapter = new MessageListAdapter(mApplicationContext, messages);
         lvChat.setAdapter(mAdapter);
     }
 
@@ -159,15 +165,13 @@ public class MessagingFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (!mServiceBound) {
-            applicationContext.startService(intent);
-//            getActivity().registerReceiver(broadcastReceiver, new IntentFilter(MessagingService.CLASS_NAME));
+            mApplicationContext.startService(intent);
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        getActivity().unregisterReceiver(broadcastReceiver);
         stopMessagingService();
     }
 

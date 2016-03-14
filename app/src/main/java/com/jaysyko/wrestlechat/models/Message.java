@@ -12,37 +12,19 @@ import java.io.Serializable;
  * @author Jay Syko
  */
 
-@ParseClassName(Message.PARSE_MESSAGE_TABLE)
-public class Message extends ParseObject implements Serializable {
+public class Message {
 
-    public static final String PARSE_MESSAGE_TABLE = "Message";
     public static final String USERNAME = "username";
     public static final String EVENT_ID = "eventId";
     public static final String MSG_BODY = "body";
     public static final String CREATED_AT = "createdAt";
-    public static final String USER_IMAGE = "user_image";
-
-    /**
-     *
-     * @return image_url
-     */
-    public String getUserImage() {
-        return getString(USER_IMAGE);
-    }
-
-    /**
-     * @param user_image String
-     */
-    public void setUserImage(String user_image) {
-        put(USER_IMAGE, user_image);
-    }
 
     /**
      * Returns the owner of the message
      *
      * @return username
      */
-    public String getUsername() {
+    public String getUserID() {
         return getString(USERNAME);
     }
 
@@ -51,7 +33,7 @@ public class Message extends ParseObject implements Serializable {
      *
      * @param username String
      */
-    public void setUsername(String username) {
+    public void setUserID(String username) {
         put(USERNAME, username);
     }
 
@@ -82,7 +64,12 @@ public class Message extends ParseObject implements Serializable {
         put(MSG_BODY, body);
     }
 
+    /**
+     * @return String
+     */
+    @Override
     public String toString() {
-        return getUsername();
+        return getUserID();
     }
+
 }

@@ -2,7 +2,6 @@ package com.jaysyko.wrestlechat.auth;
 
 import android.util.Log;
 
-import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -149,5 +148,9 @@ public class CurrentActiveUser {
         } else {
             return false;
         }
+    }
+
+    public String getUserID() {
+        return null;
     }
 }

@@ -96,10 +96,10 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         convertView = LayoutInflater.from(context).
                 inflate(R.layout.message_bubble, parent, false);
         final MessageViewHolder holder = new MessageViewHolder();
-        holder.imageLeft = (ImageView) convertView.findViewById(R.id.ivProfileLeft);
-        holder.imageRight = (ImageView) convertView.findViewById(R.id.ivProfileRight);
-        holder.sender = (RelativeLayout) convertView.findViewById(R.id.sender_message);
-        holder.user = (RelativeLayout) convertView.findViewById(R.id.my_message);
+        holder.imageLeft = (ImageView) convertView.findViewById(R.id.left_profile_image);
+        holder.imageRight = (ImageView) convertView.findViewById(R.id.right_profile_image);
+        holder.sender = (RelativeLayout) convertView.findViewById(R.id.sender_message_container);
+        holder.user = (RelativeLayout) convertView.findViewById(R.id.user_message_container);
         convertView.setTag(holder);
         return convertView;
     }
