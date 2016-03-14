@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat.query;
+package com.jaysyko.wrestlechat.db;
 
 import com.parse.ParseQuery;
 

@@ -12,7 +12,7 @@ import com.jaysyko.wrestlechat.fragments.MessagingFragment;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.network.NetworkState;
-import com.jaysyko.wrestlechat.query.Query;
+import com.jaysyko.wrestlechat.db.Query;
 
 import java.util.Collections;
 import java.util.List;

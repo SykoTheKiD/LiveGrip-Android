@@ -2,7 +2,7 @@ package com.jaysyko.wrestlechat.eventManager;
 
 import com.jaysyko.wrestlechat.db.QueryResult;
 import com.jaysyko.wrestlechat.models.Events;
-import com.jaysyko.wrestlechat.query.Query;
+import com.jaysyko.wrestlechat.db.Query;
 
 import java.util.List;
 

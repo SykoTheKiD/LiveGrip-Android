@@ -2,7 +2,6 @@ package com.jaysyko.wrestlechat.db;
 
 import android.util.Log;
 
-import com.jaysyko.wrestlechat.query.Query;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 

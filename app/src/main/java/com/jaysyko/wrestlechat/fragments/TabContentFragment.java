@@ -25,7 +25,7 @@ import com.jaysyko.wrestlechat.eventManager.RetrieveEvents;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Events;
 import com.jaysyko.wrestlechat.network.NetworkState;
-import com.jaysyko.wrestlechat.utils.Keys;
+import com.jaysyko.wrestlechat.utils.BundleKeys;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public class TabContentFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layout = (RelativeLayout) inflater.inflate(R.layout.event_list_fragment_layout, null);
         applicationContext = getContext();
-        this.state = getArguments().getInt(Keys.STATE_KEY);
+        this.state = getArguments().getInt(BundleKeys.STATE_KEY);
         handler.post(initSwipeRefresh);
         handler.post(new Runnable() {
             @Override
