@@ -20,10 +20,10 @@ import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.dataObjects.EventObject;
 import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
-import com.jaysyko.wrestlechat.eventManager.OpenEventConversation;
+import com.jaysyko.wrestlechat.eventManager.OpenEvent;
 import com.jaysyko.wrestlechat.eventManager.RetrieveEvents;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
-import com.jaysyko.wrestlechat.models.Events;
+import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.utils.BundleKeys;
 import com.parse.ParseObject;
@@ -39,6 +39,12 @@ public class TabContentFragment extends Fragment {
     private Context applicationContext;
     private EventListAdapter mAdapter;
     private RelativeLayout layout;
+    final Runnable initSwipeRefresh = new Runnable() {
+        @Override
+        public void run() {
+            initSwipeRefresh();
+        }
+    };
     private int state;
     private List<ParseObject> liveEvents = new ArrayList<>();
     final Runnable updateEventsSoft = new Runnable() {
@@ -55,12 +61,6 @@ public class TabContentFragment extends Fragment {
             } else {
                 Dialog.makeToast(applicationContext, getString(R.string.no_network));
             }
-        }
-    };
-    final Runnable initSwipeRefresh = new Runnable() {
-        @Override
-        public void run() {
-            initSwipeRefresh();
         }
     };
 
@@ -111,14 +111,14 @@ public class TabContentFragment extends Fragment {
             if (eventList.size() > 0) {
                 for (int i = 0; i < eventList.size(); i++) {
                     current = eventList.get(i);
-                    Long startTime = current.getLong(Events.START_TIME), endTime = current.getLong(Events.END_TIME);
+                    Long startTime = current.getLong(Event.START_TIME), endTime = current.getLong(Event.END_TIME);
                     if (DateVerifier.goLive(startTime, endTime).getReason() == this.state) {
                         EventObject eventObject = new EventObject(
-                                current.getString(Events.NAME),
-                                current.getString(Events.LOCATION),
+                                current.getString(Event.NAME),
+                                current.getString(Event.LOCATION),
                                 startTime,
                                 endTime,
-                                current.getString(Events.IMAGE)
+                                current.getString(Event.IMAGE)
                         );
                         eventObjects.add(eventObject);
                         liveEvents.add(current);
@@ -146,14 +146,14 @@ public class TabContentFragment extends Fragment {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                OpenEventConversation.openConversation(liveEvents.get(position), applicationContext);
+                                OpenEvent.openConversation(liveEvents.get(position), applicationContext);
                             }
 
                             @Override
                             public void onItemLongClick(View view, int position) {
                                 Vibrator vibe = (Vibrator) applicationContext.getSystemService(Context.VIBRATOR_SERVICE);
                                 vibe.vibrate(VIBRATE_MILLISECONDS);
-                                OpenEventConversation.openEventInfo(liveEvents.get(position), applicationContext);
+                                OpenEvent.openEventInfo(liveEvents.get(position), applicationContext);
                             }
                         }));
     }
