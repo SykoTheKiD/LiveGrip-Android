@@ -63,7 +63,9 @@ public class ChatStream extends Service implements MqttCallback {
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-        intent.putExtra("MSG", message.getPayload());
+        Message messageObject = new Message();
+        intent.putExtra("MSG", messageObject);
+        sendBroadcast(intent);
     }
 
     @Override

@@ -1,8 +1,5 @@
 package com.jaysyko.wrestlechat.models;
 
-import com.parse.ParseClassName;
-import com.parse.ParseObject;
-
 import java.io.Serializable;
 
 /**
@@ -12,12 +9,17 @@ import java.io.Serializable;
  * @author Jay Syko
  */
 
-public class Message {
+public class Message implements Serializable {
 
-    public static final String USERNAME = "username";
-    public static final String EVENT_ID = "eventId";
-    public static final String MSG_BODY = "body";
-    public static final String CREATED_AT = "createdAt";
+    private String userID;
+    private String eventID;
+    private String body;
+
+    public Message(String userID, String eventID, String body) {
+        this.userID = userID;
+        this.eventID = eventID;
+        this.body = body;
+    }
 
     /**
      * Returns the owner of the message
@@ -25,25 +27,14 @@ public class Message {
      * @return username
      */
     public String getUserID() {
-        return getString(USERNAME);
+        return this.userID;
     }
 
     /**
-     * Set the user's username associated to the message
-     *
-     * @param username String
+     * @return eventID
      */
-    public void setUserID(String username) {
-        put(USERNAME, username);
-    }
-
-    /**
-     * Set the event the message was sent to
-     *
-     * @param eventId String
-     */
-    public void setEventId(String eventId) {
-        put(EVENT_ID, eventId);
+    public String getEventID() {
+        return eventID;
     }
 
     /**
@@ -52,16 +43,7 @@ public class Message {
      * @return body String
      */
     public String getBody() {
-        return getString(MSG_BODY);
-    }
-
-    /**
-     * Assigns the message some content
-     *
-     * @param body String
-     */
-    public void setBody(String body) {
-        put(MSG_BODY, body);
+        return this.body;
     }
 
     /**
@@ -69,7 +51,7 @@ public class Message {
      */
     @Override
     public String toString() {
-        return getUserID();
+        return this.userID;
     }
 
 }

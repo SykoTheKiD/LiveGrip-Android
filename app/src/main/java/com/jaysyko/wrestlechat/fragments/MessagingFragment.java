@@ -36,6 +36,7 @@ import com.jaysyko.wrestlechat.services.chatStream.ChatStream;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MessagingFragment extends Fragment {
 
@@ -60,9 +61,7 @@ public class MessagingFragment extends Fragment {
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            messages.clear();
-//            messages.add(messages.size()-1, intent.getStringExtra("MSG"));
-            mAdapter.notifyDataSetChanged();
+            updateMessages((Message) intent.getSerializableExtra("MSG"));
         }
     };
     private ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -70,7 +69,7 @@ public class MessagingFragment extends Fragment {
         public void onServiceConnected(ComponentName name, IBinder service) {
             MessageBinder binder = (MessageBinder) service;
             MessagingService messagingService = binder.getService();
-            messagingService.getMessageList();
+            updateMessages(messagingService.getMessageList());
             mApplicationContext.registerReceiver(broadcastReceiver, new IntentFilter(ChatStream.CLASS_NAME));
             mServiceBound = true;
         }
@@ -81,6 +80,19 @@ public class MessagingFragment extends Fragment {
             mServiceBound = false;
         }
     };
+
+    @SuppressWarnings("unchecked")
+    private void updateMessages(List messageList) {
+        this.messages.clear();
+        this.messages.addAll(messageList);
+        this.mAdapter.notifyDataSetChanged();
+    }
+
+    private void updateMessages(Message message) {
+        ArrayList<Message> messages = this.messages;
+        messages.add(messages.size() - 1, message);
+        this.mAdapter.notifyDataSetChanged();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
