@@ -12,6 +12,5 @@ public class StringResources {
     public static final String PLAIN_CONTENT_TYPE = "text/plain";
     public static final String NULL_TEXT = "";
     public static final String BLANK_SPACE = " ";
-    public static final String DUMMY_PASSWORD = "pass";
     public static final String TWITTER_INTENT = "http://www.twitter.com/intent/tweet?text=";
 }

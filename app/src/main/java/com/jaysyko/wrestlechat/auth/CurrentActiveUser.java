@@ -142,7 +142,7 @@ public class CurrentActiveUser {
                 currentUser.save();
                 return true;
             } catch (ParseException e) {
-                Log.e("FAIL IMAGE", e.getMessage());
+                Log.e("FAIL EVENT_IMAGE_KEY", e.getMessage());
                 return false;
             }
         } else {
