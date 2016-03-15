@@ -10,27 +10,28 @@ public class BackEnd {
 
     /**
      * Query the app's cache
-     * @param label String
      * @return List of results
      */
-    public static QueryResult queryCache(Query query, String label) {
-        return queryDB(query, label);
+    public static QueryResult queryCache(Query query) {
+        return queryDB(query);
     }
 
     /**
      * Delete a set from the cache
-     * @param label String
      */
-    private static void deleteFromCache(String label) {
+    private static void deleteFromCache() {
 
     }
 
     /**
      * Query for results in the database
-     * @param label String
      * @return List of results
      */
-    public static QueryResult queryDB(Query query, String label) {
+    public static QueryResult queryDB(Query query) {
         return null;
+    }
+
+    public static void save() {
+
     }
 }

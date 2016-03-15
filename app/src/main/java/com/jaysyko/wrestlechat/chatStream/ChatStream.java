@@ -1,6 +1,8 @@
-package com.jaysyko.wrestlechat.mqtt;
+package com.jaysyko.wrestlechat.chatStream;
 
+import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
+import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.utils.DBConstants;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -12,16 +14,16 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 /**
  * Created by jarushaan on 2016-03-14
  */
-public class MQTTConnection implements MqttCallback {
+public class ChatStream implements MqttCallback {
 
-    private static final MQTTConnection instance = new MQTTConnection();
+    private static final ChatStream instance = new ChatStream();
     private MqttClient client;
 
-    private MQTTConnection() {
+    private ChatStream() {
         connect();
     }
 
-    public static MQTTConnection getInstance() {
+    public static ChatStream getInstance() {
         return instance;
     }
 
@@ -33,10 +35,6 @@ public class MQTTConnection implements MqttCallback {
         } catch (MqttException e) {
             e.printStackTrace();
         }
-        return client;
-    }
-
-    public MqttClient getClient() {
         return client;
     }
 
@@ -53,5 +51,23 @@ public class MQTTConnection implements MqttCallback {
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
 
+    }
+
+    public void send(Message message) {
+        MqttMessage mqttMessage = new MqttMessage();
+        mqttMessage.setPayload(message.getBody().getBytes());
+        try {
+            client.publish(CurrentActiveEvent.getInstance().getCurrentEvent().getEventID(), mqttMessage);
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void subscribe(String room) {
+        try {
+            client.subscribe(room);
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
     }
 }

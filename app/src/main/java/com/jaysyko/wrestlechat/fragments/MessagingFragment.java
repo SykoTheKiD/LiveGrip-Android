@@ -1,5 +1,6 @@
 package com.jaysyko.wrestlechat.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.ComponentName;
 import android.content.Context;
@@ -21,9 +22,11 @@ import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
+import com.jaysyko.wrestlechat.chatStream.ChatStream;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formValidators.MessageValidator;
+import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.services.MessagingService;
@@ -37,10 +40,10 @@ public class MessagingFragment extends Fragment {
     private static final int SEND_DELAY = 1500;
     private static ArrayList<Message> messages = new ArrayList<>();
     private static MessageListAdapter mAdapter;
-    private String userName, sEventId;
+    private String userID, sEventId;
     private EditText etMessage;
     private ImageButton btSend;
-    private Context applicationContext;
+    private Activity mApplicationContext;
     private View view;
     private Handler handler = new Handler();
     private boolean mServiceBound = false;
@@ -51,6 +54,7 @@ public class MessagingFragment extends Fragment {
             initMessageAdapter();
         }
     };
+    private Event mCurrentEvent;
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -72,21 +76,22 @@ public class MessagingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String eventName = CurrentActiveEvent.getInstance().getEventName();
-        getActivity().setTitle(eventName);
-        intent = new Intent(getActivity(), MessagingService.class);
+        mCurrentEvent = CurrentActiveEvent.getInstance().getCurrentEvent();
+        String eventName = mCurrentEvent.getEventName();
+        mApplicationContext.setTitle(eventName);
+        intent = new Intent(mApplicationContext, MessagingService.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_messaging, container, false);
-        applicationContext = getActivity();
+        mApplicationContext = getActivity();
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
-        ((AppCompatActivity) applicationContext).setSupportActionBar(toolbar);
-        sEventId = CurrentActiveEvent.getInstance().getEventID();
+        ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
+        sEventId = mCurrentEvent.getEventID();
         CurrentActiveUser currentUser = CurrentActiveUser.getInstance();
-        userName = currentUser.getUsername();
+        userID = currentUser.getUserID();
         btSend = (ImageButton) view.findViewById(R.id.btSend);
         handler.post(initMessageAdapter);
         btSend.setOnClickListener(new View.OnClickListener() {
@@ -106,21 +111,20 @@ public class MessagingFragment extends Fragment {
 
     private void saveMessage(String body) {
         Form form = new MessageValidator(body).validate();
-        if (NetworkState.isConnected(applicationContext)) {
+        if (NetworkState.isConnected(mApplicationContext)) {
             if (form.isValid()) {
                 // Use Message model to create new messages now
                 Message message = new Message();
-                message.setUsername(userName);
+                message.setUserID(userID);
                 message.setEventId(sEventId);
                 message.setBody(body);
-                message.setUserImage(CurrentActiveUser.getInstance().getCustomProfileImageURL());
-//              message.saveInBackground();
+                ChatStream.getInstance().send(message);
                 etMessage.setText(StringResources.NULL_TEXT);
             } else {
-                Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.getReason())));
+                Dialog.makeToast(mApplicationContext, getString(Form.getSimpleMessage(form.getReason())));
             }
         } else {
-            Dialog.makeToast(applicationContext, getString(R.string.no_network));
+            Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
         }
         handler.postDelayed(new Runnable() {
             @Override
@@ -136,7 +140,7 @@ public class MessagingFragment extends Fragment {
         ListView lvChat = (ListView) view.findViewById(R.id.lvChat);
         // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen. Don't scroll to the bottom otherwise.
         lvChat.setTranscriptMode(1);
-        mAdapter = new MessageListAdapter(applicationContext, messages);
+        mAdapter = new MessageListAdapter(mApplicationContext, messages);
         lvChat.setAdapter(mAdapter);
     }
 
@@ -152,7 +156,7 @@ public class MessagingFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (!mServiceBound) {
-            applicationContext.startService(intent);
+            mApplicationContext.startService(intent);
         }
     }
 

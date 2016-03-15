@@ -42,7 +42,7 @@ public class RetrieveEvents {
         if (hard) {
             this.queryResult = queryDB(query, EVENTS_MODEL_SIMPLE_NAME);
         } else {
-            this.queryResult = queryCache(query, EVENTS_MODEL_SIMPLE_NAME);
+            this.queryResult = queryCache(query);
         }
     }
 }

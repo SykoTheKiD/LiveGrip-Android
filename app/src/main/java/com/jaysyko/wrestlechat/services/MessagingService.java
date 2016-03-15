@@ -28,11 +28,10 @@ public class MessagingService extends Service {
     private final Runnable fetchMessageRunnable = new Runnable() {
         @Override
         public void run() {
-            fetchNewMessages();
+            fetchOldMessages();
         }
     };
     private Handler handler = new Handler();
-//    private Intent intent;
 
     @Nullable
     @Override
@@ -52,14 +51,14 @@ public class MessagingService extends Service {
     }
 
     @SuppressWarnings("unchecked")
-    private void fetchNewMessages() {
+    private void fetchOldMessages() {
         if (NetworkState.isConnected(getApplicationContext())) {
             Query query = new Query(Message.class);
-            String sEventId = CurrentActiveEvent.getInstance().getEventID();
+            String sEventId = CurrentActiveEvent.getInstance().getCurrentEvent().getEventID();
             query.whereEqualTo(Event.ID, sEventId);
             query.orderByDESC(Message.CREATED_AT);
             query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-            QueryResult messages = queryDB(query, Message.class.getSimpleName());
+            QueryResult messages = queryDB(query);
             List messageList = messages != null ? messages.getResults() : null;
             if (messageList != null) {
                 Collections.reverse(messageList);

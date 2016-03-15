@@ -20,27 +20,13 @@ public class Message {
     public static final String CREATED_AT = "createdAt";
     public static final String USER_IMAGE = "user_image";
 
-    /**
-     *
-     * @return image_url
-     */
-    public String getUserImage() {
-        return getString(USER_IMAGE);
-    }
-
-    /**
-     * @param user_image String
-     */
-    public void setUserImage(String user_image) {
-        put(USER_IMAGE, user_image);
-    }
 
     /**
      * Returns the owner of the message
      *
      * @return username
      */
-    public String getUsername() {
+    public String getUserID() {
         return getString(USERNAME);
     }
 
@@ -49,7 +35,7 @@ public class Message {
      *
      * @param username String
      */
-    public void setUsername(String username) {
+    public void setUserID(String username) {
         put(USERNAME, username);
     }
 
@@ -80,7 +66,12 @@ public class Message {
         put(MSG_BODY, body);
     }
 
+    /**
+     * @return String
+     */
+    @Override
     public String toString() {
-        return getUsername();
+        return getUserID();
     }
+
 }
