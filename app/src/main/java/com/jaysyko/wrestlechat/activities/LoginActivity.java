@@ -38,13 +38,13 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else {
-            final Button loginButton = (Button) findViewById(R.id.signIn);
-            final Button signUpButton = (Button) findViewById(R.id.signUp);
-            final TextView signUpText = (TextView) findViewById(R.id.signUpText);
+            final Button loginButton = (Button) findViewById(R.id.sign_in_button);
+            final Button signUpButton = (Button) findViewById(R.id.sign_up_button);
+            final TextView signUpText = (TextView) findViewById(R.id.sign_up_text_view);
             final TextView signUpPrompt = (TextView) findViewById(R.id.sign_in_prompt);
-            final EditText usernameField = (EditText) findViewById(R.id.usernameEV);
+            final EditText usernameField = (EditText) findViewById(R.id.username_text_view);
             usernameField.setText(getIntent().getStringExtra(IntentKeys.USERNAME));
-            final EditText passwordField = (EditText) findViewById(R.id.loginPasswordEV);
+            final EditText passwordField = (EditText) findViewById(R.id.login_password_et);
             handler.post(new Runnable() {
                 @Override
                 public void run() {

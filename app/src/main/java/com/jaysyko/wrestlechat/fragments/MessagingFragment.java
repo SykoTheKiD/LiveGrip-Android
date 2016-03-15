@@ -92,7 +92,7 @@ public class MessagingFragment extends Fragment {
         sEventId = mCurrentEvent.getEventID();
         CurrentActiveUser currentUser = CurrentActiveUser.getInstance();
         userID = currentUser.getUserID();
-        btSend = (ImageButton) view.findViewById(R.id.btSend);
+        btSend = (ImageButton) view.findViewById(R.id.send_button);
         handler.post(initMessageAdapter);
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,8 +136,8 @@ public class MessagingFragment extends Fragment {
 
     // Setup message field and posting
     private void initMessageAdapter() {
-        etMessage = (EditText) view.findViewById(R.id.etMessage);
-        ListView lvChat = (ListView) view.findViewById(R.id.lvChat);
+        etMessage = (EditText) view.findViewById(R.id.new_message_edit_text);
+        ListView lvChat = (ListView) view.findViewById(R.id.chat_list_view);
         // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen. Don't scroll to the bottom otherwise.
         lvChat.setTranscriptMode(1);
         mAdapter = new MessageListAdapter(mApplicationContext, messages);

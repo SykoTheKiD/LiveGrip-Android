@@ -18,8 +18,6 @@ public class Message {
     public static final String EVENT_ID = "eventId";
     public static final String MSG_BODY = "body";
     public static final String CREATED_AT = "createdAt";
-    public static final String USER_IMAGE = "user_image";
-
 
     /**
      * Returns the owner of the message
