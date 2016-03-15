@@ -63,16 +63,6 @@ public class MessagingFragment extends Fragment {
         }
     };
 
-//    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            MessageListWrapper newMessages = intent.getParcelableExtra(IntentKeys.NEW_MESSAGE_BROADCAST);
-//            MessagingFragment.this.messages.clear();
-//            MessagingFragment.this.messages.addAll(newMessages.getMessages());
-//            mAdapter.notifyDataSetChanged();
-//        }
-//    };
-
     public static void update(List<Message> newMessages) {
         messages.clear();
         messages.addAll(newMessages);
@@ -106,35 +96,38 @@ public class MessagingFragment extends Fragment {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        String body = etMessage.getText().toString().trim();
-                        Form form = new MessageValidator(body).validate();
-                        if (NetworkState.isConnected(applicationContext)) {
-                            if (form.isValid()) {
-                                // Use Message model to create new messages now
-                                Message message = new Message();
-                                message.setUsername(userName);
-                                message.setEventId(sEventId);
-                                message.setBody(body);
-                                message.setUserImage(CurrentActiveUser.getInstance().getCustomProfileImageURL());
-                                message.saveInBackground();
-                                etMessage.setText(StringResources.NULL_TEXT);
-                            } else {
-                                Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.getReason())));
-                            }
-                        } else {
-                            Dialog.makeToast(applicationContext, getString(R.string.no_network));
-                        }
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                btSend.setEnabled(true);
-                            }
-                        }, SEND_DELAY);
+                        saveMessage(etMessage.getText().toString().trim());
                     }
                 });
             }
         });
         return view;
+    }
+
+    private void saveMessage(String body) {
+        Form form = new MessageValidator(body).validate();
+        if (NetworkState.isConnected(applicationContext)) {
+            if (form.isValid()) {
+                // Use Message model to create new messages now
+                Message message = new Message();
+                message.setUsername(userName);
+                message.setEventId(sEventId);
+                message.setBody(body);
+                message.setUserImage(CurrentActiveUser.getInstance().getCustomProfileImageURL());
+//              message.saveInBackground();
+                etMessage.setText(StringResources.NULL_TEXT);
+            } else {
+                Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.getReason())));
+            }
+        } else {
+            Dialog.makeToast(applicationContext, getString(R.string.no_network));
+        }
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                btSend.setEnabled(true);
+            }
+        }, SEND_DELAY);
     }
 
     // Setup message field and posting
@@ -160,14 +153,12 @@ public class MessagingFragment extends Fragment {
         super.onResume();
         if (!mServiceBound) {
             applicationContext.startService(intent);
-//            getActivity().registerReceiver(broadcastReceiver, new IntentFilter(MessagingService.CLASS_NAME));
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        getActivity().unregisterReceiver(broadcastReceiver);
         stopMessagingService();
     }
 

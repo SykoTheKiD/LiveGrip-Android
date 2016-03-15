@@ -12,10 +12,8 @@ import java.io.Serializable;
  * @author Jay Syko
  */
 
-@ParseClassName(Message.PARSE_MESSAGE_TABLE)
-public class Message extends ParseObject implements Serializable {
+public class Message {
 
-    public static final String PARSE_MESSAGE_TABLE = "Message";
     public static final String USERNAME = "username";
     public static final String EVENT_ID = "eventId";
     public static final String MSG_BODY = "body";

@@ -18,15 +18,6 @@ public class CreateNewUser {
      * @return boolean
      */
     public static boolean signUpUser(String username, String password) {
-        ParseUser user = new ParseUser();
-        user.setUsername(username.toLowerCase());
-        user.setPassword(password);
-        try {
-            user.signUp();
-            CurrentActiveUser.getInstance(username, password);
-            return true;
-        } catch (ParseException e) {
-            return false;
-        }
+
     }
 }

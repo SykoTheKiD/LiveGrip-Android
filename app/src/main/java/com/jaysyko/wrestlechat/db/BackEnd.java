@@ -1,12 +1,5 @@
 package com.jaysyko.wrestlechat.db;
 
-import android.util.Log;
-
-import com.parse.ParseException;
-import com.parse.ParseObject;
-
-import java.util.List;
-
 /**
  * BackEnd.java
  * Contains the code for the backend of the app
@@ -21,12 +14,6 @@ public class BackEnd {
      * @return List of results
      */
     public static QueryResult queryCache(Query query, String label) {
-        query.build().fromLocalDatastore();
-        try {
-            return new QueryResult(query.build().find());
-        } catch (ParseException e) {
-            Log.d("CACHE", e.getMessage());
-        }
         return queryDB(query, label);
     }
 
@@ -35,11 +22,7 @@ public class BackEnd {
      * @param label String
      */
     private static void deleteFromCache(String label) {
-        try {
-            ParseObject.unpinAll(label);
-        } catch (ParseException e) {
-            Log.d("DELETE CACHE LABEL", e.getMessage());
-        }
+
     }
 
     /**
@@ -48,14 +31,6 @@ public class BackEnd {
      * @return List of results
      */
     public static QueryResult queryDB(Query query, String label) {
-        try {
-            List results = query.build().find();
-            deleteFromCache(label);
-            ParseObject.pinAll(label, results);
-            return new QueryResult(results);
-        } catch (ParseException e) {
-            Log.d("DB", "FAIL");
-            return null;
-        }
+        return null;
     }
 }

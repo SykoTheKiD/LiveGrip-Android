@@ -9,13 +9,20 @@ android {
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 13
-        versionName "Alpha"
+        versionName "Prime"
     }
+
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+}
+
+repositories {
+    maven {
+        url "https://repo.eclipse.org/content/repositories/paho-releases/"
     }
 }
 
@@ -35,4 +42,7 @@ dependencies {
     compile 'com.android.support:support-v4:23.2.0'
     compile 'com.google.android.gms:play-services-ads:8.4.0'
     compile 'com.flaviofaria:kenburnsview:1.0.7'
+    compile(group: 'org.eclipse.paho', name: 'org.eclipse.paho.android.service', version: '1.0.2') {
+        exclude module: 'support-v4'
+    }
 }
