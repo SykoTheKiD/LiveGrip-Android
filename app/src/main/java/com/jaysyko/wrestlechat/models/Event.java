@@ -9,21 +9,29 @@ package com.jaysyko.wrestlechat.models;
  */
 
 public class Event {
-    public static final String ID = "eventId";
-    public static final String NAME = "eventName";
-    public static final String LOCATION = "location";
-    public static final String START_TIME = "startTime";
-    public static final String END_TIME = "endTime";
-    public static final String IMAGE = "imgurId";
+
+    private String eventID, eventName, eventInfo, matchCard, eventImage, eventLocation;
+    private Long eventStartTime, eventEndTime;
+
+    public Event(String eventID, String eventName, String eventInfo, String matchCard, String eventImage, String eventLocation, Long eventStartTime, Long eventEndTime) {
+        this.eventID = eventID;
+        this.eventName = eventName;
+        this.eventInfo = eventInfo;
+        this.matchCard = matchCard;
+        this.eventImage = eventImage;
+        this.eventLocation = eventLocation;
+        this.eventStartTime = eventStartTime;
+        this.eventEndTime = eventEndTime;
+    }
 
 
     /**
-     * Returns the current event's ID
+     * Returns the current event's EVENT_ID_KEY
      *
      * @return String
      */
     public String getEventID() {
-        return null;
+        return this.eventID;
     }
 
     /**
@@ -32,7 +40,7 @@ public class Event {
      * @return String
      */
     public String getEventName() {
-        return null;
+        return this.eventName;
     }
 
     /**
@@ -41,7 +49,7 @@ public class Event {
      * @return String
      */
     public String getEventInfo() {
-        return null;
+        return this.eventInfo;
     }
 
     /**
@@ -50,7 +58,7 @@ public class Event {
      * @return String
      */
     public String getMatchCard() {
-        return null;
+        return this.matchCard;
     }
 
     /**
@@ -59,7 +67,7 @@ public class Event {
      * @return String
      */
     public String getEventImage() {
-        return null;
+        return this.eventImage;
     }
 
     /**
@@ -68,7 +76,7 @@ public class Event {
      * @return String
      */
     public String getEventLocation() {
-        return null;
+        return this.eventLocation;
     }
 
     /**
@@ -77,10 +85,13 @@ public class Event {
      * @return Long
      */
     public Long getEventStartTime() {
-        return null;
+        return this.eventStartTime;
     }
 
+    /**
+     * @return Long
+     */
     public Long getEventEndTime() {
-        return null;
+        return this.eventEndTime;
     }
 }

@@ -23,9 +23,9 @@ import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.eventManager.OpenEvent;
 import com.jaysyko.wrestlechat.eventManager.RetrieveEvents;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
-import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.utils.BundleKeys;
+import com.jaysyko.wrestlechat.utils.DBConstants;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
@@ -39,12 +39,6 @@ public class TabContentFragment extends Fragment {
     private Context applicationContext;
     private EventListAdapter mAdapter;
     private RelativeLayout layout;
-    final Runnable initSwipeRefresh = new Runnable() {
-        @Override
-        public void run() {
-            initSwipeRefresh();
-        }
-    };
     private int state;
     private List<ParseObject> liveEvents = new ArrayList<>();
     final Runnable updateEventsSoft = new Runnable() {
@@ -61,6 +55,12 @@ public class TabContentFragment extends Fragment {
             } else {
                 Dialog.makeToast(applicationContext, getString(R.string.no_network));
             }
+        }
+    };
+    final Runnable initSwipeRefresh = new Runnable() {
+        @Override
+        public void run() {
+            initSwipeRefresh();
         }
     };
 
@@ -111,14 +111,14 @@ public class TabContentFragment extends Fragment {
             if (eventList.size() > 0) {
                 for (int i = 0; i < eventList.size(); i++) {
                     current = eventList.get(i);
-                    Long startTime = current.getLong(Event.START_TIME), endTime = current.getLong(Event.END_TIME);
+                    Long startTime = current.getLong(DBConstants.EVENT_START_TIME_KEY), endTime = current.getLong(DBConstants.EVENT_END_TIME_KEY);
                     if (DateVerifier.goLive(startTime, endTime).getReason() == this.state) {
                         EventObject eventObject = new EventObject(
-                                current.getString(Event.NAME),
-                                current.getString(Event.LOCATION),
+                                current.getString(DBConstants.EVENT_NAME_KEY),
+                                current.getString(DBConstants.EVENT_LOCATION_KEY),
                                 startTime,
                                 endTime,
-                                current.getString(Event.IMAGE)
+                                current.getString(DBConstants.EVENT_IMAGE_KEY)
                         );
                         eventObjects.add(eventObject);
                         liveEvents.add(current);

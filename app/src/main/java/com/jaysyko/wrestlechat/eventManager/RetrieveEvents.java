@@ -3,6 +3,7 @@ package com.jaysyko.wrestlechat.eventManager;
 import com.jaysyko.wrestlechat.db.QueryResult;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.db.Query;
+import com.jaysyko.wrestlechat.utils.DBConstants;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class RetrieveEvents {
     @SuppressWarnings("unchecked")
     private synchronized void updateEventCards(Boolean hard) {
         Query query = new Query(EVENT_MODEL);
-        query.orderByASC(Event.START_TIME);
+        query.orderByASC(DBConstants.EVENT_START_TIME_KEY);
         if (hard) {
             this.queryResult = queryDB(query, EVENTS_MODEL_SIMPLE_NAME);
         } else {

@@ -1,19 +1,19 @@
 package com.jaysyko.wrestlechat.db;
 
-import java.util.List;
+import org.json.JSONObject;
 
 /**
  * Created by jarushaan on 2016-03-12
  */
 public class QueryResult {
 
-    private List results;
+    private JSONObject response;
 
-    public QueryResult(List results) {
-        this.results = results;
+    public QueryResult(JSONObject response) {
+        this.response = response;
     }
 
-    public List getResults() {
-        return this.results;
+    public JSONObject getResponse() {
+        return this.response;
     }
 }
