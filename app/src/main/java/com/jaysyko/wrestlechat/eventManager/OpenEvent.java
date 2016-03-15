@@ -8,15 +8,22 @@ import com.jaysyko.wrestlechat.activities.EventInfoActivity;
 import com.jaysyko.wrestlechat.activities.MessagingActivity;
 import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
-import com.jaysyko.wrestlechat.models.Events;
-import com.parse.ParseObject;
+import com.jaysyko.wrestlechat.models.Event;
+import com.jaysyko.wrestlechat.mqtt.MQTTConnection;
 
-public class OpenEventConversation {
+import org.eclipse.paho.client.mqttv3.MqttException;
 
-    public static void openConversation(ParseObject event, Context context) {
-        com.jaysyko.wrestlechat.date.LiveStatus status = DateVerifier.goLive(event.getLong(Events.START_TIME), event.getLong(Events.END_TIME));
+public class OpenEvent {
+
+    public static void openConversation(Event event, Context context) {
+        com.jaysyko.wrestlechat.date.LiveStatus status = DateVerifier.goLive(event.getEventStartTime(), event.getEventEndTime());
         if (status.goLive()) {
             CurrentActiveEvent.getInstance().setCurrentEvent(event);
+            try {
+                MQTTConnection.getInstance().getClient().subscribe(event.getEventID());
+            } catch (MqttException e) {
+                e.printStackTrace();
+            }
             Intent intent = new Intent(context, MessagingActivity.class);
             context.startActivity(intent);
         } else {
@@ -24,7 +31,7 @@ public class OpenEventConversation {
         }
     }
 
-    public static void openEventInfo(ParseObject event, Context context) {
+    public static void openEventInfo(Event event, Context context) {
         CurrentActiveEvent.getInstance().setCurrentEvent(event);
         Intent intent = new Intent(context, EventInfoActivity.class);
         context.startActivity(intent);

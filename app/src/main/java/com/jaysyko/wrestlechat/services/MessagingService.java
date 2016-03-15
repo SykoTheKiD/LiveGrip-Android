@@ -10,7 +10,7 @@ import android.support.annotation.Nullable;
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.db.QueryResult;
 import com.jaysyko.wrestlechat.fragments.MessagingFragment;
-import com.jaysyko.wrestlechat.models.Events;
+import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.db.Query;
@@ -56,7 +56,7 @@ public class MessagingService extends Service {
         if (NetworkState.isConnected(getApplicationContext())) {
             Query query = new Query(Message.class);
             String sEventId = CurrentActiveEvent.getInstance().getEventID();
-            query.whereEqualTo(Events.ID, sEventId);
+            query.whereEqualTo(Event.ID, sEventId);
             query.orderByDESC(Message.CREATED_AT);
             query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
             QueryResult messages = queryDB(query, Message.class.getSimpleName());

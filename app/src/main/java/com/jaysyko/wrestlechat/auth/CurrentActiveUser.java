@@ -150,4 +150,8 @@ public class CurrentActiveUser {
             return false;
         }
     }
+
+    public String getUserID() {
+        return null;
+    }
 }

@@ -1,5 +1,6 @@
 package com.jaysyko.wrestlechat.mqtt;
 
+import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.utils.DBConstants;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -13,14 +14,30 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class MQTTConnection implements MqttCallback {
 
-    public void connect(String clientID) {
+    private static final MQTTConnection instance = new MQTTConnection();
+    private MqttClient client;
+
+    private MQTTConnection() {
+        connect();
+    }
+
+    public static MQTTConnection getInstance() {
+        return instance;
+    }
+
+    private MqttClient connect() {
         try {
-            MqttClient client = new MqttClient(DBConstants.MQTT_BROKER_URL, clientID);
+            client = new MqttClient(DBConstants.MQTT_BROKER_URL, CurrentActiveUser.getInstance().getUserID());
             client.connect();
             client.setCallback(this);
         } catch (MqttException e) {
             e.printStackTrace();
         }
+        return client;
+    }
+
+    public MqttClient getClient() {
+        return client;
     }
 
     @Override
