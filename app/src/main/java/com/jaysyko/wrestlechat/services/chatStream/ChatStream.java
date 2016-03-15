@@ -1,4 +1,9 @@
-package com.jaysyko.wrestlechat.chatStream;
+package com.jaysyko.wrestlechat.services.chatStream;
+
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
 
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
@@ -14,10 +19,11 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 /**
  * Created by jarushaan on 2016-03-14
  */
-public class ChatStream implements MqttCallback {
-
+public class ChatStream extends Service implements MqttCallback {
+    public static final String CLASS_NAME = ChatStream.class.getSimpleName();
     private static final ChatStream instance = new ChatStream();
     private MqttClient client;
+    private Intent intent;
 
     private ChatStream() {
         connect();
@@ -25,6 +31,18 @@ public class ChatStream implements MqttCallback {
 
     public static ChatStream getInstance() {
         return instance;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        intent = new Intent(CLASS_NAME);
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
     private MqttClient connect() {
@@ -45,7 +63,7 @@ public class ChatStream implements MqttCallback {
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-
+        intent.putExtra("MSG", message.getPayload());
     }
 
     @Override

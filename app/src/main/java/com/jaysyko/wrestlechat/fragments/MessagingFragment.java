@@ -2,9 +2,11 @@ package com.jaysyko.wrestlechat.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,24 +24,24 @@ import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
-import com.jaysyko.wrestlechat.chatStream.ChatStream;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formValidators.MessageValidator;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.network.NetworkState;
+import com.jaysyko.wrestlechat.services.MessageBinder;
 import com.jaysyko.wrestlechat.services.MessagingService;
+import com.jaysyko.wrestlechat.services.chatStream.ChatStream;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MessagingFragment extends Fragment {
 
     private static final int SEND_DELAY = 1500;
-    private static ArrayList<Message> messages = new ArrayList<>();
-    private static MessageListAdapter mAdapter;
+    private ArrayList<Message> messages = new ArrayList<>();
+    private MessageListAdapter mAdapter;
     private String userID, sEventId;
     private EditText etMessage;
     private ImageButton btSend;
@@ -55,23 +57,30 @@ public class MessagingFragment extends Fragment {
         }
     };
     private Event mCurrentEvent;
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            messages.clear();
+//            messages.add(messages.size()-1, intent.getStringExtra("MSG"));
+            mAdapter.notifyDataSetChanged();
+        }
+    };
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
+            MessageBinder binder = (MessageBinder) service;
+            MessagingService messagingService = binder.getService();
+            messagingService.getMessageList();
+            mApplicationContext.registerReceiver(broadcastReceiver, new IntentFilter(ChatStream.CLASS_NAME));
             mServiceBound = true;
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
+            mApplicationContext.unregisterReceiver(broadcastReceiver);
             mServiceBound = false;
         }
     };
-
-    public static void update(List<Message> newMessages) {
-        messages.clear();
-        messages.addAll(newMessages);
-        mAdapter.notifyDataSetChanged();
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
