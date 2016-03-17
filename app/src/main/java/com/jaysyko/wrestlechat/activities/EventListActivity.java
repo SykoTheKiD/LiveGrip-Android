@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.ads.AdBuilder;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.fragments.TabFragment;
@@ -44,12 +43,12 @@ public class EventListActivity extends AppCompatActivity{
         TextView headerUsername = (TextView) headerLayout.findViewById(R.id.drawer_username);
         headerUsername.setText(CurrentActiveUser.getInstance().getUsername());
 
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                new AdBuilder(EventListActivity.this).buildAd();
-            }
-        });
+//        handler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                new AdBuilder(EventListActivity.this).buildAd();
+//            }
+//        });
 
 
         /**

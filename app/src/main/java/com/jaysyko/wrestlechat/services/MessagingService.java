@@ -50,7 +50,7 @@ public class MessagingService extends Service {
 //            query.whereEqualTo(DBConstants.EVENT_ID_KEY, sEventId);
 //            query.orderByDESC(DBConstants.MESSAGE_CREATED_AT_KEY);
 //            query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-//            QueryResult messages = queryDB(query);
+//            QueryResult messages = execute(query);
 //            messageList = messages != null ? messages.getResults() : null;
 //            if (messageList != null) {
 //                Collections.reverse(messageList);
