@@ -46,13 +46,13 @@ public class EventInfoFragment extends Fragment {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         final Activity activity = getActivity();
         ((AppCompatActivity) activity).setSupportActionBar(toolbar);
-        eventName = CurrentActiveEvent.getInstance().getEventName();
-        activity.setTitle(StringResources.NULL_TEXT);
-        eventInfo = currentActiveEvent.getEventInfo();
-        imageLink = currentActiveEvent.getEventImage();
-        matchCardText = currentActiveEvent.getMatchCard();
-        startTime = currentActiveEvent.getEventStartTime();
-        location = currentActiveEvent.getEventLocation();
+//        eventName = CurrentActiveEvent.getInstance().getEventName();
+//        activity.setTitle(StringResources.NULL_TEXT);
+//        eventInfo = currentActiveEvent.getEventInfo();
+//        imageLink = currentActiveEvent.getEventImage();
+//        matchCardText = currentActiveEvent.getMatchCard();
+//        startTime = currentActiveEvent.getEventStartTime();
+//        location = currentActiveEvent.getEventLocation();
         prepareEventInfoContent(activity);
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

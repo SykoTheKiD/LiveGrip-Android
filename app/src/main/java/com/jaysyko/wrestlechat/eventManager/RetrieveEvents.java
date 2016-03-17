@@ -2,13 +2,6 @@ package com.jaysyko.wrestlechat.eventManager;
 
 import com.jaysyko.wrestlechat.db.QueryResult;
 import com.jaysyko.wrestlechat.models.Event;
-import com.jaysyko.wrestlechat.db.Query;
-import com.jaysyko.wrestlechat.utils.DBConstants;
-
-import java.util.List;
-
-import static com.jaysyko.wrestlechat.db.BackEnd.queryCache;
-import static com.jaysyko.wrestlechat.db.BackEnd.queryDB;
 
 /**
  * RetrieveEvents.java
@@ -30,20 +23,20 @@ public class RetrieveEvents {
         return retrieveEvents;
     }
 
-    public List getEventList(Boolean level) {
-        updateEventCards(level);
-        return this.queryResult.getResults();
-    }
+//    public List getEventList(Boolean level) {
+//        updateEventCards(level);
+//        return this.queryResult.getResults();
+//    }
 
     //display clickable a list of all users
     @SuppressWarnings("unchecked")
     private synchronized void updateEventCards(Boolean hard) {
-        Query query = new Query(EVENT_MODEL);
-        query.orderByASC(DBConstants.EVENT_START_TIME_KEY);
-        if (hard) {
-            this.queryResult = queryDB(query, EVENTS_MODEL_SIMPLE_NAME);
-        } else {
-            this.queryResult = queryCache(query);
-        }
+//        Query query = new Query(EVENT_MODEL);
+//        query.orderByASC(DBConstants.EVENT_START_TIME_KEY);
+//        if (hard) {
+//            this.queryResult = queryDB(query, EVENTS_MODEL_SIMPLE_NAME);
+//        } else {
+//            this.queryResult = queryCache(query);
+//        }
     }
 }

@@ -21,7 +21,6 @@ import com.jaysyko.wrestlechat.messageTypes.MessageGenerator;
 import com.jaysyko.wrestlechat.messageTypes.MessagePosition;
 import com.jaysyko.wrestlechat.messageTypes.MessageType;
 import com.jaysyko.wrestlechat.models.Message;
-import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import java.util.List;
 
@@ -57,31 +56,31 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         }
         final Message message = getItem(position);
         final MessageViewHolder holder = (MessageViewHolder) convertView.getTag();
-        final boolean isMe = message.getUsername().equals(mUsername);
+//        final boolean isMe = message.getUsername().equals(mUsername);
         handler.post(new Runnable() {
             @Override
             public void run() {
-                final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
-                ImageTools.loadImage(context, message.getUserImage(), profileView);
+//                final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
+//                ImageTools.loadImage(context, message.getUserImage(), profileView);
             }
         });
         // Show-hide image based on the logged-in user.
         // Display the profile image to the right for our user, left for other users.
-        if (isMe) {
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    setUserView(holder, message);
-                }
-            });
-        } else {
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    senderView(holder, message);
-                }
-            });
-        }
+//        if (isMe) {
+//            handler.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    setUserView(holder, message);
+//                }
+//            });
+//        } else {
+//            handler.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    senderView(holder, message);
+//                }
+//            });
+//        }
         return convertView;
     }
 
@@ -116,7 +115,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         holder.imageRight.setVisibility(View.GONE);
         holder.user.setVisibility(View.GONE);
         TextView usernameTV = generateUsername();
-        usernameTV.setText(message.getUsername());
+//        usernameTV.setText(message.getUsername());
         View view = uiComponents.generateView(MessagePosition.SENDER, message);
         senderContainer.removeAllViews();
         senderContainer.addView(usernameTV);
