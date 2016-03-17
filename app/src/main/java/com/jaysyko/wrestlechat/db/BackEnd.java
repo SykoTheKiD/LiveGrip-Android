@@ -3,16 +3,9 @@ package com.jaysyko.wrestlechat.db;
 import android.content.Context;
 import android.util.Log;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.jaysyko.wrestlechat.utils.DBConstants;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * BackEnd.java
@@ -22,9 +15,9 @@ import java.util.Map;
  */
 public class BackEnd {
     private RequestQueue requestQueue;
-    private StringRequest stringRequest;
 
     public BackEnd(Context context) {
+        Log.e("ME", String.valueOf(context == null));
         requestQueue = Volley.newRequestQueue(context);
     }
 
@@ -34,7 +27,7 @@ public class BackEnd {
      * @return List of results
      */
 //    public QueryResult queryCache(Query query) {
-//        return queryDB(query);
+//        return execute(query);
 //    }
 
     /**
@@ -49,30 +42,31 @@ public class BackEnd {
      *
      * @return List of results
      */
-    public synchronized QueryResult queryDB(String endpoint, final HashMap<String, String> params) {
+    public synchronized QueryResult execute(StringRequest request) {
         final QueryResult[] queryResponse = {null};
-        stringRequest = new StringRequest(
-                Request.Method.POST,
-                DBConstants.MYSQL_URL.concat(endpoint),
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.e("RE", response);
-                        queryResponse[0] = new QueryResult(response);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("RE", error.getMessage());
-                queryResponse[0] = new QueryResult(null);
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                return params;
-            }
-        };
-        requestQueue.add(stringRequest);
+        requestQueue.add(request);
         return queryResponse[0];
     }
 }
+
+/**
+ * RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+ * StringRequest stringRequest = new StringRequest(Request.Method.POST, DBConstants.MYSQL_URL.concat("/newuser.php"), new Response.Listener<String>() {
+ *
+ * @Override public void onResponse(String response) {
+ * Log.e("K", response);
+ * }
+ * }, new Response.ErrorListener() {
+ * @Override public void onErrorResponse(VolleyError error) {
+ * Log.e("E", error.getMessage());
+ * }
+ * }) {
+ * @Override protected Map<String, String> getParams() {
+ * HashMap<String, String> params = new HashMap<>();
+ * params.put("username", username);
+ * params.put("password", password);
+ * return params;
+ * }
+ * };
+ * queue.add(stringRequest);
+ */

@@ -34,7 +34,7 @@ public class RetrieveEvents {
 //        Query query = new Query(EVENT_MODEL);
 //        query.orderByASC(DBConstants.EVENT_START_TIME_KEY);
 //        if (hard) {
-//            this.queryResult = queryDB(query, EVENTS_MODEL_SIMPLE_NAME);
+//            this.queryResult = execute(query, EVENTS_MODEL_SIMPLE_NAME);
 //        } else {
 //            this.queryResult = queryCache(query);
 //        }
