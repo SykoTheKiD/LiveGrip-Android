@@ -1,5 +1,6 @@
 package com.jaysyko.wrestlechat.date;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,21 +17,26 @@ public class DateVerifier {
     private static final String STRING_DATE_FORMAT = "EEE, MMM dd hh:mm a";
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat(STRING_DATE_FORMAT, Locale.CANADA);
 
+    private static Date toMillisDate(Timestamp timestamp) {
+        long milliseconds = timestamp.getTime() + (timestamp.getNanos() / 1000000);
+        return new java.util.Date(milliseconds);
+    }
+
     /**
      * Returns a LiveStatus object stating whether or not we should go live with an event
      * @param startTime Long
      * @param endTime Long
      * @return LiveStatus
      */
-    public static LiveStatus goLive(Long startTime, Long endTime) {
+    public static LiveStatus goLive(String startTime, String endTime) {
         // String UTC to Date object
-        Date startTimeDate = new Date(startTime);
-        Date endTimeDate = new Date(endTime);
+        Date startTimeDate = toMillisDate(Timestamp.valueOf(startTime));
+        Date endTimeDate = toMillisDate(Timestamp.valueOf(endTime));
         // get Current time in UTC in a Date Object
         Date currentTime = new Date();
-        Boolean started = currentTime.before(startTimeDate);
+        Boolean notStarted = currentTime.before(startTimeDate);
         Boolean ended = currentTime.after(endTimeDate);
-        if (started) {
+        if (notStarted) {
             return new LiveStatus(false, LiveStatus.EVENT_NOT_STARTED);
         }
         if (ended) {
@@ -49,17 +55,3 @@ public class DateVerifier {
         return DATE_FORMAT.format(date);
     }
 }
-
-
-//    private static final String TIME_ZONE = "UTC";
-
-//    public static Long goLive(String date) {
-//        DATE_FORMAT.setTimeZone(TimeZone.getTimeZone(TIME_ZONE));
-//        try {
-//            Date dateObj = DATE_FORMAT.parse(date);
-//            return goLive(dateObj.getTime());
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        return false;
-//    }

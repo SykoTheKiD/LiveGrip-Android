@@ -1,15 +1,21 @@
 package com.jaysyko.wrestlechat.auth;
 
-import android.app.Activity;
+import android.content.Context;
+import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.jaysyko.wrestlechat.db.BackEnd;
-import com.jaysyko.wrestlechat.db.QueryResult;
+import com.jaysyko.wrestlechat.utils.DBConstants;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * CurrentActiveUser.java
@@ -94,23 +100,41 @@ public class CurrentActiveUser {
      *
      * @return boolean
      */
-    public boolean loginUser(Activity activity, String username, String password) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("username", username);
-        params.put("password", password);
-        QueryResult result = new BackEnd(activity).queryDB("/login.php", params);
-        boolean resultSuccessful = result.isSuccessful();
-        if (resultSuccessful) {
-            JSONObject payload = result.getPayload();
-            try {
-                activeCurrentActiveUser.username = username;
-                activeCurrentActiveUser.password = password;
-                activeCurrentActiveUser.profileImageURL = payload.getString("profile_image");
-            } catch (JSONException e) {
-                e.printStackTrace();
+    public boolean loginUser(Context context, final String username, final String password) {
+        final Boolean[] ret = new Boolean[1];
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                DBConstants.MYSQL_URL.concat("login.php"),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            ret[0] = jsonObject.getBoolean("success");
+                            Log.e("E", jsonObject.toString());
+                        } catch (JSONException e) {
+                            ret[0] = false;
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                ret[0] = false;
             }
-        }
-        return resultSuccessful;
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("username", username);
+                params.put("password", password);
+                return params;
+            }
+        };
+
+        new BackEnd(context).execute(stringRequest);
+        return ret[0];
     }
 
     /**

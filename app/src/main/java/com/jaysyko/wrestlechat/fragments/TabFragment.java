@@ -1,5 +1,6 @@
 package com.jaysyko.wrestlechat.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -14,9 +15,9 @@ import com.jaysyko.wrestlechat.adapters.TabAdapter;
 
 public class TabFragment extends Fragment {
 
+    public static final int MAX_TABS = 3;
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
-    public static int int_items = 3;
 
     @Nullable
     @Override
@@ -31,7 +32,8 @@ public class TabFragment extends Fragment {
         /**
          *Set an Adapter for the View Pager
          */
-        viewPager.setAdapter(new TabAdapter(getChildFragmentManager(), getContext()));
+        Context context = getContext();
+        viewPager.setAdapter(new TabAdapter(getChildFragmentManager(), context));
 
         /**
          * Now , this is a workaround ,
@@ -45,9 +47,7 @@ public class TabFragment extends Fragment {
                 tabLayout.setupWithViewPager(viewPager);
             }
         });
-
         return view;
 
     }
-
 }
