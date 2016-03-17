@@ -18,35 +18,26 @@ import android.widget.RelativeLayout;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.dataObjects.EventObject;
-import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
-import com.jaysyko.wrestlechat.eventManager.OpenEvent;
-import com.jaysyko.wrestlechat.eventManager.RetrieveEvents;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.utils.BundleKeys;
-import com.jaysyko.wrestlechat.utils.DBConstants;
-import com.parse.ParseObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TabContentFragment extends Fragment {
 
     private static final int VIBRATE_MILLISECONDS = 40;
     private static final int REFRESH_ANI_MILLIS = 3000;
     final Handler handler = new Handler();
-    private Context applicationContext;
-    private EventListAdapter mAdapter;
-    private RelativeLayout layout;
-    private int state;
-    private List<ParseObject> liveEvents = new ArrayList<>();
+    //    private List<ParseObject> liveEvents = new ArrayList<>();
     final Runnable updateEventsSoft = new Runnable() {
         @Override
         public void run() {
             refreshCards(false);
         }
     };
+    private Context applicationContext;
     final Runnable updateEventsHard = new Runnable() {
         @Override
         public void run() {
@@ -57,12 +48,15 @@ public class TabContentFragment extends Fragment {
             }
         }
     };
+    private EventListAdapter mAdapter;
+    private RelativeLayout layout;
     final Runnable initSwipeRefresh = new Runnable() {
         @Override
         public void run() {
             initSwipeRefresh();
         }
     };
+    private int state;
 
     @Nullable
     @Override
@@ -104,33 +98,33 @@ public class TabContentFragment extends Fragment {
     }
 
     private void refreshCards(Boolean hard) {
-        ArrayList<EventObject> eventObjects = new ArrayList<>();
-        ParseObject current;
-        List<ParseObject> eventList = RetrieveEvents.getInstance().getEventList(hard);
-        if (eventList != null) {
-            if (eventList.size() > 0) {
-                for (int i = 0; i < eventList.size(); i++) {
-                    current = eventList.get(i);
-                    Long startTime = current.getLong(DBConstants.EVENT_START_TIME_KEY), endTime = current.getLong(DBConstants.EVENT_END_TIME_KEY);
-                    if (DateVerifier.goLive(startTime, endTime).getReason() == this.state) {
-                        EventObject eventObject = new EventObject(
-                                current.getString(DBConstants.EVENT_NAME_KEY),
-                                current.getString(DBConstants.EVENT_LOCATION_KEY),
-                                startTime,
-                                endTime,
-                                current.getString(DBConstants.EVENT_IMAGE_KEY)
-                        );
-                        eventObjects.add(eventObject);
-                        liveEvents.add(current);
-                    }
-                }
-            } else {
-                Dialog.makeToast(applicationContext, getString(R.string.no_events));
-            }
-        } else {
-            Dialog.makeToast(applicationContext, getString(R.string.error_loading_events));
-        }
-        updateRecyclerView(eventObjects);
+//        ArrayList<EventObject> eventObjects = new ArrayList<>();
+//        ParseObject current;
+//        List<ParseObject> eventList = RetrieveEvents.getInstance().getEventList(hard);
+//        if (eventList != null) {
+//            if (eventList.size() > 0) {
+//                for (int i = 0; i < eventList.size(); i++) {
+//                    current = eventList.get(i);
+//                    Long startTime = current.getLong(DBConstants.EVENT_START_TIME_KEY), endTime = current.getLong(DBConstants.EVENT_END_TIME_KEY);
+//                    if (DateVerifier.goLive(startTime, endTime).getReason() == this.state) {
+//                        EventObject eventObject = new EventObject(
+//                                current.getString(DBConstants.EVENT_NAME_KEY),
+//                                current.getString(DBConstants.EVENT_LOCATION_KEY),
+//                                startTime,
+//                                endTime,
+//                                current.getString(DBConstants.EVENT_IMAGE_KEY)
+//                        );
+//                        eventObjects.add(eventObject);
+//                        liveEvents.add(current);
+//                    }
+//                }
+//            } else {
+//                Dialog.makeToast(applicationContext, getString(R.string.no_events));
+//            }
+//        } else {
+//            Dialog.makeToast(applicationContext, getString(R.string.error_loading_events));
+//        }
+//        updateRecyclerView(eventObjects);
     }
 
     private synchronized void updateRecyclerView(ArrayList<EventObject> eventObjects) {
@@ -146,14 +140,14 @@ public class TabContentFragment extends Fragment {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                OpenEvent.openConversation(liveEvents.get(position), applicationContext);
+//                                OpenEvent.openConversation(liveEvents.get(position), applicationContext);
                             }
 
                             @Override
                             public void onItemLongClick(View view, int position) {
                                 Vibrator vibe = (Vibrator) applicationContext.getSystemService(Context.VIBRATOR_SERVICE);
                                 vibe.vibrate(VIBRATE_MILLISECONDS);
-                                OpenEvent.openEventInfo(liveEvents.get(position), applicationContext);
+//                                OpenEvent.openEventInfo(liveEvents.get(position), applicationContext);
                             }
                         }));
     }

@@ -11,9 +11,7 @@ import java.io.Serializable;
 
 public class Message implements Serializable {
 
-    private String userID;
-    private String eventID;
-    private String body;
+    private String userID, eventID, body;
 
     public Message(String userID, String eventID, String body) {
         this.userID = userID;
@@ -44,14 +42,6 @@ public class Message implements Serializable {
      */
     public String getBody() {
         return this.body;
-    }
-
-    /**
-     * @return String
-     */
-    @Override
-    public String toString() {
-        return this.userID;
     }
 
 }

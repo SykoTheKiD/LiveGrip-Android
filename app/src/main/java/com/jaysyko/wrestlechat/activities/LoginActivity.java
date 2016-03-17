@@ -5,21 +5,30 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.auth.CreateNewUser;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formValidators.LoginValidator;
-import com.jaysyko.wrestlechat.forms.formValidators.SignUpValidator;
 import com.jaysyko.wrestlechat.network.NetworkState;
+import com.jaysyko.wrestlechat.utils.DBConstants;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.StringResources;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -82,22 +91,43 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 username = usernameField.getText().toString();
                 password = passwordField.getText().toString();
-                if (NetworkState.isConnected(context)) {
-                    Form form = new SignUpValidator(username, password).validate();
-                    if (form.isValid()) {
-                        if (CreateNewUser.signUpUser(username, password)) {
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            Dialog.makeToast(context, getString(R.string.username_taken));
-                        }
-                    } else {
-                        Dialog.makeToast(context, getString(Form.getSimpleMessage(form.getReason())));
+                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, DBConstants.MYSQL_URL.concat("/newuser.php"), new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("K", response);
                     }
-                } else {
-                    Dialog.makeToast(context, getString(R.string.no_network));
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("E", error.getMessage());
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() {
+                        HashMap<String, String> params = new HashMap<>();
+                        params.put("username", username);
+                        params.put("password", password);
+                        return params;
+                    }
+                };
+                queue.add(stringRequest);
                 }
-            }
+//                if (NetworkState.isConnected(context)) {
+//                    Form form = new SignUpValidator(username, password).validate();
+//                    if (form.isValid()) {
+//                        if (CreateNewUser.signUpUser(getApplicationContext(), username, password)) {
+//                            startActivity(intent);
+//                            finish();
+//                        } else {
+//                            Dialog.makeToast(context, getString(R.string.username_taken));
+//                        }
+//                    } else {
+//                        Dialog.makeToast(context, getString(Form.getSimpleMessage(form.getReason())));
+//                    }
+//                } else {
+//                    Dialog.makeToast(context, getString(R.string.no_network));
+//                }
         });
     }
 
@@ -111,7 +141,7 @@ public class LoginActivity extends AppCompatActivity {
                     Form form = new LoginValidator(username, password).validate();
                     if (form.isValid()) {
                         CurrentActiveUser currentActiveUser = CurrentActiveUser.getInstance(username, password);
-                        if (currentActiveUser.loginUser()) {
+                        if (currentActiveUser.loginUser(getParent(), username, password)) {
                             Dialog.makeToast(context, getString(R.string.welcome_back).concat(StringResources.BLANK_SPACE).concat(username));
                             startActivity(intent);
                             finish();

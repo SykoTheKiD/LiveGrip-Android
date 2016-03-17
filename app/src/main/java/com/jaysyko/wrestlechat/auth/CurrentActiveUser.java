@@ -1,10 +1,15 @@
 package com.jaysyko.wrestlechat.auth;
 
-import android.util.Log;
+import android.app.Activity;
 
+import com.jaysyko.wrestlechat.db.BackEnd;
+import com.jaysyko.wrestlechat.db.QueryResult;
 import com.jaysyko.wrestlechat.utils.ImageTools;
-import com.parse.ParseException;
-import com.parse.ParseUser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 /**
  * CurrentActiveUser.java
@@ -43,23 +48,15 @@ public class CurrentActiveUser {
      * @return CurrentActiveUser
      */
     public static CurrentActiveUser getInstance() {
-        final ParseUser currentUser = ParseUser.getCurrentUser();
-        if (currentUser != null) {
-            activeCurrentActiveUser = new CurrentActiveUser(currentUser.getUsername(), null);
-        }
+//        if (currentUser != null) {
+//            activeCurrentActiveUser = new CurrentActiveUser(currentUser.getUsername(), null);
+//        }
         return activeCurrentActiveUser;
     }
 
     public boolean setPassword(String password) {
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        currentUser.setPassword(password);
-        try {
-            currentUser.save();
-            activeCurrentActiveUser = null;
-            return true;
-        } catch (ParseException e) {
-            return false;
-        }
+//        currentUser.setPassword(password);
+        return true;
     }
 
     /**
@@ -68,13 +65,12 @@ public class CurrentActiveUser {
      * @return imageUrl: String
      */
     public String getCustomProfileImageURL() {
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        String userImage = currentUser.getString(User.IMG_ID);
-        if (userImage != null) {
-            activeCurrentActiveUser.profileImageURL = userImage;
-        } else {
-            activeCurrentActiveUser.profileImageURL = ImageTools.defaultProfileImage(activeCurrentActiveUser.getUsername());
-        }
+//        String userImage = currentUser.getString(User.IMG_ID);
+//        if (userImage != null) {
+//            activeCurrentActiveUser.profileImageURL = userImage;
+//        } else {
+//            activeCurrentActiveUser.profileImageURL = ImageTools.defaultProfileImage(activeCurrentActiveUser.getUsername());
+//        }
         return activeCurrentActiveUser.profileImageURL;
     }
 
@@ -88,18 +84,9 @@ public class CurrentActiveUser {
     }
 
     public boolean setUsername(String username) {
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        String oldUsername = activeCurrentActiveUser.username;
-        currentUser.setUsername(username);
-        try {
-            currentUser.save();
-            activeCurrentActiveUser.username = username;
-            return true;
-        } catch (ParseException e) {
-            currentUser.setUsername(oldUsername);
-            activeCurrentActiveUser.username = oldUsername;
-            return false;
-        }
+        // hit /users/edit
+//        currentUser.setUsername(username);
+        return true;
     }
 
     /**
@@ -107,15 +94,23 @@ public class CurrentActiveUser {
      *
      * @return boolean
      */
-    public boolean loginUser() {
-        try {
-            ParseUser.logIn(activeCurrentActiveUser.username, activeCurrentActiveUser.password);
-            return true;
-        } catch (ParseException e) {
-            activeCurrentActiveUser = null;
-            return false;
+    public boolean loginUser(Activity activity, String username, String password) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("username", username);
+        params.put("password", password);
+        QueryResult result = new BackEnd(activity).queryDB("/login.php", params);
+        boolean resultSuccessful = result.isSuccessful();
+        if (resultSuccessful) {
+            JSONObject payload = result.getPayload();
+            try {
+                activeCurrentActiveUser.username = username;
+                activeCurrentActiveUser.password = password;
+                activeCurrentActiveUser.profileImageURL = payload.getString("profile_image");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
-
+        return resultSuccessful;
     }
 
     /**
@@ -123,7 +118,7 @@ public class CurrentActiveUser {
      */
     public void logout() {
         activeCurrentActiveUser = null;
-        ParseUser.logOut();
+        // delete local session
     }
 
     /**
@@ -136,15 +131,7 @@ public class CurrentActiveUser {
         Boolean isLinkToImage = ImageTools.isLinkToImage(url);
         if (isLinkToImage) {
             activeCurrentActiveUser.profileImageURL = url;
-            ParseUser currentUser = ParseUser.getCurrentUser();
-            currentUser.put(User.IMG_ID, url);
-            try {
-                currentUser.save();
-                return true;
-            } catch (ParseException e) {
-                Log.e("FAIL EVENT_IMAGE_KEY", e.getMessage());
-                return false;
-            }
+            return true;
         } else {
             return false;
         }
