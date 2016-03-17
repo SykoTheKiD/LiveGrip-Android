@@ -1,8 +1,8 @@
 package com.jaysyko.wrestlechat.db;
 
-import android.app.Activity;
+import android.content.Context;
+import android.util.Log;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -10,9 +10,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.jaysyko.wrestlechat.utils.DBConstants;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,8 +24,8 @@ public class BackEnd {
     private RequestQueue requestQueue;
     private StringRequest stringRequest;
 
-    public BackEnd(Activity activity) {
-        requestQueue = Volley.newRequestQueue(activity);
+    public BackEnd(Context context) {
+        requestQueue = Volley.newRequestQueue(context);
     }
 
     /**
@@ -52,36 +49,30 @@ public class BackEnd {
      *
      * @return List of results
      */
-    private QueryResult queryDB(String endpoint) {
+    public synchronized QueryResult queryDB(String endpoint, final HashMap<String, String> params) {
         final QueryResult[] queryResponse = {null};
-        stringRequest = new StringRequest(Request.Method.POST, DBConstants.MYSQL_URL.concat(endpoint), new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    queryResponse[0] = new QueryResult(new JSONObject(response));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-
+        stringRequest = new StringRequest(
+                Request.Method.POST,
+                DBConstants.MYSQL_URL.concat(endpoint),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("RE", response);
+                        queryResponse[0] = new QueryResult(response);
+                    }
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.e("RE", error.getMessage());
+                queryResponse[0] = new QueryResult(null);
             }
         }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> params = new HashMap<>();
-                requestQueue.add(stringRequest);
+            protected Map<String, String> getParams() {
                 return params;
             }
         };
-
+        requestQueue.add(stringRequest);
         return queryResponse[0];
-    }
-
-    public synchronized void save() {
-
     }
 }

@@ -135,11 +135,11 @@ public class MessagingFragment extends Fragment {
         if (NetworkState.isConnected(mApplicationContext)) {
             if (form.isValid()) {
                 // Use Message model to create new messages now
-                Message message = new Message();
-                message.setUserID(userID);
-                message.setEventId(sEventId);
-                message.setBody(body);
-                ChatStream.getInstance().send(message);
+//                Message message = new Message();
+//                message.setUserID(userID);
+//                message.setEventId(sEventId);
+//                message.setBody(body);
+//                ChatStream.getInstance().send(message);
                 etMessage.setText(StringResources.NULL_TEXT);
             } else {
                 Dialog.makeToast(mApplicationContext, getString(Form.getSimpleMessage(form.getReason())));

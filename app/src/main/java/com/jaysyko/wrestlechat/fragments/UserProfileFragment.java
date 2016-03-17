@@ -1,13 +1,13 @@
 package com.jaysyko.wrestlechat.fragments;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.activities.EventListActivity;
 import com.jaysyko.wrestlechat.activities.LoginActivity;
 import com.jaysyko.wrestlechat.ads.AdBuilder;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
@@ -26,7 +25,6 @@ import com.jaysyko.wrestlechat.forms.formValidators.SignUpValidator;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
-import com.jaysyko.wrestlechat.utils.StringResources;
 
 public class UserProfileFragment extends Fragment {
 
@@ -98,34 +96,34 @@ public class UserProfileFragment extends Fragment {
                 });
             }
         });
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                update.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String newPasswordStr = newPassword.getText().toString().trim();
-                        String newUsernameStr = username.getText().toString().trim();
-                        if (!(newUsernameStr.equals(currentActiveUser.getUsername())) && !newPasswordStr.isEmpty()) {
-                            if (changeUsername(newUsernameStr) && changePassword(newPasswordStr)) {
-                                startActivity(reLogin());
-                            }
-                        } else if (!(newUsernameStr.equals(currentActiveUser.getUsername()))) {
-                            if (changeUsername(newUsernameStr)) {
-                                Dialog.makeToast(applicationContext, getString(R.string.saved_successfully));
-                                startActivity(new Intent(applicationContext, EventListActivity.class));
-                            }
-                        } else if (!newPasswordStr.isEmpty()) {
-                            if (changePassword(newPasswordStr)) {
-                                startActivity(reLogin());
-                            } else {
-                                Dialog.makeToast(applicationContext, getString(R.string.error_has_occured));
-                            }
-                        }
-                    }
-                });
-            }
-        });
+//        handler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                update.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        String newPasswordStr = newPassword.getText().toString().trim();
+//                        String newUsernameStr = username.getText().toString().trim();
+//                        if (!(newUsernameStr.equals(currentActiveUser.getUsername())) && !newPasswordStr.isEmpty()) {
+//                            if (changeUsername(newUsernameStr) && changePassword(newPasswordStr)) {
+//                                startActivity(reLogin());
+//                            }
+//                        } else if (!(newUsernameStr.equals(currentActiveUser.getUsername()))) {
+//                            if (changeUsername(newUsernameStr)) {
+//                                Dialog.makeToast(applicationContext, getString(R.string.saved_successfully));
+//                                startActivity(new Intent(applicationContext, EventListActivity.class));
+//                            }
+//                        } else if (!newPasswordStr.isEmpty()) {
+//                            if (changePassword(newPasswordStr)) {
+//                                startActivity(reLogin());
+//                            } else {
+//                                Dialog.makeToast(applicationContext, getString(R.string.error_has_occured));
+//                            }
+//                        }
+//                    }
+//                });
+//            }
+//        });
         return view;
     }
 
@@ -138,20 +136,20 @@ public class UserProfileFragment extends Fragment {
         return intent;
     }
 
-    private boolean changeUsername(String newUsernameStr) {
-        Form form = new SignUpValidator(newUsernameStr, StringResources.DUMMY_PASSWORD).validate();
-        if (form.isValid()) {
-            if (currentActiveUser.setUsername(newUsernameStr)) {
-                return true;
-            } else {
-                Dialog.makeToast(applicationContext, getString(R.string.username_taken));
-                return false;
-            }
-        } else {
-            Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.getReason())));
-            return false;
-        }
-    }
+//    private boolean changeUsername(String newUsernameStr) {
+//        Form form = new SignUpValidator(newUsernameStr, StringResources.DUMMY_PASSWORD).validate();
+//        if (form.isValid()) {
+//            if (currentActiveUser.setUsername(newUsernameStr)) {
+//                return true;
+//            } else {
+//                Dialog.makeToast(applicationContext, getString(R.string.username_taken));
+//                return false;
+//            }
+//        } else {
+//            Dialog.makeToast(applicationContext, getString(Form.getSimpleMessage(form.getReason())));
+//            return false;
+//        }
+//    }
 
     private boolean changePassword(String newPasswordStr) {
         Form form = new SignUpValidator(currentActiveUser.getUsername(), newPasswordStr).validate();
