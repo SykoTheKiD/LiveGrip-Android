@@ -165,13 +165,14 @@ public class LoginActivity extends AppCompatActivity {
                     if (form.isValid()) {
                         StringRequest stringRequest = new StringRequest(
                                 Request.Method.POST,
-                                DBConstants.MYSQL_URL.concat("newuser.php"),
+                                DBConstants.MYSQL_URL.concat("login.php"),
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
                                         try {
                                             JSONObject jsonObject = new JSONObject(response);
                                             boolean successful = jsonObject.getBoolean("success");
+                                            Log.e("RESP", response);
                                             if (successful) {
                                                 CurrentActiveUser.getInstance(username, password);
                                                 Dialog.makeToast(mContext, getString(R.string.welcome_back).concat(StringResources.BLANK_SPACE).concat(username));

@@ -1,7 +1,13 @@
 package com.jaysyko.wrestlechat.eventManager;
 
-import com.jaysyko.wrestlechat.db.QueryResult;
+import android.content.Context;
+
+import com.android.volley.toolbox.StringRequest;
+import com.jaysyko.wrestlechat.db.BackEnd;
 import com.jaysyko.wrestlechat.models.Event;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * RetrieveEvents.java
@@ -13,30 +19,25 @@ public class RetrieveEvents {
     private static final Class<Event> EVENT_MODEL = Event.class;
     private static final String EVENTS_MODEL_SIMPLE_NAME = EVENT_MODEL.getSimpleName();
     private static RetrieveEvents retrieveEvents = new RetrieveEvents();
-
-    private QueryResult queryResult;
+    private List<Event> eventsList = new ArrayList<>();
+    private Context context;
+    private StringRequest stringRequest;
 
     private RetrieveEvents() {
     }
 
-    public static RetrieveEvents getInstance() {
+    public static RetrieveEvents getInstance(Context context, StringRequest stringRequest) {
+        retrieveEvents.context = context;
+        retrieveEvents.stringRequest = stringRequest;
         return retrieveEvents;
     }
 
-//    public List getEventList(Boolean level) {
-//        updateEventCards(level);
-//        return this.queryResult.getResults();
-//    }
+    public List<Event> getEventList() {
+        updateEventCards();
+        return retrieveEvents.eventsList;
+    }
 
-    //display clickable a list of all users
-    @SuppressWarnings("unchecked")
-    private synchronized void updateEventCards(Boolean hard) {
-//        Query query = new Query(EVENT_MODEL);
-//        query.orderByASC(DBConstants.EVENT_START_TIME_KEY);
-//        if (hard) {
-//            this.queryResult = execute(query, EVENTS_MODEL_SIMPLE_NAME);
-//        } else {
-//            this.queryResult = queryCache(query);
-//        }
+    public synchronized void updateEventCards() {
+        new BackEnd(context).execute(stringRequest);
     }
 }

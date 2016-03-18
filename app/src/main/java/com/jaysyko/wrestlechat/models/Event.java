@@ -11,9 +11,9 @@ package com.jaysyko.wrestlechat.models;
 public class Event {
 
     private String eventID, eventName, eventInfo, matchCard, eventImage, eventLocation;
-    private Long eventStartTime, eventEndTime;
+    private String eventStartTime, eventEndTime;
 
-    public Event(String eventID, String eventName, String eventInfo, String matchCard, String eventImage, String eventLocation, Long eventStartTime, Long eventEndTime) {
+    public Event(String eventID, String eventName, String eventInfo, String matchCard, String eventImage, String eventLocation, String eventStartTime, String eventEndTime) {
         this.eventID = eventID;
         this.eventName = eventName;
         this.eventInfo = eventInfo;
@@ -84,14 +84,14 @@ public class Event {
      *
      * @return Long
      */
-    public Long getEventStartTime() {
+    public String getEventStartTime() {
         return this.eventStartTime;
     }
 
     /**
      * @return Long
      */
-    public Long getEventEndTime() {
+    public String getEventEndTime() {
         return this.eventEndTime;
     }
 }

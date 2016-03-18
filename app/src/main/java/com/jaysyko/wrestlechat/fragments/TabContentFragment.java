@@ -10,45 +10,60 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
-import com.jaysyko.wrestlechat.dataObjects.EventObject;
+import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
+import com.jaysyko.wrestlechat.eventManager.RetrieveEvents;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
+import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.utils.BundleKeys;
+import com.jaysyko.wrestlechat.utils.DBConstants;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
+
+
 
 public class TabContentFragment extends Fragment {
 
     private static final int VIBRATE_MILLISECONDS = 40;
     private static final int REFRESH_ANI_MILLIS = 3000;
     final Handler handler = new Handler();
-    //    private List<ParseObject> liveEvents = new ArrayList<>();
+    private List<Event> liveEvents = new ArrayList<>();
+    private Context applicationContext;
+    private EventListAdapter mAdapter;
     final Runnable updateEventsSoft = new Runnable() {
         @Override
         public void run() {
-            refreshCards(false);
+            refreshCards();
         }
     };
-    private Context applicationContext;
     final Runnable updateEventsHard = new Runnable() {
         @Override
         public void run() {
             if (NetworkState.isConnected(applicationContext)) {
-                refreshCards(true);
+                refreshCards();
             } else {
                 Dialog.makeToast(applicationContext, getString(R.string.no_network));
             }
         }
     };
-    private EventListAdapter mAdapter;
     private RelativeLayout layout;
     final Runnable initSwipeRefresh = new Runnable() {
         @Override
@@ -71,7 +86,7 @@ public class TabContentFragment extends Fragment {
                 RecyclerView recyclerView = (RecyclerView) layout.findViewById(R.id.recyclerView);
                 recyclerView.setLayoutManager(new LinearLayoutManager(applicationContext));
                 eventListClickListener(recyclerView);
-                mAdapter = new EventListAdapter(new ArrayList<EventObject>(), applicationContext);
+                mAdapter = new EventListAdapter(new ArrayList<Event>(), applicationContext);
                 recyclerView.setAdapter(mAdapter);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
             }
@@ -97,37 +112,51 @@ public class TabContentFragment extends Fragment {
         });
     }
 
-    private void refreshCards(Boolean hard) {
-//        ArrayList<EventObject> eventObjects = new ArrayList<>();
-//        ParseObject current;
-//        List<ParseObject> eventList = RetrieveEvents.getInstance().getEventList(hard);
-//        if (eventList != null) {
-//            if (eventList.size() > 0) {
-//                for (int i = 0; i < eventList.size(); i++) {
-//                    current = eventList.get(i);
-//                    Long startTime = current.getLong(DBConstants.EVENT_START_TIME_KEY), endTime = current.getLong(DBConstants.EVENT_END_TIME_KEY);
-//                    if (DateVerifier.goLive(startTime, endTime).getReason() == this.state) {
-//                        EventObject eventObject = new EventObject(
-//                                current.getString(DBConstants.EVENT_NAME_KEY),
-//                                current.getString(DBConstants.EVENT_LOCATION_KEY),
-//                                startTime,
-//                                endTime,
-//                                current.getString(DBConstants.EVENT_IMAGE_KEY)
-//                        );
-//                        eventObjects.add(eventObject);
-//                        liveEvents.add(current);
-//                    }
-//                }
-//            } else {
-//                Dialog.makeToast(applicationContext, getString(R.string.no_events));
-//            }
-//        } else {
-//            Dialog.makeToast(applicationContext, getString(R.string.error_loading_events));
-//        }
-//        updateRecyclerView(eventObjects);
+    private void refreshCards() {
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                DBConstants.MYSQL_URL.concat("events.php"),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean successful = jsonObject.getBoolean("success");
+                            if (successful) {
+                                JSONObject current;
+                                JSONArray events = jsonObject.getJSONArray("payload");
+                                for (int i = 0; i < events.length(); i++) {
+                                    current = (JSONObject) events.get(i);
+                                    String startTime = current.getString("start_time"), endTime = current.getString("end_time");
+                                    if (DateVerifier.goLive(startTime, endTime).goLive()) {
+                                        liveEvents.add(new Event(
+                                                current.getString("id"),
+                                                current.getString("name"),
+                                                current.getString("info"),
+                                                current.getString("match_card"),
+                                                current.getString("image"),
+                                                current.getString("location"),
+                                                current.getString("start_time"),
+                                                current.getString("end_time")
+                                        ));
+                                    }
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("ERR", error.getMessage());
+            }
+        });
+        RetrieveEvents.getInstance(applicationContext, stringRequest).updateEventCards();
+        updateRecyclerView(liveEvents);
     }
 
-    private synchronized void updateRecyclerView(ArrayList<EventObject> eventObjects) {
+    private synchronized void updateRecyclerView(List<Event> eventObjects) {
         mAdapter.itemsData.clear();
         mAdapter.itemsData.addAll(eventObjects);
         mAdapter.notifyDataSetChanged();

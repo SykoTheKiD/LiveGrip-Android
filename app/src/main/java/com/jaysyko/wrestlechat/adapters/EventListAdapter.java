@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.viewholders.EventListViewHolder;
-import com.jaysyko.wrestlechat.dataObjects.EventObject;
 import com.jaysyko.wrestlechat.date.DateVerifier;
+import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
@@ -28,11 +28,11 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListViewHolder> 
     private static final int NON_LIVE_TEXT_SIZE = 15;
     private static final String LIVE_TEXT_COLOUR = "#00C853";
     private static final int LIVE_TEXT_SIZE = 20;
-    public List<EventObject> itemsData;
+    public List<Event> itemsData;
     private Context context;
 
 
-    public EventListAdapter(List<EventObject> itemsData, Context context) {
+    public EventListAdapter(List<Event> itemsData, Context context) {
         this.itemsData = itemsData;
         this.context = context;
     }
@@ -64,17 +64,17 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListViewHolder> 
     public void onBindViewHolder(EventListViewHolder viewHolder, int position) {
         // - get data from your itemsData at this position
         // - replace the contents of the view with that itemsData
-        EventObject currentCard = itemsData.get(position);
+        Event currentCard = itemsData.get(position);
         viewHolder.txtViewTitle.setText(currentCard.getEventName());
-        viewHolder.txtViewLocation.setText(currentCard.getLocation());
-        ImageTools.loadImage(this.context, StringResources.IMGUR_LINK.concat(currentCard.getImageLink()), viewHolder.imgViewIcon);
+        viewHolder.txtViewLocation.setText(currentCard.getEventLocation());
+        ImageTools.loadImage(this.context, StringResources.IMGUR_LINK.concat(currentCard.getEventImage()), viewHolder.imgViewIcon);
 
-        if (DateVerifier.goLive(currentCard.getStartTime(), currentCard.getEndTime()).goLive()) {
+        if (DateVerifier.goLive(currentCard.getEventStartTime(), currentCard.getEventEndTime()).goLive()) {
             viewHolder.txtViewLiveStatus.setText(R.string.online_status_live);
             viewHolder.txtViewLiveStatus.setTextColor(Color.parseColor(LIVE_TEXT_COLOUR));
             viewHolder.txtViewLiveStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, LIVE_TEXT_SIZE);
         } else {
-            String eventDate = DateVerifier.format(currentCard.getStartTime());
+            String eventDate = currentCard.getEventStartTime().toString();
             viewHolder.txtViewLiveStatus.setTextColor(Color.parseColor(NON_LIVE_TEXT_COLOUR));
             viewHolder.txtViewLiveStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, NON_LIVE_TEXT_SIZE);
             viewHolder.txtViewLiveStatus.setText(eventDate);
