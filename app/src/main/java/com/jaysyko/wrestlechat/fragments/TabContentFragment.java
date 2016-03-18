@@ -25,6 +25,7 @@ import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.db.BackEnd;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
+import com.jaysyko.wrestlechat.eventManager.OpenEvent;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.network.NetworkState;
@@ -159,14 +160,14 @@ public class TabContentFragment extends Fragment {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-//                                OpenEvent.openConversation(liveEvents.get(position), mApplicationContext);
+                                OpenEvent.openConversation(mEventsList.get(position), mApplicationContext);
                             }
 
                             @Override
                             public void onItemLongClick(View view, int position) {
                                 Vibrator vibe = (Vibrator) mApplicationContext.getSystemService(Context.VIBRATOR_SERVICE);
                                 vibe.vibrate(VIBRATE_MILLISECONDS);
-//                                OpenEvent.openEventInfo(liveEvents.get(position), mApplicationContext);
+                                OpenEvent.openEventInfo(mEventsList.get(position), mApplicationContext);
                             }
                         }
                 )

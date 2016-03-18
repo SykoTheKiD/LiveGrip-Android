@@ -5,10 +5,27 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
+import com.jaysyko.wrestlechat.db.BackEnd;
+import com.jaysyko.wrestlechat.fragments.MessagingFragment;
+import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.network.NetworkState;
+import com.jaysyko.wrestlechat.utils.DBConstants;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by jarushaan on 2016-03-09
@@ -16,14 +33,14 @@ import java.util.List;
 public class MessagingService extends Service {
     private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
     private final IBinder mBinder = new MessageBinder(this);
+    private Handler handler = new Handler();
+    private List<Message> messageList = new ArrayList<>();
     private final Runnable fetchMessageRunnable = new Runnable() {
         @Override
         public void run() {
             fetchOldMessages();
         }
     };
-    private Handler handler = new Handler();
-    private List messageList;
 
     @Nullable
     @Override
@@ -42,23 +59,54 @@ public class MessagingService extends Service {
         return false;
     }
 
-    @SuppressWarnings("unchecked")
     private void fetchOldMessages() {
         if (NetworkState.isConnected(getApplicationContext())) {
-//            Query query = new Query(Message.class);
-//            String sEventId = CurrentActiveEvent.getInstance().getCurrentEvent().getEventID();
-//            query.whereEqualTo(DBConstants.EVENT_ID_KEY, sEventId);
-//            query.orderByDESC(DBConstants.MESSAGE_CREATED_AT_KEY);
-//            query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-//            QueryResult messages = execute(query);
-//            messageList = messages != null ? messages.getResults() : null;
-//            if (messageList != null) {
-//                Collections.reverse(messageList);
-//            }
+            StringRequest stringRequest = new StringRequest(
+                    Request.Method.POST,
+                    DBConstants.MYSQL_URL.concat("messages.php"),
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                boolean successful = jsonObject.getBoolean("success");
+                                if (successful) {
+                                    JSONObject current;
+                                    JSONArray messages = jsonObject.getJSONArray("payload");
+                                    for (int i = 0; i < messages.length(); i++) {
+                                        current = (JSONObject) messages.get(i);
+                                        messageList.add(
+                                                new Message(
+                                                        current.getString("user_id"),
+                                                        current.getString("event_id"),
+                                                        current.getString("body")
+                                                )
+                                        );
+                                    }
+                                    update(messageList);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("ERR", error.getMessage());
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    HashMap<String, String> params = new HashMap<>();
+                    params.put("event_id", CurrentActiveEvent.getInstance().getCurrentEvent().getEventID());
+                    return params;
+                }
+            };
+            new BackEnd(getApplicationContext()).execute(stringRequest);
         }
     }
 
-    public List getMessageList() {
-        return this.messageList;
+    public void update(List<Message> messages) {
+        MessagingFragment.updateMessages(messages);
     }
 }
