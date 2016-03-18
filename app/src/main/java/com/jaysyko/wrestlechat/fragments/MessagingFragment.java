@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,7 +22,6 @@ import android.widget.ListView;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
-import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formValidators.MessageValidator;
@@ -32,7 +30,6 @@ import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.services.MessageBinder;
 import com.jaysyko.wrestlechat.services.MessagingService;
-import com.jaysyko.wrestlechat.services.chatStream.ChatStream;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 import java.util.ArrayList;
@@ -41,9 +38,8 @@ import java.util.List;
 public class MessagingFragment extends Fragment {
 
     private static final int SEND_DELAY = 1500;
-    private ArrayList<Message> messages = new ArrayList<>();
-    private MessageListAdapter mAdapter;
-    private String userID, sEventId;
+    private static ArrayList<Message> messages = new ArrayList<>();
+    private static MessageListAdapter mAdapter;
     private EditText etMessage;
     private ImageButton btSend;
     private Activity mApplicationContext;
@@ -57,7 +53,7 @@ public class MessagingFragment extends Fragment {
             initMessageAdapter();
         }
     };
-    private Event mCurrentEvent;
+    private Event mCurrentEvent = CurrentActiveEvent.getInstance().getCurrentEvent();
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -69,38 +65,22 @@ public class MessagingFragment extends Fragment {
         public void onServiceConnected(ComponentName name, IBinder service) {
             MessageBinder binder = (MessageBinder) service;
             MessagingService messagingService = binder.getService();
-            updateMessages(messagingService.getMessageList());
-            mApplicationContext.registerReceiver(broadcastReceiver, new IntentFilter(ChatStream.CLASS_NAME));
+//            updateMessages(messagingService.getMessageList());
+//            mApplicationContext.registerReceiver(broadcastReceiver, new IntentFilter(ChatStream.CLASS_NAME));
             mServiceBound = true;
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            mApplicationContext.unregisterReceiver(broadcastReceiver);
+//            mApplicationContext.unregisterReceiver(broadcastReceiver);
             mServiceBound = false;
         }
     };
 
-    @SuppressWarnings("unchecked")
-    private void updateMessages(List messageList) {
-        this.messages.clear();
-        this.messages.addAll(messageList);
-        this.mAdapter.notifyDataSetChanged();
-    }
-
-    private void updateMessages(Message message) {
-        ArrayList<Message> messages = this.messages;
-        messages.add(messages.size() - 1, message);
-        this.mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mCurrentEvent = CurrentActiveEvent.getInstance().getCurrentEvent();
-        String eventName = mCurrentEvent.getEventName();
-        mApplicationContext.setTitle(eventName);
-        intent = new Intent(mApplicationContext, MessagingService.class);
+    public static void updateMessages(List<Message> messageList) {
+        messages.clear();
+        messages.addAll(messageList);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -108,11 +88,10 @@ public class MessagingFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_messaging, container, false);
         mApplicationContext = getActivity();
+        mApplicationContext.setTitle(mCurrentEvent.getEventName());
+        intent = new Intent(mApplicationContext, MessagingService.class);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
         ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
-        sEventId = mCurrentEvent.getEventID();
-        CurrentActiveUser currentUser = CurrentActiveUser.getInstance();
-        userID = currentUser.getUserID();
         btSend = (ImageButton) view.findViewById(R.id.send_button);
         handler.post(initMessageAdapter);
         btSend.setOnClickListener(new View.OnClickListener() {
@@ -171,6 +150,16 @@ public class MessagingFragment extends Fragment {
             getActivity().unbindService(mServiceConnection);
             mServiceBound = false;
         }
+    }
+
+    private void updateMessages(Message message) {
+        messages.add(messages.size() - 1, message);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override

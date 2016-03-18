@@ -6,7 +6,6 @@ import android.content.Intent;
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.activities.EventInfoActivity;
 import com.jaysyko.wrestlechat.activities.MessagingActivity;
-import com.jaysyko.wrestlechat.services.chatStream.ChatStream;
 import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.models.Event;
@@ -17,7 +16,7 @@ public class OpenEvent {
         com.jaysyko.wrestlechat.date.LiveStatus status = DateVerifier.goLive(event.getEventStartTime(), event.getEventEndTime());
         if (status.goLive()) {
             CurrentActiveEvent.getInstance().setCurrentEvent(event);
-            ChatStream.getInstance().subscribe(event.getEventID());
+//            ChatStream.getInstance().subscribe(event.getEventID());
             Intent intent = new Intent(context, MessagingActivity.class);
             context.startActivity(intent);
         } else {
