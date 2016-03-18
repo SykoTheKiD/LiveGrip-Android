@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
+import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.db.BackEnd;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
@@ -64,18 +65,21 @@ public class TabContentFragment extends Fragment {
                             mEventsList.clear();
                             for (int i = 0; i < events.length(); i++) {
                                 current = (JSONObject) events.get(i);
-                                mEventsList.add(
-                                        new Event(
-                                                current.getString("id"),
-                                                current.getString("name"),
-                                                current.getString("info"),
-                                                current.getString("match_card"),
-                                                current.getString("image"),
-                                                current.getString("location"),
-                                                current.getString("start_time"),
-                                                current.getString("end_time")
-                                        )
-                                );
+                                String start_time = current.getString("start_time");
+                                String end_time = current.getString("end_time");
+                                if (DateVerifier.goLive(start_time, end_time).getReason() == state) {
+                                    Event event = new Event(
+                                            current.getString("id"),
+                                            current.getString("name"),
+                                            current.getString("info"),
+                                            current.getString("match_card"),
+                                            current.getString("image"),
+                                            current.getString("location"),
+                                            start_time,
+                                            end_time
+                                    );
+                                    mEventsList.add(event);
+                                }
                             }
                             updateRecyclerView(mEventsList);
                         }
