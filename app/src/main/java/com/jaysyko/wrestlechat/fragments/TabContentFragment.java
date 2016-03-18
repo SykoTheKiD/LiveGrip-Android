@@ -116,7 +116,6 @@ public class TabContentFragment extends Fragment {
                 recyclerView.setAdapter(mAdapter);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 new BackEnd(mApplicationContext).execute(mStringRequest);
-//                updateRecyclerView(RetrieveEvents.getInstance(mApplicationContext).getEventList());
             }
         });
         return layout;
@@ -134,9 +133,6 @@ public class TabContentFragment extends Fragment {
                         @Override
                         public void run() {
                             new BackEnd(mApplicationContext).execute(mStringRequest);
-//                            RetrieveEvents instance = RetrieveEvents.getInstance(mApplicationContext);
-//                            instance.updateEventCards();
-//                            updateRecyclerView(instance.getEventList());
                             swipeView.setRefreshing(false);
                         }
                     });
