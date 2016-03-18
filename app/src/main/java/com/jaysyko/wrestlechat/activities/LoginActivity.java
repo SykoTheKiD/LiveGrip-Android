@@ -18,6 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.db.BackEnd;
+import com.jaysyko.wrestlechat.db.NetworkSingleton;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formValidators.LoginValidator;
@@ -143,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                                 return params;
                             }
                         };
-                        new BackEnd(mContext).execute(stringRequest);
+                        NetworkSingleton.getInstance(mContext).addToRequestQueue(stringRequest);
                     } else {
                         Dialog.makeToast(mContext, getString(Form.getSimpleMessage(form.getReason())));
                     }
@@ -172,7 +173,6 @@ public class LoginActivity extends AppCompatActivity {
                                         try {
                                             JSONObject jsonObject = new JSONObject(response);
                                             boolean successful = jsonObject.getBoolean("success");
-                                            Log.e("RESP", response);
                                             if (successful) {
                                                 CurrentActiveUser.getInstance(username, password);
                                                 Dialog.makeToast(mContext, getString(R.string.welcome_back).concat(StringResources.BLANK_SPACE).concat(username));
@@ -199,6 +199,7 @@ public class LoginActivity extends AppCompatActivity {
                                 return params;
                             }
                         };
+//                        NetworkSingleton.getInstance(mContext).addToRequestQueue(stringRequest);
                         new BackEnd(mContext).execute(stringRequest);
                     } else {
                         Dialog.makeToast(mContext, getString(Form.getSimpleMessage(form.getReason())));
