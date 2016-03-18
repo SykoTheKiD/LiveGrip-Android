@@ -44,7 +44,6 @@ public class TabContentFragment extends Fragment {
     private static final String TAG = TabContentFragment.class.getSimpleName();
     private static final int VIBRATE_MILLISECONDS = 40;
     final Handler handler = new Handler();
-    private List<Event> liveEvents = new ArrayList<>();
     private Context mApplicationContext;
     private EventListAdapter mAdapter;
     private RelativeLayout layout;

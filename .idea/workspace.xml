@@ -31,7 +31,7 @@
     <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7a8a10f5-4885-4e0e-a2b6-9e884a6f279a" name="Default" comment="WIP Refreshing Events">
+    <list default="true" id="7a8a10f5-4885-4e0e-a2b6-9e884a6f279a" name="Default" comment="Added Refreshing Events">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/TabContentFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/TabContentFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -109,11 +109,11 @@
       <file leaf-file-name="TabContentFragment.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/TabContentFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.78158456">
-              <caret line="80" column="59" selection-start-line="80" selection-start-column="59" selection-end-line="80" selection-end-column="59" />
+            <state vertical-scroll-proportion="0.32119915">
+              <caret line="46" column="4" selection-start-line="46" selection-start-column="4" selection-end-line="46" selection-end-column="4" />
               <folding>
-                <element signature="e#4184#4294#0" expanded="true" />
-                <element signature="e#4293#4294#0" expanded="true" />
+                <element signature="e#4130#4240#0" expanded="true" />
+                <element signature="e#4239#4240#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -2272,12 +2272,6 @@
       <option name="number" value="Default" />
       <updated>1454079562825</updated>
     </task>
-    <task id="LOCAL-00083" summary="Custom user images">
-      <created>1456174586506</created>
-      <option name="number" value="00083" />
-      <option name="project" value="LOCAL" />
-      <updated>1456174586507</updated>
-    </task>
     <task id="LOCAL-00084" summary="Username open">
       <created>1456189795221</created>
       <option name="number" value="00084" />
@@ -2566,7 +2560,13 @@
       <option name="project" value="LOCAL" />
       <updated>1458273190036</updated>
     </task>
-    <option name="localTasksCounter" value="132" />
+    <task id="LOCAL-00132" summary="Added Refreshing Events">
+      <created>1458314576128</created>
+      <option name="number" value="00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1458314576131</updated>
+    </task>
+    <option name="localTasksCounter" value="133" />
     <servers />
   </component>
   <component name="TodoView">
@@ -2665,7 +2665,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="Removed unneeded code" />
     <MESSAGE value="Viewholder Refactor" />
     <MESSAGE value="Added Image Support to Messages" />
     <MESSAGE value="Just need to resize imageViews" />
@@ -2690,7 +2689,8 @@
     <MESSAGE value="Login done" />
     <MESSAGE value="WIP Events" />
     <MESSAGE value="WIP Refreshing Events" />
-    <option name="LAST_COMMIT_MESSAGE" value="WIP Refreshing Events" />
+    <MESSAGE value="Added Refreshing Events" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Refreshing Events" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -3089,11 +3089,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/TabContentFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.78158456">
-          <caret line="80" column="59" selection-start-line="80" selection-start-column="59" selection-end-line="80" selection-end-column="59" />
+        <state vertical-scroll-proportion="0.32119915">
+          <caret line="46" column="4" selection-start-line="46" selection-start-column="4" selection-end-line="46" selection-end-column="4" />
           <folding>
-            <element signature="e#4184#4294#0" expanded="true" />
-            <element signature="e#4293#4294#0" expanded="true" />
+            <element signature="e#4130#4240#0" expanded="true" />
+            <element signature="e#4239#4240#0" expanded="true" />
           </folding>
         </state>
       </provider>
