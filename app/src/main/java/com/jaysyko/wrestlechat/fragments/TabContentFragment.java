@@ -10,7 +10,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,6 @@ import java.util.List;
 public class TabContentFragment extends Fragment {
 
     private static final int VIBRATE_MILLISECONDS = 40;
-    private static final int REFRESH_ANI_MILLIS = 3000;
     final Handler handler = new Handler();
     private List<Event> liveEvents = new ArrayList<>();
     private Context mApplicationContext;
@@ -64,11 +62,8 @@ public class TabContentFragment extends Fragment {
                 recyclerView.setAdapter(mAdapter);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 updateRecyclerView(RetrieveEvents.getInstance(mApplicationContext).getEventList());
-
-                Log.e("COUNT", String.valueOf(RetrieveEvents.getInstance(mApplicationContext).getEventList().size()));
             }
         });
-
         return layout;
     }
 
@@ -121,7 +116,9 @@ public class TabContentFragment extends Fragment {
                                 vibe.vibrate(VIBRATE_MILLISECONDS);
 //                                OpenEvent.openEventInfo(liveEvents.get(position), mApplicationContext);
                             }
-                        }));
+                        }
+                )
+        );
     }
 
 //    public void onStart() {

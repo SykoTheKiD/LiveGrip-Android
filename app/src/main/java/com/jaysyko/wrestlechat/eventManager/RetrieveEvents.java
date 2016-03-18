@@ -25,19 +25,17 @@ import java.util.List;
  * @author Jay Syko
  */
 public class RetrieveEvents {
-    private static final Class<Event> EVENT_MODEL = Event.class;
-    private static final String EVENTS_MODEL_SIMPLE_NAME = EVENT_MODEL.getSimpleName();
-    private static RetrieveEvents retrieveEvents = new RetrieveEvents();
-    private List<Event> eventsList = new ArrayList<>();
-    private Context context;
-    private StringRequest stringRequest = new StringRequest(
+    private static final String TAG = RetrieveEvents.class.getSimpleName();
+    private static RetrieveEvents mRetrieveEvents = new RetrieveEvents();
+    private List<Event> mEventsList = new ArrayList<>();
+    private Context mContext;
+    private StringRequest mStringRequest = new StringRequest(
             Request.Method.POST,
             DBConstants.MYSQL_URL.concat("events.php"),
             new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     try {
-                        Log.e("R", response);
                         JSONObject jsonObject = new JSONObject(response);
                         boolean successful = jsonObject.getBoolean("success");
                         if (successful) {
@@ -45,16 +43,18 @@ public class RetrieveEvents {
                             JSONArray events = jsonObject.getJSONArray("payload");
                             for (int i = 0; i < events.length(); i++) {
                                 current = (JSONObject) events.get(i);
-                                eventsList.add(new Event(
-                                        current.getString("id"),
-                                        current.getString("name"),
-                                        current.getString("info"),
-                                        current.getString("match_card"),
-                                        current.getString("image"),
-                                        current.getString("location"),
-                                        current.getString("start_time"),
-                                        current.getString("end_time")
-                                ));
+                                mEventsList.add(
+                                        new Event(
+                                                current.getString("id"),
+                                                current.getString("name"),
+                                                current.getString("info"),
+                                                current.getString("match_card"),
+                                                current.getString("image"),
+                                                current.getString("location"),
+                                                current.getString("start_time"),
+                                                current.getString("end_time")
+                                        )
+                                );
                             }
                         }
                     } catch (JSONException e) {
@@ -64,7 +64,7 @@ public class RetrieveEvents {
             }, new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-            Log.e("ERR", error.getMessage());
+            Log.e(TAG, error.getMessage());
         }
     });
 
@@ -72,15 +72,16 @@ public class RetrieveEvents {
     }
 
     public static RetrieveEvents getInstance(Context context) {
-        retrieveEvents.context = context;
-        return retrieveEvents;
+        mRetrieveEvents.mContext = context;
+        return mRetrieveEvents;
     }
 
     public List<Event> getEventList() {
-        return retrieveEvents.eventsList;
+        return mRetrieveEvents.mEventsList;
     }
 
     public synchronized void updateEventCards() {
-        new BackEnd(context).execute(stringRequest);
+        mEventsList.clear();
+        new BackEnd(mContext).execute(mStringRequest);
     }
 }
