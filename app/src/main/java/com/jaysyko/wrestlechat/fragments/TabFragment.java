@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.TabAdapter;
-import com.jaysyko.wrestlechat.eventManager.RetrieveEvents;
 
 public class TabFragment extends Fragment {
 
@@ -48,7 +47,6 @@ public class TabFragment extends Fragment {
                 tabLayout.setupWithViewPager(viewPager);
             }
         });
-        RetrieveEvents.getInstance(context).updateEventCards();
         return view;
 
     }

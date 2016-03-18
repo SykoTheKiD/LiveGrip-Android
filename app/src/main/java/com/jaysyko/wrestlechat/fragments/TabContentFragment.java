@@ -10,19 +10,29 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
+import com.jaysyko.wrestlechat.db.BackEnd;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
-import com.jaysyko.wrestlechat.eventManager.RetrieveEvents;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.utils.BundleKeys;
+import com.jaysyko.wrestlechat.utils.DBConstants;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,20 +40,61 @@ import java.util.List;
 
 
 public class TabContentFragment extends Fragment {
-
+    private static final String TAG = TabContentFragment.class.getSimpleName();
     private static final int VIBRATE_MILLISECONDS = 40;
     final Handler handler = new Handler();
     private List<Event> liveEvents = new ArrayList<>();
     private Context mApplicationContext;
     private EventListAdapter mAdapter;
     private RelativeLayout layout;
+    private int state;
+    private List<Event> mEventsList = new ArrayList<>();
+    private StringRequest mStringRequest = new StringRequest(
+            Request.Method.POST,
+            DBConstants.MYSQL_URL.concat("events.php"),
+            new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        boolean successful = jsonObject.getBoolean("success");
+                        if (successful) {
+                            JSONObject current;
+                            JSONArray events = jsonObject.getJSONArray("payload");
+                            mEventsList.clear();
+                            for (int i = 0; i < events.length(); i++) {
+                                current = (JSONObject) events.get(i);
+                                mEventsList.add(
+                                        new Event(
+                                                current.getString("id"),
+                                                current.getString("name"),
+                                                current.getString("info"),
+                                                current.getString("match_card"),
+                                                current.getString("image"),
+                                                current.getString("location"),
+                                                current.getString("start_time"),
+                                                current.getString("end_time")
+                                        )
+                                );
+                            }
+                            updateRecyclerView(mEventsList);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            Log.e(TAG, error.getMessage());
+        }
+    });
     final Runnable initSwipeRefresh = new Runnable() {
         @Override
         public void run() {
             initSwipeRefresh();
         }
     };
-    private int state;
 
     @Nullable
     @Override
@@ -61,7 +112,8 @@ public class TabContentFragment extends Fragment {
                 mAdapter = new EventListAdapter(new ArrayList<Event>(), mApplicationContext);
                 recyclerView.setAdapter(mAdapter);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
-                updateRecyclerView(RetrieveEvents.getInstance(mApplicationContext).getEventList());
+                new BackEnd(mApplicationContext).execute(mStringRequest);
+//                updateRecyclerView(RetrieveEvents.getInstance(mApplicationContext).getEventList());
             }
         });
         return layout;
@@ -78,9 +130,10 @@ public class TabContentFragment extends Fragment {
                     new Handler().post(new Runnable() {
                         @Override
                         public void run() {
-                            RetrieveEvents instance = RetrieveEvents.getInstance(mApplicationContext);
-                            instance.updateEventCards();
-                            updateRecyclerView(instance.getEventList());
+                            new BackEnd(mApplicationContext).execute(mStringRequest);
+//                            RetrieveEvents instance = RetrieveEvents.getInstance(mApplicationContext);
+//                            instance.updateEventCards();
+//                            updateRecyclerView(instance.getEventList());
                             swipeView.setRefreshing(false);
                         }
                     });
