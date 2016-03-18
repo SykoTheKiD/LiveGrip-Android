@@ -47,11 +47,11 @@ public class DateVerifier {
 
     /**
      * Format a Millis time to a Human Readable date
-     * @param millis Long
+     * @param stringDate String
      * @return date: String
      */
-    public static String format(Long millis) {
-        Date date = new Date(millis);
+    public static String format(String stringDate) {
+        Date date = toMillisDate(Timestamp.valueOf(stringDate));
         return DATE_FORMAT.format(date);
     }
 }
