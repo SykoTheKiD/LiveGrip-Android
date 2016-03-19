@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat.db;
+package com.jaysyko.wrestlechat.network;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -12,9 +12,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
-import com.jaysyko.wrestlechat.db.BackEnd;
 import com.jaysyko.wrestlechat.fragments.MessagingFragment;
 import com.jaysyko.wrestlechat.models.Message;
+import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.utils.DBConstants;
 
@@ -103,7 +103,7 @@ public class MessagingService extends Service {
                     return params;
                 }
             };
-            new BackEnd(getApplicationContext()).execute(stringRequest);
+            NetworkSingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
         }
     }
 
