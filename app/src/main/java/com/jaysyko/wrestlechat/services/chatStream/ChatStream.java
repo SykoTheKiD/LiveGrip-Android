@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
@@ -20,29 +21,22 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  * Created by jarushaan on 2016-03-14
  */
 public class ChatStream extends Service implements MqttCallback {
-    public static final String CLASS_NAME = ChatStream.class.getSimpleName();
-    private static final ChatStream instance = new ChatStream();
+    public static final String TAG = ChatStream.class.getSimpleName();
+    private final IBinder mBinder = new ChatStreamBinder(this);
     private MqttClient client;
     private Intent intent;
-
-    private ChatStream() {
-        connect();
-    }
-
-    public static ChatStream getInstance() {
-        return instance;
-    }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        intent = new Intent(CLASS_NAME);
+        intent = new Intent(TAG);
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        connect();
+        return mBinder;
     }
 
     private MqttClient connect() {
@@ -51,7 +45,7 @@ public class ChatStream extends Service implements MqttCallback {
             client.connect();
             client.setCallback(this);
         } catch (MqttException e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
         }
         return client;
     }
@@ -63,9 +57,11 @@ public class ChatStream extends Service implements MqttCallback {
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
+        Log.e(TAG, topic);
+        Log.e(TAG, message.toString());
 //        Message messageObject = new Message();
-//        intent.putExtra("MSG", messageObject);
-//        sendBroadcast(intent);
+//        intent.putExtra(IntentKeys.MESSAGE_BROADCAST, messageObject);
+        sendBroadcast(intent);
     }
 
     @Override
@@ -79,7 +75,7 @@ public class ChatStream extends Service implements MqttCallback {
         try {
             client.publish(CurrentActiveEvent.getInstance().getCurrentEvent().getEventID(), mqttMessage);
         } catch (MqttException e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
         }
     }
 
@@ -87,7 +83,7 @@ public class ChatStream extends Service implements MqttCallback {
         try {
             client.subscribe(room);
         } catch (MqttException e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
         }
     }
 }

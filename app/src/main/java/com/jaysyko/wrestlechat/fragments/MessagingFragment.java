@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,6 +37,9 @@ import com.jaysyko.wrestlechat.network.NetworkResponse;
 import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.RESTEndpoints;
+import com.jaysyko.wrestlechat.services.chatStream.ChatStream;
+import com.jaysyko.wrestlechat.services.chatStream.ChatStreamBinder;
+import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 import org.json.JSONArray;
@@ -56,7 +60,7 @@ public class MessagingFragment extends Fragment {
     private Activity mApplicationContext;
     private View view;
     private Handler handler = new Handler();
-    private boolean mServiceBound = false;
+    private boolean mServiceBound;
     private Intent intent;
     private Runnable initMessageAdapter = new Runnable() {
         @Override
@@ -68,22 +72,22 @@ public class MessagingFragment extends Fragment {
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            updateMessages((Message) intent.getSerializableExtra("MSG"));
+            updateMessages((Message) intent.getSerializableExtra(IntentKeys.MESSAGE_BROADCAST));
         }
     };
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-//            MessageBinder binder = (MessageBinder) service;
-//            MessagingService messagingService = binder.getService();
-//            updateMessages(messagingService.getMessageList());
-//            mApplicationContext.registerReceiver(broadcastReceiver, new IntentFilter(ChatStream.CLASS_NAME));
+            ChatStreamBinder binder = (ChatStreamBinder) service;
+            ChatStream chatStream = binder.getService();
+            chatStream.subscribe(CurrentActiveEvent.getInstance().getCurrentEvent().getEventID());
+            mApplicationContext.registerReceiver(broadcastReceiver, new IntentFilter(ChatStream.TAG));
             mServiceBound = true;
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-//            mApplicationContext.unregisterReceiver(broadcastReceiver);
+            mApplicationContext.unregisterReceiver(broadcastReceiver);
             mServiceBound = false;
         }
     };
@@ -94,7 +98,7 @@ public class MessagingFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_messaging, container, false);
         mApplicationContext = getActivity();
         mApplicationContext.setTitle(mCurrentEvent.getEventName());
-//        intent = new Intent(mApplicationContext, MessagingService.class);
+        intent = new Intent(mApplicationContext, ChatStream.class);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
         ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
         btSend = (ImageButton) view.findViewById(R.id.send_button);
@@ -157,8 +161,8 @@ public class MessagingFragment extends Fragment {
 
     private void stopMessagingService() {
         if (mServiceBound) {
-//            getActivity().stopService(intent);
-//            getActivity().unbindService(mServiceConnection);
+            getActivity().stopService(intent);
+            getActivity().unbindService(mServiceConnection);
             mServiceBound = false;
         }
     }
@@ -202,19 +206,18 @@ public class MessagingFragment extends Fragment {
         }
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        if (!mServiceBound) {
-//            mApplicationContext.startService(intent);
-//        }
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!mServiceBound) {
+            mApplicationContext.startService(intent);
+        }
+    }
 
-
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        Intent intent = new Intent(getActivity(), MessagingService.class);
-//        getActivity().bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
-//    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        Intent intent = new Intent(getActivity(), ChatStream.class);
+        getActivity().bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
+    }
 }
