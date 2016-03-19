@@ -8,5 +8,5 @@ package com.jaysyko.wrestlechat.utils;
  */
 public class IntentKeys {
     public static final String USERNAME = "username";
-    public static final String NEW_MESSAGE_BROADCAST = "newMessageBroadcast";
+    public static final String MESSAGE_BROADCAST = "new_message";
 }

@@ -17,9 +17,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.date.DateVerifier;
@@ -27,10 +24,14 @@ import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.eventManager.OpenEvent;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Event;
+import com.jaysyko.wrestlechat.models.EventJSONKeys;
+import com.jaysyko.wrestlechat.network.NetworkCallback;
+import com.jaysyko.wrestlechat.network.NetworkRequest;
+import com.jaysyko.wrestlechat.network.NetworkResponse;
 import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.NetworkState;
+import com.jaysyko.wrestlechat.network.RESTEndpoints;
 import com.jaysyko.wrestlechat.utils.BundleKeys;
-import com.jaysyko.wrestlechat.utils.DBConstants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,49 +51,40 @@ public class TabContentFragment extends Fragment {
     private RelativeLayout layout;
     private int state;
     private List<Event> mEventsList = new ArrayList<>();
-    private StringRequest mStringRequest = new StringRequest(
-            Request.Method.POST,
-            DBConstants.MYSQL_URL.concat("events.php"),
-            new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        boolean successful = jsonObject.getBoolean("success");
-                        if (successful) {
-                            JSONObject current;
-                            JSONArray events = jsonObject.getJSONArray("payload");
-                            mEventsList.clear();
-                            for (int i = 0; i < events.length(); i++) {
-                                current = (JSONObject) events.get(i);
-                                String start_time = current.getString("start_time");
-                                String end_time = current.getString("end_time");
-                                if (DateVerifier.goLive(start_time, end_time).getReason() == state) {
-                                    Event event = new Event(
-                                            current.getString("id"),
-                                            current.getString("name"),
-                                            current.getString("info"),
-                                            current.getString("match_card"),
-                                            current.getString("image"),
-                                            current.getString("location"),
-                                            start_time,
-                                            end_time
-                                    );
-                                    mEventsList.add(event);
-                                }
-                            }
-                            updateRecyclerView(mEventsList);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }, new Response.ErrorListener() {
+    private Request mStringRequest = new NetworkRequest(new NetworkCallback() {
         @Override
-        public void onErrorResponse(VolleyError error) {
-            Log.e(TAG, error.getMessage());
+        public void onSuccess(String response) {
+            try {
+                NetworkResponse networkResponse = new NetworkResponse(response);
+                if (networkResponse.isSuccessful()) {
+                    JSONObject current;
+                    JSONArray events = networkResponse.getPayload();
+                    mEventsList.clear();
+                    for (int index = 0; index < events.length(); index++) {
+                        current = (JSONObject) events.get(index);
+                        String start_time = current.getString(EventJSONKeys.START_TIME.getKey());
+                        String end_time = current.getString(EventJSONKeys.END_TIME.getKey());
+                        if (DateVerifier.goLive(start_time, end_time).getReason() == state) {
+                            Event event = new Event(
+                                    current.getString(EventJSONKeys.ID.getKey()),
+                                    current.getString(EventJSONKeys.NAME.getKey()),
+                                    current.getString(EventJSONKeys.INFO.getKey()),
+                                    current.getString(EventJSONKeys.MATCH_CARD.getKey()),
+                                    current.getString(EventJSONKeys.IMAGE.getKey()),
+                                    current.getString(EventJSONKeys.LOCATION.getKey()),
+                                    start_time,
+                                    end_time
+                            );
+                            mEventsList.add(event);
+                        }
+                    }
+                    updateRecyclerView(mEventsList);
+                }
+            } catch (JSONException e) {
+                Log.e(TAG, e.getMessage());
+            }
         }
-    });
+    }).post(RESTEndpoints.EVENTS);
     final Runnable initSwipeRefresh = new Runnable() {
         @Override
         public void run() {
@@ -173,14 +165,4 @@ public class TabContentFragment extends Fragment {
                 )
         );
     }
-
-//    public void onStart() {
-//        super.onStart();
-//        handler.post(updateEventsHard);
-//    }
-//
-//    public void onResume() {
-//        super.onResume();
-//        handler.post(updateEventsSoft);
-//    }
 }

@@ -1,21 +1,6 @@
 package com.jaysyko.wrestlechat.auth;
 
-import android.content.Context;
-import android.util.Log;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.jaysyko.wrestlechat.network.NetworkSingleton;
-import com.jaysyko.wrestlechat.utils.DBConstants;
 import com.jaysyko.wrestlechat.utils.ImageTools;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * CurrentActiveUser.java
@@ -61,7 +46,7 @@ public class CurrentActiveUser {
     }
 
     public boolean setPassword(String password) {
-//        currentUser.setPassword(password);
+        this.password = password;
         return true;
     }
 
@@ -96,48 +81,6 @@ public class CurrentActiveUser {
     }
 
     /**
-     * Login the user; returns true if successful else returns false
-     *
-     * @return boolean
-     */
-    public boolean loginUser(Context mContext, final String username, final String password) {
-        final Boolean[] ret = new Boolean[1];
-        StringRequest stringRequest = new StringRequest(
-                Request.Method.POST,
-                DBConstants.MYSQL_URL.concat("login.php"),
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            ret[0] = jsonObject.getBoolean("success");
-                            Log.e("E", jsonObject.toString());
-                        } catch (JSONException e) {
-                            ret[0] = false;
-                            e.printStackTrace();
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                ret[0] = false;
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                HashMap<String, String> params = new HashMap<>();
-                params.put("username", username);
-                params.put("password", password);
-                return params;
-            }
-        };
-
-        NetworkSingleton.getInstance(mContext).addToRequestQueue(stringRequest);
-        return ret[0];
-    }
-
-    /**
      * Logs out the current user
      */
     public void logout() {
@@ -159,9 +102,5 @@ public class CurrentActiveUser {
         } else {
             return false;
         }
-    }
-
-    public String getUserID() {
-        return null;
     }
 }
