@@ -5,7 +5,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -28,7 +27,7 @@ public class EventInfoFragment extends Fragment {
     private static final String LINE_SEPARATOR = "line.separator";
     private static final String NEW_LINE = "\\n";
     private final Event currentActiveEvent = CurrentActiveEvent.getInstance().getCurrentEvent();
-    private Handler handler = new Handler();
+//    private Handler handler = new Handler();
     private View view;
 
     @Override

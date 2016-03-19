@@ -11,7 +11,8 @@ public enum MessageJSONKeys {
         this.key = key;
     }
 
-    public String getKey() {
+    @Override
+    public String toString() {
         return this.key;
     }
 }

@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.android.volley.Request;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
@@ -27,16 +29,25 @@ import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formValidators.MessageValidator;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.Message;
+import com.jaysyko.wrestlechat.models.MessageJSONKeys;
+import com.jaysyko.wrestlechat.network.NetworkCallback;
+import com.jaysyko.wrestlechat.network.NetworkRequest;
+import com.jaysyko.wrestlechat.network.NetworkResponse;
+import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.NetworkState;
-import com.jaysyko.wrestlechat.services.MessageBinder;
-import com.jaysyko.wrestlechat.services.MessagingService;
+import com.jaysyko.wrestlechat.network.RESTEndpoints;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class MessagingFragment extends Fragment {
 
+    public static final String TAG = MessagingFragment.class.getSimpleName();
     private static final int SEND_DELAY = 1500;
     private static ArrayList<Message> messages = new ArrayList<>();
     private static MessageListAdapter mAdapter;
@@ -63,8 +74,8 @@ public class MessagingFragment extends Fragment {
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            MessageBinder binder = (MessageBinder) service;
-            MessagingService messagingService = binder.getService();
+//            MessageBinder binder = (MessageBinder) service;
+//            MessagingService messagingService = binder.getService();
 //            updateMessages(messagingService.getMessageList());
 //            mApplicationContext.registerReceiver(broadcastReceiver, new IntentFilter(ChatStream.CLASS_NAME));
             mServiceBound = true;
@@ -77,23 +88,23 @@ public class MessagingFragment extends Fragment {
         }
     };
 
-    public static void updateMessages(List<Message> messageList) {
-        messages.clear();
-        messages.addAll(messageList);
-        mAdapter.notifyDataSetChanged();
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_messaging, container, false);
         mApplicationContext = getActivity();
         mApplicationContext.setTitle(mCurrentEvent.getEventName());
-        intent = new Intent(mApplicationContext, MessagingService.class);
+//        intent = new Intent(mApplicationContext, MessagingService.class);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
         ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
         btSend = (ImageButton) view.findViewById(R.id.send_button);
         handler.post(initMessageAdapter);
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                fetchOldMessages();
+            }
+        });
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,8 +157,8 @@ public class MessagingFragment extends Fragment {
 
     private void stopMessagingService() {
         if (mServiceBound) {
-            getActivity().stopService(intent);
-            getActivity().unbindService(mServiceConnection);
+//            getActivity().stopService(intent);
+//            getActivity().unbindService(mServiceConnection);
             mServiceBound = false;
         }
     }
@@ -157,29 +168,53 @@ public class MessagingFragment extends Fragment {
         mAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (!mServiceBound) {
-            mApplicationContext.startService(intent);
+    private void fetchOldMessages() {
+        if (NetworkState.isConnected(mApplicationContext)) {
+            HashMap<String, String> params = new HashMap<>();
+            params.put(MessageJSONKeys.EVENT_ID.toString(), CurrentActiveEvent.getInstance().getCurrentEvent().getEventID());
+            Request networkRequest = new NetworkRequest(new NetworkCallback() {
+                @Override
+                public void onSuccess(String response) {
+                    try {
+                        NetworkResponse networkResponse = new NetworkResponse(response);
+                        if (networkResponse.isSuccessful()) {
+                            JSONObject current;
+                            JSONArray messageObjects = networkResponse.getPayload();
+                            for (int index = 0; index < messageObjects.length(); index++) {
+                                current = (JSONObject) messageObjects.get(index);
+                                messages.add(
+                                        new Message(
+                                                current.getString(MessageJSONKeys.USERNAME.toString()),
+                                                current.getString(MessageJSONKeys.EVENT_NAME.toString()),
+                                                current.getString(MessageJSONKeys.BODY.toString()),
+                                                current.getString(MessageJSONKeys.PROFILE_IMAGE.toString())
+                                        )
+                                );
+                            }
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    } catch (JSONException e) {
+                        Log.e(TAG, e.getMessage());
+                    }
+                }
+            }).post(RESTEndpoints.MESSAGES, params);
+            NetworkSingleton.getInstance(mApplicationContext).addToRequestQueue(networkRequest);
         }
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        stopMessagingService();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if (!mServiceBound) {
+//            mApplicationContext.startService(intent);
+//        }
+//    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        Intent intent = new Intent(getActivity(), MessagingService.class);
-        getActivity().bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
-    }
+
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        Intent intent = new Intent(getActivity(), MessagingService.class);
+//        getActivity().bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
+//    }
 }
