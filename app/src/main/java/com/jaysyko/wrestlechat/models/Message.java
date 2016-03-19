@@ -11,11 +11,15 @@ import java.io.Serializable;
 
 public class Message implements Serializable {
 
-    private String userID, eventID, body;
+    private String username;
+    private String eventName;
+    private String body;
+    private String userImage;
 
-    public Message(String userID, String eventID, String body) {
-        this.userID = userID;
-        this.eventID = eventID;
+    public Message(String username, String eventName, String body, String userImage) {
+        this.username = username;
+        this.eventName = eventName;
+        this.userImage = userImage;
         this.body = body;
     }
 
@@ -24,16 +28,24 @@ public class Message implements Serializable {
      *
      * @return username
      */
-    public String getUserID() {
-        return this.userID;
+    public String getUsername() {
+        return this.username;
     }
 
     /**
      * @return eventID
      */
-    public String getEventID() {
-        return eventID;
+    public String getEventName() {
+        return this.eventName;
     }
+
+    /**
+     * @return userImage
+     */
+    public String getUserImage() {
+        return this.userImage;
+    }
+
 
     /**
      * Returns the message contents

@@ -31,7 +31,7 @@ import java.util.Map;
  * Created by jarushaan on 2016-03-09
  */
 public class MessagingService extends Service {
-    private static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
+    private static final String TAG = MessagingService.class.getSimpleName();
     private final IBinder mBinder = new MessageBinder(this);
     private Handler handler = new Handler();
     private List<Message> messageList = new ArrayList<>();
@@ -77,9 +77,10 @@ public class MessagingService extends Service {
                                         current = (JSONObject) messages.get(i);
                                         messageList.add(
                                                 new Message(
-                                                        current.getString("user_id"),
-                                                        current.getString("event_id"),
-                                                        current.getString("body")
+                                                        current.getString("username"),
+                                                        current.getString("name"),
+                                                        current.getString("body"),
+                                                        current.getString("profile_image")
                                                 )
                                         );
                                     }
@@ -92,7 +93,7 @@ public class MessagingService extends Service {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.e("ERR", error.getMessage());
+                    Log.e(TAG, error.getMessage());
                 }
             }) {
                 @Override
