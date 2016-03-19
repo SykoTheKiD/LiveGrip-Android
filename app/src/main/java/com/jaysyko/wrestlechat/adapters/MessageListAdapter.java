@@ -134,7 +134,6 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         userContainer.removeAllViews();
         holder.imageRight.setVisibility(View.VISIBLE);
         holder.user.setVisibility(View.VISIBLE);
-
         holder.imageLeft.setVisibility(View.GONE);
         holder.sender.setVisibility(View.GONE);
 
