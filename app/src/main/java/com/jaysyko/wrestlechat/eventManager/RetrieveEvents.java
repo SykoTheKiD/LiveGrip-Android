@@ -7,7 +7,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.jaysyko.wrestlechat.db.BackEnd;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.utils.DBConstants;
 
@@ -82,6 +81,5 @@ public class RetrieveEvents {
 
     public synchronized void updateEventCards() {
         mEventsList.clear();
-        new BackEnd(mContext).execute(mStringRequest);
     }
 }
