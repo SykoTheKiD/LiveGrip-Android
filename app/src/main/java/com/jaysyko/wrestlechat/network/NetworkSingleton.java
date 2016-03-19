@@ -10,20 +10,27 @@ import com.android.volley.toolbox.Volley;
  * Created by jarushaan on 2016-03-17
  */
 public class NetworkSingleton {
-    private static NetworkSingleton ourInstance = new NetworkSingleton();
+    private static NetworkSingleton mInstance;
     private Context mContext;
-    private RequestQueue mRequestQueue = Volley.newRequestQueue(mContext);
+    private RequestQueue mRequestQueue;
 
-    private NetworkSingleton() {
+    private NetworkSingleton(Context context) {
+        this.mContext = context;
+        this.mRequestQueue = getRequestQueue();
     }
 
     public static synchronized NetworkSingleton getInstance(Context context) {
-        ourInstance.mContext = context;
-        return ourInstance;
+        if(mInstance == null){
+            mInstance = new NetworkSingleton(context);
+        }
+        return mInstance;
     }
 
     private RequestQueue getRequestQueue() {
-        return ourInstance.mRequestQueue;
+        if (mRequestQueue == null) {
+            mRequestQueue = Volley.newRequestQueue(mContext.getApplicationContext());
+        }
+        return mRequestQueue;
     }
 
     public <T> void addToRequestQueue(Request<T> request) {
