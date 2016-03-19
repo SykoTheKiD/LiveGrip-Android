@@ -5,36 +5,33 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formValidators.LoginValidator;
 import com.jaysyko.wrestlechat.forms.formValidators.SignUpValidator;
+import com.jaysyko.wrestlechat.network.NetworkCallback;
+import com.jaysyko.wrestlechat.network.NetworkIndex;
+import com.jaysyko.wrestlechat.network.NetworkRequest;
+import com.jaysyko.wrestlechat.network.NetworkResponse;
 import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.NetworkState;
-import com.jaysyko.wrestlechat.utils.DBConstants;
+import com.jaysyko.wrestlechat.network.RESTEndpoints;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.HashMap;
-import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final String TAG = LoginActivity.class.getSimpleName();
     private String username, password;
     private boolean signIn = true;
     private Handler handler = new Handler();
@@ -109,41 +106,23 @@ public class LoginActivity extends AppCompatActivity {
                 if (NetworkState.isConnected(mContext)) {
                     Form form = new SignUpValidator(username, password).validate();
                     if (form.isValid()) {
-                        StringRequest stringRequest = new StringRequest(
-                                Request.Method.POST,
-                                DBConstants.MYSQL_URL.concat("newuser.php"),
-                                new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        try {
-                                            JSONObject jsonObject = new JSONObject(response);
-                                            boolean successful = jsonObject.getBoolean("success");
-                                            if (successful) {
-                                                Dialog.makeToast(mContext, getString(R.string.user_created));
-                                                passwordField.setText(StringResources.NULL_TEXT);
-                                                changeMode();
-                                            } else {
-                                                Dialog.makeToast(mContext, getString(R.string.username_taken));
-                                            }
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
+                        HashMap<String, String> params = new HashMap<>();
+                        params.put(NetworkIndex.USERNAME.getKey(), username);
+                        params.put(NetworkIndex.PASSWORD.getKey(), password);
+                        Request request = new NetworkRequest(new NetworkCallback() {
+                            @Override
+                            public void onSuccess(String response) {
+                                    NetworkResponse networkResponse = new NetworkResponse(response);
+                                    if (networkResponse.isSuccessful()) {
+                                        Dialog.makeToast(mContext, getString(R.string.user_created));
+                                        passwordField.setText(StringResources.NULL_TEXT);
+                                        changeMode();
+                                    } else {
+                                        Dialog.makeToast(mContext, getString(R.string.username_taken));
                                     }
-                                }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.e("ERR", error.getMessage());
                             }
-                        }) {
-                            @Override
-                            protected Map<String, String> getParams() {
-                                HashMap<String, String> params = new HashMap<>();
-                                params.put("username", username);
-                                params.put("password", password);
-                                return params;
-                            }
-                        };
-                        NetworkSingleton.getInstance(mContext).addToRequestQueue(stringRequest);
+                        }).post(RESTEndpoints.SIGN_UP, params);
+                        NetworkSingleton.getInstance(mContext).addToRequestQueue(request);
                     } else {
                         Dialog.makeToast(mContext, getString(Form.getSimpleMessage(form.getReason())));
                     }
@@ -163,42 +142,24 @@ public class LoginActivity extends AppCompatActivity {
                 if (NetworkState.isConnected(mContext)) {
                     Form form = new LoginValidator(username, password).validate();
                     if (form.isValid()) {
-                        StringRequest stringRequest = new StringRequest(
-                                Request.Method.POST,
-                                DBConstants.MYSQL_URL.concat("login.php"),
-                                new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        try {
-                                            JSONObject jsonObject = new JSONObject(response);
-                                            boolean successful = jsonObject.getBoolean("success");
-                                            if (successful) {
-                                                CurrentActiveUser.getInstance(username, password);
-                                                Dialog.makeToast(mContext, getString(R.string.welcome_back).concat(StringResources.BLANK_SPACE).concat(username));
-                                                startActivity(intent);
-                                                finish();
-                                            } else {
-                                                Dialog.makeToast(mContext, getString(R.string.incorrect_login_info));
-                                            }
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
+                        HashMap<String, String> params = new HashMap<>();
+                        params.put(NetworkIndex.USERNAME.getKey(), username);
+                        params.put(NetworkIndex.PASSWORD.getKey(), password);
+                        Request request = new NetworkRequest(new NetworkCallback() {
+                            @Override
+                            public void onSuccess(String response) {
+                                    NetworkResponse networkResponse = new NetworkResponse(response);
+                                    if (networkResponse.isSuccessful()) {
+                                        CurrentActiveUser.getInstance(username, password);
+                                        Dialog.makeToast(mContext, getString(R.string.welcome_back).concat(StringResources.BLANK_SPACE).concat(username));
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        Dialog.makeToast(mContext, getString(R.string.incorrect_login_info));
                                     }
-                                }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.e("ERR", error.getMessage());
                             }
-                        }) {
-                            @Override
-                            protected Map<String, String> getParams() {
-                                HashMap<String, String> params = new HashMap<>();
-                                params.put("username", username);
-                                params.put("password", password);
-                                return params;
-                            }
-                        };
-                        NetworkSingleton.getInstance(mContext).addToRequestQueue(stringRequest);
+                        }).post(RESTEndpoints.LOGIN, params);
+                        NetworkSingleton.getInstance(mContext).addToRequestQueue(request);
                     } else {
                         Dialog.makeToast(mContext, getString(Form.getSimpleMessage(form.getReason())));
                     }
