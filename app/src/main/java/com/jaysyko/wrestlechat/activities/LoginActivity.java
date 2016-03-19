@@ -17,12 +17,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
-import com.jaysyko.wrestlechat.db.BackEnd;
-import com.jaysyko.wrestlechat.db.NetworkSingleton;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formValidators.LoginValidator;
 import com.jaysyko.wrestlechat.forms.formValidators.SignUpValidator;
+import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.utils.DBConstants;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
@@ -199,8 +198,7 @@ public class LoginActivity extends AppCompatActivity {
                                 return params;
                             }
                         };
-//                        NetworkSingleton.getInstance(mContext).addToRequestQueue(stringRequest);
-                        new BackEnd(mContext).execute(stringRequest);
+                        NetworkSingleton.getInstance(mContext).addToRequestQueue(stringRequest);
                     } else {
                         Dialog.makeToast(mContext, getString(Form.getSimpleMessage(form.getReason())));
                     }

@@ -23,11 +23,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.date.DateVerifier;
-import com.jaysyko.wrestlechat.db.BackEnd;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.eventManager.OpenEvent;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Event;
+import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.utils.BundleKeys;
 import com.jaysyko.wrestlechat.utils.DBConstants;
@@ -116,7 +116,7 @@ public class TabContentFragment extends Fragment {
                 mAdapter = new EventListAdapter(new ArrayList<Event>(), mApplicationContext);
                 recyclerView.setAdapter(mAdapter);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
-                new BackEnd(mApplicationContext).execute(mStringRequest);
+                NetworkSingleton.getInstance(mApplicationContext).addToRequestQueue(mStringRequest);
             }
         });
         return layout;
@@ -133,7 +133,7 @@ public class TabContentFragment extends Fragment {
                     new Handler().post(new Runnable() {
                         @Override
                         public void run() {
-                            new BackEnd(mApplicationContext).execute(mStringRequest);
+                            NetworkSingleton.getInstance(mApplicationContext).addToRequestQueue(mStringRequest);
                             swipeView.setRefreshing(false);
                         }
                     });

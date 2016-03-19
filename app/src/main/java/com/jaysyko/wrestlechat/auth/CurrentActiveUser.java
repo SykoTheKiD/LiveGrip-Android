@@ -7,7 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.jaysyko.wrestlechat.db.BackEnd;
+import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.utils.DBConstants;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
@@ -100,7 +100,7 @@ public class CurrentActiveUser {
      *
      * @return boolean
      */
-    public boolean loginUser(Context context, final String username, final String password) {
+    public boolean loginUser(Context mContext, final String username, final String password) {
         final Boolean[] ret = new Boolean[1];
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
@@ -133,7 +133,7 @@ public class CurrentActiveUser {
             }
         };
 
-        new BackEnd(context).execute(stringRequest);
+        NetworkSingleton.getInstance(mContext).addToRequestQueue(stringRequest);
         return ret[0];
     }
 
