@@ -36,3 +36,4 @@ script:
   
 notifications:
   email: false
+  slack: livegrip:2Cmw2YtkISrMcNcRWfN8lmfZ
