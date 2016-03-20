@@ -31,15 +31,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a8a10f5-4885-4e0e-a2b6-9e884a6f279a" name="Default" comment="MQTT WIP">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/libs/org.eclipse.paho.android.service-1.0.3-20160309.164130-273.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/libs/org.eclipse.paho.client.mqttv3-1.0.2.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/org_eclipse_paho_android_service_1_0_3_20160309_164130_273.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/org_eclipse_paho_android_service_1_0_2.xml" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/chatStream/ChatStream.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/ChatStream.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/chatStream/ChatStreamBinder.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/ChatStreamBinder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/org_eclipse_paho_android_service_1_0_2.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/org_eclipse_paho_android_service_1_0_3_20160309_164130_273.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/eventManager/RetrieveEvents.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/libs/org.eclipse.paho.android.service-1.0.3-20160309.164130-273.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/libs/org.eclipse.paho.client.mqttv3-1.0.2.jar" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/ChatStream.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/ChatStream.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/utils/DBConstants.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/utils/DBConstants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/org_eclipse_paho_client_mqttv3_1_0_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/org_eclipse_paho_client_mqttv3_1_0_2.xml" />
@@ -115,108 +113,7 @@
     <favorites_list name="WrestleChat" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="ChatStream.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/ChatStream.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.18181819">
-              <caret line="42" column="58" selection-start-line="42" selection-start-column="58" selection-end-line="42" selection-end-column="58" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CurrentActiveUser.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/auth/CurrentActiveUser.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="72" column="18" selection-start-line="72" selection-start-column="18" selection-end-line="72" selection-end-column="18" />
-              <folding>
-                <element signature="e#2129#2130#0" expanded="true" />
-                <element signature="e#2160#2161#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
-              <folding>
-                <marker date="1458448920000" expanded="true" signature="591:1516" placeholder="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RetrieveEvents.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/eventManager/RetrieveEvents.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="83" column="5" selection-start-line="83" selection-start-column="5" selection-end-line="83" selection-end-column="5" />
-              <folding>
-                <element signature="e#3128#3129#0" expanded="true" />
-                <element signature="e#3163#3164#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DBConstants.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/utils/DBConstants.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="31" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ChatStreamBinder.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/ChatStreamBinder.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="35" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
-              <folding>
-                <element signature="e#252#253#0" expanded="true" />
-                <element signature="e#298#299#0" expanded="true" />
-                <element signature="e#336#337#0" expanded="true" />
-                <element signature="e#370#371#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MessagingFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="77" column="38" selection-start-line="77" selection-start-column="38" selection-end-line="77" selection-end-column="38" />
-              <folding>
-                <element signature="e#4466#4596#0" expanded="true" />
-                <element signature="e#4595#4596#0" expanded="true" />
-                <element signature="e#5904#6039#0" expanded="true" />
-                <element signature="e#6038#6039#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="79" column="42" selection-start-line="79" selection-start-column="42" selection-end-line="79" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -1505,7 +1402,7 @@
     <option name="modificationStamps">
       <map>
         <entry key="$PROJECT_DIR$/../Sykodoro" value="5794682845000" />
-        <entry key="$PROJECT_DIR$" value="4373568248000" />
+        <entry key="$PROJECT_DIR$" value="4373602357000" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -1730,12 +1627,12 @@
                             <option value="$USER_HOME$/Library/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-ads/8.4.0/play-services-ads-8.4.0.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.flaviofaria/kenburnsview/1.0.7/ce4e8bba9e026dd29f8110b2f6bb1fc4ecbdd9b1/kenburnsview-1.0.7.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.volley/volley/1.0.0/8c3f383fc51fc498dbd77f103f8c4ad23c9ac35f/volley-1.0.0.aar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.paho/org.eclipse.paho.android.service/1.0.2/2d956522c556caeb35148445ecd059ebe67331f6/org.eclipse.paho.android.service-1.0.2.jar" />
                             <option value="$USER_HOME$/Library/Android/sdk/extras/android/m2repository/com/android/support/animated-vector-drawable/23.2.0/animated-vector-drawable-23.2.0.aar" />
                             <option value="$USER_HOME$/Library/Android/sdk/extras/android/m2repository/com/android/support/support-vector-drawable/23.2.0/support-vector-drawable-23.2.0.aar" />
                             <option value="$USER_HOME$/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.2.0/support-annotations-23.2.0.jar" />
                             <option value="$USER_HOME$/Library/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-basement/8.4.0/play-services-basement-8.4.0.aar" />
-                            <option value="$MODULE_DIR$/src/main/java/libs/org.eclipse.paho.android.service-1.0.3-20160309.164130-273.jar" />
-                            <option value="$MODULE_DIR$/src/main/java/libs/org.eclipse.paho.client.mqttv3-1.0.2.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.paho/org.eclipse.paho.client.mqttv3/1.0.2/11752d3f24d1a9deda4533a7ca18d8496417ceeb/org.eclipse.paho.client.mqttv3-1.0.2.jar" />
                           </list>
                         </option>
                         <option name="path" value="$PROJECT_DIR$/app" />
@@ -1928,9 +1825,9 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/chatStream/ChatStreamBinder.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/chatStream/ChatStream.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/ChatStream.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/utils/DBConstants.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/ChatStream.java" />
       </list>
     </option>
   </component>
@@ -1945,9 +1842,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
-    <option name="width" value="1680" />
-    <option name="height" value="973" />
+    <option name="x" value="-1600" />
+    <option name="y" value="173" />
+    <option name="width" value="1600" />
+    <option name="height" value="877" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -1972,6 +1870,28 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WrestleChat" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WrestleChat" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WrestleChat-Android" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2003,8 +1923,22 @@
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="libs" />
+              <option name="myItemId" value="WrestleChat" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wrestlechat" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2021,32 +1955,18 @@
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
             </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="WrestleChat" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WrestleChat" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+              <option name="myItemId" value="wrestlechat" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="WrestleChat-Android" />
+              <option name="myItemId" value="eventManager" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2598,16 +2518,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1680" height="973" extended-state="0" />
-    <editor active="true" />
+    <frame x="-1600" y="173" width="1600" height="877" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32889965" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4616172" sideWeight="0.4940978" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25284737" sideWeight="0.47346252" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25319692" sideWeight="0.47346252" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295979" sideWeight="0.4948849" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3516624" sideWeight="0.4832905" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
@@ -2622,13 +2541,14 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24983521" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22649573" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22593068" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30229747" sideWeight="0.48711553" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4616172" sideWeight="0.4940978" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295979" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.81321186" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -2715,14 +2635,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/ChatStream.java</url>
-          <line>41</line>
-          <properties />
-          <option name="timeStamp" value="85" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="86" />
     </breakpoint-manager>
     <watches-manager />
@@ -2999,7 +2911,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="150" column="37" selection-start-line="150" selection-start-column="37" selection-end-line="150" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3007,7 +2918,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.3557693">
           <caret line="70" column="49" selection-start-line="70" selection-start-column="49" selection-end-line="70" selection-end-column="49" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3015,9 +2925,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="169" column="0" selection-start-line="169" selection-start-column="0" selection-end-line="169" selection-end-column="0" />
-          <folding>
-            <element signature="e#5462#5463#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3025,9 +2932,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="787" column="0" selection-start-line="787" selection-start-column="0" selection-end-line="787" selection-end-column="0" />
-          <folding>
-            <element signature="e#30164#30165#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3035,7 +2939,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="603" column="0" selection-start-line="603" selection-start-column="0" selection-end-line="603" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3043,7 +2946,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3326923">
           <caret line="353" column="18" selection-start-line="353" selection-start-column="18" selection-end-line="353" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3051,20 +2953,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
           <caret line="2269" column="28" selection-start-line="2269" selection-start-column="28" selection-end-line="2269" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/ChatStreamBinder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.21621622">
           <caret line="8" column="35" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
-          <folding>
-            <element signature="e#252#253#0" expanded="true" />
-            <element signature="e#298#299#0" expanded="true" />
-            <element signature="e#336#337#0" expanded="true" />
-            <element signature="e#370#371#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3073,40 +2969,24 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="77" column="38" selection-start-line="77" selection-start-column="38" selection-end-line="77" selection-end-column="38" />
           <folding>
-            <element signature="e#4466#4596#0" expanded="true" />
-            <element signature="e#4595#4596#0" expanded="true" />
-            <element signature="e#5904#6039#0" expanded="true" />
-            <element signature="e#6038#6039#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/eventManager/RetrieveEvents.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="83" column="5" selection-start-line="83" selection-start-column="5" selection-end-line="83" selection-end-column="5" />
-          <folding>
-            <element signature="e#3128#3129#0" expanded="true" />
-            <element signature="e#3163#3164#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#2423#2424#0" expanded="false" />
+            <element signature="e#2467#2468#0" expanded="false" />
+            <element signature="e#4535#4536#0" expanded="false" />
+            <element signature="e#4585#4586#0" expanded="false" />
+            <element signature="e#4882#4883#0" expanded="false" />
+            <element signature="e#4980#4981#0" expanded="false" />
+            <element signature="e#5973#5974#0" expanded="false" />
+            <element signature="e#6028#6029#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.7027027">
           <caret line="79" column="42" selection-start-line="79" selection-start-column="42" selection-end-line="79" selection-end-column="42" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
-          <folding>
-            <marker date="1458448920000" expanded="true" signature="591:1516" placeholder="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3114,25 +2994,30 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="72" column="18" selection-start-line="72" selection-start-column="18" selection-end-line="72" selection-end-column="18" />
-          <folding>
-            <element signature="e#2129#2130#0" expanded="true" />
-            <element signature="e#2160#2161#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/utils/DBConstants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="31" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.1891892">
+          <caret line="7" column="67" selection-start-line="7" selection-start-column="67" selection-end-line="7" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.84144145">
+          <caret line="47" column="5" selection-start-line="47" selection-start-column="5" selection-end-line="47" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/ChatStream.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18181819">
-          <caret line="42" column="58" selection-start-line="42" selection-start-column="58" selection-end-line="42" selection-end-column="58" />
+        <state vertical-scroll-proportion="0.5405405">
+          <caret line="43" column="64" selection-start-line="43" selection-start-column="64" selection-end-line="43" selection-end-column="64" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

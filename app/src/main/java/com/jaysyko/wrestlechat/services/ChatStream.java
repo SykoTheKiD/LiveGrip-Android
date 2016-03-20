@@ -9,6 +9,7 @@ import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.models.Message;
+import com.jaysyko.wrestlechat.utils.DBConstants;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
@@ -40,7 +41,7 @@ public class ChatStream extends Service implements MqttCallback {
     public MqttClient connect() {
         try {
             String username = CurrentActiveUser.getInstance().getUsername();
-            mClient = new MqttClient("tcp://127.0.0.1:8080", username);
+            mClient = new MqttClient(DBConstants.MQTT_BROKER_URL, username);
             mClient.connect();
             mClient.setCallback(this);
         } catch (MqttException e) {
