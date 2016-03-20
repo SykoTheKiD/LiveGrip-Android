@@ -2,11 +2,9 @@ package com.jaysyko.wrestlechat.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,9 +35,8 @@ import com.jaysyko.wrestlechat.network.NetworkResponse;
 import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.RESTEndpoints;
-import com.jaysyko.wrestlechat.services.chatStream.ChatStream;
-import com.jaysyko.wrestlechat.services.chatStream.ChatStreamBinder;
-import com.jaysyko.wrestlechat.utils.IntentKeys;
+import com.jaysyko.wrestlechat.services.ChatStream;
+import com.jaysyko.wrestlechat.services.ChatStreamBinder;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 import org.json.JSONArray;
@@ -53,15 +50,15 @@ public class MessagingFragment extends Fragment {
 
     public static final String TAG = MessagingFragment.class.getSimpleName();
     private static final int SEND_DELAY = 1500;
-    private static ArrayList<Message> messages = new ArrayList<>();
+    private static ArrayList<Message> mMessages = new ArrayList<>();
     private static MessageListAdapter mAdapter;
     private EditText etMessage;
     private ImageButton btSend;
-    private Activity mApplicationContext;
+    private Context mApplicationContext;
     private View view;
     private Handler handler = new Handler();
-    private boolean mServiceBound;
-    private Intent intent;
+    private boolean mServiceBound = false;
+    private Intent mChatServiceIntent;
     private Runnable initMessageAdapter = new Runnable() {
         @Override
         public void run() {
@@ -69,26 +66,25 @@ public class MessagingFragment extends Fragment {
         }
     };
     private Event mCurrentEvent = CurrentActiveEvent.getInstance().getCurrentEvent();
-    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            updateMessages((Message) intent.getSerializableExtra(IntentKeys.MESSAGE_BROADCAST));
-        }
-    };
+//    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent mChatServiceIntent) {
+//            updateMessages((Message) mChatServiceIntent.getSerializableExtra(IntentKeys.MESSAGE_BROADCAST));
+//        }
+//    };
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             ChatStreamBinder binder = (ChatStreamBinder) service;
             ChatStream chatStream = binder.getService();
-            chatStream.connect();
             chatStream.subscribe(CurrentActiveEvent.getInstance().getCurrentEvent().getEventID());
-            mApplicationContext.registerReceiver(broadcastReceiver, new IntentFilter(ChatStream.TAG));
+//            mApplicationContext.registerReceiver(broadcastReceiver, new IntentFilter(ChatStream.TAG));
             mServiceBound = true;
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            mApplicationContext.unregisterReceiver(broadcastReceiver);
+//            mApplicationContext.unregisterReceiver(broadcastReceiver);
             mServiceBound = false;
         }
     };
@@ -96,7 +92,9 @@ public class MessagingFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        intent = new Intent(getActivity(), ChatStream.class);
+        Activity activity = getActivity();
+        activity.setTitle(mCurrentEvent.getEventName());
+        mChatServiceIntent = new Intent(activity, ChatStream.class);
     }
 
     @Override
@@ -104,7 +102,6 @@ public class MessagingFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_messaging, container, false);
         mApplicationContext = getActivity();
-        mApplicationContext.setTitle(mCurrentEvent.getEventName());
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
         ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
         btSend = (ImageButton) view.findViewById(R.id.send_button);
@@ -134,7 +131,7 @@ public class MessagingFragment extends Fragment {
         Form form = new MessageValidator(body).validate();
         if (NetworkState.isConnected(mApplicationContext)) {
             if (form.isValid()) {
-                // Use Message model to create new messages now
+                // Use Message model to create new mMessages now
 //                Message message = new Message();
 //                message.setUserID(userID);
 //                message.setEventId(sEventId);
@@ -161,20 +158,20 @@ public class MessagingFragment extends Fragment {
         ListView lvChat = (ListView) view.findViewById(R.id.chat_list_view);
         // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen. Don't scroll to the bottom otherwise.
         lvChat.setTranscriptMode(1);
-        mAdapter = new MessageListAdapter(mApplicationContext, messages);
+        mAdapter = new MessageListAdapter(mApplicationContext, mMessages);
         lvChat.setAdapter(mAdapter);
     }
 
     private void stopMessagingService() {
         if (mServiceBound) {
-            getActivity().stopService(intent);
+            getActivity().stopService(mChatServiceIntent);
             getActivity().unbindService(mServiceConnection);
             mServiceBound = false;
         }
     }
 
     private void updateMessages(Message message) {
-        messages.add(messages.size() - 1, message);
+        mMessages.add(mMessages.size() - 1, message);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -192,7 +189,7 @@ public class MessagingFragment extends Fragment {
                             JSONArray messageObjects = networkResponse.getPayload();
                             for (int index = 0; index < messageObjects.length(); index++) {
                                 current = (JSONObject) messageObjects.get(index);
-                                messages.add(
+                                mMessages.add(
                                         new Message(
                                                 current.getString(MessageJSONKeys.USERNAME.toString()),
                                                 current.getString(MessageJSONKeys.EVENT_NAME.toString()),
@@ -216,14 +213,29 @@ public class MessagingFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (!mServiceBound) {
-            mApplicationContext.startService(intent);
+            mApplicationContext.startService(mChatServiceIntent);
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+//        getActivity().unregisterReceiver(broadcastReceiver);
+        mApplicationContext.stopService(mChatServiceIntent);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Intent intent = new Intent(getActivity(), ChatStream.class);
-        getActivity().bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
+        mApplicationContext.bindService(mChatServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mServiceBound) {
+            mApplicationContext.unbindService(mServiceConnection);
+            mServiceBound = false;
+        }
     }
 }

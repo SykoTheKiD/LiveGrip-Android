@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat.services.chatStream;
+package com.jaysyko.wrestlechat.services;
 
 import android.app.Service;
 import android.content.Intent;
@@ -9,7 +9,6 @@ import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.models.Message;
-import com.jaysyko.wrestlechat.utils.DBConstants;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
@@ -23,32 +22,31 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class ChatStream extends Service implements MqttCallback {
     public static final String TAG = ChatStream.class.getSimpleName();
     private final IBinder mBinder = new ChatStreamBinder(this);
-    private MqttClient client;
+    private MqttClient mClient;
     private Intent intent;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.e(TAG, "onCreate()");
         intent = new Intent(TAG);
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        Log.e(TAG, "onBind()");
+        connect();
         return mBinder;
     }
 
     public MqttClient connect() {
-        Log.e(TAG, "connect()");
         try {
-            client = new MqttClient(DBConstants.MQTT_BROKER_URL, CurrentActiveUser.getInstance().getUsername());
-            client.connect();
-            client.setCallback(this);
+            String username = CurrentActiveUser.getInstance().getUsername();
+            mClient = new MqttClient("tcp://127.0.0.1:8080", username);
+            mClient.connect();
+            mClient.setCallback(this);
         } catch (MqttException e) {
             Log.e(TAG, e.getMessage());
         }
-        return this.client;
+        return this.mClient;
     }
 
     @Override
@@ -74,7 +72,7 @@ public class ChatStream extends Service implements MqttCallback {
         MqttMessage mqttMessage = new MqttMessage();
         mqttMessage.setPayload(message.getBody().getBytes());
         try {
-            this.client.publish(CurrentActiveEvent.getInstance().getCurrentEvent().getEventID(), mqttMessage);
+            this.mClient.publish(CurrentActiveEvent.getInstance().getCurrentEvent().getEventID(), mqttMessage);
         } catch (MqttException e) {
             Log.e(TAG, e.getMessage());
         }
@@ -82,7 +80,7 @@ public class ChatStream extends Service implements MqttCallback {
 
     public void subscribe(String room) {
         try {
-            this.client.subscribe(room);
+            this.mClient.subscribe(room);
         } catch (MqttException e) {
             Log.e(TAG, e.getMessage());
         }

@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat.services.chatStream;
+package com.jaysyko.wrestlechat.services;
 
 import android.os.Binder;
 
@@ -6,7 +6,6 @@ import android.os.Binder;
  * Created by jarushaan on 2016-03-19
  */
 public class ChatStreamBinder extends Binder {
-
     private ChatStream chatService;
 
     public ChatStreamBinder(ChatStream chatService) {
@@ -14,6 +13,6 @@ public class ChatStreamBinder extends Binder {
     }
 
     public ChatStream getService() {
-        return this.chatService;
+        return chatService;
     }
 }

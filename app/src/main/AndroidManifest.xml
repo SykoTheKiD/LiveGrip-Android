@@ -76,9 +76,9 @@
             android:name=".activities.EventListActivity"
             android:theme="@style/NoActionBar" />
 
-        <!--<service-->
-        <!--android:name=".services.MessagingService"-->
-        <!--android:exported="false" />-->
+        <service
+        android:name=".services.ChatStream"
+        android:exported="false" />
     </application>
 
 </manifest>
