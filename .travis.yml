@@ -18,7 +18,7 @@ android:
     - extra-google-m2repository
     - sys-img-armeabi-v7a-android-21
 
-sudo: required
+sudo: false
 
 before_install:
     - chmod +x gradlew
