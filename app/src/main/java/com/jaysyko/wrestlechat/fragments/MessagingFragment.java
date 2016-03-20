@@ -80,6 +80,7 @@ public class MessagingFragment extends Fragment {
         public void onServiceConnected(ComponentName name, IBinder service) {
             ChatStreamBinder binder = (ChatStreamBinder) service;
             ChatStream chatStream = binder.getService();
+            chatStream.connect();
             chatStream.subscribe(CurrentActiveEvent.getInstance().getCurrentEvent().getEventID());
             mApplicationContext.registerReceiver(broadcastReceiver, new IntentFilter(ChatStream.TAG));
             mServiceBound = true;
@@ -93,12 +94,17 @@ public class MessagingFragment extends Fragment {
     };
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        intent = new Intent(getActivity(), ChatStream.class);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_messaging, container, false);
         mApplicationContext = getActivity();
         mApplicationContext.setTitle(mCurrentEvent.getEventName());
-        intent = new Intent(mApplicationContext, ChatStream.class);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
         ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
         btSend = (ImageButton) view.findViewById(R.id.send_button);
