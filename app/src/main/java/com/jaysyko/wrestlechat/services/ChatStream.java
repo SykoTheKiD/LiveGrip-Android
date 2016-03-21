@@ -30,9 +30,12 @@ public class ChatStream extends Service implements MqttCallback, MqttTraceHandle
     private static final String CLIENT_ID = CurrentActiveUser.getInstance().getUsername();
     private static final String PROTOCOL = "tcp://";
     private static final String MOSQUITO_URL = PROTOCOL + MQTT_BROKER_URL + ":" + MQTT_BROKER_PORT;
+    private static final int CONNECTION_TIMEOUT = 10000;
+    private static final int KEEP_ALIVE_INTERVAL = 600000;
     private final ChatStreamBinder mBinder = new ChatStreamBinder(this);
     private MqttAndroidClient mClient;
     private boolean mIsConnecting;
+    private String room = CurrentActiveEvent.getInstance().getCurrentEvent().getEventID();
     private Intent intent;
 
     public MqttAndroidClient getClient() {
@@ -56,8 +59,8 @@ public class ChatStream extends Service implements MqttCallback, MqttTraceHandle
         mClient = new MqttAndroidClient(this, MOSQUITO_URL, CLIENT_ID);
         MqttConnectOptions connectOptions = new MqttConnectOptions();
         connectOptions.setCleanSession(false);
-        connectOptions.setConnectionTimeout(10000);
-        connectOptions.setKeepAliveInterval(600000);
+        connectOptions.setConnectionTimeout(CONNECTION_TIMEOUT);
+        connectOptions.setKeepAliveInterval(KEEP_ALIVE_INTERVAL);
         connectOptions.setUserName(CLIENT_ID);
         connectOptions.setPassword("password".toCharArray());
 
@@ -83,7 +86,7 @@ public class ChatStream extends Service implements MqttCallback, MqttTraceHandle
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         Log.i(TAG, message.toString());
         mBinder.messageArrived(message.toString());
-//        Message messageObject = new Message();
+//        Message messageObject = new Message(message.getPayload());
 //        intent.putExtra(IntentKeys.MESSAGE_BROADCAST, messageObject);
 //        sendBroadcast(intent);
     }
@@ -103,7 +106,7 @@ public class ChatStream extends Service implements MqttCallback, MqttTraceHandle
         }
     }
 
-    public void subscribe(String room) {
+    private void subscribe() {
         try {
             getClient().subscribe(room, 2, null, this);
         } catch (MqttException e) {
@@ -130,12 +133,20 @@ public class ChatStream extends Service implements MqttCallback, MqttTraceHandle
     public void onSuccess(IMqttToken asyncActionToken) {
         if (mIsConnecting) {
             mIsConnecting = false;
-            subscribe(CurrentActiveEvent.getInstance().getCurrentEvent().getEventID());
+            subscribe();
         }
     }
 
     @Override
     public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
         Log.e(TAG, "Error:".concat(exception.toString()));
+    }
+
+    public void sendMessage(String body) {
+        try {
+            mClient.publish(room, body.getBytes(), 2, false, null, this);
+        } catch (MqttException e) {
+            Log.e(TAG, e.getMessage());
+        }
     }
 }
