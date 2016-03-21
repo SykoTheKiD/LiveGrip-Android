@@ -77,8 +77,12 @@
             android:theme="@style/NoActionBar" />
 
         <service
-        android:name=".services.ChatStream"
-        android:exported="false" />
+            android:name=".services.ChatStream"
+            android:enabled="true"
+            android:exported="false" />
+
+        <service android:name="org.eclipse.paho.android.service.MqttService" />
+
     </application>
 
 </manifest>

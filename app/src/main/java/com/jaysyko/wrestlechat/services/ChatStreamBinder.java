@@ -7,6 +7,7 @@ import android.os.Binder;
  */
 public class ChatStreamBinder extends Binder {
     private ChatStream chatService;
+    private IMessageArrivedListener mListener;
 
     public ChatStreamBinder(ChatStream chatService) {
         this.chatService = chatService;
@@ -14,5 +15,14 @@ public class ChatStreamBinder extends Binder {
 
     public ChatStream getService() {
         return chatService;
+    }
+
+    public void setMessageArrivedListener(IMessageArrivedListener listener) {
+        mListener = listener;
+    }
+
+    public void messageArrived(String message) {
+        if (mListener != null)
+            mListener.messageArrived(message);
     }
 }

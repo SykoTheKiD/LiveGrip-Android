@@ -36,7 +36,6 @@ import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.RESTEndpoints;
 import com.jaysyko.wrestlechat.services.ChatStream;
-import com.jaysyko.wrestlechat.services.ChatStreamBinder;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 import org.json.JSONArray;
@@ -75,9 +74,9 @@ public class MessagingFragment extends Fragment {
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            ChatStreamBinder binder = (ChatStreamBinder) service;
-            ChatStream chatStream = binder.getService();
-            chatStream.subscribe(CurrentActiveEvent.getInstance().getCurrentEvent().getEventID());
+//            ChatStreamBinder binder = (ChatStreamBinder) service;
+//            ChatStream chatStream = binder.getService();
+//            chatStream.subscribe(CurrentActiveEvent.getInstance().getCurrentEvent().getEventID());
 //            mApplicationContext.registerReceiver(broadcastReceiver, new IntentFilter(ChatStream.TAG));
             mServiceBound = true;
         }
