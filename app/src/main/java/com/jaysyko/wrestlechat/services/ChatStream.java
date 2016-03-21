@@ -7,8 +7,11 @@ import android.util.Log;
 
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
+import com.jaysyko.wrestlechat.auth.UserJSONKeys;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
+import com.jaysyko.wrestlechat.models.EventJSONKeys;
 import com.jaysyko.wrestlechat.models.Message;
+import com.jaysyko.wrestlechat.models.MessageJSONKeys;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.android.service.MqttTraceHandler;
@@ -19,6 +22,8 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by jarushaan on 2016-03-14
@@ -85,7 +90,8 @@ public class ChatStream extends Service implements MqttCallback, MqttTraceHandle
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         Log.i(TAG, message.toString());
-        mBinder.messageArrived(message.toString());
+        String payload = message.toString();
+        mBinder.messageArrived(payload);
 //        Message messageObject = new Message(message.getPayload());
 //        intent.putExtra(IntentKeys.MESSAGE_BROADCAST, messageObject);
 //        sendBroadcast(intent);
@@ -143,8 +149,21 @@ public class ChatStream extends Service implements MqttCallback, MqttTraceHandle
     }
 
     public void sendMessage(String body) {
+        JSONObject payload = new JSONObject();
+        CurrentActiveUser currentActiveUser = CurrentActiveUser.getInstance();
+        CurrentActiveEvent currentActiveEvent = CurrentActiveEvent.getInstance();
         try {
-            mClient.publish(room, body.getBytes(), 2, false, null, this);
+            payload.put(UserJSONKeys.ID.toString(), currentActiveUser.getUserID());
+            payload.put(EventJSONKeys.ID.toString(), currentActiveEvent.getCurrentEvent().getEventID());
+            payload.put(MessageJSONKeys.BODY.toString(), body);
+            payload.put(EventJSONKeys.NAME.toString(), currentActiveEvent.getCurrentEvent().getEventName());
+            payload.put(UserJSONKeys.USERNAME.toString(), currentActiveUser.getUsername());
+            payload.put(UserJSONKeys.PROFILE_IMAGE.toString(), currentActiveUser.getCustomProfileImageURL());
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage());
+        }
+        try {
+            mClient.publish(room, payload.toString().getBytes(), 2, false, null, this);
         } catch (MqttException e) {
             Log.e(TAG, e.getMessage());
         }

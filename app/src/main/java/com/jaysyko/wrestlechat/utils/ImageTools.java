@@ -22,6 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class ImageTools {
+    private static final String TAG = ImageTools.class.getSimpleName();
     public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
                                                          int reqWidth, int reqHeight) {
 
@@ -91,6 +92,7 @@ public final class ImageTools {
     }
 
     public static Boolean isLinkToImage(String url) {
+        Log.e(TAG, "URL: " + url);
         String patternToMatch = "\\.jpg|\\.png*";
         Pattern p = Pattern.compile(patternToMatch);
         Matcher m = p.matcher(url);

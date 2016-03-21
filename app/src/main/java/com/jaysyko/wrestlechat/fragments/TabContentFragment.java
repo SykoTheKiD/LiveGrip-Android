@@ -62,16 +62,16 @@ public class TabContentFragment extends Fragment {
                     mEventsList.clear();
                     for (int index = 0; index < events.length(); index++) {
                         current = (JSONObject) events.get(index);
-                        String start_time = current.getString(EventJSONKeys.START_TIME.getKey());
-                        String end_time = current.getString(EventJSONKeys.END_TIME.getKey());
+                        String start_time = current.getString(EventJSONKeys.START_TIME.toString());
+                        String end_time = current.getString(EventJSONKeys.END_TIME.toString());
                         if (DateVerifier.goLive(start_time, end_time).getReason() == state) {
                             Event event = new Event(
-                                    current.getString(EventJSONKeys.ID.getKey()),
-                                    current.getString(EventJSONKeys.NAME.getKey()),
-                                    current.getString(EventJSONKeys.INFO.getKey()),
-                                    current.getString(EventJSONKeys.MATCH_CARD.getKey()),
-                                    current.getString(EventJSONKeys.IMAGE.getKey()),
-                                    current.getString(EventJSONKeys.LOCATION.getKey()),
+                                    current.getString(EventJSONKeys.ID.toString()),
+                                    current.getString(EventJSONKeys.NAME.toString()),
+                                    current.getString(EventJSONKeys.INFO.toString()),
+                                    current.getString(EventJSONKeys.MATCH_CARD.toString()),
+                                    current.getString(EventJSONKeys.IMAGE.toString()),
+                                    current.getString(EventJSONKeys.LOCATION.toString()),
                                     start_time,
                                     end_time
                             );
