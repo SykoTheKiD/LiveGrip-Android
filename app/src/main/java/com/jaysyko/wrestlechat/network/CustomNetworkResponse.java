@@ -9,22 +9,22 @@ import org.json.JSONObject;
 /**
  * Created by jarushaan on 2016-03-12
  */
-public class NetworkResponse {
+public class CustomNetworkResponse {
 
-    public static final String TAG = NetworkResponse.class.getSimpleName();
+    public static final String TAG = CustomNetworkResponse.class.getSimpleName();
     private JSONObject response;
 
-    public NetworkResponse(String response) {
+    public CustomNetworkResponse(String response) {
         try {
             this.response = new JSONObject(response);
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
         }
     }
 
     public boolean isSuccessful() {
         try {
-            return (Boolean) this.response.get(NetworkIndex.SUCCESS.getKey());
+            return (Boolean) this.response.get(NetworkResponseKeys.SUCCESS.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -33,7 +33,7 @@ public class NetworkResponse {
 
     public JSONArray getPayload() {
         try {
-            return (JSONArray) this.response.get(NetworkIndex.PAYLOAD.getKey());
+            return (JSONArray) this.response.get(NetworkResponseKeys.PAYLOAD.toString());
         } catch (JSONException e) {
             Log.e(TAG, e.getMessage());
             return null;

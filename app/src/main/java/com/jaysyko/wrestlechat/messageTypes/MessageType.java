@@ -49,7 +49,7 @@ public class MessageType implements MessageGenerator {
                     lp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                 }
                 lp.addRule(RelativeLayout.BELOW, R.id.senderUsernameID);
-                textView.setBackgroundResource(R.drawable.bubble_left_brown);
+                textView.setBackgroundResource(R.drawable.bubble_right_red);
                 textView.setTextColor(Color.parseColor(WHITE));
                 break;
         }
