@@ -78,6 +78,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             ChatStreamBinder binder = (ChatStreamBinder) service;
+            binder.setMessageArrivedListener(MessagingFragment.this);
             chatStream = binder.getService();
 //            chatStream.subscribe(CurrentActiveEvent.getInstance().getCurrentEvent().getEventID());
 //            mApplicationContext.registerReceiver(broadcastReceiver, new IntentFilter(ChatStream.TAG));
@@ -174,7 +175,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     }
 
     private void updateMessages(Message message) {
-        mMessages.add(mMessages.size() - 1, message);
+        mMessages.add(mMessages.size(), message);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -243,7 +244,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     }
 
     @Override
-    public void messageArrived(String message) {
-        Log.e(TAG, message);
+    public void messageArrived(Message message) {
+        updateMessages(message);
     }
 }

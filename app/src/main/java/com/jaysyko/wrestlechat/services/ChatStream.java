@@ -89,9 +89,16 @@ public class ChatStream extends Service implements MqttCallback, MqttTraceHandle
 
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-        Log.i(TAG, message.toString());
         String payload = message.toString();
-        mBinder.messageArrived(payload);
+        JSONObject messageJSON = new JSONObject(payload);
+        Log.e(TAG, messageJSON.toString());
+        Message newMessage = new Message(
+                messageJSON.getString("username"),
+                messageJSON.getString("name"),
+                messageJSON.getString("body"),
+                messageJSON.getString("profile_image")
+        );
+        mBinder.messageArrived(newMessage);
 //        Message messageObject = new Message(message.getPayload());
 //        intent.putExtra(IntentKeys.MESSAGE_BROADCAST, messageObject);
 //        sendBroadcast(intent);

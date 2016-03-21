@@ -2,6 +2,8 @@ package com.jaysyko.wrestlechat.services;
 
 import android.os.Binder;
 
+import com.jaysyko.wrestlechat.models.Message;
+
 /**
  * Created by jarushaan on 2016-03-19
  */
@@ -21,7 +23,7 @@ public class ChatStreamBinder extends Binder {
         mListener = listener;
     }
 
-    public void messageArrived(String message) {
+    public void messageArrived(Message message) {
         if (mListener != null)
             mListener.messageArrived(message);
     }
