@@ -10,6 +10,7 @@ import com.jaysyko.wrestlechat.utils.ImageTools;
  */
 public class CurrentActiveUser {
     private static CurrentActiveUser activeCurrentActiveUser;
+    private String userID;
     private String username;
     private String password;
     private String profileImageURL;
@@ -26,7 +27,7 @@ public class CurrentActiveUser {
      * @param password String
      * @return CurrentActiveUser
      */
-    public static CurrentActiveUser getInstance(String username, String password) {
+    public static CurrentActiveUser getInstance(String userID, String username, String password) {
         if (activeCurrentActiveUser == null) {
             activeCurrentActiveUser = new CurrentActiveUser(username, password);
         }
@@ -45,8 +46,15 @@ public class CurrentActiveUser {
         return activeCurrentActiveUser;
     }
 
+    /**
+     * @return userID
+     */
+    public String getUserID() {
+        return activeCurrentActiveUser.userID;
+    }
+
     public boolean setPassword(String password) {
-        this.password = password;
+        activeCurrentActiveUser.password = password;
         return true;
     }
 
@@ -56,12 +64,6 @@ public class CurrentActiveUser {
      * @return imageUrl: String
      */
     public String getCustomProfileImageURL() {
-//        String userImage = currentUser.getString(User.IMG_ID);
-//        if (userImage != null) {
-//            activeCurrentActiveUser.profileImageURL = userImage;
-//        } else {
-//            activeCurrentActiveUser.profileImageURL = ImageTools.defaultProfileImage(activeCurrentActiveUser.getUsername());
-//        }
         return activeCurrentActiveUser.profileImageURL;
     }
 
@@ -76,7 +78,7 @@ public class CurrentActiveUser {
 
     public boolean setUsername(String username) {
         // hit /users/edit
-//        currentUser.setUsername(username);
+//        ac.setUsername(username);
         return true;
     }
 

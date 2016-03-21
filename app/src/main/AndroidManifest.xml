@@ -35,7 +35,7 @@
             android:name=".activities.MessagingActivity"
             android:label="@string/activity_messaging"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/NoActionBar" />
         <activity
             android:name=".activities.EventInfoActivity"
             android:label="@string/activity_event_info"
@@ -77,8 +77,12 @@
             android:theme="@style/NoActionBar" />
 
         <service
-        android:name=".services.ChatStream"
-        android:exported="false" />
+            android:name=".services.MessagingService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <service android:name="org.eclipse.paho.android.service.MqttService" />
+
     </application>
 
 </manifest>

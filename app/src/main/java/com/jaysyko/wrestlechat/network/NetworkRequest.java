@@ -6,17 +6,17 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.jaysyko.wrestlechat.utils.DBConstants;
+import com.jaysyko.wrestlechat.utils.StringResources;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by jarushaan on 2016-03-18
+ * @author Jay Syko
  */
 public class NetworkRequest {
-
-    public static String TAG = NetworkRequest.class.getSimpleName();
+    private static final String MYSQL_URL = "http://192.168.33.10/";
+    private static String TAG = NetworkRequest.class.getSimpleName();
     private NetworkCallback callback;
 
     public NetworkRequest(NetworkCallback callback) {
@@ -26,7 +26,7 @@ public class NetworkRequest {
     public Request get(RESTEndpoints endpoint) {
         return new StringRequest(
                 Request.Method.POST,
-                DBConstants.MYSQL_URL.concat(endpoint.getEndpoint()),
+                MYSQL_URL.concat(endpoint.getEndpoint()),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -49,7 +49,7 @@ public class NetworkRequest {
     public Request post(RESTEndpoints endpoint) {
         return new StringRequest(
                 Request.Method.POST,
-                DBConstants.MYSQL_URL.concat(endpoint.getEndpoint()),
+                MYSQL_URL.concat(endpoint.getEndpoint()),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -67,7 +67,7 @@ public class NetworkRequest {
     public Request post(RESTEndpoints endpoint, final HashMap<String, String> params) {
         return new StringRequest(
                 Request.Method.POST,
-                DBConstants.MYSQL_URL.concat(endpoint.getEndpoint()),
+                MYSQL_URL.concat(endpoint.getEndpoint()),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -77,7 +77,7 @@ public class NetworkRequest {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e(TAG, error.getMessage());
+                        Log.e(TAG, StringResources.NULL_TEXT + error.getMessage());
                     }
                 }) {
             @Override

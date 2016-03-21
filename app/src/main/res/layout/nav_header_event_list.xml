@@ -3,7 +3,8 @@
     android:id="@+id/nav_header_layout"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@drawable/nav_header_bg"
+
+    android:background="#ff5252"
     android:clickable="true"
     android:gravity="bottom"
     android:orientation="vertical"
@@ -13,12 +14,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <!--<com.jaysyko.wrestlechat.customImageView.RoundedImageView-->
-    <!--android:id="@+id/drawerProfilePicture"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:contentDescription="@string/app_name"-->
-    <!--android:src="@android:drawable/sym_def_app_icon" />-->
+    <ImageView
+        android:id="@+id/drawerProfilePicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:src="@android:drawable/sym_def_app_icon" />
 
     <com.jaysyko.wrestlechat.customTextView.AutoResizeTextView
         android:id="@+id/drawer_username"
@@ -27,11 +28,5 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="25sp"
         android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name" />
 
 </LinearLayout>

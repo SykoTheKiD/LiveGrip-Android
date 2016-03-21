@@ -27,7 +27,7 @@ import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.EventJSONKeys;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkRequest;
-import com.jaysyko.wrestlechat.network.NetworkResponse;
+import com.jaysyko.wrestlechat.network.CustomNetworkResponse;
 import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.RESTEndpoints;
@@ -55,23 +55,23 @@ public class TabContentFragment extends Fragment {
         @Override
         public void onSuccess(String response) {
             try {
-                NetworkResponse networkResponse = new NetworkResponse(response);
-                if (networkResponse.isSuccessful()) {
+                CustomNetworkResponse customNetworkResponse = new CustomNetworkResponse(response);
+                if (customNetworkResponse.isSuccessful()) {
                     JSONObject current;
-                    JSONArray events = networkResponse.getPayload();
+                    JSONArray events = customNetworkResponse.getPayload();
                     mEventsList.clear();
                     for (int index = 0; index < events.length(); index++) {
                         current = (JSONObject) events.get(index);
-                        String start_time = current.getString(EventJSONKeys.START_TIME.getKey());
-                        String end_time = current.getString(EventJSONKeys.END_TIME.getKey());
+                        String start_time = current.getString(EventJSONKeys.START_TIME.toString());
+                        String end_time = current.getString(EventJSONKeys.END_TIME.toString());
                         if (DateVerifier.goLive(start_time, end_time).getReason() == state) {
                             Event event = new Event(
-                                    current.getString(EventJSONKeys.ID.getKey()),
-                                    current.getString(EventJSONKeys.NAME.getKey()),
-                                    current.getString(EventJSONKeys.INFO.getKey()),
-                                    current.getString(EventJSONKeys.MATCH_CARD.getKey()),
-                                    current.getString(EventJSONKeys.IMAGE.getKey()),
-                                    current.getString(EventJSONKeys.LOCATION.getKey()),
+                                    current.getString(EventJSONKeys.ID.toString()),
+                                    current.getString(EventJSONKeys.NAME.toString()),
+                                    current.getString(EventJSONKeys.INFO.toString()),
+                                    current.getString(EventJSONKeys.MATCH_CARD.toString()),
+                                    current.getString(EventJSONKeys.IMAGE.toString()),
+                                    current.getString(EventJSONKeys.LOCATION.toString()),
                                     start_time,
                                     end_time
                             );

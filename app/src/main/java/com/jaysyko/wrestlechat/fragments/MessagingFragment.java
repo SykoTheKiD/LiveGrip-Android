@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,14 +30,15 @@ import com.jaysyko.wrestlechat.forms.formValidators.MessageValidator;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.models.MessageJSONKeys;
+import com.jaysyko.wrestlechat.network.CustomNetworkResponse;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkRequest;
-import com.jaysyko.wrestlechat.network.NetworkResponse;
 import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.RESTEndpoints;
-import com.jaysyko.wrestlechat.services.ChatStream;
-import com.jaysyko.wrestlechat.services.ChatStreamBinder;
+import com.jaysyko.wrestlechat.services.IMessageArrivedListener;
+import com.jaysyko.wrestlechat.services.MessagingService;
+import com.jaysyko.wrestlechat.services.MessagingServiceBinder;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 import org.json.JSONArray;
@@ -45,8 +47,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-public class MessagingFragment extends Fragment {
+public class MessagingFragment extends Fragment implements IMessageArrivedListener {
 
     public static final String TAG = MessagingFragment.class.getSimpleName();
     private static final int SEND_DELAY = 1500;
@@ -59,6 +62,7 @@ public class MessagingFragment extends Fragment {
     private Handler handler = new Handler();
     private boolean mServiceBound = false;
     private Intent mChatServiceIntent;
+    private MessagingService messagingService;
     private Runnable initMessageAdapter = new Runnable() {
         @Override
         public void run() {
@@ -66,25 +70,17 @@ public class MessagingFragment extends Fragment {
         }
     };
     private Event mCurrentEvent = CurrentActiveEvent.getInstance().getCurrentEvent();
-//    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-//        @Override
-//        public void onReceive(Context context, Intent mChatServiceIntent) {
-//            updateMessages((Message) mChatServiceIntent.getSerializableExtra(IntentKeys.MESSAGE_BROADCAST));
-//        }
-//    };
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            ChatStreamBinder binder = (ChatStreamBinder) service;
-            ChatStream chatStream = binder.getService();
-            chatStream.subscribe(CurrentActiveEvent.getInstance().getCurrentEvent().getEventID());
-//            mApplicationContext.registerReceiver(broadcastReceiver, new IntentFilter(ChatStream.TAG));
+            MessagingServiceBinder binder = (MessagingServiceBinder) service;
+            binder.setMessageArrivedListener(MessagingFragment.this);
+            messagingService = binder.getService();
             mServiceBound = true;
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-//            mApplicationContext.unregisterReceiver(broadcastReceiver);
             mServiceBound = false;
         }
     };
@@ -93,8 +89,8 @@ public class MessagingFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Activity activity = getActivity();
-        activity.setTitle(mCurrentEvent.getEventName());
-        mChatServiceIntent = new Intent(activity, ChatStream.class);
+        activity.setTitle(Html.fromHtml("<font color=\"#FFFFFFF\">" + mCurrentEvent.getEventName() + "</font>"));
+        mChatServiceIntent = new Intent(activity, MessagingService.class);
     }
 
     @Override
@@ -102,6 +98,7 @@ public class MessagingFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_messaging, container, false);
         mApplicationContext = getActivity();
+        getActivity().getWindow().setBackgroundDrawable(null);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
         ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
         btSend = (ImageButton) view.findViewById(R.id.send_button);
@@ -131,6 +128,7 @@ public class MessagingFragment extends Fragment {
         Form form = new MessageValidator(body).validate();
         if (NetworkState.isConnected(mApplicationContext)) {
             if (form.isValid()) {
+                messagingService.send(body);
                 // Use Message model to create new mMessages now
 //                Message message = new Message();
 //                message.setUserID(userID);
@@ -171,7 +169,9 @@ public class MessagingFragment extends Fragment {
     }
 
     private void updateMessages(Message message) {
-        mMessages.add(mMessages.size() - 1, message);
+        List<Message> listMessage = new ArrayList<>();
+        listMessage.add(message);
+        mMessages.addAll(listMessage);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -183,10 +183,10 @@ public class MessagingFragment extends Fragment {
                 @Override
                 public void onSuccess(String response) {
                     try {
-                        NetworkResponse networkResponse = new NetworkResponse(response);
-                        if (networkResponse.isSuccessful()) {
+                        CustomNetworkResponse customNetworkResponse = new CustomNetworkResponse(response);
+                        if (customNetworkResponse.isSuccessful()) {
                             JSONObject current;
-                            JSONArray messageObjects = networkResponse.getPayload();
+                            JSONArray messageObjects = customNetworkResponse.getPayload();
                             for (int index = 0; index < messageObjects.length(); index++) {
                                 current = (JSONObject) messageObjects.get(index);
                                 mMessages.add(
@@ -220,7 +220,6 @@ public class MessagingFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-//        getActivity().unregisterReceiver(broadcastReceiver);
         mApplicationContext.stopService(mChatServiceIntent);
     }
 
@@ -237,5 +236,10 @@ public class MessagingFragment extends Fragment {
             mApplicationContext.unbindService(mServiceConnection);
             mServiceBound = false;
         }
+    }
+
+    @Override
+    public void messageArrived(Message message) {
+        updateMessages(message);
     }
 }
