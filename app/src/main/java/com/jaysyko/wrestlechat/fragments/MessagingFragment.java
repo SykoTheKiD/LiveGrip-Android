@@ -35,9 +35,9 @@ import com.jaysyko.wrestlechat.network.NetworkResponse;
 import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.RESTEndpoints;
-import com.jaysyko.wrestlechat.services.ChatStream;
-import com.jaysyko.wrestlechat.services.ChatStreamBinder;
 import com.jaysyko.wrestlechat.services.IMessageArrivedListener;
+import com.jaysyko.wrestlechat.services.MessagingService;
+import com.jaysyko.wrestlechat.services.MessagingServiceBinder;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 import org.json.JSONArray;
@@ -46,6 +46,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class MessagingFragment extends Fragment implements IMessageArrivedListener {
 
@@ -60,7 +61,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private Handler handler = new Handler();
     private boolean mServiceBound = false;
     private Intent mChatServiceIntent;
-    private ChatStream chatStream;
+    private MessagingService messagingService;
     private Runnable initMessageAdapter = new Runnable() {
         @Override
         public void run() {
@@ -77,9 +78,9 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            ChatStreamBinder binder = (ChatStreamBinder) service;
+            MessagingServiceBinder binder = (MessagingServiceBinder) service;
             binder.setMessageArrivedListener(MessagingFragment.this);
-            chatStream = binder.getService();
+            messagingService = binder.getService();
 //            chatStream.subscribe(CurrentActiveEvent.getInstance().getCurrentEvent().getEventID());
 //            mApplicationContext.registerReceiver(broadcastReceiver, new IntentFilter(ChatStream.TAG));
             mServiceBound = true;
@@ -97,7 +98,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         super.onCreate(savedInstanceState);
         Activity activity = getActivity();
         activity.setTitle(mCurrentEvent.getEventName());
-        mChatServiceIntent = new Intent(activity, ChatStream.class);
+        mChatServiceIntent = new Intent(activity, MessagingService.class);
     }
 
     @Override
@@ -109,12 +110,12 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
         btSend = (ImageButton) view.findViewById(R.id.send_button);
         handler.post(initMessageAdapter);
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                fetchOldMessages();
-            }
-        });
+//        handler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                fetchOldMessages();
+//            }
+//        });
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,7 +135,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         Form form = new MessageValidator(body).validate();
         if (NetworkState.isConnected(mApplicationContext)) {
             if (form.isValid()) {
-                chatStream.sendMessage(body);
+                messagingService.send(body);
                 // Use Message model to create new mMessages now
 //                Message message = new Message();
 //                message.setUserID(userID);
@@ -175,7 +176,9 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     }
 
     private void updateMessages(Message message) {
-        mMessages.add(mMessages.size(), message);
+        List<Message> listMessage = new ArrayList<>();
+        listMessage.add(message);
+        mMessages.addAll(listMessage);
         mAdapter.notifyDataSetChanged();
     }
 

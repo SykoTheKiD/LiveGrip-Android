@@ -28,8 +28,8 @@ import org.json.JSONObject;
 /**
  * Created by jarushaan on 2016-03-14
  */
-public class ChatStream extends Service implements MqttCallback, MqttTraceHandler, IMqttActionListener {
-    public static final String TAG = ChatStream.class.getSimpleName();
+public class MessagingService extends Service implements MqttCallback, MqttTraceHandler, IMqttActionListener {
+    public static final String TAG = MessagingService.class.getSimpleName();
     private static final String MQTT_BROKER_URL = "192.168.33.10";
     private static final String MQTT_BROKER_PORT = "8080";
     private static final String CLIENT_ID = CurrentActiveUser.getInstance().getUsername();
@@ -37,21 +37,14 @@ public class ChatStream extends Service implements MqttCallback, MqttTraceHandle
     private static final String MOSQUITO_URL = PROTOCOL + MQTT_BROKER_URL + ":" + MQTT_BROKER_PORT;
     private static final int CONNECTION_TIMEOUT = 10000;
     private static final int KEEP_ALIVE_INTERVAL = 600000;
-    private final ChatStreamBinder mBinder = new ChatStreamBinder(this);
+    private static final String DUMMY_PASSWORD = "password";
+    private final MessagingServiceBinder mBinder = new MessagingServiceBinder(this);
     private MqttAndroidClient mClient;
     private boolean mIsConnecting;
     private String room = CurrentActiveEvent.getInstance().getCurrentEvent().getEventID();
-    private Intent intent;
 
-    public MqttAndroidClient getClient() {
+    private MqttAndroidClient getClient() {
         return mClient;
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        connect();
-        intent = new Intent(TAG);
     }
 
     @Override
@@ -67,11 +60,9 @@ public class ChatStream extends Service implements MqttCallback, MqttTraceHandle
         connectOptions.setConnectionTimeout(CONNECTION_TIMEOUT);
         connectOptions.setKeepAliveInterval(KEEP_ALIVE_INTERVAL);
         connectOptions.setUserName(CLIENT_ID);
-        connectOptions.setPassword("password".toCharArray());
-
+        connectOptions.setPassword(DUMMY_PASSWORD.toCharArray());
         mClient.setCallback(this);
         mClient.setTraceCallback(this);
-
         mIsConnecting = true;
 
         try {
@@ -93,30 +84,17 @@ public class ChatStream extends Service implements MqttCallback, MqttTraceHandle
         JSONObject messageJSON = new JSONObject(payload);
         Log.e(TAG, messageJSON.toString());
         Message newMessage = new Message(
-                messageJSON.getString("username"),
-                messageJSON.getString("name"),
-                messageJSON.getString("body"),
-                messageJSON.getString("profile_image")
+                messageJSON.getString(MessageJSONKeys.USERNAME.toString()),
+                messageJSON.getString(MessageJSONKeys.EVENT_NAME.toString()),
+                messageJSON.getString(MessageJSONKeys.BODY.toString()),
+                messageJSON.getString(MessageJSONKeys.PROFILE_IMAGE.toString())
         );
         mBinder.messageArrived(newMessage);
-//        Message messageObject = new Message(message.getPayload());
-//        intent.putExtra(IntentKeys.MESSAGE_BROADCAST, messageObject);
-//        sendBroadcast(intent);
     }
 
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
 
-    }
-
-    public void send(Message message) {
-        MqttMessage mqttMessage = new MqttMessage();
-        mqttMessage.setPayload(message.getBody().getBytes());
-        try {
-            getClient().publish(CurrentActiveEvent.getInstance().getCurrentEvent().getEventID(), mqttMessage);
-        } catch (MqttException e) {
-            Log.e(TAG, e.getMessage());
-        }
     }
 
     private void subscribe() {
@@ -155,7 +133,7 @@ public class ChatStream extends Service implements MqttCallback, MqttTraceHandle
         Log.e(TAG, "Error:".concat(exception.toString()));
     }
 
-    public void sendMessage(String body) {
+    public void send(String body) {
         JSONObject payload = new JSONObject();
         CurrentActiveUser currentActiveUser = CurrentActiveUser.getInstance();
         CurrentActiveEvent currentActiveEvent = CurrentActiveEvent.getInstance();

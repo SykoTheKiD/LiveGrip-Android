@@ -7,15 +7,15 @@ import com.jaysyko.wrestlechat.models.Message;
 /**
  * Created by jarushaan on 2016-03-19
  */
-public class ChatStreamBinder extends Binder {
-    private ChatStream chatService;
+public class MessagingServiceBinder extends Binder {
+    private MessagingService chatService;
     private IMessageArrivedListener mListener;
 
-    public ChatStreamBinder(ChatStream chatService) {
+    public MessagingServiceBinder(MessagingService chatService) {
         this.chatService = chatService;
     }
 
-    public ChatStream getService() {
+    public MessagingService getService() {
         return chatService;
     }
 

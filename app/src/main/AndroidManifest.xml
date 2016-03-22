@@ -77,7 +77,7 @@
             android:theme="@style/NoActionBar" />
 
         <service
-            android:name=".services.ChatStream"
+            android:name=".services.MessagingService"
             android:enabled="true"
             android:exported="false" />
 
