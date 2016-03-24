@@ -35,7 +35,7 @@
             android:name=".activities.MessagingActivity"
             android:label="@string/activity_messaging"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/NoActionBar" />
         <activity
             android:name=".activities.EventInfoActivity"
             android:label="@string/activity_event_info"
