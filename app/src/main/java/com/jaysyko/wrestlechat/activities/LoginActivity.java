@@ -13,14 +13,14 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
+import com.jaysyko.wrestlechat.auth.UserJSONKeys;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formValidators.LoginValidator;
 import com.jaysyko.wrestlechat.forms.formValidators.SignUpValidator;
+import com.jaysyko.wrestlechat.network.CustomNetworkResponse;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
-import com.jaysyko.wrestlechat.auth.UserJSONKeys;
 import com.jaysyko.wrestlechat.network.NetworkRequest;
-import com.jaysyko.wrestlechat.network.NetworkResponse;
 import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.RESTEndpoints;
@@ -115,8 +115,8 @@ public class LoginActivity extends AppCompatActivity {
                         Request request = new NetworkRequest(new NetworkCallback() {
                             @Override
                             public void onSuccess(String response) {
-                                    NetworkResponse networkResponse = new NetworkResponse(response);
-                                    if (networkResponse.isSuccessful()) {
+                                CustomNetworkResponse customNetworkResponse = new CustomNetworkResponse(response);
+                                if (customNetworkResponse.isSuccessful()) {
                                         Dialog.makeToast(mContext, getString(R.string.user_created));
                                         passwordField.setText(StringResources.NULL_TEXT);
                                         changeMode();
@@ -151,11 +151,11 @@ public class LoginActivity extends AppCompatActivity {
                         Request request = new NetworkRequest(new NetworkCallback() {
                             @Override
                             public void onSuccess(String response) {
-                                NetworkResponse networkResponse = new NetworkResponse(response);
-                                if (networkResponse.isSuccessful()) {
+                                CustomNetworkResponse customNetworkResponse = new CustomNetworkResponse(response);
+                                if (customNetworkResponse.isSuccessful()) {
                                     String id = null, profileImageURL = null;
                                     try {
-                                        JSONObject userJSON = (JSONObject) networkResponse.getPayload().get(0);
+                                        JSONObject userJSON = (JSONObject) customNetworkResponse.getPayload().get(0);
                                         id = userJSON.getString(UserJSONKeys.ID.toString());
                                         profileImageURL = userJSON.getString(UserJSONKeys.PROFILE_IMAGE.toString());
                                     } catch (JSONException e) {

@@ -3,7 +3,7 @@
     android:id="@+id/login_linear_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/smallbglogin"
+    android:background="@drawable/bg"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -29,14 +29,15 @@
         android:paddingTop="40dp"
         android:text="@string/sign_in_to_app"
         android:textColor="#ffffff"
-        android:textSize="25sp" />
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
 
     <AutoCompleteTextView
         android:id="@+id/username_text_view"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:background="#ffffff"
+        android:background="@drawable/round"
         android:hint="@string/username_placeholder"
         android:imeOptions="actionNext"
         android:inputType="text"
@@ -50,7 +51,7 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
-        android:background="#ffffff"
+        android:background="@drawable/round"
         android:hint="@string/password_placeholder"
         android:imeActionId="@+id/login"
         android:imeOptions="actionDone"
@@ -76,12 +77,12 @@
     <Button
         android:id="@+id/sign_in_button"
         style="?android:textAppearanceSmall"
-        android:layout_width="100dp"
+        android:layout_width="172dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="#e0e0e0"
+        android:background="#e57373"
         android:text="@string/action_login"
-        android:textColor="#263238"
+        android:textColor="#ffffff"
         android:textSize="17sp"
         android:textStyle="bold" />
 

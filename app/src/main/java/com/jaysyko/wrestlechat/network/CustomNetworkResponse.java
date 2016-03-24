@@ -9,12 +9,12 @@ import org.json.JSONObject;
 /**
  * Created by jarushaan on 2016-03-12
  */
-public class NetworkResponse {
+public class CustomNetworkResponse {
 
-    public static final String TAG = NetworkResponse.class.getSimpleName();
+    public static final String TAG = CustomNetworkResponse.class.getSimpleName();
     private JSONObject response;
 
-    public NetworkResponse(String response) {
+    public CustomNetworkResponse(String response) {
         try {
             this.response = new JSONObject(response);
         } catch (JSONException e) {

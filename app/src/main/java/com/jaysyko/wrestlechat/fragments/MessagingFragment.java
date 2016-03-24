@@ -31,7 +31,7 @@ import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.models.MessageJSONKeys;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkRequest;
-import com.jaysyko.wrestlechat.network.NetworkResponse;
+import com.jaysyko.wrestlechat.network.CustomNetworkResponse;
 import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.RESTEndpoints;
@@ -190,10 +190,10 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
                 @Override
                 public void onSuccess(String response) {
                     try {
-                        NetworkResponse networkResponse = new NetworkResponse(response);
-                        if (networkResponse.isSuccessful()) {
+                        CustomNetworkResponse customNetworkResponse = new CustomNetworkResponse(response);
+                        if (customNetworkResponse.isSuccessful()) {
                             JSONObject current;
-                            JSONArray messageObjects = networkResponse.getPayload();
+                            JSONArray messageObjects = customNetworkResponse.getPayload();
                             for (int index = 0; index < messageObjects.length(); index++) {
                                 current = (JSONObject) messageObjects.get(index);
                                 mMessages.add(
