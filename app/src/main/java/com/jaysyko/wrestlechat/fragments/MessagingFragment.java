@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,9 +30,9 @@ import com.jaysyko.wrestlechat.forms.formValidators.MessageValidator;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.models.MessageJSONKeys;
+import com.jaysyko.wrestlechat.network.CustomNetworkResponse;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkRequest;
-import com.jaysyko.wrestlechat.network.CustomNetworkResponse;
 import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.RESTEndpoints;
@@ -97,7 +98,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Activity activity = getActivity();
-        activity.setTitle(mCurrentEvent.getEventName());
+        activity.setTitle(Html.fromHtml("<font color=\"#FFFFFFF\">" + mCurrentEvent.getEventName() + "</font>"));
         mChatServiceIntent = new Intent(activity, MessagingService.class);
     }
 
@@ -110,12 +111,12 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
         btSend = (ImageButton) view.findViewById(R.id.send_button);
         handler.post(initMessageAdapter);
-//        handler.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                fetchOldMessages();
-//            }
-//        });
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                fetchOldMessages();
+            }
+        });
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
