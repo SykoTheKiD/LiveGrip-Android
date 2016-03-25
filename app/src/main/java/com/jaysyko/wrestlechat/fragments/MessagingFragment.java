@@ -70,26 +70,17 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         }
     };
     private Event mCurrentEvent = CurrentActiveEvent.getInstance().getCurrentEvent();
-//    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-//        @Override
-//        public void onReceive(Context context, Intent mChatServiceIntent) {
-//            updateMessages((Message) mChatServiceIntent.getSerializableExtra(IntentKeys.MESSAGE_BROADCAST));
-//        }
-//    };
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             MessagingServiceBinder binder = (MessagingServiceBinder) service;
             binder.setMessageArrivedListener(MessagingFragment.this);
             messagingService = binder.getService();
-//            chatStream.subscribe(CurrentActiveEvent.getInstance().getCurrentEvent().getEventID());
-//            mApplicationContext.registerReceiver(broadcastReceiver, new IntentFilter(ChatStream.TAG));
             mServiceBound = true;
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-//            mApplicationContext.unregisterReceiver(broadcastReceiver);
             mServiceBound = false;
         }
     };
@@ -107,6 +98,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_messaging, container, false);
         mApplicationContext = getActivity();
+        getActivity().getWindow().setBackgroundDrawable(null);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
         ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
         btSend = (ImageButton) view.findViewById(R.id.send_button);
@@ -228,7 +220,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     @Override
     public void onPause() {
         super.onPause();
-//        getActivity().unregisterReceiver(broadcastReceiver);
         mApplicationContext.stopService(mChatServiceIntent);
     }
 
