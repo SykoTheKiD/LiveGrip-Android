@@ -3,7 +3,7 @@ package com.jaysyko.wrestlechat.auth;
 /**
  * Created by jarushaan on 2016-03-19
  */
-public enum UserJSONKeys {
+public enum UserKeys {
     USERNAME("username"),
     PASSWORD("password"),
     SUCCESS("success"),
@@ -13,7 +13,7 @@ public enum UserJSONKeys {
 
     private String key;
 
-    UserJSONKeys(String key) {
+    UserKeys(String key) {
         this.key = key;
     }
 

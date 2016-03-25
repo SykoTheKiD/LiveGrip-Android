@@ -42,7 +42,7 @@ public class UserProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
         getActivity().setTitle(getString(R.string.manage_profile));
         username = (EditText) view.findViewById(R.id.usernameChange);
-        currentActiveUser = CurrentActiveUser.getInstance();
+        currentActiveUser = CurrentActiveUser.getCurrentUser();
         username.setText(currentActiveUser.getUsername());
         applicationContext = getActivity();
         newPassword = (EditText) view.findViewById(R.id.newPassword);
@@ -74,7 +74,7 @@ public class UserProfileFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (NetworkState.isConnected(applicationContext)) {
-                                    if (!(CurrentActiveUser.getInstance().setProfileImageURL(input.getText().toString()))) {
+                                    if (!(CurrentActiveUser.getCurrentUser().setProfileImageURL(input.getText().toString()))) {
                                         Dialog.makeToast(applicationContext, getString(R.string.bad_image_type));
                                     } else {
                                         ImageTools.loadImage(applicationContext, currentActiveUser.getCustomProfileImageURL(), profilePicture);
@@ -132,7 +132,7 @@ public class UserProfileFragment extends Fragment {
         Dialog.makeToast(applicationContext, getString(R.string.password_changed_relogin));
         Intent intent = new Intent(applicationContext, LoginActivity.class);
         intent.putExtra(IntentKeys.USERNAME, currentActiveUser.getUsername());
-        CurrentActiveUser.getInstance().logout();
+        CurrentActiveUser.getCurrentUser().logout();
         return intent;
     }
 

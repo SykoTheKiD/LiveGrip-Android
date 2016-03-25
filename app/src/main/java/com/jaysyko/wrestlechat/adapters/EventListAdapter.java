@@ -1,8 +1,12 @@
 package com.jaysyko.wrestlechat.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +16,9 @@ import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.viewholders.EventListViewHolder;
 import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.models.Event;
-import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.jaysyko.wrestlechat.utils.StringResources;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.util.List;
 
@@ -61,13 +66,31 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListViewHolder> 
      * @param position int
      */
     @Override
-    public void onBindViewHolder(EventListViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final EventListViewHolder viewHolder, int position) {
         // - get data from your itemsData at this position
         // - replace the contents of the view with that itemsData
         Event currentCard = itemsData.get(position);
         viewHolder.txtViewTitle.setText(currentCard.getEventName());
         viewHolder.txtViewLocation.setText(currentCard.getEventLocation());
-        ImageTools.loadImage(this.context, StringResources.IMGUR_LINK.concat(currentCard.getEventImage()), viewHolder.imgViewIcon);
+        Picasso.with(this.context).load(StringResources.IMGUR_LINK.concat(currentCard.getEventImage())).into(new Target() {
+
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                viewHolder.imgViewIcon.setBackground(new BitmapDrawable(context.getResources(), bitmap));
+//                viewHolder.imgViewIcon.setColorFilter(Color.argb(255, 255, 255, 255));
+            }
+
+            @Override
+            public void onBitmapFailed(final Drawable errorDrawable) {
+                Log.d("TAG", "FAILED");
+            }
+
+            @Override
+            public void onPrepareLoad(final Drawable placeHolderDrawable) {
+                Log.d("TAG", "Prepare Load");
+            }
+        });
+//                ImageTools.loadImage(this.context, StringResources.IMGUR_LINK.concat(currentCard.getEventImage()), viewHolder.imgViewIcon);
 
         if (DateVerifier.goLive(currentCard.getEventStartTime(), currentCard.getEventEndTime()).goLive()) {
             viewHolder.txtViewLiveStatus.setText(R.string.online_status_live);

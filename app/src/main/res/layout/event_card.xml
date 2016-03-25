@@ -3,32 +3,33 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="380dp"
-    android:layout_margin="8dp"
+    android:layout_margin="10dp"
     card_view:cardUseCompatPadding="true">
 
     <RelativeLayout
+        android:id="@+id/event_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.flaviofaria.kenburnsview.KenBurnsView
-            android:id="@+id/event_image"
+        <ImageView
+            android:id="@+id/dummy_block"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_alignParentTop="true"
             android:contentDescription="@string/app_name"
-            android:scaleType="centerCrop" />
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/event_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/event_image"
+            android:layout_below="@+id/dummy_block"
             android:maxLines="3"
             android:paddingBottom="0dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="15dp"
-            android:textColor="#263238"
+            android:textColor="#e3f2fd"
             android:textSize="25sp"
             android:textStyle="bold" />
 
@@ -49,9 +50,8 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:paddingTop="10dp"
-                android:textColor="#666"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textColor="#eeeeee"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/event_live"
