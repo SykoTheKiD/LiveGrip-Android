@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
-import com.jaysyko.wrestlechat.auth.UserJSONKeys;
+import com.jaysyko.wrestlechat.auth.UserKeys;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.models.EventJSONKeys;
 import com.jaysyko.wrestlechat.models.Message;
@@ -32,7 +32,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     public static final String TAG = MessagingService.class.getSimpleName();
     private static final String MQTT_BROKER_URL = "192.168.33.10";
     private static final String MQTT_BROKER_PORT = "8080";
-    private static final String CLIENT_ID = CurrentActiveUser.getInstance().getUsername();
+    private static final String CLIENT_ID = CurrentActiveUser.getCurrentUser().getUsername();
     private static final String PROTOCOL = "tcp://";
     private static final String MOSQUITO_URL = PROTOCOL + MQTT_BROKER_URL + ":" + MQTT_BROKER_PORT;
     private static final int CONNECTION_TIMEOUT = 10000;
@@ -135,15 +135,15 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
 
     public void send(String body) {
         JSONObject payload = new JSONObject();
-        CurrentActiveUser currentActiveUser = CurrentActiveUser.getInstance();
+        CurrentActiveUser currentActiveUser = CurrentActiveUser.getCurrentUser();
         CurrentActiveEvent currentActiveEvent = CurrentActiveEvent.getInstance();
         try {
-            payload.put(UserJSONKeys.ID.toString(), currentActiveUser.getUserID());
+            payload.put(UserKeys.ID.toString(), currentActiveUser.getUserID());
             payload.put(EventJSONKeys.ID.toString(), currentActiveEvent.getCurrentEvent().getEventID());
             payload.put(MessageJSONKeys.BODY.toString(), body);
             payload.put(EventJSONKeys.NAME.toString(), currentActiveEvent.getCurrentEvent().getEventName());
-            payload.put(UserJSONKeys.USERNAME.toString(), currentActiveUser.getUsername());
-            payload.put(UserJSONKeys.PROFILE_IMAGE.toString(), currentActiveUser.getCustomProfileImageURL());
+            payload.put(UserKeys.USERNAME.toString(), currentActiveUser.getUsername());
+            payload.put(UserKeys.PROFILE_IMAGE.toString(), currentActiveUser.getCustomProfileImageURL());
         } catch (JSONException e) {
             Log.e(TAG, e.getMessage());
         }

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
-import com.jaysyko.wrestlechat.auth.UserJSONKeys;
+import com.jaysyko.wrestlechat.auth.UserKeys;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formValidators.LoginValidator;
@@ -27,12 +27,9 @@ import com.jaysyko.wrestlechat.network.RESTEndpoints;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.HashMap;
 
-public class LoginActivity extends AppCompatActivity {
+public final class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
     private String username, password;
@@ -54,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         // Redirect to Events page if logged in;
         mContext = getApplicationContext();
         intent = new Intent(mContext, EventListActivity.class);
-        if (CurrentActiveUser.getInstance() != null) {
+        if (CurrentActiveUser.getCurrentUser(mContext) != null) {
             startActivity(intent);
             finish();
         } else {
@@ -110,8 +107,8 @@ public class LoginActivity extends AppCompatActivity {
                     Form form = new SignUpValidator(username, password).validate();
                     if (form.isValid()) {
                         HashMap<String, String> params = new HashMap<>();
-                        params.put(UserJSONKeys.USERNAME.toString(), username);
-                        params.put(UserJSONKeys.PASSWORD.toString(), password);
+                        params.put(UserKeys.USERNAME.toString(), username);
+                        params.put(UserKeys.PASSWORD.toString(), password);
                         Request request = new NetworkRequest(new NetworkCallback() {
                             @Override
                             public void onSuccess(String response) {
@@ -146,26 +143,17 @@ public class LoginActivity extends AppCompatActivity {
                     Form form = new LoginValidator(username, password).validate();
                     if (form.isValid()) {
                         HashMap<String, String> params = new HashMap<>();
-                        params.put(UserJSONKeys.USERNAME.toString(), username);
-                        params.put(UserJSONKeys.PASSWORD.toString(), password);
+                        params.put(UserKeys.USERNAME.toString(), username);
+                        params.put(UserKeys.PASSWORD.toString(), password);
                         Request request = new NetworkRequest(new NetworkCallback() {
                             @Override
                             public void onSuccess(String response) {
                                 CustomNetworkResponse customNetworkResponse = new CustomNetworkResponse(response);
                                 if (customNetworkResponse.isSuccessful()) {
-                                    String id = null, profileImageURL = null;
-                                    try {
-                                        JSONObject userJSON = (JSONObject) customNetworkResponse.getPayload().get(0);
-                                        id = userJSON.getString(UserJSONKeys.ID.toString());
-                                        profileImageURL = userJSON.getString(UserJSONKeys.PROFILE_IMAGE.toString());
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                    CurrentActiveUser.getInstance(id, username, password);
-                                    CurrentActiveUser.getInstance().setProfileImageURL(profileImageURL);
-                                        Dialog.makeToast(mContext, getString(R.string.welcome_back).concat(StringResources.BLANK_SPACE).concat(username));
-                                        startActivity(intent);
-                                        finish();
+                                    CurrentActiveUser.newUser(mContext, password, customNetworkResponse.getPayload());
+                                    Dialog.makeToast(mContext, getString(R.string.welcome_back).concat(StringResources.BLANK_SPACE).concat(username));
+                                    startActivity(intent);
+                                    finish();
                                     } else {
                                         Dialog.makeToast(mContext, getString(R.string.incorrect_login_info));
                                     }

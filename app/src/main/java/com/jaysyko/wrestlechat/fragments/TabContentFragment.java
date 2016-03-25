@@ -25,9 +25,9 @@ import com.jaysyko.wrestlechat.eventManager.OpenEvent;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.EventJSONKeys;
+import com.jaysyko.wrestlechat.network.CustomNetworkResponse;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkRequest;
-import com.jaysyko.wrestlechat.network.CustomNetworkResponse;
 import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.RESTEndpoints;
@@ -59,6 +59,7 @@ public class TabContentFragment extends Fragment {
                 if (customNetworkResponse.isSuccessful()) {
                     JSONObject current;
                     JSONArray events = customNetworkResponse.getPayload();
+//                    ImageTools.loadImage(mApplicationContext, "http://i.imgur.com/H1ZE4ZQ.png",(ImageView) layout.findViewById(R.id.no_events));
                     mEventsList.clear();
                     for (int index = 0; index < events.length(); index++) {
                         current = (JSONObject) events.get(index);
