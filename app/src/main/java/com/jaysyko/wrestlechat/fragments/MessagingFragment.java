@@ -134,7 +134,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
 //                message.setUserID(userID);
 //                message.setEventId(sEventId);
 //                message.setBody(body);
-//                ChatStream.getInstance().send(message);
+//                ChatStream.getCurrentUser().send(message);
                 etMessage.setText(StringResources.NULL_TEXT);
             } else {
                 Dialog.makeToast(mApplicationContext, getString(Form.getSimpleMessage(form.getReason())));

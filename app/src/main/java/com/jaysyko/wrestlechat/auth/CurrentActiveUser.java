@@ -1,6 +1,12 @@
 package com.jaysyko.wrestlechat.auth;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.jaysyko.wrestlechat.utils.ImageTools;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * CurrentActiveUser.java
@@ -9,29 +15,48 @@ import com.jaysyko.wrestlechat.utils.ImageTools;
  * @author Jay Syko
  */
 public class CurrentActiveUser {
-    private static CurrentActiveUser activeCurrentActiveUser;
+    private static final String USERNAME = "username";
+    private static final String IS_LOGGED_IN = "isLoggedIn";
+    private static final String USER_ID = "userID";
+    private static final String PASSWORD = "password";
+    private static final String IMAGE_URL = "imageURL";
+    private static CurrentActiveUser activeUser;
     private String userID;
     private String username;
     private String password;
     private String profileImageURL;
 
-    private CurrentActiveUser(String username, String password) {
+    private CurrentActiveUser(String userID, String username, String password, String profileImageURL) {
+        this.userID = userID;
         this.username = username;
         this.password = password;
+        this.profileImageURL = profileImageURL;
     }
 
     /**
      * Returns a new instance of a current logged in user
      *
-     * @param username String
-     * @param password String
+     * @param context String
+     * @param payload String
      * @return CurrentActiveUser
      */
-    public static CurrentActiveUser getInstance(String userID, String username, String password) {
-        if (activeCurrentActiveUser == null) {
-            activeCurrentActiveUser = new CurrentActiveUser(username, password);
+    public static CurrentActiveUser newUser(Context context, JSONArray payload) {
+        SharedPreferences sharedPreferences = SessionManager.getSessionManager(context).getSharedPreferences();
+        if (sharedPreferences.getBoolean(IS_LOGGED_IN, false)) {
+            String storedUserID = sharedPreferences.getString(USER_ID, null);
+            String storedUsername = sharedPreferences.getString(USERNAME, null);
+            String storedPassword = sharedPreferences.getString(PASSWORD, null);
+            String storedImageURL = sharedPreferences.getString(IMAGE_URL, null);
+            activeUser = new CurrentActiveUser(storedUserID, storedUsername, storedPassword, storedImageURL);
+        } else {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(USERNAME, activeUser.getUsername());
+            editor.putString(USER_ID, activeUser.getUserID());
+            editor.putString(PASSWORD, activeUser.password);
+            editor.apply();
+            activeUser = new CurrentActiveUser(userID, username, password);
         }
-        return activeCurrentActiveUser;
+        return activeUser;
     }
 
     /**
@@ -39,22 +64,27 @@ public class CurrentActiveUser {
      *
      * @return CurrentActiveUser
      */
-    public static CurrentActiveUser getInstance() {
-//        if (currentUser != null) {
-//            activeCurrentActiveUser = new CurrentActiveUser(currentUser.getUsername(), null);
-//        }
-        return activeCurrentActiveUser;
+    public static CurrentActiveUser getCurrentUser() {
+        SharedPreferences sharedPreferences = SessionManager.getSessionManager(context).getSharedPreferences();
+        if (sharedPreferences.getBoolean(IS_LOGGED_IN, false)) {
+            String storedUserID = sharedPreferences.getString(USER_ID, null);
+            String storedUsername = sharedPreferences.getString(USERNAME, null);
+            String storedPassword = sharedPreferences.getString(PASSWORD, null);
+            String storedImageURL = sharedPreferences.getString(IMAGE_URL, null);
+            activeUser = new CurrentActiveUser(storedUserID, storedUsername, storedPassword, storedImageURL);
+        }
+        return activeUser;
     }
 
     /**
      * @return userID
      */
     public String getUserID() {
-        return activeCurrentActiveUser.userID;
+        return activeUser.userID;
     }
 
     public boolean setPassword(String password) {
-        activeCurrentActiveUser.password = password;
+        activeUser.password = password;
         return true;
     }
 
@@ -64,7 +94,7 @@ public class CurrentActiveUser {
      * @return imageUrl: String
      */
     public String getCustomProfileImageURL() {
-        return activeCurrentActiveUser.profileImageURL;
+        return activeUser.profileImageURL;
     }
 
     /**
@@ -86,8 +116,8 @@ public class CurrentActiveUser {
      * Logs out the current user
      */
     public void logout() {
-        activeCurrentActiveUser = null;
         // delete local session
+        activeUser = null;
     }
 
     /**
@@ -97,9 +127,10 @@ public class CurrentActiveUser {
      * @return String
      */
     public boolean setProfileImageURL(final String url) {
+        // store url in local cache
         Boolean isLinkToImage = ImageTools.isLinkToImage(url);
         if (isLinkToImage) {
-            activeCurrentActiveUser.profileImageURL = url;
+            activeUser.profileImageURL = url;
             return true;
         } else {
             return false;

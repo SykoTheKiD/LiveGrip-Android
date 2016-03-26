@@ -41,7 +41,7 @@ public class EventListActivity extends AppCompatActivity{
         mNavigationView = (NavigationView) findViewById(R.id.navDrawerItems);
         final View headerLayout = mNavigationView.inflateHeaderView(R.layout.nav_header_event_list);
         TextView headerUsername = (TextView) headerLayout.findViewById(R.id.drawer_username);
-        headerUsername.setText(CurrentActiveUser.getInstance().getUsername());
+        headerUsername.setText(CurrentActiveUser.getCurrentUser().getUsername());
 
 //        handler.post(new Runnable() {
 //            @Override
@@ -79,7 +79,7 @@ public class EventListActivity extends AppCompatActivity{
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                CurrentActiveUser.getInstance().logout();
+                                CurrentActiveUser.getCurrentUser().logout();
                                 Intent intent = new Intent(mApplicationContext, LoginActivity.class);
                                 startActivity(intent);
                                 finish();

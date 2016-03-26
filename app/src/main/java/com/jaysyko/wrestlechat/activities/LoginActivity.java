@@ -27,9 +27,6 @@ import com.jaysyko.wrestlechat.network.RESTEndpoints;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
@@ -54,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         // Redirect to Events page if logged in;
         mContext = getApplicationContext();
         intent = new Intent(mContext, EventListActivity.class);
-        if (CurrentActiveUser.getInstance() != null) {
+        if (CurrentActiveUser.getCurrentUser() != null) {
             startActivity(intent);
             finish();
         } else {
@@ -153,16 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                             public void onSuccess(String response) {
                                 CustomNetworkResponse customNetworkResponse = new CustomNetworkResponse(response);
                                 if (customNetworkResponse.isSuccessful()) {
-                                    String id = null, profileImageURL = null;
-                                    try {
-                                        JSONObject userJSON = (JSONObject) customNetworkResponse.getPayload().get(0);
-                                        id = userJSON.getString(UserJSONKeys.ID.toString());
-                                        profileImageURL = userJSON.getString(UserJSONKeys.PROFILE_IMAGE.toString());
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                    CurrentActiveUser.getInstance(id, username, password);
-                                    CurrentActiveUser.getInstance().setProfileImageURL(profileImageURL);
+                                    CurrentActiveUser.newUser(mContext, customNetworkResponse.getPayload());
                                         Dialog.makeToast(mContext, getString(R.string.welcome_back).concat(StringResources.BLANK_SPACE).concat(username));
                                         startActivity(intent);
                                         finish();
