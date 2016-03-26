@@ -81,7 +81,7 @@ public class CurrentActiveUser {
 
     public static CurrentActiveUser getCurrentUser(Context context) {
         SharedPreferences sharedPreferences = SessionManager.getSessionManager(context).getSharedPreferences();
-        if (activeUser != null || sharedPreferences.getBoolean(IS_LOGGED_IN, true)) {
+        if (sharedPreferences.getBoolean(IS_LOGGED_IN, false)) {
             String storedUserID = sharedPreferences.getString(USER_ID, null);
             String storedUsername = sharedPreferences.getString(USERNAME, null);
             String storedPassword = sharedPreferences.getString(PASSWORD, null);

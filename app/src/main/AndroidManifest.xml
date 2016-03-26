@@ -48,7 +48,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.EventListActivity" />
         </activity>
-
         <activity
             android:name=".activities.LegalActivity"
             android:label="@string/title_activity_legal"
@@ -80,9 +79,30 @@
             android:name=".services.MessagingService"
             android:enabled="true"
             android:exported="false" />
-
         <service android:name="org.eclipse.paho.android.service.MqttService" />
 
+        <!-- [START the default gcm receiver] -->
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.jaysyko.wrestlechat" />
+            </intent-filter>
+        </receiver>
+        <!-- [End default gcm receiver] -->
+
+
+        <!-- [Custom service gets push notification from server, add code in this service to show notifications] -->
+        <service
+            android:name=".services.GCMListener"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
