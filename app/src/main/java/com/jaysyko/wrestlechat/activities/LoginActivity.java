@@ -2,15 +2,21 @@ package com.jaysyko.wrestlechat.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.volley.Request;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.auth.UserKeys;
@@ -104,27 +110,32 @@ public final class LoginActivity extends AppCompatActivity {
                 username = usernameField.getText().toString();
                 password = passwordField.getText().toString();
                 if (NetworkState.isConnected(mContext)) {
-                    Form form = new SignUpValidator(username, password).validate();
-                    if (form.isValid()) {
-                        HashMap<String, String> params = new HashMap<>();
-                        params.put(UserKeys.USERNAME.toString(), username);
-                        params.put(UserKeys.PASSWORD.toString(), password);
-                        Request request = new NetworkRequest(new NetworkCallback() {
-                            @Override
-                            public void onSuccess(String response) {
-                                CustomNetworkResponse customNetworkResponse = new CustomNetworkResponse(response);
-                                if (customNetworkResponse.isSuccessful()) {
+                    if (isPlayServicesInstalled()) {
+                        Form form = new SignUpValidator(username, password).validate();
+                        if (form.isValid()) {
+                            HashMap<String, String> params = new HashMap<>();
+                            params.put(UserKeys.USERNAME.toString(), username);
+                            params.put(UserKeys.PASSWORD.toString(), password);
+                            Request request = new NetworkRequest(new NetworkCallback() {
+                                @Override
+                                public void onSuccess(String response) {
+                                    CustomNetworkResponse customNetworkResponse = new CustomNetworkResponse(response);
+                                    if (customNetworkResponse.isSuccessful()) {
                                         Dialog.makeToast(mContext, getString(R.string.user_created));
                                         passwordField.setText(StringResources.NULL_TEXT);
+                                        getDeviceIDForGCM(username);
                                         changeMode();
                                     } else {
                                         Dialog.makeToast(mContext, getString(R.string.username_taken));
                                     }
-                            }
-                        }).post(RESTEndpoints.SIGN_UP, params);
-                        NetworkSingleton.getInstance(mContext).addToRequestQueue(request);
+                                }
+                            }).post(RESTEndpoints.SIGN_UP, params);
+                            NetworkSingleton.getInstance(mContext).addToRequestQueue(request);
+                        } else {
+                            Dialog.makeToast(mContext, getString(Form.getSimpleMessage(form.getReason())));
+                        }
                     } else {
-                        Dialog.makeToast(mContext, getString(Form.getSimpleMessage(form.getReason())));
+                        Dialog.makeToast(mContext, getString(R.string.no_play_services));
                     }
                 } else {
                     Dialog.makeToast(mContext, getString(R.string.no_network));
@@ -154,9 +165,9 @@ public final class LoginActivity extends AppCompatActivity {
                                     Dialog.makeToast(mContext, getString(R.string.welcome_back).concat(StringResources.BLANK_SPACE).concat(username));
                                     startActivity(intent);
                                     finish();
-                                    } else {
-                                        Dialog.makeToast(mContext, getString(R.string.incorrect_login_info));
-                                    }
+                                } else {
+                                    Dialog.makeToast(mContext, getString(R.string.incorrect_login_info));
+                                }
                             }
                         }).post(RESTEndpoints.LOGIN, params);
                         NetworkSingleton.getInstance(mContext).addToRequestQueue(request);
@@ -168,5 +179,50 @@ public final class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    //code to check Google play services availability.
+    private boolean isPlayServicesInstalled() {
+        GoogleApiAvailability getGoogleAvailability = GoogleApiAvailability.getInstance();
+        int availabilityCode = getGoogleAvailability.isGooglePlayServicesAvailable(this);
+        if (availabilityCode != ConnectionResult.SUCCESS) {
+            if (getGoogleAvailability.isUserResolvableError(availabilityCode)) {
+                getGoogleAvailability.getErrorDialog(this, availabilityCode, 9000).show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    public void getDeviceIDForGCM(final String username) {
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... taskParams) {
+                final StringBuilder token = new StringBuilder();
+                try {
+                    InstanceID gcmTokenInstanceID = InstanceID.getInstance(mContext);
+                    //we will get gcm_defaultSenderId by applying plugin: 'com.google.gms.google-services'
+                    token.append(gcmTokenInstanceID.getToken(getString(R.string.gcm_defaultSenderId), GoogleCloudMessaging.INSTANCE_ID_SCOPE, null));
+                    HashMap<String, String> params = new HashMap<>();
+                    params.put(UserKeys.GCM.toString(), token.toString());
+                    params.put(UserKeys.USERNAME.toString(), username);
+                    Request request = new NetworkRequest(new NetworkCallback() {
+                        @Override
+                        public void onSuccess(String response) {
+                            Log.e(TAG, token.toString());
+                            Log.i(TAG, "Complete");
+                        }
+                    }).post(RESTEndpoints.GCM, params);
+                    NetworkSingleton.getInstance(mContext).addToRequestQueue(request);
+                } catch (Exception e) {
+                    Log.e(TAG, "GCM Registration Token: " + e.getMessage());
+                }
+                //Keep this token securely, we use this to send message, refer in URL we have added this ID as parameter
+                return token.toString();
+            }
+        }.execute(null, null, null);
     }
 }

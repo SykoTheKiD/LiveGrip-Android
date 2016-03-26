@@ -160,4 +160,6 @@
     <string name="manage_profile">Manage Profile</string>
 
     <string name="user_created">Account Created! Please Re-Login</string>
+    <!--<string name="gcm_defaultSenderId">576111130083</string>-->
+    <string name="no_play_services">Google Play Services not Installed</string>
 </resources>
