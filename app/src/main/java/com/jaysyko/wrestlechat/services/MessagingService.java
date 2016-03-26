@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
-import com.jaysyko.wrestlechat.auth.UserJSONKeys;
+import com.jaysyko.wrestlechat.auth.UserKeys;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.models.EventJSONKeys;
 import com.jaysyko.wrestlechat.models.Message;
@@ -138,12 +138,12 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         CurrentActiveUser currentActiveUser = CurrentActiveUser.getCurrentUser();
         CurrentActiveEvent currentActiveEvent = CurrentActiveEvent.getInstance();
         try {
-            payload.put(UserJSONKeys.ID.toString(), currentActiveUser.getUserID());
+            payload.put(UserKeys.ID.toString(), currentActiveUser.getUserID());
             payload.put(EventJSONKeys.ID.toString(), currentActiveEvent.getCurrentEvent().getEventID());
             payload.put(MessageJSONKeys.BODY.toString(), body);
             payload.put(EventJSONKeys.NAME.toString(), currentActiveEvent.getCurrentEvent().getEventName());
-            payload.put(UserJSONKeys.USERNAME.toString(), currentActiveUser.getUsername());
-            payload.put(UserJSONKeys.PROFILE_IMAGE.toString(), currentActiveUser.getCustomProfileImageURL());
+            payload.put(UserKeys.USERNAME.toString(), currentActiveUser.getUsername());
+            payload.put(UserKeys.PROFILE_IMAGE.toString(), currentActiveUser.getCustomProfileImageURL());
         } catch (JSONException e) {
             Log.e(TAG, e.getMessage());
         }

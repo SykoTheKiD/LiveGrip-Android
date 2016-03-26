@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
  */
 public class SessionManager {
     private static final int MODE = 0;
-    private static final String PREF_NAME = "USER";
+    private static final String PREF_NAME = "AUTH";
     private static SessionManager sessionManager;
     private SharedPreferences sharedPreferences;
 
@@ -25,17 +25,6 @@ public class SessionManager {
 
     public SharedPreferences getSharedPreferences() {
         return sharedPreferences;
-    }
-
-    public boolean activeSession(Context context) {
-        SharedPreferences sharedPreferences = SessionManager.getSessionManager(context).getSharedPreferences();
-        if (sharedPreferences.getBoolean(IS_LOGGED_IN, false)) {
-            String storedUserID = sharedPreferences.getString(USER_ID, null);
-            String storedUsername = sharedPreferences.getString(USERNAME, null);
-            String storedPassword = sharedPreferences.getString(PASSWORD, null);
-            String storedImageURL = sharedPreferences.getString(IMAGE_URL, null);
-            activeUser = new CurrentActiveUser(storedUserID, storedUsername, storedPassword, storedImageURL);
-        }
     }
 
 }

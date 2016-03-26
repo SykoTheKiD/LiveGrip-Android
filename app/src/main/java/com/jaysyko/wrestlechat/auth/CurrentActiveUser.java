@@ -2,10 +2,12 @@ package com.jaysyko.wrestlechat.auth;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -20,17 +22,18 @@ public class CurrentActiveUser {
     private static final String USER_ID = "userID";
     private static final String PASSWORD = "password";
     private static final String IMAGE_URL = "imageURL";
+    private static final String TAG = CurrentActiveUser.class.getSimpleName();
     private static CurrentActiveUser activeUser;
+    private Context context;
     private String userID;
     private String username;
     private String password;
     private String profileImageURL;
 
-    private CurrentActiveUser(String userID, String username, String password, String profileImageURL) {
+    private CurrentActiveUser(String userID, String username, String password) {
         this.userID = userID;
         this.username = username;
         this.password = password;
-        this.profileImageURL = profileImageURL;
     }
 
     /**
@@ -40,21 +43,28 @@ public class CurrentActiveUser {
      * @param payload String
      * @return CurrentActiveUser
      */
-    public static CurrentActiveUser newUser(Context context, JSONArray payload) {
-        SharedPreferences sharedPreferences = SessionManager.getSessionManager(context).getSharedPreferences();
-        if (sharedPreferences.getBoolean(IS_LOGGED_IN, false)) {
-            String storedUserID = sharedPreferences.getString(USER_ID, null);
-            String storedUsername = sharedPreferences.getString(USERNAME, null);
-            String storedPassword = sharedPreferences.getString(PASSWORD, null);
-            String storedImageURL = sharedPreferences.getString(IMAGE_URL, null);
-            activeUser = new CurrentActiveUser(storedUserID, storedUsername, storedPassword, storedImageURL);
-        } else {
+    public static CurrentActiveUser newUser(Context context, String password, JSONArray payload) {
+        try {
+            JSONObject user = (JSONObject) payload.get(0);
+            String userID = user.getString(UserKeys.ID.toString());
+            String username = user.getString(UserKeys.USERNAME.toString());
+            String profileImageURL = user.getString(UserKeys.PROFILE_IMAGE.toString());
+            SharedPreferences sharedPreferences = SessionManager.getSessionManager(context).getSharedPreferences();
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(USERNAME, activeUser.getUsername());
-            editor.putString(USER_ID, activeUser.getUserID());
-            editor.putString(PASSWORD, activeUser.password);
+            editor.putBoolean(IS_LOGGED_IN, true);
+            editor.putString(USERNAME, username);
+            editor.putString(USER_ID, userID);
+            editor.putString(PASSWORD, password);
+            editor.putString(IMAGE_URL, profileImageURL);
             editor.apply();
             activeUser = new CurrentActiveUser(userID, username, password);
+            activeUser.context = context;
+            activeUser.setUsername(username);
+            activeUser.setUserId(userID);
+            activeUser.setProfileImageURL(profileImageURL);
+            activeUser.setPassword(password);
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage());
         }
         return activeUser;
     }
@@ -65,13 +75,20 @@ public class CurrentActiveUser {
      * @return CurrentActiveUser
      */
     public static CurrentActiveUser getCurrentUser() {
+        return activeUser;
+    }
+
+
+    public static CurrentActiveUser getCurrentUser(Context context) {
         SharedPreferences sharedPreferences = SessionManager.getSessionManager(context).getSharedPreferences();
-        if (sharedPreferences.getBoolean(IS_LOGGED_IN, false)) {
+        if (activeUser != null || sharedPreferences.getBoolean(IS_LOGGED_IN, true)) {
             String storedUserID = sharedPreferences.getString(USER_ID, null);
             String storedUsername = sharedPreferences.getString(USERNAME, null);
             String storedPassword = sharedPreferences.getString(PASSWORD, null);
             String storedImageURL = sharedPreferences.getString(IMAGE_URL, null);
-            activeUser = new CurrentActiveUser(storedUserID, storedUsername, storedPassword, storedImageURL);
+            activeUser = new CurrentActiveUser(storedUserID, storedUsername, storedPassword);
+            activeUser.setProfileImageURL(storedImageURL);
+            activeUser.context = context;
         }
         return activeUser;
     }
@@ -103,12 +120,11 @@ public class CurrentActiveUser {
      * @return username: String
      */
     public String getUsername() {
-        return username;
+        return activeUser.username;
     }
 
     public boolean setUsername(String username) {
-        // hit /users/edit
-//        ac.setUsername(username);
+        activeUser.username = username;
         return true;
     }
 
@@ -116,7 +132,9 @@ public class CurrentActiveUser {
      * Logs out the current user
      */
     public void logout() {
-        // delete local session
+        SharedPreferences sharedPreferences = SessionManager.getSessionManager(activeUser.context).getSharedPreferences();
+        sharedPreferences.edit().clear();
+        sharedPreferences.edit().apply();
         activeUser = null;
     }
 
@@ -135,5 +153,13 @@ public class CurrentActiveUser {
         } else {
             return false;
         }
+    }
+
+    private void setUserId(String userId) {
+        activeUser.userID = userId;
+    }
+
+    private String getPassword() {
+        return activeUser.password;
     }
 }
