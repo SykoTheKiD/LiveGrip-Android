@@ -9,7 +9,8 @@ public enum UserKeys {
     SUCCESS("success"),
     PAYLOAD("payload"),
     ID("id"),
-    PROFILE_IMAGE("profile_image");
+    PROFILE_IMAGE("profile_image"),
+    GCM("gcm_id");
 
     private String key;
 

@@ -83,6 +83,28 @@
 
         <service android:name="org.eclipse.paho.android.service.MqttService" />
 
+
+        <!-- [START the default gcm receiver] -->
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.jaysyko.wrestlechat" />
+            </intent-filter>
+        </receiver>
+        <!-- [End default gcm receiver] -->
+
+        <!-- [Custom service gets push notification from server, add code in this service to show notifications] -->
+        <service
+            android:name=".services.GCMListener"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>
