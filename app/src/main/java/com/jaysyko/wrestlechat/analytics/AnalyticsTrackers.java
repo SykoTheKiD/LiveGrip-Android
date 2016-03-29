@@ -1,9 +1,10 @@
-package com.jaysyko.wrestlechat;
+package com.jaysyko.wrestlechat.analytics;
 
 import android.content.Context;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import com.jaysyko.wrestlechat.R;
 
 import java.util.HashMap;
 import java.util.Map;
