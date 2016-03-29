@@ -46,7 +46,7 @@ public class TabAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
 
-        return TabFragment.MAX_TABS;
+        return TabFragment.int_items;
 
     }
 
