@@ -133,8 +133,9 @@ public class CurrentActiveUser {
      */
     public void logout() {
         SharedPreferences sharedPreferences = SessionManager.getSessionManager(activeUser.context).getSharedPreferences();
-        sharedPreferences.edit().clear();
-        sharedPreferences.edit().apply();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
         activeUser = null;
     }
 

@@ -14,9 +14,9 @@ import com.jaysyko.wrestlechat.adapters.TabAdapter;
 
 public class TabFragment extends Fragment {
 
+    public static final int MAX_TABS = 3;
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
-    public static int int_items = 3;
 
     @Nullable
     @Override
