@@ -6,8 +6,6 @@ package com.jaysyko.wrestlechat.auth;
 public enum UserKeys {
     USERNAME("username"),
     PASSWORD("password"),
-    SUCCESS("success"),
-    PAYLOAD("payload"),
     ID("id"),
     PROFILE_IMAGE("profile_image"),
     GCM("gcm_id");

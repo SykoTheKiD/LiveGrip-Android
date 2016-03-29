@@ -29,22 +29,29 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+
+    compile(group: 'org.eclipse.paho', name: 'org.eclipse.paho.android.service', version: '1.0.2') {
+        exclude module: 'support-v4'
+    }
     //noinspection GradleDependency
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    //noinspection GradleDependency
+//noinspection GradleDependency
     compile 'com.android.support:design:23.2.0'
-    //noinspection GradleDependency
+//noinspection GradleDependency
     compile 'com.android.support:cardview-v7:23.2.0'
-    //noinspection GradleDependency
+//noinspection GradleDependency
     compile 'com.android.support:recyclerview-v7:23.2.0'
-    //noinspection GradleDependency
+//noinspection GradleDependency
     compile 'com.android.support:support-v4:23.2.0'
     compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.flaviofaria:kenburnsview:1.0.7'
     compile 'com.android.volley:volley:1.0.0'
     compile 'de.hdodenhof:circleimageview:2.0.0'
-    compile(group: 'org.eclipse.paho', name: 'org.eclipse.paho.android.service', version: '1.0.2') {
-        exclude module: 'support-v4'
-    }
+    compile 'com.google.android.gms:play-services-ads:8.4.0'
+    compile 'com.google.android.gms:play-services-analytics:8.4.0'
+    compile 'com.google.android.gms:play-services-identity:8.4.0'
+    compile 'com.google.android.gms:play-services-gcm:8.4.0'
 }
+
+apply plugin: 'com.google.gms.google-services'
