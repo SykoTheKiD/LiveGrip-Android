@@ -12,7 +12,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
@@ -20,7 +19,6 @@ import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.fragments.TabFragment;
 import com.jaysyko.wrestlechat.network.NetworkState;
-import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 public class EventListActivity extends AppCompatActivity{
@@ -42,11 +40,8 @@ public class EventListActivity extends AppCompatActivity{
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.navDrawerItems);
         final View headerLayout = mNavigationView.inflateHeaderView(R.layout.nav_header_event_list);
-        ImageView profilePicture = (ImageView) headerLayout.findViewById(R.id.drawerProfilePicture);
         TextView headerUsername = (TextView) headerLayout.findViewById(R.id.drawer_username);
         headerUsername.setText(CurrentActiveUser.getCurrentUser().getUsername());
-        ImageTools.loadImage(mApplicationContext, CurrentActiveUser.getCurrentUser().getCustomProfileImageURL(), profilePicture);
-
 //        handler.post(new Runnable() {
 //            @Override
 //            public void run() {
