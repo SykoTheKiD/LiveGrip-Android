@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.jaysyko.wrestlechat.localStorage.LocalStorage;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import org.json.JSONArray;
@@ -23,6 +24,7 @@ public class CurrentActiveUser {
     private static final String PASSWORD = "password";
     private static final String IMAGE_URL = "imageURL";
     private static final String TAG = CurrentActiveUser.class.getSimpleName();
+    private static final String PREFERENCE_NAME = "AUTH";
     private static CurrentActiveUser activeUser;
     private Context context;
     private String userID;
@@ -49,7 +51,7 @@ public class CurrentActiveUser {
             String userID = user.getString(UserKeys.ID.toString());
             String username = user.getString(UserKeys.USERNAME.toString());
             String profileImageURL = user.getString(UserKeys.PROFILE_IMAGE.toString());
-            SharedPreferences sharedPreferences = SessionManager.getSessionManager(context).getSharedPreferences();
+            SharedPreferences sharedPreferences = new LocalStorage(context, PREFERENCE_NAME).getSharedPreferences();
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(IS_LOGGED_IN, true);
             editor.putString(USERNAME, username);
@@ -80,7 +82,7 @@ public class CurrentActiveUser {
 
 
     public static CurrentActiveUser getCurrentUser(Context context) {
-        SharedPreferences sharedPreferences = SessionManager.getSessionManager(context).getSharedPreferences();
+        SharedPreferences sharedPreferences = new LocalStorage(context, PREFERENCE_NAME).getSharedPreferences();
         if (sharedPreferences.getBoolean(IS_LOGGED_IN, false)) {
             String storedUserID = sharedPreferences.getString(USER_ID, null);
             String storedUsername = sharedPreferences.getString(USERNAME, null);
@@ -132,7 +134,7 @@ public class CurrentActiveUser {
      * Logs out the current user
      */
     public void logout() {
-        SharedPreferences sharedPreferences = SessionManager.getSessionManager(activeUser.context).getSharedPreferences();
+        SharedPreferences sharedPreferences = new LocalStorage(context, PREFERENCE_NAME).getSharedPreferences();
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
