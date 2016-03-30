@@ -29,6 +29,7 @@ import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formValidators.MessageValidator;
 import com.jaysyko.wrestlechat.localStorage.LocalStorage;
+import com.jaysyko.wrestlechat.localStorage.StorageFile;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.models.MessageJSONKeys;
@@ -55,7 +56,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
 
     public static final String TAG = MessagingFragment.class.getSimpleName();
     private static final int SEND_DELAY = 1500;
-    private static final String PREFERENCE_NAME = "MESSAGING";
     private static ArrayList<Message> mMessages = new ArrayList<>();
     private static MessageListAdapter mAdapter;
     private EditText etMessage;
@@ -78,7 +78,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            if (sharedPreferences.getBoolean(mCurrentEventId, false)) {
+            if (!sharedPreferences.getBoolean(mCurrentEventId, false)) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean(mCurrentEventId, true);
                 editor.apply();
@@ -91,6 +91,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
+            Log.i(TAG, "Service Disconnected");
             mServiceBound = false;
         }
     };
@@ -112,7 +113,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
         ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
         btSend = (ImageButton) view.findViewById(R.id.send_button);
-        sharedPreferences = new LocalStorage(mApplicationContext, PREFERENCE_NAME).getSharedPreferences();
+        sharedPreferences = new LocalStorage(mApplicationContext, StorageFile.MESSAGING).getSharedPreferences();
         handler.post(initMessageAdapter);
         handler.post(new Runnable() {
             @Override
@@ -225,17 +226,22 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     }
 
     @Override
+    public void messageArrived(Message message) {
+        updateMessages(message);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         if (!mServiceBound) {
-            mApplicationContext.startService(mChatServiceIntent);
+            getActivity().startService(mChatServiceIntent);
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mApplicationContext.stopService(mChatServiceIntent);
+        getActivity().stopService(mChatServiceIntent);
     }
 
     @Override
@@ -248,19 +254,8 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     public void onStop() {
         super.onStop();
         if (mServiceBound) {
-            mApplicationContext.unbindService(mServiceConnection);
+            getActivity().unbindService(mServiceConnection);
             mServiceBound = false;
         }
-    }
-
-    @Override
-    public void messageArrived(Message message) {
-        updateMessages(message);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        stopMessagingService();
     }
 }

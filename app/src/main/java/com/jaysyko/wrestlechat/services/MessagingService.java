@@ -82,7 +82,6 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         String payload = message.toString();
         JSONObject messageJSON = new JSONObject(payload);
-        Log.e(TAG, messageJSON.toString());
         Message newMessage = new Message(
                 messageJSON.getString(MessageJSONKeys.USERNAME.toString()),
                 messageJSON.getString(MessageJSONKeys.EVENT_NAME.toString()),
@@ -94,6 +93,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
 
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
+        Log.i(TAG, "Delivered");
 
     }
 

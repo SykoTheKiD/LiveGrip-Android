@@ -10,8 +10,8 @@ public class LocalStorage {
     private static final int MODE = 0;
     private SharedPreferences sharedPreferences;
 
-    public LocalStorage(Context context, String preferenceName) {
-        sharedPreferences = context.getSharedPreferences(preferenceName, MODE);
+    public LocalStorage(Context context, StorageFile preferenceName) {
+        sharedPreferences = context.getSharedPreferences(preferenceName.toString(), MODE);
     }
 
     public SharedPreferences getSharedPreferences() {
