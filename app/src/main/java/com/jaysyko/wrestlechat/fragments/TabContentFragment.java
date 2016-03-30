@@ -59,7 +59,6 @@ public class TabContentFragment extends Fragment {
                 if (customNetworkResponse.isSuccessful()) {
                     JSONObject current;
                     JSONArray events = customNetworkResponse.getPayload();
-//                    ImageTools.loadImage(mApplicationContext, "http://i.imgur.com/H1ZE4ZQ.png",(ImageView) layout.findViewById(R.id.no_events));
                     mEventsList.clear();
                     for (int index = 0; index < events.length(); index++) {
                         current = (JSONObject) events.get(index);
