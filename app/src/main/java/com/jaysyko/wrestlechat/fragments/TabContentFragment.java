@@ -137,8 +137,6 @@ public class TabContentFragment extends Fragment {
         });
     }
 
-
-
     private synchronized void updateRecyclerView(List<Event> eventObjects) {
         mAdapter.itemsData.clear();
         mAdapter.itemsData.addAll(eventObjects);
