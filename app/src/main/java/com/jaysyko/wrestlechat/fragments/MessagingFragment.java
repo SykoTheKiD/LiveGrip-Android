@@ -78,6 +78,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.e(TAG, "Connected");
             if (!sharedPreferences.getBoolean(mCurrentEventId, false)) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean(mCurrentEventId, true);

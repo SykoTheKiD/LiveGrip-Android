@@ -2,7 +2,6 @@ package com.jaysyko.wrestlechat.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,8 +24,6 @@ import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formValidators.LoginValidator;
 import com.jaysyko.wrestlechat.forms.formValidators.SignUpValidator;
-import com.jaysyko.wrestlechat.localStorage.LocalStorage;
-import com.jaysyko.wrestlechat.localStorage.StorageFile;
 import com.jaysyko.wrestlechat.network.CustomNetworkResponse;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkRequest;
@@ -61,8 +58,6 @@ public final class LoginActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         intent = new Intent(mContext, EventListActivity.class);
         if (CurrentActiveUser.getCurrentUser(mContext) != null) {
-            SharedPreferences.Editor editor = new LocalStorage(mContext, StorageFile.MESSAGING).getSharedPreferences().edit();
-            editor.clear().apply();
             startActivity(intent);
             finish();
         } else {
