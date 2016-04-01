@@ -1,8 +1,8 @@
 package com.jaysyko.wrestlechat.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -19,8 +19,6 @@ import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.fragments.TabFragment;
-import com.jaysyko.wrestlechat.localStorage.LocalStorage;
-import com.jaysyko.wrestlechat.localStorage.StorageFile;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
@@ -31,6 +29,8 @@ public class EventListActivity extends AppCompatActivity{
     FragmentTransaction mFragmentTransaction;
     Context mApplicationContext;
     Handler handler = new Handler();
+
+    @SuppressLint("CommitTransaction")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,13 +45,6 @@ public class EventListActivity extends AppCompatActivity{
         final View headerLayout = mNavigationView.inflateHeaderView(R.layout.nav_header_event_list);
         TextView headerUsername = (TextView) headerLayout.findViewById(R.id.drawer_username);
         headerUsername.setText(CurrentActiveUser.getCurrentUser().getUsername());
-//        handler.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                new AdBuilder(EventListActivity.this).buildAd();
-//            }
-//        });
-
 
         /**
          * Lets inflate the very first fragment
@@ -119,12 +112,5 @@ public class EventListActivity extends AppCompatActivity{
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        SharedPreferences.Editor editor = new LocalStorage(mApplicationContext, StorageFile.MESSAGING).getSharedPreferences().edit();
-        editor.clear().apply();
     }
 }
