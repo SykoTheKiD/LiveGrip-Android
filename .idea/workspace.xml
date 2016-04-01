@@ -32,7 +32,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7a8a10f5-4885-4e0e-a2b6-9e884a6f279a" name="Default" comment="Added Images">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/MessagingService.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/MessagingService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="WrestleChat.iws" />
@@ -114,8 +114,6 @@
               <folding>
                 <element signature="e#2110#2111#0" expanded="true" />
                 <element signature="e#2140#2141#0" expanded="true" />
-                <element signature="e#3046#3047#0" expanded="true" />
-                <element signature="e#3091#3092#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -124,14 +122,9 @@
       <file leaf-file-name="MessagingFragment.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.4341252">
-              <caret line="96" column="45" selection-start-line="96" selection-start-column="45" selection-end-line="96" selection-end-column="45" />
-              <folding>
-                <element signature="e#5476#5868#0" expanded="true" />
-                <element signature="e#5867#5868#0" expanded="true" />
-                <element signature="e#10045#10046#0" expanded="true" />
-                <element signature="e#10084#10085#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="0.48164147">
+              <caret line="242" column="13" selection-start-line="242" selection-start-column="13" selection-end-line="242" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1746,7 +1739,7 @@
     <option name="modificationStamps">
       <map>
         <entry key="$PROJECT_DIR$/../Sykodoro" value="5794682845000" />
-        <entry key="$PROJECT_DIR$" value="4376931141000" />
+        <entry key="$PROJECT_DIR$" value="4377530538000" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -2018,7 +2011,6 @@
                             <option value="$USER_HOME$/Library/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-wallet/8.4.0/play-services-wallet-8.4.0.aar" />
                             <option value="$USER_HOME$/Library/Android/sdk/extras/google/m2repository/com/google/android/gms/play-services-wearable/8.4.0/play-services-wearable-8.4.0.aar" />
                             <option value="$USER_HOME$/Library/Android/sdk/extras/android/m2repository/com/android/support/mediarouter-v7/23.0.0/mediarouter-v7-23.0.0.aar" />
-                            <option value="$MODULE_DIR$/libs/YouTubeAndroidPlayerApi.jar" />
                           </list>
                         </option>
                         <option name="path" value="$PROJECT_DIR$/app" />
@@ -2212,8 +2204,8 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/network/RESTEndpoints.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/auth/CurrentActiveUser.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_user_profile_temp.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/MessagingService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java" />
       </list>
     </option>
   </component>
@@ -2228,7 +2220,7 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1599" />
+    <option name="x" value="-1600" />
     <option name="y" value="173" />
     <option name="width" value="1600" />
     <option name="height" value="877" />
@@ -2256,8 +2248,8 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="Scratches" />
       <pane id="AndroidView">
         <subPane>
@@ -2265,70 +2257,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="WrestleChat" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WrestleChat" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WrestleChat" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WrestleChat" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wrestlechat" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WrestleChat" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wrestlechat" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fragments" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -3024,16 +2952,14 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1599" y="173" width="1600" height="877" extended-state="0" />
-    <editor active="false" />
+    <frame x="-1600" y="173" width="1600" height="877" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32889965" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.452164" sideWeight="0.4940978" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37084398" sideWeight="0.47427502" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295979" sideWeight="0.4948849" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35164836" sideWeight="0.4832905" order="3" side_tool="false" content_ui="tabs" />
@@ -3054,7 +2980,9 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.452164" sideWeight="0.4940978" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295979" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.81321186" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -3229,11 +3157,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3478261">
           <caret line="46" column="27" selection-start-line="46" selection-start-column="27" selection-end-line="46" selection-end-column="27" />
-          <folding>
-            <element signature="e#1684#1731#0" expanded="false" />
-            <element signature="e#1776#1827#0" expanded="false" />
-            <element signature="e#1872#1921#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3314,7 +3237,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3340,7 +3262,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6114865">
           <caret line="138" column="0" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3356,7 +3277,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.10169491">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3443,7 +3363,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="127" column="31" selection-start-line="127" selection-start-column="31" selection-end-line="127" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3451,7 +3370,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.0565218">
           <caret line="135" column="94" selection-start-line="117" selection-start-column="28" selection-end-line="135" selection-end-column="94" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3467,7 +3385,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.29157668">
           <caret line="9" column="4" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3475,7 +3392,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="80" column="61" selection-start-line="80" selection-start-column="61" selection-end-line="80" selection-end-column="61" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3483,7 +3399,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19565217">
           <caret line="6" column="123" selection-start-line="6" selection-start-column="123" selection-end-line="6" selection-end-column="123" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3491,18 +3406,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.2130435">
           <caret line="171" column="25" selection-start-line="171" selection-start-column="25" selection-end-line="171" selection-end-column="25" />
-          <folding>
-            <element signature="e#3023#3024#0" expanded="true" />
-            <element signature="e#3056#3057#0" expanded="true" />
-            <element signature="e#3848#3849#0" expanded="true" />
-            <element signature="e#3888#3889#0" expanded="true" />
-            <element signature="e#4057#4058#0" expanded="true" />
-            <element signature="e#4106#4107#0" expanded="true" />
-            <element signature="e#4238#4239#0" expanded="true" />
-            <element signature="e#4280#4281#0" expanded="true" />
-            <element signature="e#5335#6030#0" expanded="true" />
-            <element signature="e#6029#6030#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3510,7 +3413,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5869565">
           <caret line="66" column="37" selection-start-line="66" selection-start-column="37" selection-end-line="66" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3533,7 +3435,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.2483802">
           <caret line="131" column="24" selection-start-line="131" selection-start-column="22" selection-end-line="131" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3544,22 +3445,15 @@
           <folding>
             <element signature="e#2110#2111#0" expanded="true" />
             <element signature="e#2140#2141#0" expanded="true" />
-            <element signature="e#3046#3047#0" expanded="true" />
-            <element signature="e#3091#3092#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.4341252">
-          <caret line="96" column="45" selection-start-line="96" selection-start-column="45" selection-end-line="96" selection-end-column="45" />
-          <folding>
-            <element signature="e#5476#5868#0" expanded="true" />
-            <element signature="e#5867#5868#0" expanded="true" />
-            <element signature="e#10045#10046#0" expanded="true" />
-            <element signature="e#10084#10085#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.48164147">
+          <caret line="242" column="13" selection-start-line="242" selection-start-column="13" selection-end-line="242" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
