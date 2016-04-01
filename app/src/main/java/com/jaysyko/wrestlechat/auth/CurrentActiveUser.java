@@ -4,13 +4,21 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.android.volley.Request;
 import com.jaysyko.wrestlechat.localStorage.LocalStorage;
 import com.jaysyko.wrestlechat.localStorage.StorageFile;
+import com.jaysyko.wrestlechat.network.CustomNetworkResponse;
+import com.jaysyko.wrestlechat.network.NetworkCallback;
+import com.jaysyko.wrestlechat.network.NetworkRequest;
+import com.jaysyko.wrestlechat.network.NetworkSingleton;
+import com.jaysyko.wrestlechat.network.RESTEndpoints;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 /**
  * CurrentActiveUser.java
@@ -22,21 +30,17 @@ public class CurrentActiveUser {
     private static final String USERNAME = "username";
     private static final String IS_LOGGED_IN = "isLoggedIn";
     private static final String USER_ID = "userID";
-    private static final String PASSWORD = "password";
     private static final String IMAGE_URL = "imageURL";
     private static final String TAG = CurrentActiveUser.class.getSimpleName();
-    private static final String PREFERENCE_NAME = "AUTH";
     private static CurrentActiveUser activeUser;
     private Context context;
     private String userID;
     private String username;
-    private String password;
     private String profileImageURL;
 
-    private CurrentActiveUser(String userID, String username, String password) {
+    private CurrentActiveUser(String userID, String username) {
         this.userID = userID;
         this.username = username;
-        this.password = password;
     }
 
     /**
@@ -46,7 +50,7 @@ public class CurrentActiveUser {
      * @param payload String
      * @return CurrentActiveUser
      */
-    public static CurrentActiveUser newUser(Context context, String password, JSONArray payload) {
+    public static CurrentActiveUser newUser(Context context, JSONArray payload) {
         try {
             JSONObject user = (JSONObject) payload.get(0);
             String userID = user.getString(UserKeys.ID.toString());
@@ -57,15 +61,13 @@ public class CurrentActiveUser {
             editor.putBoolean(IS_LOGGED_IN, true);
             editor.putString(USERNAME, username);
             editor.putString(USER_ID, userID);
-            editor.putString(PASSWORD, password);
             editor.putString(IMAGE_URL, profileImageURL);
             editor.apply();
-            activeUser = new CurrentActiveUser(userID, username, password);
+            activeUser = new CurrentActiveUser(userID, username);
             activeUser.context = context;
             activeUser.setUsername(username);
             activeUser.setUserId(userID);
-            activeUser.setProfileImageURL(profileImageURL);
-            activeUser.setPassword(password);
+            activeUser.setProfileImageURL(profileImageURL, false);
         } catch (JSONException e) {
             Log.e(TAG, e.getMessage());
         }
@@ -87,10 +89,9 @@ public class CurrentActiveUser {
         if (sharedPreferences.getBoolean(IS_LOGGED_IN, false)) {
             String storedUserID = sharedPreferences.getString(USER_ID, null);
             String storedUsername = sharedPreferences.getString(USERNAME, null);
-            String storedPassword = sharedPreferences.getString(PASSWORD, null);
             String storedImageURL = sharedPreferences.getString(IMAGE_URL, null);
-            activeUser = new CurrentActiveUser(storedUserID, storedUsername, storedPassword);
-            activeUser.setProfileImageURL(storedImageURL);
+            activeUser = new CurrentActiveUser(storedUserID, storedUsername);
+            activeUser.setProfileImageURL(storedImageURL, false);
             activeUser.context = context;
         }
         return activeUser;
@@ -101,11 +102,6 @@ public class CurrentActiveUser {
      */
     public String getUserID() {
         return activeUser.userID;
-    }
-
-    public boolean setPassword(String password) {
-        activeUser.password = password;
-        return true;
     }
 
     /**
@@ -148,10 +144,28 @@ public class CurrentActiveUser {
      * @param url String
      * @return String
      */
-    public boolean setProfileImageURL(final String url) {
+    public boolean setProfileImageURL(final String url, boolean hard) {
         // store url in local cache
         Boolean isLinkToImage = ImageTools.isLinkToImage(url);
         if (isLinkToImage) {
+            if (hard) {
+                HashMap<String, String> params = new HashMap<>();
+                params.put(UserKeys.USERNAME.toString(), activeUser.getUsername());
+                params.put(UserKeys.PROFILE_IMAGE.toString(), url);
+                Request request = new NetworkRequest(new NetworkCallback() {
+                    @Override
+                    public void onSuccess(String response) {
+                        CustomNetworkResponse customNetworkResponse = new CustomNetworkResponse(response);
+                        if (customNetworkResponse.isSuccessful()) {
+                            SharedPreferences sharedPreferences = new LocalStorage(context, StorageFile.AUTH).getSharedPreferences();
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString(IMAGE_URL, profileImageURL);
+                            editor.apply();
+                        }
+                    }
+                }).post(RESTEndpoints.UPDATE_PROFILE, params);
+                NetworkSingleton.getInstance(context).addToRequestQueue(request);
+            }
             activeUser.profileImageURL = url;
             return true;
         } else {
@@ -163,7 +177,4 @@ public class CurrentActiveUser {
         activeUser.userID = userId;
     }
 
-    private String getPassword() {
-        return activeUser.password;
-    }
 }

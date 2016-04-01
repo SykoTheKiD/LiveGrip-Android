@@ -30,6 +30,7 @@ import com.jaysyko.wrestlechat.network.NetworkRequest;
 import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.RESTEndpoints;
+import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
@@ -113,9 +114,11 @@ public final class LoginActivity extends AppCompatActivity {
                     if (isPlayServicesInstalled()) {
                         Form form = new SignUpValidator(username, password).validate();
                         if (form.isValid()) {
+                            String profileImageURL = ImageTools.defaultProfileImage(username);
                             HashMap<String, String> params = new HashMap<>();
                             params.put(UserKeys.USERNAME.toString(), username);
                             params.put(UserKeys.PASSWORD.toString(), password);
+                            params.put(UserKeys.PROFILE_IMAGE.toString(), profileImageURL);
                             Request request = new NetworkRequest(new NetworkCallback() {
                                 @Override
                                 public void onSuccess(String response) {
@@ -161,7 +164,7 @@ public final class LoginActivity extends AppCompatActivity {
                             public void onSuccess(String response) {
                                 CustomNetworkResponse customNetworkResponse = new CustomNetworkResponse(response);
                                 if (customNetworkResponse.isSuccessful()) {
-                                    CurrentActiveUser.newUser(mContext, password, customNetworkResponse.getPayload());
+                                    CurrentActiveUser.newUser(mContext, customNetworkResponse.getPayload());
                                     Dialog.makeToast(mContext, getString(R.string.welcome_back).concat(StringResources.BLANK_SPACE).concat(username));
                                     startActivity(intent);
                                     finish();
