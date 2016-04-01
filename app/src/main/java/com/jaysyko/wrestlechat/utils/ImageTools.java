@@ -92,10 +92,13 @@ public final class ImageTools {
     }
 
     public static Boolean isLinkToImage(String url) {
-        String patternToMatch = "\\.jpg|\\.png*";
-        Pattern p = Pattern.compile(patternToMatch);
-        Matcher m = p.matcher(url);
-        return m.find();
+        if (url != null) {
+            String patternToMatch = "\\.jpg|\\.png*";
+            Pattern p = Pattern.compile(patternToMatch);
+            Matcher m = p.matcher(url);
+            return m.find();
+        }
+        return false;
     }
 
 }
