@@ -97,7 +97,7 @@
 
         <!-- [Custom service gets push notification from server, add code in this service to show notifications] -->
         <service
-            android:name=".services.GCMListener"
+            android:name=".services.GCMListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
