@@ -23,25 +23,33 @@ import java.net.URL;
 /**
  * Created by jarushaan on 2016-03-28
  */
-public class GCMListener extends GcmListenerService {
+public class GCMListenerService extends GcmListenerService {
+    private static final String TAG = GCMListenerService.class.getSimpleName();
+    private static final String MESSAGE = "message";
+    private static final String TITLE = "title";
+    private static final String TICKER_TEXT = "tickerText";
+    private static final String URL = "url";
+    private static final String SMALL = "small";
+    private static final String NOTIFICATION_RECEIVED = "Notification received";
+    private static final int NOTIFICATION_ID = 11221;
 
     @Override
     public void onMessageReceived(String from, Bundle data) {
 
-        Log.i("TAG", "Notification received");
+        Log.i(TAG, NOTIFICATION_RECEIVED);
 
-        String message = data.getString("message");
-        String title = data.getString("title");
-        String tikerText = data.getString("tickerText");
+        String message = data.getString(MESSAGE);
+        String title = data.getString(TITLE);
+        String tickerText = data.getString(TICKER_TEXT);
+        String url = data.getString(URL);
+        boolean small = data.getBoolean(SMALL);
 
-//        String smallIconURL = data.getString("smallIcon");
-//        String LargeIconURL = data.getString("largeIcon");
-
-        Bitmap smallIconBitmap = getBitmapFromURL("https://cdn4.iconfinder.com/data/icons/iconsimple-logotypes/512/github-512.png");
-
-        //ShowSimpleNotifications(message,title,tikerText,smallIconBitmap);
-        //Bitmap largeiconbitmap = getBitmapFromURL(LargeIconURL);
-        showBigPictureStyleNotifications(message, title, tikerText, smallIconBitmap, smallIconBitmap);
+        Bitmap smallIconBitmap = getBitmapFromURL(url);
+        if (small) {
+            showSimpleNotifications(message, title, tickerText, smallIconBitmap);
+        } else {
+            showBigPictureStyleNotifications(message, title, tickerText, smallIconBitmap, smallIconBitmap);
+        }
     }
 
 
@@ -54,7 +62,7 @@ public class GCMListener extends GcmListenerService {
             InputStream input = connection.getInputStream();
             return BitmapFactory.decodeStream(input);
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
             return null;
         }
     }
@@ -63,7 +71,7 @@ public class GCMListener extends GcmListenerService {
                                                  Bitmap largeIcon) {
         //Create notification object and set the content.
         NotificationCompat.Builder nb = new NotificationCompat.Builder(this);
-        nb.setSmallIcon(R.drawable.common_ic_googleplayservices);
+        nb.setSmallIcon(R.drawable.logo);
 
         nb.setLargeIcon(smallIcon);
         nb.setContentTitle(title);
@@ -90,23 +98,23 @@ public class GCMListener extends GcmListenerService {
         NotificationManager mNotificationManager =
                 (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         // mId allows you to update the notification later on.
-        mNotificationManager.notify(11221, nb.build());
+        mNotificationManager.notify(NOTIFICATION_ID, nb.build());
     }
 
-    public void ShowSimpleNotifications(String message, String title, String tickerText, Bitmap smallIcon) {
+    public void showSimpleNotifications(String message, String title, String tickerText, Bitmap smallIcon) {
 
-        NotificationCompat.Builder nb = new NotificationCompat.Builder(this);
-        nb.setSmallIcon(R.drawable.common_ic_googleplayservices);
-        nb.setLargeIcon(smallIcon);
-        nb.setContentTitle(title);
-        nb.setContentText(message);
-        nb.setTicker(tickerText);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+        notificationBuilder.setSmallIcon(R.drawable.logo);
+        notificationBuilder.setLargeIcon(smallIcon);
+        notificationBuilder.setContentTitle(title);
+        notificationBuilder.setContentText(message);
+        notificationBuilder.setTicker(tickerText);
 
-        NotificationCompat.BigTextStyle bigTextnotifications = new NotificationCompat.BigTextStyle();
-        bigTextnotifications.bigText(message);
-        bigTextnotifications.setBigContentTitle(title);
-        bigTextnotifications.setSummaryText("liveGrip");
-        nb.setStyle(bigTextnotifications);
+        NotificationCompat.BigTextStyle bigTextNotification = new NotificationCompat.BigTextStyle();
+        bigTextNotification.bigText(message);
+        bigTextNotification.setBigContentTitle(title);
+        bigTextNotification.setSummaryText(getString(R.string.app_name));
+        notificationBuilder.setStyle(bigTextNotification);
 
         Intent resultIntent = new Intent(this, LoginActivity.class);
         TaskStackBuilder TSB = TaskStackBuilder.create(this);
@@ -119,13 +127,11 @@ public class GCMListener extends GcmListenerService {
                         PendingIntent.FLAG_UPDATE_CURRENT
                 );
 
-        nb.setContentIntent(resultPendingIntent);
-        nb.setAutoCancel(true);
+        notificationBuilder.setContentIntent(resultPendingIntent);
+        notificationBuilder.setAutoCancel(true);
         NotificationManager mNotificationManager =
                 (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
         // mId allows you to update the notification later on.
-        mNotificationManager.notify(11221, nb.build());
-
+        mNotificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
     }
-
 }
