@@ -79,7 +79,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            Log.e(TAG, "Connected");
             if (!sharedPreferences.getBoolean(mCurrentEventId, false)) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean(mCurrentEventId, true);
@@ -93,7 +92,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            Log.i(TAG, "Service Disconnected");
             binder.getService().disconnect();
             mServiceBound = false;
         }
@@ -124,7 +122,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
                 boolean visited = sharedPreferences.getBoolean(mCurrentEventId, false);
                 if (!visited) {
                     fetchOldMessages();
-                    Log.e(TAG, "FETCHING");
                 }
             }
         });
@@ -181,6 +178,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
 
     private void stopMessagingService() {
         if (mServiceBound) {
+            binder.getService().disconnect();
             getActivity().stopService(mChatServiceIntent);
             getActivity().unbindService(mServiceConnection);
             mServiceBound = false;
@@ -234,37 +232,21 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
+        mApplicationContext.bindService(mChatServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
         if (!mServiceBound) {
             getActivity().startService(mChatServiceIntent);
         }
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        getActivity().stopService(mChatServiceIntent);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mApplicationContext.bindService(mChatServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
+    public void onDestroy() {
+        super.onDestroy();
         if (mServiceBound) {
             getActivity().unbindService(mServiceConnection);
             mServiceBound = false;
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
         stopMessagingService();
     }
 }
