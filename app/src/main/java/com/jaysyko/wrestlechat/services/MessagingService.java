@@ -8,7 +8,6 @@ import android.util.Log;
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.auth.UserKeys;
-import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.models.EventJSONKeys;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.models.MessageJSONKeys;
@@ -53,6 +52,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         return mBinder;
     }
 
+
     private void connect() {
         mClient = new MqttAndroidClient(this, MOSQUITO_URL, CLIENT_ID);
         MqttConnectOptions connectOptions = new MqttConnectOptions();
@@ -74,8 +74,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
 
     @Override
     public void connectionLost(Throwable cause) {
-        Log.i(TAG, cause.getMessage());
-        Dialog.makeToast(getApplicationContext(), cause.getMessage());
+        Log.i(TAG, "Connection Lost");
     }
 
     @Override
@@ -149,6 +148,21 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         }
         try {
             mClient.publish(room, payload.toString().getBytes(), 2, false, null, this);
+        } catch (MqttException e) {
+            Log.e(TAG, e.getMessage());
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        disconnect();
+    }
+
+    public void disconnect() {
+        try {
+            this.mClient.disconnect();
+            Log.e(TAG, "disconnected");
         } catch (MqttException e) {
             Log.e(TAG, e.getMessage());
         }

@@ -75,6 +75,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         }
     };
     private Event mCurrentEvent = CurrentActiveEvent.getInstance().getCurrentEvent();
+    private MessagingServiceBinder binder;
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -84,7 +85,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
                 editor.putBoolean(mCurrentEventId, true);
                 editor.apply();
             }
-            MessagingServiceBinder binder = (MessagingServiceBinder) service;
+            binder = (MessagingServiceBinder) service;
             binder.setMessageArrivedListener(MessagingFragment.this);
             messagingService = binder.getService();
             mServiceBound = true;
@@ -93,6 +94,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         @Override
         public void onServiceDisconnected(ComponentName name) {
             Log.i(TAG, "Service Disconnected");
+            binder.getService().disconnect();
             mServiceBound = false;
         }
     };
@@ -258,5 +260,11 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
             getActivity().unbindService(mServiceConnection);
             mServiceBound = false;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopMessagingService();
     }
 }
