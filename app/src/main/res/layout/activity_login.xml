@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
+    android:backgroundTint="#747474"
+    android:backgroundTintMode="multiply"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -35,7 +37,7 @@
 
     <AutoCompleteTextView
         android:id="@+id/username_text_view"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="40dp"
         android:background="@drawable/round"
         android:hint="@string/username_placeholder"
@@ -48,7 +50,7 @@
 
     <EditText
         android:id="@+id/login_password_et"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/round"
@@ -64,12 +66,12 @@
     <Button
         android:id="@+id/sign_up_button"
         style="?android:textAppearanceSmall"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:layout_marginTop="16dp"
-        android:background="#e0e0e0"
-        android:text="@string/action_signup"
-        android:textColor="#263238"
+        android:background="#e57373"
+        android:text="@string/action_sign_up"
+        android:textColor="#ffffff"
         android:textSize="17sp"
         android:textStyle="bold"
         android:visibility="gone" />

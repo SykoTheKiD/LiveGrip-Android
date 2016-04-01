@@ -10,7 +10,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/user_profile">
+        android:background="@drawable/user_profile_bg"
+        android:backgroundTint="#797979"
+        android:backgroundTintMode="multiply">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profilePicture"
@@ -34,7 +36,6 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="120dp"
-            android:text="@string/lorem_username"
             android:textColor="#ffffff"
             android:textSize="30sp"
             android:textStyle="bold" />
