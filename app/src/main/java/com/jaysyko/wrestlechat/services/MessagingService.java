@@ -49,7 +49,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     private static final String DUMMY_PASSWORD = "password";
     private static final String USER_ID = "user_id";
     private static final String EVENT_ID = "event_id";
-    private static final String MESSAGE_BODY = "message_body";
+    private static final String MESSAGE_BODY = "body";
     private static final Handler handler = new Handler();
     private final MessagingServiceBinder mBinder = new MessagingServiceBinder(this);
     private MqttAndroidClient mClient;

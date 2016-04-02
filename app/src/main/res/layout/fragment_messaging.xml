@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#eeeeee"
     android:orientation="vertical"
     tools:context=".fragments.MessagingFragment">
 
@@ -26,7 +25,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/my_toolbar"
-        android:background="#ECEFF1"
+        android:background="@drawable/messaging_background"
         android:divider="@android:color/transparent"
         android:dividerHeight="20dp"
         android:padding="15dp"

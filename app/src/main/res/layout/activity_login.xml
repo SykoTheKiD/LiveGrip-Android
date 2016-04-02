@@ -3,7 +3,7 @@
     android:id="@+id/login_linear_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="@drawable/login_screen_bg"
     android:backgroundTint="#747474"
     android:backgroundTintMode="multiply"
     android:gravity="center_horizontal"
