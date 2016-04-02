@@ -9,14 +9,24 @@
 
     <!-- Settings, should always be in the overflow -->
 
-    <!--<item-->
-    <!--android:id="@+id/action_rules"-->
-    <!--android:title="@string/action_rules"-->
-    <!--app:showAsAction="never" />-->
+    <item
+        android:id="@+id/action_rules"
+        android:title="@string/chat_rules"
+        app:showAsAction="never" />
 
-    <!--<item-->
-    <!--android:id="@+id/action_settings"-->
-    <!--android:title="@string/action_settings"-->
-    <!--app:showAsAction="never" />-->
+    <item
+        android:id="@+id/action_reddit"
+        android:title="@string/action_reddit"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_user_profile"
+        android:title="@string/action_user_profile"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
 
 </menu>

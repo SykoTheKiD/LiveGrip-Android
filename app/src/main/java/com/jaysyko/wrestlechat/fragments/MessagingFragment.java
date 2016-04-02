@@ -125,12 +125,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         if (NetworkState.isConnected(mApplicationContext)) {
             if (form.isValid()) {
                 messagingService.send(body);
-                // Use Message model to create new mMessages now
-//                Message message = new Message();
-//                message.setUserID(userID);
-//                message.setEventId(sEventId);
-//                message.setBody(body);
-//                ChatStream.getCurrentUser().send(message);
                 etMessage.setText(StringResources.NULL_TEXT);
             } else {
                 Dialog.makeToast(mApplicationContext, getString(Form.getSimpleMessage(form.getReason())));

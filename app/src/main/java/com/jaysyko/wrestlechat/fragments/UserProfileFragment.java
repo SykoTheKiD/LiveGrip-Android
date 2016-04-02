@@ -20,7 +20,7 @@ import com.jaysyko.wrestlechat.utils.ImageTools;
 
 public class UserProfileFragment extends Fragment {
 
-    private Context applicationContext;
+    private Context mApplicationContext;
     private Handler handler = new Handler();
     private CurrentActiveUser currentActiveUser;
     private ImageView profilePicture;
@@ -32,15 +32,9 @@ public class UserProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user_profile_temp, container, false);
         getActivity().setTitle(getString(R.string.manage_profile));
         currentActiveUser = CurrentActiveUser.getCurrentUser();
-        applicationContext = getActivity();
+        mApplicationContext = getActivity();
         profilePicture = (ImageView) view.findViewById(R.id.profilePicture);
-        ImageTools.loadImage(applicationContext, currentActiveUser.getCustomProfileImageURL(), profilePicture);
-//        handler.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                new AdBuilder(getActivity()).buildAd();
-//            }
-//        });
+        ImageTools.loadImage(mApplicationContext, currentActiveUser.getCustomProfileImageURL(), profilePicture);
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -59,14 +53,14 @@ public class UserProfileFragment extends Fragment {
                         builder.setPositiveButton(getString(R.string.ok_dialog), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if (NetworkState.isConnected(applicationContext)) {
+                                if (NetworkState.isConnected(mApplicationContext)) {
                                     if (!(CurrentActiveUser.getCurrentUser().setProfileImageURL(input.getText().toString(), true))) {
-                                        Dialog.makeToast(applicationContext, getString(R.string.bad_image_type));
+                                        Dialog.makeToast(mApplicationContext, getString(R.string.bad_image_type));
                                     } else {
-                                        ImageTools.loadImage(applicationContext, currentActiveUser.getCustomProfileImageURL(), profilePicture);
+                                        ImageTools.loadImage(mApplicationContext, currentActiveUser.getCustomProfileImageURL(), profilePicture);
                                     }
                                 } else {
-                                    Dialog.makeToast(applicationContext, getString(R.string.no_network));
+                                    Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
                                 }
                             }
                         });
