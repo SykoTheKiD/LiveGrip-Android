@@ -41,9 +41,8 @@ import java.util.List;
 
 public class MessagingFragment extends Fragment implements IMessageArrivedListener {
 
-    public static final String TAG = MessagingFragment.class.getSimpleName();
     private static final int SEND_DELAY = 1500;
-    private static final String FONT_COLOR_FFFFFFF_HTML = "<font color=\"#FFFFFFF\">";
+    private static final String FONT_COLOR_HTML = "<font color=\"#FFFFFFF\">";
     private static final String FONT_HTML = "</font>";
     private static ArrayList<Message> mMessages = new ArrayList<>();
     private static MessageListAdapter mAdapter;
@@ -90,7 +89,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Activity activity = getActivity();
-        activity.setTitle(Html.fromHtml(FONT_COLOR_FFFFFFF_HTML + mCurrentEvent.getEventName() + FONT_HTML));
+        activity.setTitle(Html.fromHtml(FONT_COLOR_HTML + mCurrentEvent.getEventName() + FONT_HTML));
         mChatServiceIntent = new Intent(activity, MessagingService.class);
     }
 
