@@ -167,7 +167,8 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      */
     @Override
     public void traceError(String source, String message) {
-
+        Log.d(TAG, source);
+        Log.d(TAG, message);
     }
 
     /**
@@ -177,7 +178,8 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      */
     @Override
     public void traceException(String source, String message, Exception e) {
-
+        Log.d(TAG, source);
+        Log.d(TAG, message);
     }
 
     /**
