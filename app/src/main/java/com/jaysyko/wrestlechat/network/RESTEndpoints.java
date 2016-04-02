@@ -6,7 +6,7 @@ package com.jaysyko.wrestlechat.network;
  * @author Jay Syko
  */
 public enum RESTEndpoints {
-    LOGIN("login"), SIGN_UP("newuser"), MESSAGES("messages"), EVENTS("events"), GCM("gcmID"), UPDATE_PROFILE("updateProfile");
+    LOGIN("auth/login"), SIGN_UP("auth/newuser"), MESSAGES("messages/save_message"), EVENTS("events/events"), GCM("gcm/gcmID"), UPDATE_PROFILE("auth/updateProfile");
 
     private static final String FILE_TYPE = ".php";
     private String endpoint;

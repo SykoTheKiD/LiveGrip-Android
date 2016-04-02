@@ -60,7 +60,7 @@ public class Message implements Serializable {
      * Created by jarushaan on 2016-03-19
      */
     public enum MessageJSONKeys {
-        USERNAME("username"), EVENT_NAME("name"), BODY("body"), PROFILE_IMAGE("profile_image"), EVENT_ID("event_id"), USER_ID("user_id");
+        USERNAME("username"), EVENT_NAME("name"), BODY("body"), PROFILE_IMAGE("profile_image"), EVENT_ID("id"), USER_ID("id");
         private String key;
 
         MessageJSONKeys(String key) {
