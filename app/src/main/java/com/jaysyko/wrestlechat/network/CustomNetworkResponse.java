@@ -7,7 +7,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by jarushaan on 2016-03-12
+ * CustomNetworkResponse.java
+ *
+ * Wrapper class that wraps up the JSON Response in a small API
+ * @author Jay Syko
  */
 public class CustomNetworkResponse {
 
@@ -22,6 +25,11 @@ public class CustomNetworkResponse {
         }
     }
 
+    /**
+     * Checks if the performed action was successful
+     *
+     * @return T/F
+     */
     public boolean isSuccessful() {
         try {
             return (Boolean) this.response.get(NetworkResponseKeys.SUCCESS.toString());
@@ -31,6 +39,10 @@ public class CustomNetworkResponse {
         return false;
     }
 
+    /**
+     * Gets the results of the performed action
+     * @return JSON Array of the details
+     */
     public JSONArray getPayload() {
         try {
             return (JSONArray) this.response.get(NetworkResponseKeys.PAYLOAD.toString());
@@ -40,6 +52,10 @@ public class CustomNetworkResponse {
         }
     }
 
+    /**
+     * Returns the payload as the return for toString()
+     * @return response payload
+     */
     @Override
     public String toString() {
         return getPayload().toString();

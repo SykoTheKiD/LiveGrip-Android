@@ -13,7 +13,7 @@ import com.jaysyko.wrestlechat.fragments.TabFragment;
 import com.jaysyko.wrestlechat.utils.BundleKeys;
 
 /**
- * Created by jarushaan on 2016-03-09.
+ * @author Jay Syko
  */
 public class TabAdapter extends FragmentPagerAdapter {
 

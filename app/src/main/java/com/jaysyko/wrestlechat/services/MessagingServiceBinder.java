@@ -5,7 +5,9 @@ import android.os.Binder;
 import com.jaysyko.wrestlechat.models.Message;
 
 /**
- * Created by jarushaan on 2016-03-19
+ * Public Interface for MessagingService.java
+ *
+ * @author Jay Syko
  */
 public class MessagingServiceBinder extends Binder {
     private MessagingService chatService;
@@ -15,14 +17,29 @@ public class MessagingServiceBinder extends Binder {
         this.chatService = chatService;
     }
 
+    /**
+     * Get an instance of MessagingService
+     *
+     * @return MessagingService instance
+     */
     public MessagingService getService() {
         return chatService;
     }
 
+    /**
+     * Set a listener listening for incoming MQTT messages
+     *
+     * @param listener IMessageArrivedListener
+     */
     public void setMessageArrivedListener(IMessageArrivedListener listener) {
         mListener = listener;
     }
 
+    /**
+     * Callback for when a message is received by a listener
+     *
+     * @param message Message
+     */
     public void messageArrived(Message message) {
         if (mListener != null)
             mListener.messageArrived(message);
