@@ -237,14 +237,14 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      * Saves a message to the database
      * @param payload of the sent Message
      */
-    private void saveToDB(final JSONObject payload) {
+    private synchronized void saveToDB(final JSONObject payload) {
         handler.post(new Runnable() {
             @Override
             public void run() {
                 HashMap<String, String> params = new HashMap<>();
                 try {
-                    params.put(USER_ID, payload.getString(UserKeys.ID.toString()));
-                    params.put(EVENT_ID, payload.getString(Event.EventJSONKeys.ID.toString()));
+                    params.put(USER_ID, payload.getString(Message.MessageJSONKeys.USER_ID.toString()));
+                    params.put(EVENT_ID, payload.getString(Message.MessageJSONKeys.EVENT_ID.toString()));
                     params.put(MESSAGE_BODY, payload.getString(Message.MessageJSONKeys.BODY.toString()));
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
