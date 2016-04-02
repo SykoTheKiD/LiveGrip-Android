@@ -13,7 +13,6 @@ import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import com.android.volley.Request;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
@@ -32,29 +30,21 @@ import com.jaysyko.wrestlechat.localStorage.LocalStorage;
 import com.jaysyko.wrestlechat.localStorage.StorageFile;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.Message;
-import com.jaysyko.wrestlechat.network.CustomNetworkResponse;
-import com.jaysyko.wrestlechat.network.NetworkCallback;
-import com.jaysyko.wrestlechat.network.NetworkRequest;
-import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.NetworkState;
-import com.jaysyko.wrestlechat.network.RESTEndpoints;
 import com.jaysyko.wrestlechat.services.IMessageArrivedListener;
 import com.jaysyko.wrestlechat.services.MessagingService;
 import com.jaysyko.wrestlechat.services.MessagingServiceBinder;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class MessagingFragment extends Fragment implements IMessageArrivedListener {
 
     public static final String TAG = MessagingFragment.class.getSimpleName();
     private static final int SEND_DELAY = 1500;
+    private static final String FONT_COLOR_FFFFFFF_HTML = "<font color=\"#FFFFFFF\">";
+    private static final String FONT_HTML = "</font>";
     private static ArrayList<Message> mMessages = new ArrayList<>();
     private static MessageListAdapter mAdapter;
     private EditText etMessage;
@@ -100,7 +90,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Activity activity = getActivity();
-        activity.setTitle(Html.fromHtml("<font color=\"#FFFFFFF\">" + mCurrentEvent.getEventName() + "</font>"));
+        activity.setTitle(Html.fromHtml(FONT_COLOR_FFFFFFF_HTML + mCurrentEvent.getEventName() + FONT_HTML));
         mChatServiceIntent = new Intent(activity, MessagingService.class);
     }
 
@@ -115,15 +105,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         btSend = (ImageButton) view.findViewById(R.id.send_button);
         sharedPreferences = new LocalStorage(mApplicationContext, StorageFile.MESSAGING).getSharedPreferences();
         handler.post(initMessageAdapter);
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                boolean visited = sharedPreferences.getBoolean(mCurrentEventId, false);
-                if (!visited) {
-                    fetchOldMessages();
-                }
-            }
-        });
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,40 +170,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         listMessage.add(message);
         mMessages.addAll(listMessage);
         mAdapter.notifyDataSetChanged();
-    }
-
-    private void fetchOldMessages() {
-        if (NetworkState.isConnected(mApplicationContext)) {
-            HashMap<String, String> params = new HashMap<>();
-            params.put(Message.MessageJSONKeys.EVENT_ID.toString(), CurrentActiveEvent.getInstance().getCurrentEvent().getEventID());
-            Request networkRequest = new NetworkRequest(new NetworkCallback() {
-                @Override
-                public void onSuccess(String response) {
-                    try {
-                        CustomNetworkResponse customNetworkResponse = new CustomNetworkResponse(response);
-                        if (customNetworkResponse.isSuccessful()) {
-                            JSONObject current;
-                            JSONArray messageObjects = customNetworkResponse.getPayload();
-                            for (int index = 0; index < messageObjects.length(); index++) {
-                                current = (JSONObject) messageObjects.get(index);
-                                mMessages.add(
-                                        new Message(
-                                                current.getString(Message.MessageJSONKeys.USERNAME.toString()),
-                                                current.getString(Message.MessageJSONKeys.EVENT_NAME.toString()),
-                                                current.getString(Message.MessageJSONKeys.BODY.toString()),
-                                                current.getString(Message.MessageJSONKeys.PROFILE_IMAGE.toString())
-                                        )
-                                );
-                            }
-                            mAdapter.notifyDataSetChanged();
-                        }
-                    } catch (JSONException e) {
-                        Log.e(TAG, e.getMessage());
-                    }
-                }
-            }).post(RESTEndpoints.MESSAGES, params);
-            NetworkSingleton.getInstance(mApplicationContext).addToRequestQueue(networkRequest);
-        }
     }
 
     @Override

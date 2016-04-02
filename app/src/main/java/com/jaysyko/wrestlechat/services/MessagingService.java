@@ -5,11 +5,16 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.android.volley.Request;
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.auth.UserKeys;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.Message;
+import com.jaysyko.wrestlechat.network.NetworkCallback;
+import com.jaysyko.wrestlechat.network.NetworkRequest;
+import com.jaysyko.wrestlechat.network.NetworkSingleton;
+import com.jaysyko.wrestlechat.network.RESTEndpoints;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.android.service.MqttTraceHandler;
@@ -23,15 +28,16 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 /**
  * MessagingService.java
  *
  * Implements the MQTT messaging system
- *
  * @author Jay Syko
  */
 public class MessagingService extends Service implements MqttCallback, MqttTraceHandler, IMqttActionListener {
-    public static final String TAG = MessagingService.class.getSimpleName();
+    private static final String TAG = MessagingService.class.getSimpleName();
     private static final String MQTT_BROKER_URL = "192.168.33.10";
     private static final String MQTT_BROKER_PORT = "8080";
     private static final String CLIENT_ID = CurrentActiveUser.getCurrentUser().getUsername();
@@ -40,6 +46,9 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     private static final int CONNECTION_TIMEOUT = 10000;
     private static final int KEEP_ALIVE_INTERVAL = 600000;
     private static final String DUMMY_PASSWORD = "password";
+    private static final String USER_ID = "user_id";
+    private static final String EVENT_ID = "event_id";
+    private static final String MESSAGE_BODY = "message_body";
     private final MessagingServiceBinder mBinder = new MessagingServiceBinder(this);
     private MqttAndroidClient mClient;
     private boolean mIsConnecting;
@@ -130,7 +139,6 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
 
     /**
      * Allows you to subscribe to an event and all the messages sent to it
-     *
      */
     private void subscribe() {
         try {
@@ -151,11 +159,22 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         Log.d(TAG, message);
     }
 
+    /**
+     * Debug the connection
+     *
+     * @param source  of broker
+     * @param message from broker
+     */
     @Override
     public void traceError(String source, String message) {
 
     }
 
+    /**
+     * Debug the connection
+     * @param source of broker
+     * @param message from broker
+     */
     @Override
     public void traceException(String source, String message, Exception e) {
 
@@ -198,14 +217,39 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
             payload.put(Event.EventJSONKeys.NAME.toString(), currentActiveEvent.getCurrentEvent().getEventName());
             payload.put(UserKeys.USERNAME.toString(), currentActiveUser.getUsername());
             payload.put(UserKeys.PROFILE_IMAGE.toString(), currentActiveUser.getCustomProfileImageURL());
+            saveToDB(payload);
         } catch (JSONException e) {
             Log.e(TAG, e.getMessage());
         }
+
         try {
             mClient.publish(room, payload.toString().getBytes(), 2, false, null, this);
         } catch (MqttException e) {
             Log.e(TAG, e.getMessage());
         }
+    }
+
+    /**
+     * Saves a message to the database
+     *
+     * @param payload of the sent Message
+     */
+    private void saveToDB(JSONObject payload) {
+        HashMap<String, String> params = new HashMap<>();
+        try {
+            params.put(USER_ID, payload.getString(UserKeys.ID.toString()));
+            params.put(EVENT_ID, payload.getString(Event.EventJSONKeys.ID.toString()));
+            params.put(MESSAGE_BODY, payload.getString(Message.MessageJSONKeys.BODY.toString()));
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage());
+        }
+        Request request = new NetworkRequest(new NetworkCallback() {
+            @Override
+            public void onSuccess(String response) {
+                Log.i(TAG, "Message Saved to DB");
+            }
+        }).post(RESTEndpoints.MESSAGES, params);
+        NetworkSingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
     }
 
     /**
