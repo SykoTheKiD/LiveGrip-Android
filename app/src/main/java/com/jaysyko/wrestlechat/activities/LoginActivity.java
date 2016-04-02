@@ -31,7 +31,6 @@ import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.RESTEndpoints;
 import com.jaysyko.wrestlechat.utils.ImageTools;
-import com.jaysyko.wrestlechat.utils.IntentKeys;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 import java.util.HashMap;
@@ -39,17 +38,15 @@ import java.util.HashMap;
 public final class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
+    private static final String USERNAME_INTENT_KEY = "username";
     private String username, password;
-    private boolean signIn = true;
     private Handler handler = new Handler();
-    private Button loginButton;
-    private Button signUpButton;
-    private TextView signUpText;
-    private TextView signUpPrompt;
-    private EditText usernameField;
+    private Button loginButton, signUpButton;
+    private TextView signUpText, signUpPrompt;
+    private EditText usernameField, passwordField;
     private Context mContext;
-    private EditText passwordField;
     private Intent intent;
+    private boolean signIn = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +64,7 @@ public final class LoginActivity extends AppCompatActivity {
             signUpText = (TextView) findViewById(R.id.sign_up_text_view);
             signUpPrompt = (TextView) findViewById(R.id.sign_in_prompt);
             usernameField = (EditText) findViewById(R.id.username_text_view);
-            usernameField.setText(getIntent().getStringExtra(IntentKeys.USERNAME));
+            usernameField.setText(getIntent().getStringExtra(USERNAME_INTENT_KEY));
             passwordField = (EditText) findViewById(R.id.login_password_et);
             handler.post(new Runnable() {
                 @Override

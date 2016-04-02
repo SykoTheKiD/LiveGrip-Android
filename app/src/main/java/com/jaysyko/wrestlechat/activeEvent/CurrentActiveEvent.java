@@ -29,7 +29,7 @@ public class CurrentActiveEvent {
 
     /**
      * Sets the currentEvent in focus
-     * @param currentEvent void
+     * @param currentEvent Event
      */
     public void setCurrentEvent(Event currentEvent) {
         this.currentEvent = currentEvent;

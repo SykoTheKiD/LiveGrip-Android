@@ -32,7 +32,6 @@ import com.jaysyko.wrestlechat.localStorage.LocalStorage;
 import com.jaysyko.wrestlechat.localStorage.StorageFile;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.Message;
-import com.jaysyko.wrestlechat.models.MessageJSONKeys;
 import com.jaysyko.wrestlechat.network.CustomNetworkResponse;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkRequest;
@@ -195,7 +194,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private void fetchOldMessages() {
         if (NetworkState.isConnected(mApplicationContext)) {
             HashMap<String, String> params = new HashMap<>();
-            params.put(MessageJSONKeys.EVENT_ID.toString(), CurrentActiveEvent.getInstance().getCurrentEvent().getEventID());
+            params.put(Message.MessageJSONKeys.EVENT_ID.toString(), CurrentActiveEvent.getInstance().getCurrentEvent().getEventID());
             Request networkRequest = new NetworkRequest(new NetworkCallback() {
                 @Override
                 public void onSuccess(String response) {
@@ -208,10 +207,10 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
                                 current = (JSONObject) messageObjects.get(index);
                                 mMessages.add(
                                         new Message(
-                                                current.getString(MessageJSONKeys.USERNAME.toString()),
-                                                current.getString(MessageJSONKeys.EVENT_NAME.toString()),
-                                                current.getString(MessageJSONKeys.BODY.toString()),
-                                                current.getString(MessageJSONKeys.PROFILE_IMAGE.toString())
+                                                current.getString(Message.MessageJSONKeys.USERNAME.toString()),
+                                                current.getString(Message.MessageJSONKeys.EVENT_NAME.toString()),
+                                                current.getString(Message.MessageJSONKeys.BODY.toString()),
+                                                current.getString(Message.MessageJSONKeys.PROFILE_IMAGE.toString())
                                         )
                                 );
                             }

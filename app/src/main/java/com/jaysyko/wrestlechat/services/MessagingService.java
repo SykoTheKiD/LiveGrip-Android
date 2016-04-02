@@ -8,9 +8,8 @@ import android.util.Log;
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.auth.UserKeys;
-import com.jaysyko.wrestlechat.models.EventJSONKeys;
+import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.Message;
-import com.jaysyko.wrestlechat.models.MessageJSONKeys;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.android.service.MqttTraceHandler;
@@ -25,7 +24,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by jarushaan on 2016-03-14
+ * MessagingService.java
+ *
+ * Implements the MQTT messaging system
+ *
+ * @author Jay Syko
  */
 public class MessagingService extends Service implements MqttCallback, MqttTraceHandler, IMqttActionListener {
     public static final String TAG = MessagingService.class.getSimpleName();
@@ -42,17 +45,31 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     private boolean mIsConnecting;
     private String room = CurrentActiveEvent.getInstance().getCurrentEvent().getEventID();
 
+    /**
+     * Return an instance of the MQTT Android client
+     *
+     * @return MQTTAndroidClient
+     */
     private MqttAndroidClient getClient() {
-        return mClient;
+        return this.mClient;
     }
 
+    /**
+     * Returns a binder instance so public API can be used
+     *
+     * @param intent Connector intent
+     * @return instance of the service binder
+     */
     @Override
     public IBinder onBind(Intent intent) {
         connect();
-        return mBinder;
+        return this.mBinder;
     }
 
 
+    /**
+     * Connects the device the the MQTT Broker
+     */
     private void connect() {
         mClient = new MqttAndroidClient(this, MOSQUITO_URL, CLIENT_ID);
         MqttConnectOptions connectOptions = new MqttConnectOptions();
@@ -72,30 +89,49 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         }
     }
 
+    /**
+     * Method to alert when the connection to the broker is lost
+     *
+     * @param cause Cause for connection loss
+     */
     @Override
     public void connectionLost(Throwable cause) {
         Log.i(TAG, "Connection Lost");
     }
 
+    /**
+     * Method that alerts when a new message has arrived
+     *
+     * @param topic Topic the message is from to ( chat event )
+     * @param message The message that was sent to the topic
+     * @throws Exception Catches JSON parse exceptions
+     */
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         String payload = message.toString();
         JSONObject messageJSON = new JSONObject(payload);
         Message newMessage = new Message(
-                messageJSON.getString(MessageJSONKeys.USERNAME.toString()),
-                messageJSON.getString(MessageJSONKeys.EVENT_NAME.toString()),
-                messageJSON.getString(MessageJSONKeys.BODY.toString()),
-                messageJSON.getString(MessageJSONKeys.PROFILE_IMAGE.toString())
+                messageJSON.getString(Message.MessageJSONKeys.USERNAME.toString()),
+                messageJSON.getString(Message.MessageJSONKeys.EVENT_NAME.toString()),
+                messageJSON.getString(Message.MessageJSONKeys.BODY.toString()),
+                messageJSON.getString(Message.MessageJSONKeys.PROFILE_IMAGE.toString())
         );
         mBinder.messageArrived(newMessage);
     }
 
+    /**
+     * Alerts when a message is successfully sent
+     * @param token which is created on a successful delivery of a message
+     */
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
         Log.i(TAG, "Delivered");
-
     }
 
+    /**
+     * Allows you to subscribe to an event and all the messages sent to it
+     *
+     */
     private void subscribe() {
         try {
             getClient().subscribe(room, 2, null, this);
@@ -104,9 +140,15 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         }
     }
 
+    /**
+     * Debug the connection
+     * @param source of broker
+     * @param message from broker
+     */
     @Override
     public void traceDebug(String source, String message) {
-
+        Log.d(TAG, source);
+        Log.d(TAG, message);
     }
 
     @Override
@@ -119,6 +161,10 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
 
     }
 
+    /**
+     * API for a successful connection to broker
+     * @param asyncActionToken Failure Token
+     */
     @Override
     public void onSuccess(IMqttToken asyncActionToken) {
         if (mIsConnecting) {
@@ -127,20 +173,29 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         }
     }
 
+    /**
+     * API for when the connection to broker fails
+     * @param asyncActionToken Token for broker connection fail
+     * @param exception Reason for the failing to connect
+     */
     @Override
     public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
         Log.e(TAG, "Error:".concat(exception.toString()));
     }
 
+    /**
+     * Send a message to a topic
+     * @param body Body of message in JSON format that contains all the messages details
+     */
     public void send(String body) {
         JSONObject payload = new JSONObject();
         CurrentActiveUser currentActiveUser = CurrentActiveUser.getCurrentUser();
         CurrentActiveEvent currentActiveEvent = CurrentActiveEvent.getInstance();
         try {
             payload.put(UserKeys.ID.toString(), currentActiveUser.getUserID());
-            payload.put(EventJSONKeys.ID.toString(), currentActiveEvent.getCurrentEvent().getEventID());
-            payload.put(MessageJSONKeys.BODY.toString(), body);
-            payload.put(EventJSONKeys.NAME.toString(), currentActiveEvent.getCurrentEvent().getEventName());
+            payload.put(Event.EventJSONKeys.ID.toString(), currentActiveEvent.getCurrentEvent().getEventID());
+            payload.put(Message.MessageJSONKeys.BODY.toString(), body);
+            payload.put(Event.EventJSONKeys.NAME.toString(), currentActiveEvent.getCurrentEvent().getEventName());
             payload.put(UserKeys.USERNAME.toString(), currentActiveUser.getUsername());
             payload.put(UserKeys.PROFILE_IMAGE.toString(), currentActiveUser.getCustomProfileImageURL());
         } catch (JSONException e) {
@@ -153,12 +208,9 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        disconnect();
-    }
-
+    /**
+     * Disconnects you from the MQTT Broker
+     */
     public void disconnect() {
         try {
             this.mClient.disconnect();
@@ -166,5 +218,14 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         } catch (MqttException e) {
             Log.e(TAG, e.getMessage());
         }
+    }
+
+    /**
+     * Disconnect Client from broker when service is destroyed
+     */
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        disconnect();
     }
 }
