@@ -2,6 +2,7 @@ package com.jaysyko.wrestlechat.services;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -49,6 +50,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     private static final String USER_ID = "user_id";
     private static final String EVENT_ID = "event_id";
     private static final String MESSAGE_BODY = "message_body";
+    private static final Handler handler = new Handler();
     private final MessagingServiceBinder mBinder = new MessagingServiceBinder(this);
     private MqttAndroidClient mClient;
     private boolean mIsConnecting;
@@ -233,25 +235,29 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
 
     /**
      * Saves a message to the database
-     *
      * @param payload of the sent Message
      */
-    private void saveToDB(JSONObject payload) {
-        HashMap<String, String> params = new HashMap<>();
-        try {
-            params.put(USER_ID, payload.getString(UserKeys.ID.toString()));
-            params.put(EVENT_ID, payload.getString(Event.EventJSONKeys.ID.toString()));
-            params.put(MESSAGE_BODY, payload.getString(Message.MessageJSONKeys.BODY.toString()));
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
-        }
-        Request request = new NetworkRequest(new NetworkCallback() {
+    private void saveToDB(final JSONObject payload) {
+        handler.post(new Runnable() {
             @Override
-            public void onSuccess(String response) {
-                Log.i(TAG, "Message Saved to DB");
+            public void run() {
+                HashMap<String, String> params = new HashMap<>();
+                try {
+                    params.put(USER_ID, payload.getString(UserKeys.ID.toString()));
+                    params.put(EVENT_ID, payload.getString(Event.EventJSONKeys.ID.toString()));
+                    params.put(MESSAGE_BODY, payload.getString(Message.MessageJSONKeys.BODY.toString()));
+                } catch (JSONException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+                Request request = new NetworkRequest(new NetworkCallback() {
+                    @Override
+                    public void onSuccess(String response) {
+                        Log.i(TAG, "Message Saved to DB");
+                    }
+                }).post(RESTEndpoints.MESSAGES, params);
+                NetworkSingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
             }
-        }).post(RESTEndpoints.MESSAGES, params);
-        NetworkSingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
+        });
     }
 
     /**
