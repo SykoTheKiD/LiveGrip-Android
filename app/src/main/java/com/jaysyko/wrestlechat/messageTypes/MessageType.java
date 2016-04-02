@@ -27,6 +27,7 @@ public class MessageType implements MessageGenerator {
     }
 
     /**
+     * Returns a AutoResizeTextView for regular text messages
      * @return View
      */
     private AutoResizeTextView textMessage() {
@@ -62,6 +63,7 @@ public class MessageType implements MessageGenerator {
     }
 
     /**
+     * Creates an ImageView Message if the user sends a link to a .jpg or .png
      * @return ImageView
      */
     private ImageView imageMessage() {

@@ -1,7 +1,9 @@
 package com.jaysyko.wrestlechat.network;
 
 /**
- * Created by jarushaan on 2016-03-18
+ * RESTEndpoints.java
+ * All the endpoints provided by the Backend API
+ * @author Jay Syko
  */
 public enum RESTEndpoints {
     LOGIN("login"), SIGN_UP("newuser"), MESSAGES("messages"), EVENTS("events"), GCM("gcmID"), UPDATE_PROFILE("updateProfile");
@@ -13,6 +15,11 @@ public enum RESTEndpoints {
         this.endpoint = endpoint.concat(FILE_TYPE);
     }
 
+    /**
+     * Return a string of the REST Endpoint Enum
+     *
+     * @return String
+     */
     public String getEndpoint() {
         return this.endpoint;
     }

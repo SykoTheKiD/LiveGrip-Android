@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * NetworkRequest.java
+ * Makes requests to the MySQL database
  * @author Jay Syko
  */
 public class NetworkRequest {
@@ -23,6 +25,12 @@ public class NetworkRequest {
         this.callback = callback;
     }
 
+    /**
+     * Make a GET request with no parameters
+     *
+     * @param endpoint REST API Endpoint
+     * @return a VolleyRequest to be added to RequestQueue
+     */
     public Request get(RESTEndpoints endpoint) {
         return new StringRequest(
                 Request.Method.POST,
@@ -38,14 +46,14 @@ public class NetworkRequest {
                     public void onErrorResponse(VolleyError error) {
                         Log.e(TAG, error.getMessage());
                     }
-                }) {
-            @Override
-            protected Map<String, String> getParams() {
-                return new HashMap<>();
-            }
-        };
+                });
     }
 
+    /**
+     * Make a POST request with no parameters
+     * @param endpoint REST API Endpoint
+     * @return a VolleyRequest to be added to RequestQueue
+     */
     public Request post(RESTEndpoints endpoint) {
         return new StringRequest(
                 Request.Method.POST,
@@ -64,6 +72,12 @@ public class NetworkRequest {
                 });
     }
 
+    /**
+     * Make a POST request with parameters
+     * @param endpoint REST API Endpoint
+     * @param params POST data
+     * @return a VolleyRequest to be added to RequestQueue
+     */
     public Request post(RESTEndpoints endpoint, final HashMap<String, String> params) {
         return new StringRequest(
                 Request.Method.POST,

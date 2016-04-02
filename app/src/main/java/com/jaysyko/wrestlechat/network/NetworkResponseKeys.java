@@ -1,7 +1,10 @@
 package com.jaysyko.wrestlechat.network;
 
 /**
- * Created by jarushaan on 2016-03-21
+ * NetworkResponseKeys.java
+ *
+ * Keys to parse the JSON Response
+ * @author Jay Syko
  */
 public enum NetworkResponseKeys {
     SUCCESS("success"),
@@ -13,6 +16,11 @@ public enum NetworkResponseKeys {
         this.key = key;
     }
 
+    /**
+     * Convert Enum to String
+     *
+     * @return String value of enum
+     */
     @Override
     public String toString() {
         return this.key;

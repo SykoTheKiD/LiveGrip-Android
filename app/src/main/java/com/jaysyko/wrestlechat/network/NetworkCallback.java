@@ -1,7 +1,10 @@
 package com.jaysyko.wrestlechat.network;
 
 /**
- * Created by jarushaan on 2016-03-18
+ * NetworkCallback.java
+ *
+ * Callback for when a request to a URL was successful
+ * @author Jay Syko
  */
 public interface NetworkCallback {
     void onSuccess(String response);

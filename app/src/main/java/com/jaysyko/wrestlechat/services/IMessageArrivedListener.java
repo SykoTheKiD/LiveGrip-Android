@@ -3,7 +3,8 @@ package com.jaysyko.wrestlechat.services;
 import com.jaysyko.wrestlechat.models.Message;
 
 /**
- * Created by jarushaan on 2016-03-20
+ * Interface for a message received callback
+ * @author Jay Syko
  */
 public interface IMessageArrivedListener {
 

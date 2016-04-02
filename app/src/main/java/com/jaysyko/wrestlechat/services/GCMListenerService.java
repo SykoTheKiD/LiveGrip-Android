@@ -14,6 +14,7 @@ import android.util.Log;
 import com.google.android.gms.gcm.GcmListenerService;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.activities.LoginActivity;
+import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +22,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by jarushaan on 2016-03-28
+ * Listener for GCM Messages
+ * @author Jay Syko
  */
 public class GCMListenerService extends GcmListenerService {
     private static final String TAG = GCMListenerService.class.getSimpleName();
@@ -33,6 +35,12 @@ public class GCMListenerService extends GcmListenerService {
     private static final String NOTIFICATION_RECEIVED = "Notification received";
     private static final int NOTIFICATION_ID = 11221;
 
+    /**
+     * Alerts when a GCM message was received
+     *
+     * @param from GCM Server
+     * @param data data that was passed in the GCM message
+     */
     @Override
     public void onMessageReceived(String from, Bundle data) {
 
@@ -44,6 +52,7 @@ public class GCMListenerService extends GcmListenerService {
         String url = data.getString(URL);
         boolean small = data.getBoolean(SMALL);
 
+        // Set an notification image
         Bitmap smallIconBitmap = getBitmapFromURL(url);
         if (small) {
             showSimpleNotifications(message, title, tickerText, smallIconBitmap);
@@ -52,21 +61,35 @@ public class GCMListenerService extends GcmListenerService {
         }
     }
 
-
+    /**
+     * Grab the Bitmap from the URL provided in the GCM message
+     * @param strURL URL to image (.jpg or .png only)
+     * @return a Bitmap of the Image in the URL
+     */
     public Bitmap getBitmapFromURL(String strURL) {
-        try {
-            URL url = new URL(strURL);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            return BitmapFactory.decodeStream(input);
-        } catch (IOException e) {
-            Log.e(TAG, e.getMessage());
-            return null;
+        if (ImageTools.isLinkToImage(strURL)) {
+            try {
+                URL url = new URL(strURL);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                return BitmapFactory.decodeStream(input);
+            } catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+            }
         }
+        return null;
     }
 
+    /**
+     * Set notification type to a large image in the Notification menus
+     * @param message Main Notification title
+     * @param title Byline under main title
+     * @param tickerText LockScreen text
+     * @param smallIcon App Icon
+     * @param largeIcon Large Image Header
+     */
     public void showBigPictureStyleNotifications(String message, String title, String tickerText, Bitmap smallIcon,
                                                  Bitmap largeIcon) {
         //Create notification object and set the content.
@@ -101,6 +124,13 @@ public class GCMListenerService extends GcmListenerService {
         mNotificationManager.notify(NOTIFICATION_ID, nb.build());
     }
 
+    /**
+     * Show a small bar notification
+     * @param message Main Notification title
+     * @param title Byline under main title
+     * @param tickerText LockScreen text
+     * @param smallIcon App Icon
+     */
     public void showSimpleNotifications(String message, String title, String tickerText, Bitmap smallIcon) {
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);

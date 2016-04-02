@@ -89,9 +89,35 @@ public class Event {
     }
 
     /**
+     * Return the event's endTime
      * @return Long
      */
     public String getEventEndTime() {
         return this.eventEndTime;
+    }
+
+    /**
+     * JSON keys to index the JSON Events response from the API
+     */
+    public enum EventJSONKeys {
+        ID("id"),
+        NAME("name"),
+        INFO("info"),
+        MATCH_CARD("match_card"),
+        IMAGE("image"),
+        LOCATION("location"),
+        START_TIME("start_time"),
+        END_TIME("end_time");
+
+        private String key;
+
+        EventJSONKeys(String key) {
+            this.key = key;
+        }
+
+        @Override
+        public String toString() {
+            return this.key;
+        }
     }
 }
