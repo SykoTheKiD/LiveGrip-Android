@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/background_images"
+        android:entryValues="@array/backgrounds"
+        android:icon="@drawable/ic_wallpaper_black_24dp"
+        android:key="chatBubbleStyle"
+        android:summary="Change the background image of the messaging screen"
+        android:title="Messaging Screen" />
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/chat_bubbles"
+        android:entryValues="@array/bubbles"
+        android:icon="@drawable/ic_mms_black_24dp"
+        android:key="chatBubbleStyle"
+        android:summary="Change the chat bubble style"
+        android:title="Chat Bubble Style" />
+
+    <EditTextPreference
+        android:icon="@drawable/ic_info_black_24dp"
+        android:key="username"
+        android:summary="App Details"
+        android:title="About" />
+</PreferenceScreen>
