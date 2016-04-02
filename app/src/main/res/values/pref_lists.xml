@@ -1,0 +1,27 @@
+<resources>
+    <string-array name="background_images">
+        <item>Default</item>
+        <item>Black Diamond</item>
+        <item>Green Pentagons</item>
+        <item>Flat Black</item>
+    </string-array>
+    <string-array name="backgrounds">
+        <item>1</item>
+        <item>@drawable/black_diamond</item>
+        <item>@drawable/congruent_pentagon</item>
+        <item>@drawable/congruent_outline</item>
+    </string-array>
+
+    <string-array name="chat_bubbles">
+        <item>Default</item>
+        <item>Green</item>
+        <item>Maroon</item>
+        <item>Blue</item>
+    </string-array>
+    <string-array name="bubbles">
+        <item>1</item>
+        <item>@drawable/black_diamond</item>
+        <item>@drawable/congruent_pentagon</item>
+        <item>@drawable/congruent_outline</item>
+    </string-array>
+</resources>
