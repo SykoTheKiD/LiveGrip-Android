@@ -30,6 +30,12 @@
         <item>2</item>
         <item>3</item>
     </string-array>
+    <string-array name="bubble_resources">
+        <item>@drawable/bubble_left_brown</item>
+        <item>@drawable/bubble_right_green</item>
+        <item>@drawable/bubble_right_red</item>
+        <item>@drawable/bubble_right_red</item>
+    </string-array>
 
     <string name="default_value">0</string>
 </resources>
