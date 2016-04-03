@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,6 +21,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +51,7 @@ import java.util.ArrayList;
 
 public class MessagingFragment extends Fragment implements IMessageArrivedListener {
 
+    private static final String TAG = MessagingFragment.class.getSimpleName();
     private static final int SEND_DELAY = 1500;
     private static final String FONT_COLOR_HTML = "<font color=\"#FFFFFFF\">";
     private static final String FONT_HTML = "</font>";
@@ -132,6 +135,16 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
                 saveMessage(etMessage.getText().toString().trim());
             }
         });
+        try {
+            final MediaPlayer mp = MediaPlayer.create(mApplicationContext, R.raw.music_marimba_chord);
+            if (mp.isPlaying()) {
+                mp.stop();
+                mp.release();
+            }
+            mp.start();
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
     }
 
     private void saveMessage(String body) {
@@ -175,8 +188,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
 
     @Override
     public void messageArrived(Message message) {
-        mMessages.add(message);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.add(message);
     }
 
     @Override
