@@ -14,13 +14,11 @@ import java.io.Serializable;
 public class Message implements Serializable {
 
     private String username;
-    private String eventName;
     private String body;
     private String userImage;
 
-    public Message(String username, String eventName, String body, String userImage) {
+    public Message(String username, String body, String userImage) {
         this.username = username;
-        this.eventName = eventName;
         if (userImage == null) {
             this.userImage = ImageTools.defaultProfileImage(username);
         } else {
@@ -36,13 +34,6 @@ public class Message implements Serializable {
      */
     public String getUsername() {
         return this.username;
-    }
-
-    /**
-     * @return eventID
-     */
-    public String getEventName() {
-        return this.eventName;
     }
 
     /**
@@ -68,10 +59,10 @@ public class Message implements Serializable {
     }
 
     /**
-     * Created by jarushaan on 2016-03-19
+     * @author Jay Syko
      */
     public enum MessageJSONKeys {
-        USERNAME("username"), EVENT_NAME("name"), BODY("body"), PROFILE_IMAGE("profile_image"), EVENT_ID("id"), USER_ID("id");
+        USERNAME("username"), BODY("body"), PROFILE_IMAGE("profile_image"), EVENT_ID("id"), USER_ID("id");
         private String key;
 
         MessageJSONKeys(String key) {
