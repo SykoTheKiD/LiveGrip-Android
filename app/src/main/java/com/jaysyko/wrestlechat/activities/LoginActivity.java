@@ -158,6 +158,7 @@ public final class LoginActivity extends AppCompatActivity {
                         HashMap<String, String> params = new HashMap<>();
                         params.put(UserKeys.USERNAME.toString(), username);
                         params.put(UserKeys.PASSWORD.toString(), password);
+                        params.put(UserKeys.APP_VERSION.toString(), APP_VERSION);
                         Request request = new NetworkRequest(new NetworkCallback() {
                             @Override
                             public void onSuccess(String response) {

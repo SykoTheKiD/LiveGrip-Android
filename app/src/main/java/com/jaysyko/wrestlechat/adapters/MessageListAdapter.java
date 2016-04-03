@@ -84,6 +84,8 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
                 }
             });
         }
+//        Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+//        convertView.startAnimation(animation);
         return convertView;
     }
 
