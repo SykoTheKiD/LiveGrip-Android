@@ -7,9 +7,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -44,6 +51,8 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private static final int SEND_DELAY = 1500;
     private static final String FONT_COLOR_HTML = "<font color=\"#FFFFFFF\">";
     private static final String FONT_HTML = "</font>";
+    private static final String DEFAULT_SETTINGS_VALUE = "0";
+    private static final String MESSAGING_WALLPAPER = "messagingWallpaper";
     private static ArrayList<Message> mMessages = new ArrayList<>();
     private static MessageListAdapter mAdapter;
     private EditText etMessage;
@@ -101,6 +110,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         getActivity().getWindow().setBackgroundDrawable(null);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
         ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
+
         btSend = (ImageButton) view.findViewById(R.id.send_button);
         sharedPreferences = new LocalStorage(mApplicationContext, StorageFile.MESSAGING).getSharedPreferences();
         handler.post(initMessageAdapter);
@@ -176,6 +186,20 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         mApplicationContext.bindService(mChatServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
         if (!mServiceBound) {
             getActivity().startService(mChatServiceIntent);
+        }
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        Integer bg = Integer.parseInt(settings.getString(MESSAGING_WALLPAPER, DEFAULT_SETTINGS_VALUE));
+        TypedArray typedArray = getActivity().getResources().obtainTypedArray(R.array.background_resources);
+        if (!bg.equals(Integer.valueOf(DEFAULT_SETTINGS_VALUE))) {
+            Bitmap backgroundImage = BitmapFactory.decodeResource(getResources(), typedArray.getResourceId(bg, Integer.valueOf(DEFAULT_SETTINGS_VALUE)));
+            BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), backgroundImage);
+            bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                view.findViewById(R.id.chat_list_view).setBackground(bitmapDrawable);
+            } else {
+                view.findViewById(R.id.chat_list_view).setBackgroundDrawable(bitmapDrawable);
+            }
+            typedArray.recycle();
         }
     }
 
