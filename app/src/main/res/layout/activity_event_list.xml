@@ -37,8 +37,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical" />
 
-        <include layout="@layout/activity_advertisement" />
-
         <android.support.design.widget.NavigationView
             android:id="@+id/navDrawerItems"
             android:layout_width="wrap_content"

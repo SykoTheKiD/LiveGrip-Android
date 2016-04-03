@@ -72,4 +72,9 @@ public class Message implements Serializable {
             return this.key;
         }
     }
+
+    @Override
+    public String toString(){
+        return this.body;
+    }
 }

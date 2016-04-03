@@ -44,10 +44,14 @@ public class MessagingActivity extends BaseActivity {
                 return true;
             case R.id.action_rules:
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-                builder1.setMessage(Html.fromHtml("<h2>Chat Rules</h2>\n" +
-                        "<li>-No Spam</li>" +
-                        "<li>-No Offensive Material</li>" +
-                        "<li>-No Soliciting</li>"));
+                builder1.setMessage(
+                        Html.fromHtml(
+                                "<h2>Chat Rules</h2>" +
+                                "<p>-No Spam</p>" +
+                                "<p>-No Offensive Material</p>" +
+                                "<p>-No Soliciting</p>"
+                        )
+                );
                 builder1.setCancelable(true);
 
                 builder1.setPositiveButton(
