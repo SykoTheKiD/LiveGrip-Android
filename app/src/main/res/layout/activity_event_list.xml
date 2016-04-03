@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:background="#D32F2F"
+        android:background="#f44336"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <ImageView
@@ -37,8 +37,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical" />
 
-        <include layout="@layout/activity_advertisement" />
-
         <android.support.design.widget.NavigationView
             android:id="@+id/navDrawerItems"
             android:layout_width="wrap_content"
@@ -46,7 +44,8 @@
             android:layout_gravity="start"
             android:layout_marginTop="-24dp"
             app:itemTextColor="#212121"
-            app:menu="@menu/drawer_menu">
+            app:menu="@menu/drawer_menu"
+            android:background="#ffffff">
 
         </android.support.design.widget.NavigationView>
 

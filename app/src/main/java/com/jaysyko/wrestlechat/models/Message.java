@@ -1,5 +1,7 @@
 package com.jaysyko.wrestlechat.models;
 
+import com.jaysyko.wrestlechat.utils.ImageTools;
+
 import java.io.Serializable;
 
 /**
@@ -12,14 +14,16 @@ import java.io.Serializable;
 public class Message implements Serializable {
 
     private String username;
-    private String eventName;
     private String body;
     private String userImage;
 
-    public Message(String username, String eventName, String body, String userImage) {
+    public Message(String username, String body, String userImage) {
         this.username = username;
-        this.eventName = eventName;
-        this.userImage = userImage;
+        if (userImage == null) {
+            this.userImage = ImageTools.defaultProfileImage(username);
+        } else {
+            this.userImage = userImage;
+        }
         this.body = body;
     }
 
@@ -30,13 +34,6 @@ public class Message implements Serializable {
      */
     public String getUsername() {
         return this.username;
-    }
-
-    /**
-     * @return eventID
-     */
-    public String getEventName() {
-        return this.eventName;
     }
 
     /**
@@ -56,11 +53,16 @@ public class Message implements Serializable {
         return this.body;
     }
 
+    @Override
+    public String toString() {
+        return this.body;
+    }
+
     /**
-     * Created by jarushaan on 2016-03-19
+     * @author Jay Syko
      */
     public enum MessageJSONKeys {
-        USERNAME("username"), EVENT_NAME("name"), BODY("body"), PROFILE_IMAGE("profile_image"), EVENT_ID("event_id");
+        USERNAME("username"), BODY("body"), PROFILE_IMAGE("profile_image"), EVENT_ID("id"), USER_ID("id");
         private String key;
 
         MessageJSONKeys(String key) {

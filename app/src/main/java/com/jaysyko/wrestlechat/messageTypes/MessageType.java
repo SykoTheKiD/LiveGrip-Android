@@ -1,8 +1,10 @@
 package com.jaysyko.wrestlechat.messageTypes;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,8 @@ public class MessageType implements MessageGenerator {
 
     private static final int TEXT_SIZE = 14, IMAGE_MSG_WIDTH = 1000, IMAGE_MSG_HEIGHT = 1000, IMAGE_MSG_PADDING_LEFT = 50, ZERO = 0;
     private static final String WHITE = "#FFFFFF";
+    private static final String DEFAULT_SETTINGS_VALUE = "0";
+    private static final String CHAT_BUBBLE_STYLE = "chatBubbleStyle";
     private Context context;
     private MessagePosition position;
     private Message message;
@@ -33,6 +37,8 @@ public class MessageType implements MessageGenerator {
     private AutoResizeTextView textMessage() {
         AutoResizeTextView textView = new AutoResizeTextView(this.context);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this.context);
+        Integer bg = Integer.parseInt(settings.getString(CHAT_BUBBLE_STYLE, DEFAULT_SETTINGS_VALUE));
         switch (this.position) {
             case USER:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -50,7 +56,16 @@ public class MessageType implements MessageGenerator {
                     lp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                 }
                 lp.addRule(RelativeLayout.BELOW, R.id.senderUsernameID);
-                textView.setBackgroundResource(R.drawable.bubble_left_brown);
+                int resID = R.drawable.bubble_left_brown;
+                switch (bg) {
+                    case 1:
+                        resID = R.drawable.bubble_right_red;
+                        break;
+                    case 2:
+                        resID = R.drawable.bubble_right_green;
+                        break;
+                }
+                textView.setBackgroundResource(resID);
                 textView.setTextColor(Color.parseColor(WHITE));
                 break;
         }

@@ -8,9 +8,6 @@
     <FrameLayout
         android:id="@+id/container_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" />
-
-    <include layout="@layout/activity_advertisement" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

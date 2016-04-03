@@ -39,7 +39,7 @@ import java.util.HashMap;
  */
 public class MessagingService extends Service implements MqttCallback, MqttTraceHandler, IMqttActionListener {
     private static final String TAG = MessagingService.class.getSimpleName();
-    private static final String MQTT_BROKER_URL = "192.168.33.10";
+    private static final String MQTT_BROKER_URL = "159.203.38.255";
     private static final String MQTT_BROKER_PORT = "8080";
     private static final String CLIENT_ID = CurrentActiveUser.getCurrentUser().getUsername();
     private static final String PROTOCOL = "tcp://";
@@ -49,7 +49,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     private static final String DUMMY_PASSWORD = "password";
     private static final String USER_ID = "user_id";
     private static final String EVENT_ID = "event_id";
-    private static final String MESSAGE_BODY = "message_body";
+    private static final String MESSAGE_BODY = "body";
     private static final Handler handler = new Handler();
     private final MessagingServiceBinder mBinder = new MessagingServiceBinder(this);
     private MqttAndroidClient mClient;
@@ -92,10 +92,9 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         mClient.setCallback(this);
         mClient.setTraceCallback(this);
         mIsConnecting = true;
-
         try {
             mClient.connect(connectOptions, null, this);
-        } catch (MqttException e) {
+        } catch (Exception e) {
             Log.e(TAG, e.getMessage());
         }
     }
@@ -121,11 +120,17 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         String payload = message.toString();
         JSONObject messageJSON = new JSONObject(payload);
+        Log.i(TAG, messageJSON.toString());
+        String profileImage = null;
+        try {
+            profileImage = messageJSON.getString(Message.MessageJSONKeys.PROFILE_IMAGE.toString());
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
         Message newMessage = new Message(
                 messageJSON.getString(Message.MessageJSONKeys.USERNAME.toString()),
-                messageJSON.getString(Message.MessageJSONKeys.EVENT_NAME.toString()),
                 messageJSON.getString(Message.MessageJSONKeys.BODY.toString()),
-                messageJSON.getString(Message.MessageJSONKeys.PROFILE_IMAGE.toString())
+                profileImage
         );
         mBinder.messageArrived(newMessage);
     }
@@ -237,14 +242,14 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      * Saves a message to the database
      * @param payload of the sent Message
      */
-    private void saveToDB(final JSONObject payload) {
+    private synchronized void saveToDB(final JSONObject payload) {
         handler.post(new Runnable() {
             @Override
             public void run() {
                 HashMap<String, String> params = new HashMap<>();
                 try {
-                    params.put(USER_ID, payload.getString(UserKeys.ID.toString()));
-                    params.put(EVENT_ID, payload.getString(Event.EventJSONKeys.ID.toString()));
+                    params.put(USER_ID, payload.getString(Message.MessageJSONKeys.USER_ID.toString()));
+                    params.put(EVENT_ID, payload.getString(Message.MessageJSONKeys.EVENT_ID.toString()));
                     params.put(MESSAGE_BODY, payload.getString(Message.MessageJSONKeys.BODY.toString()));
                 } catch (JSONException e) {
                     Log.e(TAG, e.getMessage());
@@ -267,7 +272,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         try {
             this.mClient.disconnect();
             Log.e(TAG, "disconnected");
-        } catch (MqttException e) {
+        } catch (Exception e) {
             Log.e(TAG, e.getMessage());
         }
     }
@@ -278,6 +283,10 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     @Override
     public void onDestroy() {
         super.onDestroy();
-        disconnect();
+        try {
+            disconnect();
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
     }
 }

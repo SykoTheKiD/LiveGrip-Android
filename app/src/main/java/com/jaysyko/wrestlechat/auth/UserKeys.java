@@ -1,7 +1,7 @@
 package com.jaysyko.wrestlechat.auth;
 
 /**
- * Created by jarushaan on 2016-03-19
+ * @author Jay Syko
  */
 public enum UserKeys {
     USERNAME("username"),
@@ -9,7 +9,6 @@ public enum UserKeys {
     ID("id"),
     PROFILE_IMAGE("profile_image"),
     GCM("gcm_id");
-
     private String key;
 
     UserKeys(String key) {
