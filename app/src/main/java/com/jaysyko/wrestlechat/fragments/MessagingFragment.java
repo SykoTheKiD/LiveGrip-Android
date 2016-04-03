@@ -189,8 +189,8 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         }
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
         Integer bg = Integer.parseInt(settings.getString(MESSAGING_WALLPAPER, DEFAULT_SETTINGS_VALUE));
-        TypedArray typedArray = getActivity().getResources().obtainTypedArray(R.array.background_resources);
         if (!bg.equals(Integer.valueOf(DEFAULT_SETTINGS_VALUE))) {
+            TypedArray typedArray = getActivity().getResources().obtainTypedArray(R.array.background_resources);
             Bitmap backgroundImage = BitmapFactory.decodeResource(getResources(), typedArray.getResourceId(bg, Integer.valueOf(DEFAULT_SETTINGS_VALUE)));
             BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), backgroundImage);
             bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);

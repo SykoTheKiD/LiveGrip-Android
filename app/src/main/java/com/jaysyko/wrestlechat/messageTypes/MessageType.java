@@ -1,8 +1,15 @@
 package com.jaysyko.wrestlechat.messageTypes;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +25,8 @@ public class MessageType implements MessageGenerator {
 
     private static final int TEXT_SIZE = 14, IMAGE_MSG_WIDTH = 1000, IMAGE_MSG_HEIGHT = 1000, IMAGE_MSG_PADDING_LEFT = 50, ZERO = 0;
     private static final String WHITE = "#FFFFFF";
+    private static final String DEFAULT_SETTINGS_VALUE = "0";
+    private static final String CHAT_BUBBLE_STYLE = "chatBubbleStyle";
     private Context context;
     private MessagePosition position;
     private Message message;
@@ -33,6 +42,15 @@ public class MessageType implements MessageGenerator {
     private AutoResizeTextView textMessage() {
         AutoResizeTextView textView = new AutoResizeTextView(this.context);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this.context);
+        Integer bg = Integer.parseInt(settings.getString(CHAT_BUBBLE_STYLE, DEFAULT_SETTINGS_VALUE));
+        if (!bg.equals(Integer.valueOf(DEFAULT_SETTINGS_VALUE))) {
+            TypedArray typedArray = this.context.getResources().obtainTypedArray(R.array.bubble_resources);
+            Bitmap backgroundImage = BitmapFactory.decodeResource(this.context.getResources(), typedArray.getResourceId(bg, Integer.valueOf(DEFAULT_SETTINGS_VALUE)));
+            BitmapDrawable bitmapDrawable = new BitmapDrawable(this.context.getResources(), backgroundImage);
+            bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+            typedArray.recycle();
+        }
         switch (this.position) {
             case USER:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
