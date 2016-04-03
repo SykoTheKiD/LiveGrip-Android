@@ -43,14 +43,10 @@
         <activity
             android:name=".activities.SettingsActivity"
             android:label="@string/activity_settings">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.EventListActivity" />
         </activity>
         <activity
             android:name=".activities.LegalActivity"
             android:label="@string/title_activity_legal"
-            android:parentActivityName=".activities.EventListActivity"
             android:theme="@style/NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -73,6 +69,8 @@
         <activity
             android:name=".activities.EventListActivity"
             android:theme="@style/NoActionBar" />
+
+        <activity android:name=".activities.WebViewActivity" />
 
         <service
             android:name=".services.MessagingService"
@@ -103,7 +101,6 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".activities.WebViewActivity"></activity>
     </application>
 
 </manifest>

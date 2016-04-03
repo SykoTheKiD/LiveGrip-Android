@@ -20,12 +20,14 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
@@ -116,16 +118,20 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btSend.setEnabled(false);
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        saveMessage(etMessage.getText().toString().trim());
-                    }
-                });
+                onSend();
             }
         });
         return view;
+    }
+
+    private void onSend() {
+        btSend.setEnabled(false);
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                saveMessage(etMessage.getText().toString().trim());
+            }
+        });
     }
 
     private void saveMessage(String body) {
@@ -151,6 +157,15 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     // Setup message field and posting
     private void initMessageAdapter() {
         etMessage = (EditText) view.findViewById(R.id.new_message_edit_text);
+        etMessage.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    onSend();
+                }
+                return false;
+            }
+        });
         ListView lvChat = (ListView) view.findViewById(R.id.chat_list_view);
         // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen. Don't scroll to the bottom otherwise.
         lvChat.setTranscriptMode(1);
