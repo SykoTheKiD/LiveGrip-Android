@@ -6,7 +6,13 @@
         <item>Flat Black</item>
     </string-array>
     <string-array name="backgrounds">
+        <item>0</item>
         <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="background_resources">
+        <item>@color/grey</item>
         <item>@drawable/black_diamond</item>
         <item>@drawable/congruent_pentagon</item>
         <item>@drawable/congruent_outline</item>
@@ -19,9 +25,11 @@
         <item>Blue</item>
     </string-array>
     <string-array name="bubbles">
+        <item>0</item>
         <item>1</item>
-        <item>@drawable/black_diamond</item>
-        <item>@drawable/congruent_pentagon</item>
-        <item>@drawable/congruent_outline</item>
+        <item>2</item>
+        <item>3</item>
     </string-array>
+
+    <string name="default_value">0</string>
 </resources>
