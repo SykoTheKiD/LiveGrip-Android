@@ -39,7 +39,7 @@ import java.util.HashMap;
  */
 public class MessagingService extends Service implements MqttCallback, MqttTraceHandler, IMqttActionListener {
     private static final String TAG = MessagingService.class.getSimpleName();
-    private static final String MQTT_BROKER_URL = "192.168.33.10";
+    private static final String MQTT_BROKER_URL = "159.203.38.255";
     private static final String MQTT_BROKER_PORT = "8080";
     private static final String CLIENT_ID = CurrentActiveUser.getCurrentUser().getUsername();
     private static final String PROTOCOL = "tcp://";
@@ -121,6 +121,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         String payload = message.toString();
         JSONObject messageJSON = new JSONObject(payload);
+        Log.e("T", messageJSON.toString());
         Message newMessage = new Message(
                 messageJSON.getString(Message.MessageJSONKeys.USERNAME.toString()),
                 messageJSON.getString(Message.MessageJSONKeys.EVENT_NAME.toString()),

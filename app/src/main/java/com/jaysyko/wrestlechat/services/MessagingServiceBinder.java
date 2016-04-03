@@ -1,6 +1,7 @@
 package com.jaysyko.wrestlechat.services;
 
 import android.os.Binder;
+import android.util.Log;
 
 import com.jaysyko.wrestlechat.models.Message;
 
@@ -41,6 +42,7 @@ public class MessagingServiceBinder extends Binder {
      * @param message Message
      */
     public void messageArrived(Message message) {
+        Log.e("T2", message.toString());
         if (mListener != null)
             mListener.messageArrived(message);
     }

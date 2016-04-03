@@ -20,6 +20,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -169,6 +170,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     }
 
     private void updateMessages(Message message) {
+        Log.e("T", message.toString());
         List<Message> listMessage = new ArrayList<>();
         listMessage.add(message);
         mMessages.addAll(listMessage);
@@ -177,6 +179,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
 
     @Override
     public void messageArrived(Message message) {
+        Log.e("T", message.toString());
         updateMessages(message);
     }
 
