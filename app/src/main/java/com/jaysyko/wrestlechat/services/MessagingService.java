@@ -92,10 +92,9 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         mClient.setCallback(this);
         mClient.setTraceCallback(this);
         mIsConnecting = true;
-
         try {
             mClient.connect(connectOptions, null, this);
-        } catch (MqttException e) {
+        } catch (Exception e) {
             Log.e(TAG, e.getMessage());
         }
     }
@@ -121,12 +120,18 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         String payload = message.toString();
         JSONObject messageJSON = new JSONObject(payload);
-        Log.e("T", messageJSON.toString());
+        Log.e("TUP", messageJSON.toString());
+        String profileImage = null;
+        try {
+            profileImage = messageJSON.getString(Message.MessageJSONKeys.PROFILE_IMAGE.toString());
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
         Message newMessage = new Message(
                 messageJSON.getString(Message.MessageJSONKeys.USERNAME.toString()),
                 messageJSON.getString(Message.MessageJSONKeys.EVENT_NAME.toString()),
                 messageJSON.getString(Message.MessageJSONKeys.BODY.toString()),
-                messageJSON.getString(Message.MessageJSONKeys.PROFILE_IMAGE.toString())
+                profileImage
         );
         mBinder.messageArrived(newMessage);
     }
@@ -279,6 +284,10 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     @Override
     public void onDestroy() {
         super.onDestroy();
-        disconnect();
+        try {
+            disconnect();
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
     }
 }
