@@ -28,5 +28,4 @@
         android:layout_marginTop="15dp"
         android:text="@string/about_tweet" />
 
-    <include layout="@layout/activity_advertisement" />
 </RelativeLayout>

@@ -158,15 +158,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         lvChat.setAdapter(mAdapter);
     }
 
-    private void stopMessagingService() {
-        if (mServiceBound) {
-            mMessagingServiceBinder.getService().disconnect();
-            getActivity().stopService(mChatServiceIntent);
-            getActivity().unbindService(mServiceConnection);
-            mServiceBound = false;
-        }
-    }
-
     @Override
     public void messageArrived(Message message) {
         mMessages.add(message);

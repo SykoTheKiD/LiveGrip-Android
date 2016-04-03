@@ -1,14 +1,15 @@
 package com.jaysyko.wrestlechat.auth;
 
 /**
- * Created by jarushaan on 2016-03-19
+ * @author Jay Syko
  */
 public enum UserKeys {
     USERNAME("username"),
     PASSWORD("password"),
     ID("id"),
     PROFILE_IMAGE("profile_image"),
-    GCM("gcm_id");
+    GCM("gcm_id"),
+    APP_VERSION("app_version");
 
     private String key;
 

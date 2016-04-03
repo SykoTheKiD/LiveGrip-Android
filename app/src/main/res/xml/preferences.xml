@@ -17,9 +17,9 @@
         android:summary="Change the chat bubble style"
         android:title="Chat Bubble Style" />
 
-    <EditTextPreference
-        android:icon="@drawable/ic_info_black_24dp"
-        android:key="username"
-        android:summary="App Details"
-        android:title="About" />
+    <!--<T-->
+    <!--android:icon="@drawable/ic_info_black_24dp"-->
+    <!--android:key="username"-->
+    <!--android:summary="App Details"-->
+    <!--android:title="About" />-->
 </PreferenceScreen>
