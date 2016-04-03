@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,12 +21,15 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
@@ -47,6 +51,7 @@ import java.util.ArrayList;
 
 public class MessagingFragment extends Fragment implements IMessageArrivedListener {
 
+    private static final String TAG = MessagingFragment.class.getSimpleName();
     private static final int SEND_DELAY = 1500;
     private static final String FONT_COLOR_HTML = "<font color=\"#FFFFFFF\">";
     private static final String FONT_HTML = "</font>";
@@ -116,16 +121,30 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btSend.setEnabled(false);
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        saveMessage(etMessage.getText().toString().trim());
-                    }
-                });
+                onSend();
             }
         });
         return view;
+    }
+
+    private void onSend() {
+        btSend.setEnabled(false);
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                saveMessage(etMessage.getText().toString().trim());
+            }
+        });
+        try {
+            final MediaPlayer mp = MediaPlayer.create(mApplicationContext, R.raw.music_marimba_chord);
+            if (mp.isPlaying()) {
+                mp.stop();
+                mp.release();
+            }
+            mp.start();
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
     }
 
     private void saveMessage(String body) {
@@ -151,6 +170,15 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     // Setup message field and posting
     private void initMessageAdapter() {
         etMessage = (EditText) view.findViewById(R.id.new_message_edit_text);
+        etMessage.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    onSend();
+                }
+                return false;
+            }
+        });
         ListView lvChat = (ListView) view.findViewById(R.id.chat_list_view);
         // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen. Don't scroll to the bottom otherwise.
         lvChat.setTranscriptMode(1);
@@ -160,8 +188,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
 
     @Override
     public void messageArrived(Message message) {
-        mMessages.add(message);
-        mAdapter.notifyDataSetChanged();
+        mAdapter.add(message);
     }
 
     @Override

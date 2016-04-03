@@ -8,9 +8,7 @@ public enum UserKeys {
     PASSWORD("password"),
     ID("id"),
     PROFILE_IMAGE("profile_image"),
-    GCM("gcm_id"),
-    APP_VERSION("app_version");
-
+    GCM("gcm_id");
     private String key;
 
     UserKeys(String key) {

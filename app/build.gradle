@@ -8,13 +8,13 @@ android {
         applicationId "com.jaysyko.wrestlechat"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 13
-        versionName "Prime"
+        versionCode 14
+        versionName "Beta"
     }
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

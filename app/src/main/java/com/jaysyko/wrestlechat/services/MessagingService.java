@@ -120,7 +120,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         String payload = message.toString();
         JSONObject messageJSON = new JSONObject(payload);
-        Log.e("TUP", messageJSON.toString());
+        Log.i(TAG, messageJSON.toString());
         String profileImage = null;
         try {
             profileImage = messageJSON.getString(Message.MessageJSONKeys.PROFILE_IMAGE.toString());

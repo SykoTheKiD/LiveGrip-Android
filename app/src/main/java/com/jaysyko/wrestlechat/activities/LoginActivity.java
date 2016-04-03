@@ -39,7 +39,6 @@ public final class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
     private static final String USERNAME_INTENT_KEY = "username";
-    private static final String APP_VERSION = "v1.0";
     private String username, password;
     private Handler handler = new Handler();
     private Button loginButton, signUpButton;
@@ -117,7 +116,6 @@ public final class LoginActivity extends AppCompatActivity {
                             params.put(UserKeys.USERNAME.toString(), username);
                             params.put(UserKeys.PASSWORD.toString(), password);
                             params.put(UserKeys.PROFILE_IMAGE.toString(), profileImageURL);
-                            params.put(UserKeys.APP_VERSION.toString(), APP_VERSION);
                             Request request = new NetworkRequest(new NetworkCallback() {
                                 @Override
                                 public void onSuccess(String response) {
