@@ -25,7 +25,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/my_toolbar"
-        android:background="@drawable/messaging_background"
+        android:background="#e0e0e0"
         android:divider="@android:color/transparent"
         android:dividerHeight="20dp"
         android:padding="15dp"

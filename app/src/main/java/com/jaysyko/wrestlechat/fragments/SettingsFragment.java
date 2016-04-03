@@ -6,7 +6,7 @@ import android.preference.PreferenceFragment;
 import com.jaysyko.wrestlechat.R;
 
 /**
- * Created by jarushaan on 2016-04-02
+ * @author Jay Syko
  */
 
 public class SettingsFragment extends PreferenceFragment {
