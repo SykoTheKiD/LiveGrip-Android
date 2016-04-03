@@ -1,5 +1,7 @@
 package com.jaysyko.wrestlechat.models;
 
+import com.jaysyko.wrestlechat.utils.ImageTools;
+
 import java.io.Serializable;
 
 /**
@@ -19,7 +21,11 @@ public class Message implements Serializable {
     public Message(String username, String eventName, String body, String userImage) {
         this.username = username;
         this.eventName = eventName;
-        this.userImage = userImage;
+        if (userImage == null) {
+            this.userImage = ImageTools.defaultProfileImage(username);
+        } else {
+            this.userImage = userImage;
+        }
         this.body = body;
     }
 
@@ -53,6 +59,11 @@ public class Message implements Serializable {
      * @return body String
      */
     public String getBody() {
+        return this.body;
+    }
+
+    @Override
+    public String toString() {
         return this.body;
     }
 

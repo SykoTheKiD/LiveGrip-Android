@@ -44,7 +44,6 @@ import com.jaysyko.wrestlechat.services.MessagingServiceBinder;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MessagingFragment extends Fragment implements IMessageArrivedListener {
 
@@ -72,7 +71,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         }
     };
     private Event mCurrentEvent = CurrentActiveEvent.getInstance().getCurrentEvent();
-    private MessagingServiceBinder binder;
+    private MessagingServiceBinder mMessagingServiceBinder;
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -81,15 +80,15 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
                 editor.putBoolean(mCurrentEventId, true);
                 editor.apply();
             }
-            binder = (MessagingServiceBinder) service;
-            binder.setMessageArrivedListener(MessagingFragment.this);
-            messagingService = binder.getService();
+            mMessagingServiceBinder = (MessagingServiceBinder) service;
+            mMessagingServiceBinder.setMessageArrivedListener(MessagingFragment.this);
+            messagingService = mMessagingServiceBinder.getService();
             mServiceBound = true;
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            binder.getService().disconnect();
+            mMessagingServiceBinder.getService().disconnect();
             mServiceBound = false;
         }
     };
@@ -161,23 +160,17 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
 
     private void stopMessagingService() {
         if (mServiceBound) {
-            binder.getService().disconnect();
+            mMessagingServiceBinder.getService().disconnect();
             getActivity().stopService(mChatServiceIntent);
             getActivity().unbindService(mServiceConnection);
             mServiceBound = false;
         }
     }
 
-    private void updateMessages(Message message) {
-        List<Message> listMessage = new ArrayList<>();
-        listMessage.add(message);
-        mMessages.addAll(listMessage);
-        mAdapter.notifyDataSetChanged();
-    }
-
     @Override
     public void messageArrived(Message message) {
-        updateMessages(message);
+        mMessages.add(message);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -189,8 +182,8 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         }
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
         Integer bg = Integer.parseInt(settings.getString(MESSAGING_WALLPAPER, DEFAULT_SETTINGS_VALUE));
-        TypedArray typedArray = getActivity().getResources().obtainTypedArray(R.array.background_resources);
         if (!bg.equals(Integer.valueOf(DEFAULT_SETTINGS_VALUE))) {
+            TypedArray typedArray = getActivity().getResources().obtainTypedArray(R.array.background_resources);
             Bitmap backgroundImage = BitmapFactory.decodeResource(getResources(), typedArray.getResourceId(bg, Integer.valueOf(DEFAULT_SETTINGS_VALUE)));
             BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), backgroundImage);
             bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
@@ -207,9 +200,10 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     public void onDestroy() {
         super.onDestroy();
         if (mServiceBound) {
+            mMessagingServiceBinder.getService().disconnect();
             getActivity().unbindService(mServiceConnection);
+            getActivity().stopService(mChatServiceIntent);
             mServiceBound = false;
         }
-        stopMessagingService();
     }
 }

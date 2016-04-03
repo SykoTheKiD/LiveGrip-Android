@@ -17,7 +17,7 @@ import java.util.Map;
  * @author Jay Syko
  */
 public class NetworkRequest {
-    private static final String MYSQL_URL = "http://192.168.33.10/v1/";
+    private static final String MYSQL_URL = "http://159.203.38.255/v1/";
     private static String TAG = NetworkRequest.class.getSimpleName();
     private NetworkCallback callback;
 

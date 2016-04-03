@@ -1,6 +1,7 @@
 package com.jaysyko.wrestlechat.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Handler;
@@ -34,6 +35,7 @@ import java.util.List;
 public class MessageListAdapter extends ArrayAdapter<Message> {
     private static final int USERNAME_PADDING_LEFT = 50;
     private static final int ZERO = 0;
+    private static final String WHITE = "#FFFFFF";
     private Handler handler = new Handler();
     private String mUsername;
     private Context context = getContext();
@@ -117,6 +119,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         holder.user.setVisibility(View.GONE);
         TextView usernameTV = generateUsername();
         usernameTV.setText(message.getUsername());
+        usernameTV.setTextColor(Color.parseColor(WHITE));
         View view = uiComponents.generateView(MessagePosition.SENDER, message);
         senderContainer.removeAllViews();
         senderContainer.addView(usernameTV);

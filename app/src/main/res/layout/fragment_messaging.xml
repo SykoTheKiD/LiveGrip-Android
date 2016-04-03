@@ -47,6 +47,7 @@
             android:id="@+id/new_message_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
             android:layout_alignTop="@+id/send_button"
             android:layout_toLeftOf="@+id/send_button"
             android:layout_toStartOf="@+id/send_button"
