@@ -35,5 +35,4 @@
 
     <include layout="@layout/content_legal" />
 
-    <include layout="@layout/activity_advertisement" />
 </android.support.design.widget.CoordinatorLayout>

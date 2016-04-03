@@ -129,7 +129,6 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         }
         Message newMessage = new Message(
                 messageJSON.getString(Message.MessageJSONKeys.USERNAME.toString()),
-                messageJSON.getString(Message.MessageJSONKeys.EVENT_NAME.toString()),
                 messageJSON.getString(Message.MessageJSONKeys.BODY.toString()),
                 profileImage
         );
@@ -273,7 +272,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         try {
             this.mClient.disconnect();
             Log.e(TAG, "disconnected");
-        } catch (MqttException e) {
+        } catch (Exception e) {
             Log.e(TAG, e.getMessage());
         }
     }
