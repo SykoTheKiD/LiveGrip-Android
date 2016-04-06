@@ -69,7 +69,6 @@
         <activity
             android:name=".activities.EventListActivity"
             android:theme="@style/NoActionBar" />
-
         <activity android:name=".activities.WebViewActivity" />
 
         <service
@@ -100,7 +99,6 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>
