@@ -66,7 +66,7 @@ public class GCMListenerService extends GcmListenerService {
      * @param strURL URL to image (.jpg or .png only)
      * @return a Bitmap of the Image in the URL
      */
-    public Bitmap getBitmapFromURL(String strURL) {
+    Bitmap getBitmapFromURL(String strURL) {
         if (ImageTools.isLinkToImage(strURL)) {
             try {
                 URL url = new URL(strURL);
