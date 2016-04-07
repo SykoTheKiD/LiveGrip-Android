@@ -10,6 +10,7 @@ android {
         targetSdkVersion 23
         versionCode 14
         versionName "Beta"
+        multiDexEnabled true
     }
 
     buildTypes {
