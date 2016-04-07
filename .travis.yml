@@ -1,39 +1,49 @@
 language: android
-
+sudo: false
 jdk: oraclejdk7
 env:
   matrix:
-    - ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-18 ANDROID_ABI=armeabi-v7a
   global:
-    - MALLOC_ARENA_MAX=2
+    # wait up to 10 minutes for adb to connect to emulator
+    - ADB_INSTALL_TIMEOUT=10
 
 android:
   components:
-    - tools
-    - android-23
-    - build-tools-23.0.2
-    - extra-google-google_play_services
-    - extra-android-support
-    - extra-android-m2repository
-    - extra-google-m2repository
-    - sys-img-armeabi-v7a-android-21
+  - platform-tools
+  - tools
+  - build-tools-23.0.2
+  - android-23
 
-sudo: false
+  # Additional components
+  - extra-google-m2repository
+  - extra-android-m2repository
+  - extra-android-support
 
-before_install:
-    - chmod +x gradlew
-    
+  # Emulator for the tests
+  - sys-img-armeabi-v7a-android-18
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/2.8
+    - $HOME/.gradle/caches/jars-1
+    - $HOME/.gradle/daemon
+    - $HOME/.gradle/native
+    - $HOME/.gradle/wrapper
+
 before_script:
-- echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
-- emulator -avd test -no-skin -no-audio -no-window &
-- curl http://is.gd/android_wait_for_emulator > android-wait-for-emulator
-- chmod u+x android-wait-for-emulator
-- ./android-wait-for-emulator
-- adb shell input keyevent 82 &
+  - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell
+   input keyevent 82 &
 
 script:
-  - ./gradlew assembleDebug
-  
+  - adb devices
+  - adb shell input keyevent 82 &
+  - ./gradlew assembleDebugAndroidTest
+  - ./gradlew test --continue
+
 notifications:
   email: false
   slack: livegrip:2Cmw2YtkISrMcNcRWfN8lmfZ
