@@ -54,4 +54,5 @@ public class FormTest {
         assertEquals(false, form.isValid());
         assertEquals(FormStatus.SPECIAL_CHARACTERS, form.getReason());
     }
+
 }
