@@ -32,14 +32,9 @@ cache:
     - $HOME/.gradle/wrapper
 
 addons:
-  apt_packages:
-    - pandoc
   artifacts:
     paths:
       - $(git ls-files -o | grep build/outputs | tr "\n" ":")
-
-before_install:
-  - pip install --user codecov
 
 before_script:
   - echo no | android create avd --force --name test --target $ANDROID_TARGET --abi $ANDROID_ABI
@@ -53,14 +48,6 @@ script:
   - ./gradlew connectedAndroidTest -PdisablePreDex --continue --stacktrace
   - rm /home/travis/.gradle/caches/2.8/plugin-resolution/cache.properties.lock
 
-after_success:
-  - ./gradlew jacocoFullReport
-  - codecov
-
-after_failure:
-  - pandoc builder/build/reports/tests/index.html -t plain | sed -n '/^Failed tests/,/default-package/p'
-
-after_script:
-  # print lint results details
-  - for f in app/build/outputs/lint-results.html; do pandoc $f -t plain; done
-  - for f in data/build/outputs/lint-results.html; do pandoc $f -t plain; done
+notifications:
+  email: false
+  slack: livegrip:2Cmw2YtkISrMcNcRWfN8lmfZ

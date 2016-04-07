@@ -207,8 +207,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
             bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 view.findViewById(R.id.chat_list_view).setBackground(bitmapDrawable);
-            } else {
-                view.findViewById(R.id.chat_list_view).setBackgroundDrawable(bitmapDrawable);
             }
             typedArray.recycle();
         }
