@@ -166,8 +166,8 @@
     <orderEntry type="library" exported="" name="kenburnsview-1.0.7" level="project" />
     <orderEntry type="library" exported="" name="play-services-wearable-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-23.2.1" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="sqlite4java-0.282" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="maven-ant-tasks-2.1.3" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="sqlite4java-0.282" level="project" />
     <orderEntry type="library" exported="" name="play-services-appindexing-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-nearby-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-8.4.0" level="project" />
