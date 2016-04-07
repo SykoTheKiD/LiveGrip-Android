@@ -41,11 +41,11 @@ before_script:
   - emulator -avd test -no-skin -no-audio -no-window &
 
 script:
-  - ./gradlew check -PdisablePreDex --continue --stacktrace
+  - ./gradlew check
   - android-wait-for-emulator
   - adb devices
   - adb shell input keyevent 82 &
-  - ./gradlew connectedAndroidTest -PdisablePreDex --continue --stacktrace
+  - ./gradlew connectedAndroidTest
   - rm /home/travis/.gradle/caches/2.8/plugin-resolution/cache.properties.lock
 
 notifications:
