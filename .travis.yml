@@ -44,10 +44,9 @@ before_script:
   - adb shell input keyevent 82 &
 
 script:
-  - ./gradlew check
   - adb devices
   - adb shell input keyevent 82 &
-  - ./gradlew connectedAndroidTest
+  - ./gradlew installDebug connectedInstrumentTest
   - rm /home/travis/.gradle/caches/2.8/plugin-resolution/cache.properties.lock
 
 notifications:
