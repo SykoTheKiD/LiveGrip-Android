@@ -37,8 +37,11 @@ addons:
       - $(git ls-files -o | grep build/outputs | tr "\n" ":")
 
 before_script:
-  - echo no | android create avd --force --name test --target $ANDROID_TARGET --abi $ANDROID_ABI
+  - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
   - emulator -avd test -no-skin -no-audio -no-window &
+  - cat `which android-wait-for-emulator`
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
 
 script:
   - ./gradlew check
