@@ -1,3 +1,5 @@
+https://travis-ci.com/SykoTheKiD/WrestleChat.svg?token=2yEAfyksPsYtz7mCSf1C&branch=master
+
 # README #
 
 An Android app that lets you talk to others about wrestling.
