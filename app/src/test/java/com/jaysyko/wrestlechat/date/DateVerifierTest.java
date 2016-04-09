@@ -35,7 +35,7 @@ public class DateVerifierTest {
         int reason = status.getReason();
 
         assertEquals(R.string.online_status_not_live, reason);
-        assertEquals(true, live);
+        assertEquals(false, live);
     }
 
     @Test
