@@ -42,6 +42,7 @@ script:
   - adb devices
   - adb shell input keyevent 82 &
   - ./gradlew assembleDebugAndroidTest
+  - ./gradlew test --continue
 
 notifications:
   email: false
