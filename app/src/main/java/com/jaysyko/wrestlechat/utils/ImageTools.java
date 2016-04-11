@@ -22,6 +22,8 @@ public final class ImageTools {
     private static final String TAG = ImageTools.class.getSimpleName();
     private static final String GRAVATAR_LINK = "http://www.gravatar.com/avatar/";
     private static final String GRAVATAR_IMAGE_TYPE = "?d=identicon";
+    private static final int RADIX = 16;
+    private static final String ALGORITHM = "MD5";
 
     /**
      * Loads an image from a URL into an ImageView
@@ -43,10 +45,10 @@ public final class ImageTools {
     public static String defaultProfileImage(String userId) {
         StringBuilder hex = new StringBuilder();
         try {
-            final MessageDigest digest = MessageDigest.getInstance("MD5");
+            final MessageDigest digest = MessageDigest.getInstance(ALGORITHM);
             final byte[] hash = digest.digest(userId.getBytes());
             final BigInteger bigInt = new BigInteger(hash);
-            hex.append(bigInt.abs().toString(16));
+            hex.append(bigInt.abs().toString(RADIX));
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
         }
