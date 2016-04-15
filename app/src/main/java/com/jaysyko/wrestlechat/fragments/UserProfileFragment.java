@@ -34,7 +34,7 @@ public class UserProfileFragment extends Fragment {
         currentActiveUser = CurrentActiveUser.getCurrentUser();
         mApplicationContext = getActivity();
         profilePicture = (ImageView) view.findViewById(R.id.profilePicture);
-        ImageTools.loadImage(mApplicationContext, currentActiveUser.getCustomProfileImageURL(), profilePicture);
+        ImageTools.loadImage(mApplicationContext, currentActiveUser.getProfileImage(), profilePicture);
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -54,10 +54,10 @@ public class UserProfileFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (NetworkState.isConnected(mApplicationContext)) {
-                                    if (!(CurrentActiveUser.getCurrentUser().setProfileImageURL(input.getText().toString(), true))) {
+                                    if (!(CurrentActiveUser.getCurrentUser().setProfileImageURL(input.getText().toString()))) {
                                         Dialog.makeToast(mApplicationContext, getString(R.string.bad_image_type));
                                     } else {
-                                        ImageTools.loadImage(mApplicationContext, currentActiveUser.getCustomProfileImageURL(), profilePicture);
+                                        ImageTools.loadImage(mApplicationContext, currentActiveUser.getProfileImage(), profilePicture);
                                     }
                                 } else {
                                     Dialog.makeToast(mApplicationContext, getString(R.string.no_network));

@@ -4,21 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.android.volley.Request;
 import com.jaysyko.wrestlechat.localStorage.LocalStorage;
 import com.jaysyko.wrestlechat.localStorage.StorageFile;
-import com.jaysyko.wrestlechat.network.CustomNetworkResponse;
-import com.jaysyko.wrestlechat.network.NetworkCallback;
-import com.jaysyko.wrestlechat.network.NetworkRequest;
-import com.jaysyko.wrestlechat.network.NetworkSingleton;
-import com.jaysyko.wrestlechat.network.RESTEndpoints;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
 
 /**
  * CurrentActiveUser.java
@@ -67,7 +59,7 @@ public class CurrentActiveUser {
             activeUser.context = context;
             activeUser.setUsername(username);
             activeUser.setUserId(userID);
-            activeUser.setProfileImageURL(profileImageURL, false);
+            activeUser.setProfileImageURL(profileImageURL);
         } catch (JSONException e) {
             Log.e(TAG, e.getMessage());
         }
@@ -91,7 +83,7 @@ public class CurrentActiveUser {
             String storedUsername = sharedPreferences.getString(USERNAME, null);
             String storedImageURL = sharedPreferences.getString(IMAGE_URL, null);
             activeUser = new CurrentActiveUser(storedUserID, storedUsername);
-            activeUser.setProfileImageURL(storedImageURL, false);
+            activeUser.setProfileImageURL(storedImageURL);
             activeUser.context = context;
         }
         return activeUser;
@@ -109,7 +101,7 @@ public class CurrentActiveUser {
      *
      * @return imageUrl: String
      */
-    public String getCustomProfileImageURL() {
+    public String getProfileImage() {
         return activeUser.profileImageURL;
     }
 
@@ -144,28 +136,10 @@ public class CurrentActiveUser {
      * @param url String
      * @return String
      */
-    public boolean setProfileImageURL(final String url, boolean hard) {
+    public boolean setProfileImageURL(final String url) {
         // store url in local cache
         Boolean isLinkToImage = ImageTools.isLinkToImage(url);
         if (isLinkToImage) {
-            if (hard) {
-                HashMap<String, String> params = new HashMap<>();
-                params.put(UserKeys.USERNAME.toString(), activeUser.getUsername());
-                params.put(UserKeys.PROFILE_IMAGE.toString(), url);
-                Request request = new NetworkRequest(new NetworkCallback() {
-                    @Override
-                    public void onSuccess(String response) {
-                        CustomNetworkResponse customNetworkResponse = new CustomNetworkResponse(response);
-                        if (customNetworkResponse.isSuccessful()) {
-                            SharedPreferences sharedPreferences = new LocalStorage(context, StorageFile.AUTH).getSharedPreferences();
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString(IMAGE_URL, profileImageURL);
-                            editor.apply();
-                        }
-                    }
-                }).post(RESTEndpoints.UPDATE_PROFILE, params);
-                NetworkSingleton.getInstance(context).addToRequestQueue(request);
-            }
             activeUser.profileImageURL = url;
             return true;
         } else {

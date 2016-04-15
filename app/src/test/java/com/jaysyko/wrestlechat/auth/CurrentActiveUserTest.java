@@ -1,5 +1,6 @@
 package com.jaysyko.wrestlechat.auth;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -9,6 +10,7 @@ import com.jaysyko.wrestlechat.localStorage.StorageFile;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +38,7 @@ public class CurrentActiveUserTest {
     CurrentActiveUser user;
     LocalStorage localStorage;
 
+    @SuppressLint("CommitPrefEdits")
     @Before
     public void setup() {
         initMocks(this);
@@ -51,7 +54,7 @@ public class CurrentActiveUserTest {
             payload = new JSONObject();
             payload.put(UserKeys.ID.toString(), "1");
             payload.put(UserKeys.USERNAME.toString(), "jaysyko");
-            payload.put(UserKeys.PROFILE_IMAGE.toString(), "link");
+            payload.put(UserKeys.PROFILE_IMAGE.toString(), "http://cdn.urbanislandz.com/wp-content/uploads/2015/09/The-Weeknd1.jpg");
             payloadArray.put(payload);
             user = CurrentActiveUser.newUser(mContext, payloadArray);
         } catch (JSONException e) {
@@ -61,8 +64,15 @@ public class CurrentActiveUserTest {
     }
 
     @Test
-    public void testUsername() {
+    public void testNewUserGood() {
         Assert.assertEquals(user.getUsername(), "jaysyko");
+        Assert.assertEquals(user.getUserID(), "1");
+        Assert.assertEquals(user.getProfileImage(), "http://cdn.urbanislandz.com/wp-content/uploads/2015/09/The-Weeknd1.jpg");
+    }
+
+    @After
+    public void cleanUp() {
+        mEditor.clear();
     }
 
 }
