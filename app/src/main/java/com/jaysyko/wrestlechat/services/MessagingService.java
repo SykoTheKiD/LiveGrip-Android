@@ -94,9 +94,10 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         mIsConnecting = true;
         try {
             mClient.connect(connectOptions, null, this);
-        } catch (Exception e) {
+        } catch (MqttException e) {
             Log.e(TAG, e.getMessage());
         }
+
     }
 
     /**
@@ -271,8 +272,8 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     public void disconnect() {
         try {
             this.mClient.disconnect();
-            Log.e(TAG, "disconnected");
-        } catch (Exception e) {
+            Log.i(TAG, "disconnected");
+        } catch (MqttException e) {
             Log.e(TAG, e.getMessage());
         }
     }
@@ -283,10 +284,6 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     @Override
     public void onDestroy() {
         super.onDestroy();
-        try {
-            disconnect();
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-        }
+        disconnect();
     }
 }
