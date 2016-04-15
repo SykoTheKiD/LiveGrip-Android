@@ -225,7 +225,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
             payload.put(Message.MessageJSONKeys.BODY.toString(), body);
             payload.put(Event.EventJSONKeys.NAME.toString(), currentActiveEvent.getCurrentEvent().getEventName());
             payload.put(UserKeys.USERNAME.toString(), currentActiveUser.getUsername());
-            payload.put(UserKeys.PROFILE_IMAGE.toString(), currentActiveUser.getCustomProfileImageURL());
+            payload.put(UserKeys.PROFILE_IMAGE.toString(), currentActiveUser.getProfileImage());
             saveToDB(payload);
         } catch (JSONException e) {
             Log.e(TAG, e.getMessage());

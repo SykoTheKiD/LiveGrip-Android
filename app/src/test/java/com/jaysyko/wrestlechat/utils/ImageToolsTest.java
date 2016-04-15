@@ -32,14 +32,6 @@ public class ImageToolsTest {
     }
 
     @Test
-    public void defaultImageTestError() {
-        exception.expect(Exception.class);
-        exception.expectMessage("");
-        String defaultImageNull = ImageTools.defaultProfileImage(null);
-        assertEquals(null, defaultImageNull);
-    }
-
-    @Test
     public void defaultImageTest() {
         String defaultImage = ImageTools.defaultProfileImage("jaysyko");
         assertEquals("http://www.gravatar.com/avatar/7091e1e6c8c03fe8690cbdefae736ec9?d=identicon", defaultImage);

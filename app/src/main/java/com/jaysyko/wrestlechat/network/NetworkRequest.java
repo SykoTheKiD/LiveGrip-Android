@@ -67,7 +67,7 @@ public class NetworkRequest {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e(TAG, error.getMessage());
+                        Log.e(TAG, "" + error.getMessage());
                     }
                 });
     }
