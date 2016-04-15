@@ -42,9 +42,11 @@ public class EventListActivity extends AppCompatActivity{
         getWindow().setBackgroundDrawable(null);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.navDrawerItems);
-        final View headerLayout = mNavigationView.inflateHeaderView(R.layout.nav_header_event_list);
-        TextView headerUsername = (TextView) headerLayout.findViewById(R.id.drawer_username);
-        headerUsername.setText(CurrentActiveUser.getCurrentUser().getUsername());
+        final View headerLayout = mNavigationView != null ? mNavigationView.inflateHeaderView(R.layout.nav_header_event_list) : null;
+        TextView headerUsername = (TextView) (headerLayout != null ? headerLayout.findViewById(R.id.drawer_username) : null);
+        if (headerUsername != null) {
+            headerUsername.setText(CurrentActiveUser.getCurrentUser().getUsername());
+        }
 
         /**
          * Lets inflate the very first fragment
