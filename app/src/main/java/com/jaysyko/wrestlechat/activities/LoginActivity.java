@@ -189,7 +189,7 @@ public final class LoginActivity extends AppCompatActivity {
             if (getGoogleAvailability.isUserResolvableError(availabilityCode)) {
                 getGoogleAvailability.getErrorDialog(this, availabilityCode, 9000).show();
             } else {
-                Log.i(TAG, "This device is not supported.");
+                Log.i(TAG, "Google Play Services not detected");
                 finish();
             }
             return false;
