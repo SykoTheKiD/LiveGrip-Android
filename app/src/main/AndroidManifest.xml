@@ -42,8 +42,7 @@
             android:theme="@style/NoActionBar" />
         <activity
             android:name=".activities.SettingsActivity"
-            android:label="@string/activity_settings">
-        </activity>
+            android:label="@string/activity_settings"></activity>
         <activity
             android:name=".activities.LegalActivity"
             android:label="@string/title_activity_legal"
@@ -99,6 +98,8 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
+
+        <activity android:name=".activities.NewsActivity"></activity>
     </application>
 
 </manifest>

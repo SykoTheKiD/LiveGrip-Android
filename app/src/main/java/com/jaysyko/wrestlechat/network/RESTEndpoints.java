@@ -6,13 +6,12 @@ package com.jaysyko.wrestlechat.network;
  * @author Jay Syko
  */
 public enum RESTEndpoints {
-    LOGIN("auth/login"), SIGN_UP("auth/newuser"), MESSAGES("messages/save_message"), EVENTS("events/events"), GCM("gcm/gcmID"), UPDATE_PROFILE("auth/updateProfile");
+    LOGIN("auth/login"), SIGN_UP("auth/register"), MESSAGES("messages/save"), EVENTS("events"), GCM("user/update/gcm_id"), UPDATE_PROFILE_IMAGE("user/update/profile_image");
 
-    private static final String FILE_TYPE = ".php";
     private String endpoint;
 
     RESTEndpoints(String endpoint) {
-        this.endpoint = endpoint.concat(FILE_TYPE);
+        this.endpoint = endpoint;
     }
 
     /**
