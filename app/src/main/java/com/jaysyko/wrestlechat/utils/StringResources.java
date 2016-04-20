@@ -13,4 +13,5 @@ public class StringResources {
     public static final String NULL_TEXT = "";
     public static final String BLANK_SPACE = " ";
     public static final String TWITTER_INTENT = "http://www.twitter.com/intent/tweet?text=";
+    public static final String APP_VERSION = "v1.0";
 }
