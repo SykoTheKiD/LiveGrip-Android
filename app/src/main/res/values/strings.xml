@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Wrestle Chat</string>
+    <string name="app_name">LiveGrip</string>
 
     <!-- Strings related to Activity Names -->
     <string name="activity_event_info">Event Info</string>

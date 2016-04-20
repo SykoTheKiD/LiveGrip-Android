@@ -30,10 +30,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a8a10f5-4885-4e0e-a2b6-9e884a6f279a" name="Default" comment="Added androidtests">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/activities/NewsActivity.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_news.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_news.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/news_item.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/activities/LoginActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/activities/LoginActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/event_card.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/event_card.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/network/RESTEndpoints.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/network/RESTEndpoints.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/utils/StringResources.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/utils/StringResources.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_event_list.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_event_list.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
     </list>
     <ignored path="WrestleChat.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -111,34 +118,7 @@
     <favorites_list name="WrestleChat" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="activity_event_list.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_event_list.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.574074">
-              <caret line="46" column="22" selection-start-line="46" selection-start-column="22" selection-end-line="46" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="event_card.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/event_card.xml">
-          <provider selected="true" editor-type-id="android-designer">
-            <state />
-          </provider>
-          <provider editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-23.125">
-              <caret line="70" column="34" selection-start-line="70" selection-start-column="34" selection-end-line="70" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -146,10 +126,10 @@
         <option value="Singleton" />
         <option value="Interface" />
         <option value="Enum" />
-        <option value="layoutResourceFile_vertical" />
         <option value="valueResourceFile" />
         <option value="resourceFile" />
         <option value="Class" />
+        <option value="layoutResourceFile_vertical" />
       </list>
     </option>
   </component>
@@ -161,7 +141,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="quickblocks" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
   </component>
@@ -2186,11 +2166,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/circular_progress_bar.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_web_view.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/activities/WebViewActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/xml/pref_headers.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/xml/pref_general.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/activities/SettingsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/custom_editText.xml" />
@@ -2211,10 +2186,8 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_messaging.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values-v21/styles.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_event_list.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/pref_lists.xml" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/auth/UserKeys.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/AnalyticsTrackers.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/GCMListenerService.java" />
@@ -2237,6 +2210,13 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/MessagingService.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/activities/LoginActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/event_card.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_event_list.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/activities/NewsActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_news.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/news_item.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/utils/StringResources.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/network/RESTEndpoints.java" />
       </list>
     </option>
   </component>
@@ -2277,7 +2257,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2310,12 +2289,70 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WrestleChat" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wrestlechat" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WrestleChat" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wrestlechat" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="network" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WrestleChat" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="wrestlechat" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="activities" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -2361,6 +2398,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2371,7 +2409,7 @@
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="192.168.57.101:5555" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="build&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/build.gradle&#10;login&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/LoginActivity.java&#10;trav&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/.travis.yml&#10;buil&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/build.gradle&#10;.tr&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/.travis.yml&#10;mess&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java&#10;mani&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/AndroidManifest.xml&#10;networ&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/network/NetworkRequest.java&#10;messag&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java&#10;strings&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/res/values/strings.xml&#10;serv&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/services/MessagingService.java&#10;adapt&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/adapters/MessageListAdapter.java&#10;manif&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.Manifest&#10;sett&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/SettingsActivity.java&#10;ada&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.adapters.MessageListAdapter&#10;fra&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java&#10;message&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.messageTypes.MessageGenerator&#10;user&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/res/layout/fragment_user_profile.xml&#10;bubb&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/res/layout/message_bubble.xml&#10;settings&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/.idea/copyright/profiles_settings.xml&#10;colo&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/res/values/colors.xml&#10;messagin&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/services/MessagingService.java&#10;Loca&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/localStorage/LocalStorage.java&#10;str&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/res/values/strings.xml&#10;app&#9;RUN_CONFIGURATION&#9;app&#10;Ima&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/utils/ImageTools.java&#10;Curre&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/activeEvent/CurrentActiveEvent.java&#10;m&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/AndroidManifest.xml&#10;log&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/LoginActivity.java&#10;Date&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/date/DateVerifier.java&#10;Even&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/EventListActivity.java&#10;Ret&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/eventManager/RetrieveEvents.java&#10;Re&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/eventManager/RetrieveEvents.java&#10;ba&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/db/BackEnd.java&#10;userp&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/UserProfileActivity.java&#10;open&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/eventManager/OpenEvent.java&#10;messa&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java&#10;event&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/EventListActivity.java&#10;bu&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/build.gradle&#10;eve&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/res/layout/activity_event_list.xml&#10;ids&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/res/values/ids.xml&#10;bub&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/res/layout/message_bubble.xml&#10;idf&#9;PSI&#9;JAVA://sun.org.mozilla.javascript.internal.IdFunctionCall&#10;form&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/forms/Form.java&#10;imagt&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/utils/ImageTools.java&#10;act&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.auth.CurrentActiveUser&#10;eventli&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/EventListActivity.java&#10;prof&#9;FILE&#9;file:///Users/jarushaan/Documents/wrestlechat/app/src/main/java/com/jaysyko/wrestlechat/activities/UserProfileActivity.java&#10;info&#9;FILE&#9;file:///Users/jarushaan/Documents/wrestlechat/app/src/main/java/com/jaysyko/wrestlechat/activities/EventInfoActivity.java&#10;about&#9;FILE&#9;file:///Users/jarushaan/Documents/wrestlechat/app/src/main/res/layout/activity_about.xml" />
+    <property name="SearchEverywhereHistoryKey" value="strings&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/res/values/strings.xml&#10;build&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/build.gradle&#10;login&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/LoginActivity.java&#10;trav&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/.travis.yml&#10;buil&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/build.gradle&#10;.tr&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/.travis.yml&#10;mess&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java&#10;mani&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/AndroidManifest.xml&#10;networ&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/network/NetworkRequest.java&#10;messag&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java&#10;serv&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/services/MessagingService.java&#10;adapt&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/adapters/MessageListAdapter.java&#10;manif&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.Manifest&#10;sett&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/SettingsActivity.java&#10;ada&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.adapters.MessageListAdapter&#10;fra&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java&#10;message&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.messageTypes.MessageGenerator&#10;user&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/res/layout/fragment_user_profile.xml&#10;bubb&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/res/layout/message_bubble.xml&#10;settings&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/.idea/copyright/profiles_settings.xml&#10;colo&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/res/values/colors.xml&#10;messagin&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/services/MessagingService.java&#10;Loca&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/localStorage/LocalStorage.java&#10;str&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/res/values/strings.xml&#10;app&#9;RUN_CONFIGURATION&#9;app&#10;Ima&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/utils/ImageTools.java&#10;Curre&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/activeEvent/CurrentActiveEvent.java&#10;m&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/AndroidManifest.xml&#10;log&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/LoginActivity.java&#10;Date&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/date/DateVerifier.java&#10;Even&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/EventListActivity.java&#10;Ret&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/eventManager/RetrieveEvents.java&#10;Re&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/eventManager/RetrieveEvents.java&#10;ba&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/db/BackEnd.java&#10;userp&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/UserProfileActivity.java&#10;open&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/eventManager/OpenEvent.java&#10;messa&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java&#10;event&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/EventListActivity.java&#10;bu&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/build.gradle&#10;eve&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/res/layout/activity_event_list.xml&#10;ids&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/res/values/ids.xml&#10;bub&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/res/layout/message_bubble.xml&#10;idf&#9;PSI&#9;JAVA://sun.org.mozilla.javascript.internal.IdFunctionCall&#10;form&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/forms/Form.java&#10;imagt&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/utils/ImageTools.java&#10;act&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.auth.CurrentActiveUser&#10;eventli&#9;FILE&#9;file:///Users/jarushaan/Documents/WrestleChat/WrestleChat-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/EventListActivity.java&#10;prof&#9;FILE&#9;file:///Users/jarushaan/Documents/wrestlechat/app/src/main/java/com/jaysyko/wrestlechat/activities/UserProfileActivity.java&#10;info&#9;FILE&#9;file:///Users/jarushaan/Documents/wrestlechat/app/src/main/java/com/jaysyko/wrestlechat/activities/EventInfoActivity.java&#10;about&#9;FILE&#9;file:///Users/jarushaan/Documents/wrestlechat/app/src/main/res/layout/activity_about.xml" />
     <property name="DEBUGGABLE_DEVICE" value="Nexus_4_API_23 [emulator-5554]" />
     <property name="DEBUGGABLE_PROCESS" value="com.jaysyko.wrestlechat" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
@@ -2395,13 +2433,9 @@
       <recent name="com.jaysyko.wrestlechat.services" />
       <recent name="com.jaysyko.wrestlechat.models" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app" />
-      <recent name="$PROJECT_DIR$/app/src/main/java/libs" />
-    </key>
     <key name="android.template.packageName">
-      <recent name="com.jaysyko.wrestlechat.fragments" />
       <recent name="com.jaysyko.wrestlechat.activities" />
+      <recent name="com.jaysyko.wrestlechat.fragments" />
       <recent name="com.jaysyko.wrestlechat.services" />
       <recent name="com.jaysyko.wrestlechat.ads" />
       <recent name="com.jaysyko.wrestlechat" />
@@ -2413,8 +2447,9 @@
       <recent name="com.jaysyko.wrestlechat.network.NetworkRequest" />
       <recent name="com.jaysyko.wrestlechat.utils.DBConstants" />
     </key>
-    <key name="IntroduceConstantDialog.RECENTS_KEY">
-      <recent name="com.jaysyko.wrestlechat.adapters.EventListAdapter" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app" />
+      <recent name="$PROJECT_DIR$/app/src/main/java/libs" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.jaysyko.wrestlechat.network" />
@@ -2426,6 +2461,9 @@
     <key name="android.template.parentActivityClass">
       <recent name="" />
       <recent name="com.jaysyko.wrestlechat.activities.EventListActivity" />
+    </key>
+    <key name="IntroduceConstantDialog.RECENTS_KEY">
+      <recent name="com.jaysyko.wrestlechat.adapters.EventListAdapter" />
     </key>
   </component>
   <component name="RunManager" selected="JUnit.NetworkStateTest">
@@ -2927,12 +2965,6 @@
       <option name="number" value="Default" />
       <updated>1454079562825</updated>
     </task>
-    <task id="LOCAL-00147" summary="WIP Removed old files">
-      <created>1458864374838</created>
-      <option name="number" value="00147" />
-      <option name="project" value="LOCAL" />
-      <updated>1458864374839</updated>
-    </task>
     <task id="LOCAL-00148" summary="WIP Removed old files">
       <created>1458864602742</created>
       <option name="number" value="00148" />
@@ -3221,7 +3253,13 @@
       <option name="project" value="LOCAL" />
       <updated>1460750400714</updated>
     </task>
-    <option name="localTasksCounter" value="196" />
+    <task id="LOCAL-00196" summary="Added androidtests">
+      <created>1460916948795</created>
+      <option name="number" value="00196" />
+      <option name="project" value="LOCAL" />
+      <updated>1460916948798</updated>
+    </task>
+    <option name="localTasksCounter" value="197" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -3267,11 +3305,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="973" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -3288,13 +3325,14 @@
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298153" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32992327" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24983521" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2814408" sideWeight="0.4340909" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2814408" sideWeight="0.4340909" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26765376" sideWeight="0.48711553" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16879795" sideWeight="0.4940978" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -3389,149 +3427,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/SettingsFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25369978">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/activities/SettingsActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38054967">
-          <caret line="12" column="93" selection-start-line="12" selection-start-column="93" selection-end-line="12" selection-end-column="93" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-23/android/media/MediaPlayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3319239">
-          <caret line="566" column="13" selection-start-line="566" selection-start-column="13" selection-end-line="566" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_messaging.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="53" column="33" selection-start-line="53" selection-start-column="33" selection-end-line="53" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/adapters/MessageListAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="88" column="27" selection-start-line="88" selection-start-column="27" selection-end-line="88" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/activities/MessagingActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4054054">
-          <caret line="12" column="46" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-v21/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23648648">
-          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/drawer_menu.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36575052">
-          <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/preferences.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41226214">
-          <caret line="13" column="41" selection-start-line="13" selection-start-column="41" selection-end-line="13" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/pref_lists.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36997885">
-          <caret line="22" column="27" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/auth/UserKeys.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31712472">
-          <caret line="10" column="18" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.141649">
-          <caret line="36" column="48" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/AnalyticsTrackers.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/utils/StringResources.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23076923">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/services/GCMListenerService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2051282">
-          <caret line="68" column="11" selection-start-line="68" selection-start-column="11" selection-end-line="68" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-23/java/sql/Timestamp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="98" column="11" selection-start-line="98" selection-start-column="11" selection-end-line="98" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/adapters/EventListAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="76" column="44" selection-start-line="76" selection-start-column="44" selection-end-line="76" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/date/DateVerifier.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="52" column="30" selection-start-line="52" selection-start-column="30" selection-end-line="52" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/date/LiveStatus.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25714287">
-          <caret line="12" column="79" selection-start-line="12" selection-start-column="48" selection-end-line="12" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/activeEvent/CurrentActiveEvent.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19285715">
@@ -3592,7 +3487,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3607,20 +3501,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="21" column="52" selection-start-line="21" selection-start-column="44" selection-end-line="21" selection-end-column="52" />
-          <folding>
-            <element signature="e#3688#3689#0" expanded="false" />
-            <element signature="e#3737#3738#0" expanded="false" />
-            <element signature="e#4830#4831#0" expanded="false" />
-            <element signature="e#4872#4873#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.735849">
-          <caret line="87" column="68" selection-start-line="87" selection-start-column="37" selection-end-line="87" selection-end-column="68" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3628,7 +3508,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="47" column="78" selection-start-line="47" selection-start-column="78" selection-end-line="47" selection-end-column="78" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3643,12 +3522,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.45439738">
           <caret line="69" column="58" selection-start-line="69" selection-start-column="58" selection-end-line="69" selection-end-column="58" />
-          <folding>
-            <element signature="e#1920#2139#0" expanded="false" />
-            <element signature="e#2138#2139#0" expanded="false" />
-            <element signature="e#2157#2387#0" expanded="false" />
-            <element signature="e#2386#2387#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3670,7 +3543,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.46416938">
           <caret line="21" column="42" selection-start-line="21" selection-start-column="42" selection-end-line="21" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3699,7 +3571,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.24429968">
           <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3721,7 +3592,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.17100978">
           <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3743,36 +3613,257 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.34812286">
           <caret line="3505" column="32" selection-start-line="3505" selection-start-column="32" selection-end-line="3505" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_messaging.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/activities/LoginActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27561837">
-          <caret line="187" column="59" selection-start-line="187" selection-start-column="59" selection-end-line="187" selection-end-column="59" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_legal.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_event_info.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_user_profile.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_web_view.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_messaging.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_event_info.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/event_list_fragment_layout.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_legal.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_event_info.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_web_view.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_event_list.xml">
-      <provider editor-type-id="android-designer">
+      <provider selected="true" editor-type-id="android-designer">
         <state />
       </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.25">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="22" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/tab_layout.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_news.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_news.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.574074">
-          <caret line="46" column="22" selection-start-line="46" selection-start-column="22" selection-end-line="46" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.33919597">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_news.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="46" selection-start-line="5" selection-start-column="46" selection-end-line="5" selection-end-column="46" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/event_card.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.77164364">
+          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="78" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/news_item.xml">
       <provider selected="true" editor-type-id="android-designer">
         <state />
       </provider>
       <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-23.125">
-          <caret line="70" column="34" selection-start-line="70" selection-start-column="34" selection-end-line="70" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="36" selection-start-line="27" selection-start-column="36" selection-end-line="27" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/network/RESTEndpoints.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26439482">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding>
+            <element signature="e#409#410#0" expanded="true" />
+            <element signature="e#449#450#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/activities/LoginActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.361927">
+          <caret line="187" column="59" selection-start-line="187" selection-start-column="59" selection-end-line="187" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/utils/StringResources.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26439482">
+          <caret line="15" column="47" selection-start-line="15" selection-start-column="47" selection-end-line="15" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/activities/NewsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.07050529">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding />
         </state>
       </provider>
