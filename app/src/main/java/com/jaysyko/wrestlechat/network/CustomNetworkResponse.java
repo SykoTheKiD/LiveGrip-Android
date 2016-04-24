@@ -51,10 +51,19 @@ public class CustomNetworkResponse {
      * Gets the results of the performed action
      * @return JSON Array of the details
      */
-    public JSONArray getPayload() {
+    public JSONArray getPayloadArray() {
         try {
             return (JSONArray) this.response.get(NetworkResponseKeys.DATA.toString());
         } catch (JSONException | ClassCastException e) {
+            Log.e(TAG, e.getMessage());
+        }
+        return null;
+    }
+
+    public JSONObject getPayloadObject() {
+        try {
+            return (JSONObject) this.response.get(NetworkResponseKeys.DATA.toString());
+        } catch (JSONException e) {
             Log.e(TAG, e.getMessage());
         }
         return null;
@@ -75,6 +84,11 @@ public class CustomNetworkResponse {
      */
     @Override
     public String toString() {
-        return getPayload().toString();
+        String string = getPayloadArray().toString();
+        if (string != null) {
+            return string;
+        } else {
+            return getPayloadObject().toString();
+        }
     }
 }

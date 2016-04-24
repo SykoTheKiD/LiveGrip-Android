@@ -33,7 +33,7 @@ import com.jaysyko.wrestlechat.network.RESTEndpoints;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
-import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -163,7 +163,7 @@ public final class LoginActivity extends AppCompatActivity {
                             public void onSuccess(String response) {
                                 CustomNetworkResponse customNetworkResponse = new CustomNetworkResponse(response);
                                 if (customNetworkResponse.isSuccessful()) {
-                                    JSONArray payload = customNetworkResponse.getPayload();
+                                    JSONObject payload = customNetworkResponse.getPayloadObject();
                                     if (payload != null) {
                                         CurrentActiveUser.newUser(mContext, payload);
                                         Dialog.makeToast(mContext, getString(R.string.welcome_back).concat(StringResources.BLANK_SPACE).concat(username));
@@ -219,8 +219,7 @@ public final class LoginActivity extends AppCompatActivity {
                     Request request = new NetworkRequest(new NetworkCallback() {
                         @Override
                         public void onSuccess(String response) {
-                            Log.e(TAG, token.toString());
-                            Log.i(TAG, "Complete");
+                            Log.i(TAG, token.toString());
                         }
                     }).post(RESTEndpoints.GCM, params);
                     NetworkSingleton.getInstance(mContext).addToRequestQueue(request);

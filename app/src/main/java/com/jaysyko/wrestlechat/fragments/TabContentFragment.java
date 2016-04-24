@@ -57,7 +57,7 @@ public class TabContentFragment extends Fragment {
                 CustomNetworkResponse customNetworkResponse = new CustomNetworkResponse(response);
                 if (customNetworkResponse.isSuccessful()) {
                     JSONObject current;
-                    JSONArray events = customNetworkResponse.getPayload();
+                    JSONArray events = customNetworkResponse.getPayloadArray();
                     mEventsList.clear();
                     for (int index = 0; index < events.length(); index++) {
                         current = (JSONObject) events.get(index);

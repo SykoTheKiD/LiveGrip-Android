@@ -23,8 +23,8 @@ import java.util.List;
  * TODO: Add 5 seconds wait for update
  */
 public class DownloadEvents {
-    private static DownloadEvents ourInstance = new DownloadEvents();
     private static final String TAG = DownloadEvents.class.getSimpleName();
+    private static DownloadEvents ourInstance = new DownloadEvents();
     private List<Event> mEventsList = new ArrayList<>();
     private Context mApplicationContext;
     private Request mStringRequest = new NetworkRequest(new NetworkCallback() {
@@ -34,7 +34,7 @@ public class DownloadEvents {
                 CustomNetworkResponse customNetworkResponse = new CustomNetworkResponse(response);
                 if (customNetworkResponse.isSuccessful()) {
                     JSONObject current;
-                    JSONArray events = customNetworkResponse.getPayload();
+                    JSONArray events = customNetworkResponse.getPayloadArray();
                     mEventsList.clear();
                     for (int index = 0; index < events.length(); index++) {
                         current = (JSONObject) events.get(index);
@@ -57,17 +57,12 @@ public class DownloadEvents {
         }
     }).get(RESTEndpoints.EVENTS);
 
-    public static DownloadEvents getInstance(Context context) {
-        ourInstance.mApplicationContext = context;
-        return ourInstance;
-    }
-
-    public static DownloadEvents getInstance(Context context) {
-        ourInstance.mApplicationContext = context;
-        return ourInstance;
-    }
-
     private DownloadEvents() {
+    }
+
+    public static DownloadEvents getInstance(Context context) {
+        ourInstance.mApplicationContext = context;
+        return ourInstance;
     }
 
     public List<Event> getEventList() {
