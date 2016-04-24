@@ -33,6 +33,8 @@ import com.jaysyko.wrestlechat.network.RESTEndpoints;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
+import org.json.JSONArray;
+
 import java.util.HashMap;
 
 public final class LoginActivity extends AppCompatActivity {
@@ -161,10 +163,15 @@ public final class LoginActivity extends AppCompatActivity {
                             public void onSuccess(String response) {
                                 CustomNetworkResponse customNetworkResponse = new CustomNetworkResponse(response);
                                 if (customNetworkResponse.isSuccessful()) {
-                                    CurrentActiveUser.newUser(mContext, customNetworkResponse.getPayload());
-                                    Dialog.makeToast(mContext, getString(R.string.welcome_back).concat(StringResources.BLANK_SPACE).concat(username));
-                                    startActivity(intent);
-                                    finish();
+                                    JSONArray payload = customNetworkResponse.getPayload();
+                                    if (payload != null) {
+                                        CurrentActiveUser.newUser(mContext, payload);
+                                        Dialog.makeToast(mContext, getString(R.string.welcome_back).concat(StringResources.BLANK_SPACE).concat(username));
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        Dialog.makeToast(mContext, getString(R.string.an_error_occured));
+                                    }
                                 } else {
                                     Dialog.makeToast(mContext, getString(R.string.incorrect_login_info));
                                 }

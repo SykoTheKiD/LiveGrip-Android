@@ -83,7 +83,7 @@ public class TabContentFragment extends Fragment {
                 Log.e(TAG, e.getMessage());
             }
         }
-    }).post(RESTEndpoints.EVENTS);
+    }).get(RESTEndpoints.EVENTS);
     final Runnable initSwipeRefresh = new Runnable() {
         @Override
         public void run() {
