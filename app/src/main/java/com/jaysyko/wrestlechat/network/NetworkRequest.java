@@ -33,7 +33,7 @@ public class NetworkRequest {
      */
     public Request get(RESTEndpoints endpoint) {
         return new StringRequest(
-                Request.Method.POST,
+                Request.Method.GET,
                 MYSQL_URL.concat(endpoint.getEndpoint()),
                 new Response.Listener<String>() {
                     @Override
