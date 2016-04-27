@@ -96,6 +96,12 @@ public class Event {
         return this.eventEndTime;
     }
 
+    @Override
+    public String toString(){
+        return this.eventName;
+    }
+
+
     /**
      * JSON keys to index the JSON Events response from the API
      */

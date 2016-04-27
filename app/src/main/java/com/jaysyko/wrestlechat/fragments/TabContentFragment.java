@@ -4,12 +4,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +33,9 @@ import java.util.List;
 
 
 public class TabContentFragment extends Fragment {
+    private static final String TAG = TabContentFragment.class.getSimpleName();
     private static final int VIBRATE_MILLISECONDS = 40;
-    final Handler handler = new Handler();
+    private final Handler handler = new Handler();
     private Context mApplicationContext;
     private EventListAdapter mAdapter;
     private RelativeLayout layout;
@@ -47,7 +48,6 @@ public class TabContentFragment extends Fragment {
     private int state;
     private List<Event> mEventsList = new ArrayList<>();
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layout = (RelativeLayout) inflater.inflate(R.layout.event_list_fragment_layout, null);
@@ -63,9 +63,16 @@ public class TabContentFragment extends Fragment {
                 mAdapter = new EventListAdapter(new ArrayList<Event>(), mApplicationContext);
                 recyclerView.setAdapter(mAdapter);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
+                getLocalEvents();
             }
         });
         return layout;
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        getLocalEvents();
     }
 
     private void initSwipeRefresh() {
@@ -79,6 +86,7 @@ public class TabContentFragment extends Fragment {
                     new Handler().post(new Runnable() {
                         @Override
                         public void run() {
+                            getEvents();
                             swipeView.setRefreshing(false);
                         }
                     });
@@ -121,17 +129,30 @@ public class TabContentFragment extends Fragment {
         CurrentEvents.getInstance(mApplicationContext).getEvents(new NetworkCallbackObject<Event>() {
             @Override
             public void onSuccess(List<Event> response) {
-                Event current;
-                for (int index = 0; index < response.size(); index++) {
-                    current = response.get(index);
-                    String start_time = current.getEventStartTime();
-                    String end_time = current.getEventEndTime();
-                    if (DateVerifier.goLive(start_time, end_time).getReason() == state) {
-                        mEventsList.add(current);
-                    }
-                }
-                updateRecyclerView(mEventsList);
+                generateEventCards(response);
             }
         });
+    }
+
+    private void generateEventCards(List<Event> response) {
+        if(mAdapter != null){
+            mEventsList.clear();
+            Event current;
+            for (int index = 0; index < response.size(); index++) {
+                current = response.get(index);
+                String start_time = current.getEventStartTime();
+                String end_time = current.getEventEndTime();
+                if (DateVerifier.goLive(start_time, end_time).getReason() == state) {
+                    mEventsList.add(current);
+                }
+            }
+            updateRecyclerView(mEventsList);
+        }
+    }
+
+    private void getLocalEvents(){
+        Log.i(TAG, "Cache Hit");
+        generateEventCards(CurrentEvents.getInstance(mApplicationContext).getEvents());
+
     }
 }

@@ -33,13 +33,14 @@ public class CurrentEvents {
     private static CurrentEvents ourInstance = new CurrentEvents();
     private List<Event> mEventsList = new ArrayList<>();
     private Context mApplicationContext;
-    private SharedPreferences mSharedPreferences = new LocalStorage(mApplicationContext, StorageFile.EVENTS).getSharedPreferences();
+    private static SharedPreferences mSharedPreferences;
 
     private CurrentEvents() {
     }
 
     public static CurrentEvents getInstance(Context context) {
         ourInstance.mApplicationContext = context;
+        mSharedPreferences = new LocalStorage(context, StorageFile.EVENTS).getSharedPreferences();
         return ourInstance;
     }
 
@@ -72,9 +73,9 @@ public class CurrentEvents {
         editor.apply();
     }
 
-    public synchronized List<Event> getEvents() {
-        if (mEventsList.isEmpty()) {
-            String events = mSharedPreferences.getString(EVENTS, null);
+    public List<Event> getEvents() {
+        String events = mSharedPreferences.getString(EVENTS, null);
+        if(events != null){
             try {
                 JSONArray eventsJSON = new JSONArray(events);
                 jsonToModel(eventsJSON);
