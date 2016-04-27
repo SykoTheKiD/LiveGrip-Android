@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import com.jaysyko.wrestlechat.localStorage.LocalStorage;
 import com.jaysyko.wrestlechat.localStorage.StorageFile;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.After;
@@ -33,17 +32,16 @@ public class CurrentActiveUserTest {
     @Mock
     SharedPreferences.Editor mEditor;
 
-    JSONObject payload;
-    JSONArray payloadArray = new JSONArray();
-    CurrentActiveUser user;
-    LocalStorage localStorage;
+    JSONObject mPayload;
+    CurrentActiveUser mUser;
+    LocalStorage mLocalStorage;
 
     @SuppressLint("CommitPrefEdits")
     @Before
     public void setup() {
         initMocks(this);
-        localStorage = new LocalStorage(mContext, StorageFile.AUTH);
-        when(localStorage.getSharedPreferences()).thenReturn(mSharedPreferences);
+        mLocalStorage = new LocalStorage(mContext, StorageFile.AUTH);
+        when(mLocalStorage.getSharedPreferences()).thenReturn(mSharedPreferences);
         when(mSharedPreferences.edit()).thenReturn(mEditor);
     }
 
@@ -51,12 +49,11 @@ public class CurrentActiveUserTest {
     public void setUp() throws Exception {
         Assert.assertNotNull(mContext);
         try {
-            payload = new JSONObject();
-            payload.put(UserKeys.ID.toString(), "1");
-            payload.put(UserKeys.USERNAME.toString(), "jaysyko");
-            payload.put(UserKeys.PROFILE_IMAGE.toString(), "http://cdn.urbanislandz.com/wp-content/uploads/2015/09/The-Weeknd1.jpg");
-            payloadArray.put(payload);
-            user = CurrentActiveUser.newUser(mContext, payloadArray);
+            mPayload = new JSONObject();
+            mPayload.put(UserKeys.ID.toString(), "1");
+            mPayload.put(UserKeys.USERNAME.toString(), "jaysyko");
+            mPayload.put(UserKeys.PROFILE_IMAGE.toString(), "http://cdn.urbanislandz.com/wp-content/uploads/2015/09/The-Weeknd1.jpg");
+            mUser = CurrentActiveUser.newUser(mContext, mPayload);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -65,9 +62,9 @@ public class CurrentActiveUserTest {
 
     @Test
     public void testNewUserGood() {
-        Assert.assertEquals(user.getUsername(), "jaysyko");
-        Assert.assertEquals(user.getUserID(), "1");
-        Assert.assertEquals(user.getProfileImage(), "http://cdn.urbanislandz.com/wp-content/uploads/2015/09/The-Weeknd1.jpg");
+        Assert.assertEquals(mUser.getUsername(), "jaysyko");
+        Assert.assertEquals(mUser.getUserID(), "1");
+        Assert.assertEquals(mUser.getProfileImage(), "http://cdn.urbanislandz.com/wp-content/uploads/2015/09/The-Weeknd1.jpg");
     }
 
     @After
