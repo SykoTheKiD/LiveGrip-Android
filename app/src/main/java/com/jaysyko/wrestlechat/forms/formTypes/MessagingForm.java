@@ -1,16 +1,16 @@
-package com.jaysyko.wrestlechat.forms.formValidators;
+package com.jaysyko.wrestlechat.forms.formTypes;
 
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.FormStatus;
 
 
-public class MessageValidator extends FormValidator {
+public class MessagingForm extends BaseForm {
     private static final int MIN_MESSAGE_LENGTH = 1;
     private static final int MAX_MESSAGE_LENGTH = 230;
 
     private Form form;
 
-    public MessageValidator(String message) {
+    public MessagingForm(String message) {
         this.form = validate(message);
     }
 

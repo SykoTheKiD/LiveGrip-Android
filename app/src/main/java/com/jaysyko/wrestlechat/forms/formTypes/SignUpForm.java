@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat.forms.formValidators;
+package com.jaysyko.wrestlechat.forms.formTypes;
 
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.FormStatus;
@@ -10,12 +10,12 @@ import java.util.regex.Pattern;
 /**
  *
  */
-public class SignUpValidator extends FormValidator {
+public class SignUpForm extends BaseForm {
 
     private static final int MAX_USERNAME_LENGTH = 25;
     private Form form;
 
-    public SignUpValidator(String username, String password) {
+    public SignUpForm(String username, String password) {
         this.form = validate(username, password);
     }
 

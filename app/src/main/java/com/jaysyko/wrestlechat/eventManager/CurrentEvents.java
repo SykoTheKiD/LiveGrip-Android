@@ -23,9 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by jarushaan on 2016-04-23
- * TODO: Add 5 seconds wait for update
- * TODO: Add Caching of Requests
+ * CurrentEvents.java
+ *
+ * Singleton that holds and updates the current events
+ * @author Jay Syko
  */
 public class CurrentEvents {
     private static final String TAG = CurrentEvents.class.getSimpleName();
@@ -86,7 +87,7 @@ public class CurrentEvents {
         return mEventsList;
     }
 
-    public synchronized void getEvents(final NetworkCallbackObject<Event> callback) {
+    public synchronized void updateEvents(final NetworkCallbackObject<Event> callback) {
         Request stringRequest = new NetworkRequest(new NetworkCallback() {
             @Override
             public void onSuccess(String response) {

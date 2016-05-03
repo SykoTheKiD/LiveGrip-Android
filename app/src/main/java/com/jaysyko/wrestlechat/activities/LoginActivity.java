@@ -22,8 +22,8 @@ import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.auth.UserKeys;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
-import com.jaysyko.wrestlechat.forms.formValidators.LoginValidator;
-import com.jaysyko.wrestlechat.forms.formValidators.SignUpValidator;
+import com.jaysyko.wrestlechat.forms.formTypes.LoginForm;
+import com.jaysyko.wrestlechat.forms.formTypes.SignUpForm;
 import com.jaysyko.wrestlechat.network.CustomNetworkResponse;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkRequest;
@@ -111,7 +111,7 @@ public final class LoginActivity extends AppCompatActivity {
                 password = passwordField.getText().toString();
                 if (NetworkState.isConnected(mContext)) {
                     if (isPlayServicesInstalled()) {
-                        Form form = new SignUpValidator(username, password).validate();
+                        Form form = new SignUpForm(username, password).validate();
                         if (form.isValid()) {
                             String profileImageURL = ImageTools.defaultProfileImage(username);
                             HashMap<String, String> params = new HashMap<>();
@@ -153,7 +153,7 @@ public final class LoginActivity extends AppCompatActivity {
                 username = usernameField.getText().toString();
                 password = passwordField.getText().toString();
                 if (NetworkState.isConnected(mContext)) {
-                    Form form = new LoginValidator(username, password).validate();
+                    Form form = new LoginForm(username, password).validate();
                     if (form.isValid()) {
                         HashMap<String, String> params = new HashMap<>();
                         params.put(UserKeys.USERNAME.toString(), username);

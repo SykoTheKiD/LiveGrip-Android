@@ -1,15 +1,15 @@
-package com.jaysyko.wrestlechat.forms.formValidators;
+package com.jaysyko.wrestlechat.forms.formTypes;
 
 import com.jaysyko.wrestlechat.forms.Form;
 
 /**
  *
  */
-public class LoginValidator extends FormValidator {
+public class LoginForm extends BaseForm {
 
     Form form;
 
-    public LoginValidator(String... args) {
+    public LoginForm(String... args) {
         this.form = validate(args);
 
     }

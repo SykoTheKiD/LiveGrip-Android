@@ -50,7 +50,7 @@ public class TabContentFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        layout = (RelativeLayout) inflater.inflate(R.layout.event_list_fragment_layout, null);
+        layout = (RelativeLayout) inflater.inflate(R.layout.fragment_event_list, null);
         mApplicationContext = getContext();
         this.state = getArguments().getInt(BundleKeys.STATE_KEY);
         handler.post(initSwipeRefresh);
@@ -126,7 +126,7 @@ public class TabContentFragment extends Fragment {
     }
 
     private void getEvents() {
-        CurrentEvents.getInstance(mApplicationContext).getEvents(new NetworkCallbackObject<Event>() {
+        CurrentEvents.getInstance(mApplicationContext).updateEvents(new NetworkCallbackObject<Event>() {
             @Override
             public void onSuccess(List<Event> response) {
                 generateEventCards(response);

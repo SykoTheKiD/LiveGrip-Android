@@ -1,10 +1,10 @@
-package com.jaysyko.wrestlechat.forms.formValidators;
+package com.jaysyko.wrestlechat.forms.formTypes;
 
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.FormStatus;
 
 
-public abstract class FormValidator {
+public abstract class BaseForm {
     public final Form isNotBlank(String... strings) {
         for (String str : strings) {
             if (str == null || str.isEmpty()) {
