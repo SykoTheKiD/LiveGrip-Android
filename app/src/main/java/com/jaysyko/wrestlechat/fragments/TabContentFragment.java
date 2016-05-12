@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,25 +15,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.android.volley.Request;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
+import com.jaysyko.wrestlechat.eventManager.CurrentEvents;
 import com.jaysyko.wrestlechat.eventManager.OpenEvent;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Event;
-import com.jaysyko.wrestlechat.network.CustomNetworkResponse;
-import com.jaysyko.wrestlechat.network.NetworkCallback;
-import com.jaysyko.wrestlechat.network.NetworkRequest;
-import com.jaysyko.wrestlechat.network.NetworkSingleton;
+import com.jaysyko.wrestlechat.network.NetworkCallbackObject;
 import com.jaysyko.wrestlechat.network.NetworkState;
-import com.jaysyko.wrestlechat.network.RESTEndpoints;
 import com.jaysyko.wrestlechat.utils.BundleKeys;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,57 +35,22 @@ import java.util.List;
 public class TabContentFragment extends Fragment {
     private static final String TAG = TabContentFragment.class.getSimpleName();
     private static final int VIBRATE_MILLISECONDS = 40;
-    final Handler handler = new Handler();
+    private final Handler handler = new Handler();
     private Context mApplicationContext;
     private EventListAdapter mAdapter;
     private RelativeLayout layout;
-    private int state;
-    private List<Event> mEventsList = new ArrayList<>();
-    private Request mStringRequest = new NetworkRequest(new NetworkCallback() {
-        @Override
-        public void onSuccess(String response) {
-            try {
-                CustomNetworkResponse customNetworkResponse = new CustomNetworkResponse(response);
-                if (customNetworkResponse.isSuccessful()) {
-                    JSONObject current;
-                    JSONArray events = customNetworkResponse.getPayload();
-                    mEventsList.clear();
-                    for (int index = 0; index < events.length(); index++) {
-                        current = (JSONObject) events.get(index);
-                        String start_time = current.getString(Event.EventJSONKeys.START_TIME.toString());
-                        String end_time = current.getString(Event.EventJSONKeys.END_TIME.toString());
-                        if (DateVerifier.goLive(start_time, end_time).getReason() == state) {
-                            Event event = new Event(
-                                    current.getString(Event.EventJSONKeys.ID.toString()),
-                                    current.getString(Event.EventJSONKeys.NAME.toString()),
-                                    current.getString(Event.EventJSONKeys.INFO.toString()),
-                                    current.getString(Event.EventJSONKeys.MATCH_CARD.toString()),
-                                    current.getString(Event.EventJSONKeys.IMAGE.toString()),
-                                    current.getString(Event.EventJSONKeys.LOCATION.toString()),
-                                    start_time,
-                                    end_time
-                            );
-                            mEventsList.add(event);
-                        }
-                    }
-                    updateRecyclerView(mEventsList);
-                }
-            } catch (JSONException e) {
-                Log.e(TAG, e.getMessage());
-            }
-        }
-    }).post(RESTEndpoints.EVENTS);
     final Runnable initSwipeRefresh = new Runnable() {
         @Override
         public void run() {
             initSwipeRefresh();
         }
     };
+    private int state;
+    private List<Event> mEventsList = new ArrayList<>();
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        layout = (RelativeLayout) inflater.inflate(R.layout.event_list_fragment_layout, null);
+        layout = (RelativeLayout) inflater.inflate(R.layout.fragment_event_list, null);
         mApplicationContext = getContext();
         this.state = getArguments().getInt(BundleKeys.STATE_KEY);
         handler.post(initSwipeRefresh);
@@ -107,10 +63,16 @@ public class TabContentFragment extends Fragment {
                 mAdapter = new EventListAdapter(new ArrayList<Event>(), mApplicationContext);
                 recyclerView.setAdapter(mAdapter);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
-                NetworkSingleton.getInstance(mApplicationContext).addToRequestQueue(mStringRequest);
+                getLocalEvents();
             }
         });
         return layout;
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        getLocalEvents();
     }
 
     private void initSwipeRefresh() {
@@ -124,7 +86,7 @@ public class TabContentFragment extends Fragment {
                     new Handler().post(new Runnable() {
                         @Override
                         public void run() {
-                            NetworkSingleton.getInstance(mApplicationContext).addToRequestQueue(mStringRequest);
+                            getEvents();
                             swipeView.setRefreshing(false);
                         }
                     });
@@ -161,5 +123,36 @@ public class TabContentFragment extends Fragment {
                         }
                 )
         );
+    }
+
+    private void getEvents() {
+        CurrentEvents.getInstance(mApplicationContext).updateEvents(new NetworkCallbackObject<Event>() {
+            @Override
+            public void onSuccess(List<Event> response) {
+                generateEventCards(response);
+            }
+        });
+    }
+
+    private void generateEventCards(List<Event> response) {
+        if(mAdapter != null){
+            mEventsList.clear();
+            Event current;
+            for (int index = 0; index < response.size(); index++) {
+                current = response.get(index);
+                String start_time = current.getEventStartTime();
+                String end_time = current.getEventEndTime();
+                if (DateVerifier.goLive(start_time, end_time).getReason() == state) {
+                    mEventsList.add(current);
+                }
+            }
+            updateRecyclerView(mEventsList);
+        }
+    }
+
+    private void getLocalEvents(){
+        Log.i(TAG, "Cache Hit");
+        generateEventCards(CurrentEvents.getInstance(mApplicationContext).getEvents());
+
     }
 }

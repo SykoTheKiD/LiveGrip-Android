@@ -22,8 +22,8 @@ import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.auth.UserKeys;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
-import com.jaysyko.wrestlechat.forms.formValidators.LoginValidator;
-import com.jaysyko.wrestlechat.forms.formValidators.SignUpValidator;
+import com.jaysyko.wrestlechat.forms.formTypes.LoginForm;
+import com.jaysyko.wrestlechat.forms.formTypes.SignUpForm;
 import com.jaysyko.wrestlechat.network.CustomNetworkResponse;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkRequest;
@@ -32,6 +32,8 @@ import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.RESTEndpoints;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.jaysyko.wrestlechat.utils.StringResources;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -109,7 +111,7 @@ public final class LoginActivity extends AppCompatActivity {
                 password = passwordField.getText().toString();
                 if (NetworkState.isConnected(mContext)) {
                     if (isPlayServicesInstalled()) {
-                        Form form = new SignUpValidator(username, password).validate();
+                        Form form = new SignUpForm(username, password).validate();
                         if (form.isValid()) {
                             String profileImageURL = ImageTools.defaultProfileImage(username);
                             HashMap<String, String> params = new HashMap<>();
@@ -151,7 +153,7 @@ public final class LoginActivity extends AppCompatActivity {
                 username = usernameField.getText().toString();
                 password = passwordField.getText().toString();
                 if (NetworkState.isConnected(mContext)) {
-                    Form form = new LoginValidator(username, password).validate();
+                    Form form = new LoginForm(username, password).validate();
                     if (form.isValid()) {
                         HashMap<String, String> params = new HashMap<>();
                         params.put(UserKeys.USERNAME.toString(), username);
@@ -161,10 +163,15 @@ public final class LoginActivity extends AppCompatActivity {
                             public void onSuccess(String response) {
                                 CustomNetworkResponse customNetworkResponse = new CustomNetworkResponse(response);
                                 if (customNetworkResponse.isSuccessful()) {
-                                    CurrentActiveUser.newUser(mContext, customNetworkResponse.getPayload());
-                                    Dialog.makeToast(mContext, getString(R.string.welcome_back).concat(StringResources.BLANK_SPACE).concat(username));
-                                    startActivity(intent);
-                                    finish();
+                                    JSONObject payload = customNetworkResponse.getPayloadObject();
+                                    if (payload != null) {
+                                        CurrentActiveUser.newUser(mContext, payload);
+                                        Dialog.makeToast(mContext, getString(R.string.welcome_back).concat(StringResources.BLANK_SPACE).concat(username));
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        Dialog.makeToast(mContext, getString(R.string.an_error_occured));
+                                    }
                                 } else {
                                     Dialog.makeToast(mContext, getString(R.string.incorrect_login_info));
                                 }
@@ -212,8 +219,7 @@ public final class LoginActivity extends AppCompatActivity {
                     Request request = new NetworkRequest(new NetworkCallback() {
                         @Override
                         public void onSuccess(String response) {
-                            Log.e(TAG, token.toString());
-                            Log.i(TAG, "Complete");
+                            Log.i(TAG, token.toString());
                         }
                     }).post(RESTEndpoints.GCM, params);
                     NetworkSingleton.getInstance(mContext).addToRequestQueue(request);

@@ -8,7 +8,6 @@ import com.jaysyko.wrestlechat.localStorage.LocalStorage;
 import com.jaysyko.wrestlechat.localStorage.StorageFile;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,12 +41,11 @@ public class CurrentActiveUser {
      * @param payload String
      * @return CurrentActiveUser
      */
-    public static CurrentActiveUser newUser(Context context, JSONArray payload) {
+    public static CurrentActiveUser newUser(Context context, JSONObject payload) {
         try {
-            JSONObject user = (JSONObject) payload.get(0);
-            String userID = user.getString(UserKeys.ID.toString());
-            String username = user.getString(UserKeys.USERNAME.toString());
-            String profileImageURL = user.getString(UserKeys.PROFILE_IMAGE.toString());
+            String userID = payload.getString(UserKeys.ID.toString());
+            String username = payload.getString(UserKeys.USERNAME.toString());
+            String profileImageURL = payload.getString(UserKeys.PROFILE_IMAGE.toString());
             SharedPreferences sharedPreferences = new LocalStorage(context, StorageFile.AUTH).getSharedPreferences();
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean(IS_LOGGED_IN, true);

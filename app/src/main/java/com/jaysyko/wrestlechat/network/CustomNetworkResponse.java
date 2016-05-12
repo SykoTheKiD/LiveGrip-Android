@@ -15,6 +15,8 @@ import org.json.JSONObject;
 public class CustomNetworkResponse {
 
     public static final String TAG = CustomNetworkResponse.class.getSimpleName();
+    private static final String SUCCESS = "success";
+    private static final String FAIL = "fail";
     private JSONObject response;
 
     public CustomNetworkResponse(String response) {
@@ -32,9 +34,15 @@ public class CustomNetworkResponse {
      */
     public boolean isSuccessful() {
         try {
-            return (Boolean) this.response.get(NetworkResponseKeys.SUCCESS.toString());
+            String status = (String) this.response.get(NetworkResponseKeys.STATUS.toString());
+            switch (status) {
+                case SUCCESS:
+                    return true;
+                case FAIL:
+                    return false;
+            }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
         }
         return false;
     }
@@ -43,13 +51,31 @@ public class CustomNetworkResponse {
      * Gets the results of the performed action
      * @return JSON Array of the details
      */
-    public JSONArray getPayload() {
+    public JSONArray getPayloadArray() {
         try {
-            return (JSONArray) this.response.get(NetworkResponseKeys.PAYLOAD.toString());
+            return (JSONArray) this.response.get(NetworkResponseKeys.DATA.toString());
+        } catch (JSONException | ClassCastException e) {
+            Log.e(TAG, e.getMessage());
+        }
+        return null;
+    }
+
+    public JSONObject getPayloadObject() {
+        try {
+            return (JSONObject) this.response.get(NetworkResponseKeys.DATA.toString());
         } catch (JSONException e) {
             Log.e(TAG, e.getMessage());
-            return null;
         }
+        return null;
+    }
+
+    public String getMessage() {
+        try {
+            return (String) this.response.get(NetworkResponseKeys.MESSAGE.toString());
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage());
+        }
+        return null;
     }
 
     /**
@@ -58,6 +84,11 @@ public class CustomNetworkResponse {
      */
     @Override
     public String toString() {
-        return getPayload().toString();
+        String string = getPayloadArray().toString();
+        if (string != null) {
+            return string;
+        } else {
+            return getPayloadObject().toString();
+        }
     }
 }

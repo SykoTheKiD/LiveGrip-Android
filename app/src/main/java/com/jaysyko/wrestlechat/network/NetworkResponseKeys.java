@@ -7,8 +7,9 @@ package com.jaysyko.wrestlechat.network;
  * @author Jay Syko
  */
 public enum NetworkResponseKeys {
-    SUCCESS("success"),
-    PAYLOAD("payload");
+    STATUS("status"),
+    MESSAGE("message"),
+    DATA("data");
 
     private String key;
 

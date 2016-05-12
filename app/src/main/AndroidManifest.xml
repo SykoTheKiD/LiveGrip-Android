@@ -42,7 +42,7 @@
             android:theme="@style/NoActionBar" />
         <activity
             android:name=".activities.SettingsActivity"
-            android:label="@string/activity_settings"></activity>
+            android:label="@string/activity_settings" />
         <activity
             android:name=".activities.LegalActivity"
             android:label="@string/title_activity_legal"
@@ -99,7 +99,12 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".activities.NewsActivity"></activity>
+        <activity android:name=".activities.NewsActivity" />
+
+        <service
+            android:name=".services.EventStartNotifierService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

@@ -1,7 +1,7 @@
 package com.jaysyko.wrestlechat.forms;
 
-import com.jaysyko.wrestlechat.forms.formValidators.LoginValidator;
-import com.jaysyko.wrestlechat.forms.formValidators.SignUpValidator;
+import com.jaysyko.wrestlechat.forms.formTypes.LoginForm;
+import com.jaysyko.wrestlechat.forms.formTypes.SignUpForm;
 
 import org.junit.Test;
 
@@ -14,43 +14,43 @@ public class FormTest {
 
     @Test
     public void loginValidatorValidTest() {
-        Form form = new LoginValidator("jaysyko", "password").validate();
+        Form form = new LoginForm("jaysyko", "password").validate();
         assertEquals(true, form.isValid());
         assertEquals(FormStatus.VALID, form.getReason());
     }
 
     @Test
     public void loginValidatorFailTest() {
-        Form form = new LoginValidator("", "password").validate();
+        Form form = new LoginForm("", "password").validate();
         assertEquals(false, form.isValid());
         assertEquals(FormStatus.BLANK_FIELDS, form.getReason());
 
-        form = new LoginValidator("", "").validate();
+        form = new LoginForm("", "").validate();
         assertEquals(false, form.isValid());
         assertEquals(FormStatus.BLANK_FIELDS, form.getReason());
 
-        form = new LoginValidator("", "password").validate();
+        form = new LoginForm("", "password").validate();
         assertEquals(false, form.isValid());
         assertEquals(FormStatus.BLANK_FIELDS, form.getReason());
 
-        form = new LoginValidator(null, null).validate();
+        form = new LoginForm(null, null).validate();
         assertEquals(false, form.isValid());
         assertEquals(FormStatus.BLANK_FIELDS, form.getReason());
     }
 
     @Test
     public void signUpValidatorValidTest() {
-        Form form = new SignUpValidator("jaysyko", "jaysyko").validate();
+        Form form = new SignUpForm("jaysyko", "jaysyko").validate();
         assertEquals(true, form.isValid());
     }
 
     @Test
     public void signUpValidatorFailTest() {
-        Form form = new SignUpValidator("", "").validate();
+        Form form = new SignUpForm("", "").validate();
         assertEquals(false, form.isValid());
         assertEquals(FormStatus.BLANK_FIELDS, form.getReason());
 
-        form = new SignUpValidator("!!syfdfdodifs!><:dasd", "password").validate();
+        form = new SignUpForm("!!syfdfdodifs!><:dasd", "password").validate();
         assertEquals(false, form.isValid());
         assertEquals(FormStatus.SPECIAL_CHARACTERS, form.getReason());
     }

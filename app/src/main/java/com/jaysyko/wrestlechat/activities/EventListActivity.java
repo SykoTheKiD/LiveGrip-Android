@@ -50,7 +50,7 @@ public class EventListActivity extends AppCompatActivity{
 
         /**
          * Lets inflate the very first fragment
-         * Here , we are inflating the TabFragment as the first Fragment
+         * Here we are inflating the TabFragment as the first Fragment
          */
 
         mFragmentManager = getSupportFragmentManager();

@@ -36,7 +36,7 @@ import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
-import com.jaysyko.wrestlechat.forms.formValidators.MessageValidator;
+import com.jaysyko.wrestlechat.forms.formTypes.MessagingForm;
 import com.jaysyko.wrestlechat.localStorage.LocalStorage;
 import com.jaysyko.wrestlechat.localStorage.StorageFile;
 import com.jaysyko.wrestlechat.models.Event;
@@ -148,7 +148,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     }
 
     private void saveMessage(String body) {
-        Form form = new MessageValidator(body).validate();
+        Form form = new MessagingForm(body).validate();
         if (NetworkState.isConnected(mApplicationContext)) {
             if (form.isValid()) {
                 messagingService.send(body);

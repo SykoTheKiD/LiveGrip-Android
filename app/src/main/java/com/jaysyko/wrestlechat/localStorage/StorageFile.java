@@ -4,7 +4,7 @@ package com.jaysyko.wrestlechat.localStorage;
  * Created by jarushaan on 2016-03-30
  */
 public enum StorageFile {
-    AUTH("AUTH"), MESSAGING("MESSAGING");
+    AUTH("AUTH"), MESSAGING("MESSAGING"), EVENTS("EVENTS");
 
     private String file;
 
