@@ -16,6 +16,7 @@ import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkRequest;
 import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.RESTEndpoints;
+import com.jaysyko.wrestlechat.network.URLS;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.android.service.MqttTraceHandler;
@@ -39,11 +40,8 @@ import java.util.HashMap;
  */
 public class MessagingService extends Service implements MqttCallback, MqttTraceHandler, IMqttActionListener {
     private static final String TAG = MessagingService.class.getSimpleName();
-    private static final String MQTT_BROKER_URL = "159.203.38.255";
-    private static final String MQTT_BROKER_PORT = "8080";
     private static final String CLIENT_ID = CurrentActiveUser.getCurrentUser().getUsername();
-    private static final String PROTOCOL = "tcp://";
-    private static final String MOSQUITO_URL = PROTOCOL + MQTT_BROKER_URL + ":" + MQTT_BROKER_PORT;
+    private static final String MOSQUITO_URL = URLS.getMosquittoURL();
     private static final int CONNECTION_TIMEOUT = 10000;
     private static final int KEEP_ALIVE_INTERVAL = 600000;
     private static final String DUMMY_PASSWORD = "password";
@@ -259,6 +257,11 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
                     @Override
                     public void onSuccess(String response) {
                         Log.i(TAG, "Message Saved to DB");
+                    }
+
+                    @Override
+                    public void onFail(String response) {
+                        Log.e(TAG, response);
                     }
                 }).post(RESTEndpoints.MESSAGES, params);
                 NetworkSingleton.getInstance(getApplicationContext()).addToRequestQueue(request);

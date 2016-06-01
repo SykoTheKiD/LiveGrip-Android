@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.android.volley.Request;
+import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.localStorage.LocalStorage;
 import com.jaysyko.wrestlechat.localStorage.StorageFile;
 import com.jaysyko.wrestlechat.models.Event;
@@ -32,9 +33,9 @@ public class CurrentEvents {
     private static final String TAG = CurrentEvents.class.getSimpleName();
     private static final String EVENTS = "events";
     private static CurrentEvents ourInstance = new CurrentEvents();
+    private static SharedPreferences mSharedPreferences;
     private List<Event> mEventsList = new ArrayList<>();
     private Context mApplicationContext;
-    private static SharedPreferences mSharedPreferences;
 
     private CurrentEvents() {
     }
@@ -98,6 +99,11 @@ public class CurrentEvents {
                     jsonToModel(events);
                     callback.onSuccess(mEventsList);
                 }
+            }
+
+            @Override
+            public void onFail(String response) {
+                Dialog.makeToast(mApplicationContext, response);
             }
         }).get(RESTEndpoints.EVENTS);
         NetworkSingleton.getInstance(mApplicationContext).addToRequestQueue(stringRequest);

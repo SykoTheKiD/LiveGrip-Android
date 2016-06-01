@@ -8,5 +8,7 @@ package com.jaysyko.wrestlechat.network;
  */
 public interface NetworkCallback {
     void onSuccess(String response);
+
+    void onFail(String response);
 }
 

@@ -131,6 +131,12 @@ public final class LoginActivity extends AppCompatActivity {
                                         Dialog.makeToast(mContext, getString(R.string.username_taken));
                                     }
                                 }
+
+                                @Override
+                                public void onFail(String response) {
+                                    Log.e(TAG, "" + response);
+                                    Dialog.makeToast(mContext, "" + response);
+                                }
                             }).post(RESTEndpoints.SIGN_UP, params);
                             NetworkSingleton.getInstance(mContext).addToRequestQueue(request);
                         } else {
@@ -176,6 +182,12 @@ public final class LoginActivity extends AppCompatActivity {
                                     Dialog.makeToast(mContext, getString(R.string.incorrect_login_info));
                                 }
                             }
+
+                            @Override
+                            public void onFail(String response) {
+                                Log.e(TAG, "" + response);
+                                Dialog.makeToast(mContext, "An Error Has Occured\nPlease try again.");
+                            }
                         }).post(RESTEndpoints.LOGIN, params);
                         NetworkSingleton.getInstance(mContext).addToRequestQueue(request);
                     } else {
@@ -220,6 +232,11 @@ public final class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(String response) {
                             Log.i(TAG, token.toString());
+                        }
+
+                        @Override
+                        public void onFail(String response) {
+                            Dialog.makeToast(mContext, response);
                         }
                     }).post(RESTEndpoints.GCM, params);
                     NetworkSingleton.getInstance(mContext).addToRequestQueue(request);

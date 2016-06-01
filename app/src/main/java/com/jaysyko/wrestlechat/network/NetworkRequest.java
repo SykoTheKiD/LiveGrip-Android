@@ -17,7 +17,7 @@ import java.util.Map;
  * @author Jay Syko
  */
 public class NetworkRequest {
-    private static final String MYSQL_URL = "http://192.168.33.10:8080/";
+    private static final String MYSQL_URL = URLS.getServerURL();
     private static String TAG = NetworkRequest.class.getSimpleName();
     private NetworkCallback callback;
 
@@ -79,7 +79,7 @@ public class NetworkRequest {
      * @return a VolleyRequest to be added to RequestQueue
      */
     public Request post(RESTEndpoints endpoint, final HashMap<String, String> params) {
-        return new StringRequest(
+        StringRequest strReq = new StringRequest(
                 Request.Method.POST,
                 MYSQL_URL.concat(endpoint.getEndpoint()),
                 new Response.Listener<String>() {
@@ -91,6 +91,7 @@ public class NetworkRequest {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        callback.onFail(error.toString());
                         Log.e(TAG, StringResources.NULL_TEXT + error.getMessage());
                     }
                 }) {
@@ -99,5 +100,6 @@ public class NetworkRequest {
                 return params;
             }
         };
+        return strReq;
     }
 }
