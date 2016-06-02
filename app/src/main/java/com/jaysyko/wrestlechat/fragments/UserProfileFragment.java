@@ -29,7 +29,7 @@ public class UserProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_user_profile_temp, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
         getActivity().setTitle(getString(R.string.manage_profile));
         currentActiveUser = CurrentActiveUser.getCurrentUser();
         mApplicationContext = getActivity();
