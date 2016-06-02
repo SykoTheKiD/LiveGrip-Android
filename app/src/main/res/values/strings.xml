@@ -87,8 +87,8 @@
     <string name="legal_info">\n\nNames, images and titles all belong to their respective owners.\n\nWrestling event info content belongs to Wikipedia and the WikiMedia Foundation.\n</string>
     <string name="no_account_dialog">Don\'t have an account? Sign Up</string>
     <string name="have_account_login">Already have an account? Sign In</string>
-    <string name="sign_in_to_app">Sign In to Wrestle Chat</string>
-    <string name="sign_up_to_app">Sign Up to Wrestle Chat</string>
+    <string name="sign_in_to_app">Sign In to LiveGrip</string>
+    <string name="sign_up_to_app">Sign Up to LiveGrip</string>
     <string name="about_tweet">Tweet Me</string>
     <string name="message_too_short">Message can\'t be blank</string>
     <string name="message_too_long">Message can\'t exceed 230 characters</string>
