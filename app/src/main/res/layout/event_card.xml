@@ -2,76 +2,56 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="380dp"
+    android:layout_height="350dp"
     android:layout_margin="8dp"
     card_view:cardUseCompatPadding="true">
 
     <RelativeLayout
+        android:id="@+id/event_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.flaviofaria.kenburnsview.KenBurnsView
-            android:id="@+id/event_image"
+            android:id="@+id/myImageView"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_alignParentTop="true"
-            android:contentDescription="@string/app_name"
-            android:scaleType="centerCrop"
-            android:src="@drawable/login_screen_bg" />
+            android:layout_height="380dp"
+            android:src="@drawable/login_screen_bg"
+            android:tint="@color/black"
+            android:tintMode="multiply" />
 
         <TextView
-            android:id="@+id/event_name"
+            android:id="@+id/myImageViewText"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_height="200dp"
+            android:layout_alignBottom="@+id/myImageView"
+            android:layout_alignLeft="@+id/myImageView"
+            android:layout_alignRight="@+id/myImageView"
+            android:layout_alignTop="@+id/myImageView"
+            android:layout_margin="1dp"
+            android:gravity="bottom|left"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:text="AT&amp;T Stadium | Dallas, Texas"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/myImageViewText1"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_alignBottom="@+id/myImageViewText"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="false"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/event_image"
-            android:maxLines="3"
-            android:paddingBottom="0dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="15dp"
-            android:textColor="#263238"
+            android:layout_marginBottom="33dp"
+            android:gravity="bottom|left"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:text="Wrestlemania 32"
+            android:textColor="#fff"
             android:textSize="25sp"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/event_name"
-            android:weightSum="1">
-
-            <TextView
-                android:id="@+id/event_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.35"
-                android:maxLines="3"
-                android:paddingBottom="35dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="20dp"
-                android:textColor="#666"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/event_live"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.60"
-                android:gravity="start"
-                android:maxLines="2"
-                android:paddingBottom="35dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="10dp"
-                android:textAllCaps="true"
-                android:textStyle="bold" />
-
-        </LinearLayout>
 
     </RelativeLayout>
+
 </android.support.v7.widget.CardView>
