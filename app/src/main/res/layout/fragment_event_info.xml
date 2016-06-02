@@ -1,55 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.jaysyko.wrestlechat.fragments.EventInfoFragment">
+    android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+    <RelativeLayout
+        android:id="@+id/event_image"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppBarOverlay">
+        android:layout_height="match_parent">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
+        <com.flaviofaria.kenburnsview.KenBurnsView
+            android:id="@+id/myImageView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            android:layout_height="380dp"
+            android:src="@drawable/login_screen_bg"
+            android:tint="@color/black"
+            android:tintMode="multiply" />
 
-            <com.flaviofaria.kenburnsview.KenBurnsView
-                android:id="@+id/event_info_photo"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/app_name"
-                android:scaleType="centerCrop" />
+        <TextView
+            android:id="@+id/myImageViewText"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_alignBottom="@+id/myImageView"
+            android:layout_alignLeft="@+id/myImageView"
+            android:layout_alignRight="@+id/myImageView"
+            android:layout_alignTop="@+id/myImageView"
+            android:layout_margin="1dp"
+            android:gravity="bottom|left"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:text="AT&amp;T Stadium | Dallas, Texas"
+            android:textColor="#fff"
+            android:textSize="25sp" />
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/PopupOverlay" />
+        <TextView
+            android:id="@+id/myImageViewText1"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_alignBottom="@+id/myImageViewText"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="33dp"
+            android:gravity="bottom|left"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:text="Wrestlemania 32"
+            android:textColor="#fff"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/myImageView"
+            android:background="#e63946" />
 
-    <include layout="@layout/content_event_info" />
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="86dp"
+            android:orientation="horizontal">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_menu_share"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end" />
+            <ImageButton
+                android:id="@+id/right_nav"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_vertical|right"
+                android:background="@null"
+                android:src="@drawable/chevron_icon" />
 
-</android.support.design.widget.CoordinatorLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/frameLayout"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:text="For the WWE Championship"
+                android:textColor="#ebebeb"
+                android:textSize="19sp" />
 
+            <ImageButton
+                android:id="@+id/left_nav"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignTop="@+id/textView2"
+                android:layout_gravity="left"
+                android:layout_toLeftOf="@+id/textView2"
+                android:layout_toStartOf="@+id/textView2"
+                android:background="@null"
+                android:src="@drawable/chevron_icon_left" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/frameLayout"
+            android:layout_centerHorizontal="true"
+            android:text="Dean Ambrose vs. Seth Rollins"
+            android:textColor="#ebebeb"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
