@@ -44,7 +44,7 @@ public final class LoginActivity extends AppCompatActivity {
     private String username, password;
     private Handler handler = new Handler();
     private Button loginButton, signUpButton;
-    private TextView signUpText, signUpPrompt;
+    private TextView signUpText;
     private EditText usernameField, passwordField;
     private Context mContext;
     private Intent intent;
@@ -64,7 +64,6 @@ public final class LoginActivity extends AppCompatActivity {
             loginButton = (Button) findViewById(R.id.sign_in_button);
             signUpButton = (Button) findViewById(R.id.sign_up_button);
             signUpText = (TextView) findViewById(R.id.sign_up_text_view);
-            signUpPrompt = (TextView) findViewById(R.id.sign_in_prompt);
             usernameField = (EditText) findViewById(R.id.username_text_view);
             usernameField.setText(getIntent().getStringExtra(USERNAME_INTENT_KEY));
             passwordField = (EditText) findViewById(R.id.login_password_et);
@@ -93,12 +92,10 @@ public final class LoginActivity extends AppCompatActivity {
             loginButton.setVisibility(View.GONE);
             signUpButton.setVisibility(View.VISIBLE);
             signUpText.setText(R.string.have_account_login);
-            signUpPrompt.setText(getString(R.string.sign_up_to_app));
         } else {
             loginButton.setVisibility(View.VISIBLE);
             signUpButton.setVisibility(View.GONE);
             signUpText.setText(R.string.no_account_dialog);
-            signUpPrompt.setText(getString(R.string.sign_in_to_app));
         }
         signIn ^= true;
     }

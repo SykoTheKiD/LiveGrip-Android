@@ -27,7 +27,7 @@ public class TabFragment extends Fragment {
          */
         View view = inflater.inflate(R.layout.tab_layout, null);
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
-        viewPager = (ViewPager) view.findViewById(R.id.viewpager);
+        viewPager = (ViewPager) view.findViewById(R.id.event_info_viewpager);
 
         /**
          * Set an Adapter for the View Pager
@@ -35,10 +35,10 @@ public class TabFragment extends Fragment {
         viewPager.setAdapter(new TabAdapter(getChildFragmentManager(), getContext()));
 
         if (CurrentEvents.getInstance(getContext()).getEvents().size() > 0){
-            view.findViewById(R.id.viewpager).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.event_info_viewpager).setVisibility(View.VISIBLE);
             view.findViewById(R.id.empty_layout).setVisibility(View.GONE);
         }else{
-            view.findViewById(R.id.viewpager).setVisibility(View.GONE);
+            view.findViewById(R.id.event_info_viewpager).setVisibility(View.GONE);
             view.findViewById(R.id.empty_layout).setVisibility(View.VISIBLE);
         }
 

@@ -17,39 +17,52 @@
             android:tintMode="multiply" />
 
         <TextView
-            android:id="@+id/myImageViewText"
+            android:id="@+id/event_location"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:layout_alignBottom="@+id/myImageView"
-            android:layout_alignLeft="@+id/myImageView"
-            android:layout_alignRight="@+id/myImageView"
-            android:layout_alignTop="@+id/myImageView"
-            android:layout_margin="1dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="32dp"
             android:gravity="bottom|left"
             android:paddingBottom="5dp"
-            android:paddingLeft="5dp"
+            android:paddingLeft="10dp"
             android:text="AT&amp;T Stadium | Dallas, Texas"
             android:textColor="#fff"
             android:textSize="25sp" />
 
         <TextView
-            android:id="@+id/myImageViewText1"
+            android:id="@+id/event_title"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
-            android:layout_alignBottom="@+id/myImageViewText"
+            android:layout_alignBottom="@+id/event_location"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="33dp"
+            android:layout_marginBottom="36dp"
             android:gravity="bottom|left"
             android:paddingBottom="5dp"
-            android:paddingLeft="5dp"
+            android:paddingLeft="10dp"
             android:text="Wrestlemania 32"
             android:textColor="#fff"
             android:textSize="30sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/event_time"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_alignBottom="@+id/myImageView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:gravity="bottom|left"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:text="5:00pm EST"
+            android:textColor="#fff"
+            android:textSize="25sp" />
+
         <android.support.v4.view.ViewPager
-            android:id="@+id/viewpager"
+            android:id="@+id/event_info_viewpager"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_alignParentBottom="true"
@@ -59,7 +72,7 @@
             android:background="#e63946" />
 
         <FrameLayout
-            android:id="@+id/frameLayout"
+            android:id="@+id/arrow_button_holders"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -79,7 +92,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/frameLayout"
+                android:layout_above="@+id/arrow_button_holders"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:text="For the WWE Championship"
@@ -90,20 +103,20 @@
                 android:id="@+id/left_nav"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_alignTop="@+id/textView2"
+                android:layout_alignTop="@+id/match_card_view_holder"
                 android:layout_gravity="left"
-                android:layout_toLeftOf="@+id/textView2"
-                android:layout_toStartOf="@+id/textView2"
+                android:layout_toLeftOf="@+id/match_card_view_holder"
+                android:layout_toStartOf="@+id/match_card_view_holder"
                 android:background="@null"
                 android:src="@drawable/chevron_icon_left" />
 
         </FrameLayout>
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/match_card_view_holder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/frameLayout"
+            android:layout_above="@+id/arrow_button_holders"
             android:layout_centerHorizontal="true"
             android:text="Dean Ambrose vs. Seth Rollins"
             android:textColor="#ebebeb"

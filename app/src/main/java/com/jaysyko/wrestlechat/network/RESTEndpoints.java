@@ -6,7 +6,12 @@ package com.jaysyko.wrestlechat.network;
  * @author Jay Syko
  */
 public enum RESTEndpoints {
-    LOGIN("auth/login"), SIGN_UP("auth/register"), MESSAGES("messages/save"), EVENTS("events"), GCM("user/update/gcm_id"), UPDATE_PROFILE_IMAGE("user/update/profile_image");
+    LOGIN("auth/login"),
+    SIGN_UP("auth/register"),
+    MESSAGES("messages/save"),
+    EVENTS("events"),
+    GCM("user/update/gcm_id"),
+    UPDATE_PROFILE_IMAGE("user/update/profile_image");
 
     private String endpoint;
 

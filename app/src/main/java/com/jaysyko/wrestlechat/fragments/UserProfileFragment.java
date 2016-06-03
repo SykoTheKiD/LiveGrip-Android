@@ -33,7 +33,7 @@ public class UserProfileFragment extends Fragment {
         getActivity().setTitle(getString(R.string.manage_profile));
         currentActiveUser = CurrentActiveUser.getCurrentUser();
         mApplicationContext = getActivity();
-        profilePicture = (ImageView) view.findViewById(R.id.profilePicture);
+        profilePicture = (ImageView) view.findViewById(R.id.profile_picture);
         ImageTools.loadImage(mApplicationContext, currentActiveUser.getProfileImage(), profilePicture);
         handler.post(new Runnable() {
             @Override

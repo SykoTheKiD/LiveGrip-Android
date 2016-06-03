@@ -3,23 +3,17 @@ package com.jaysyko.wrestlechat.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
-import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.models.Event;
-import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 public class EventInfoFragment extends Fragment {
@@ -44,16 +38,6 @@ public class EventInfoFragment extends Fragment {
         final Activity activity = getActivity();
         ((AppCompatActivity) activity).setSupportActionBar(toolbar);
         prepareEventInfoContent(activity);
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent share = new Intent(Intent.ACTION_SEND);
-                share.setType(StringResources.PLAIN_CONTENT_TYPE);
-                share.putExtra(Intent.EXTRA_TEXT, getShareMessage(currentActiveEvent.getEventName()));
-                startActivity(Intent.createChooser(share, getString(R.string.app_share_title)));
-            }
-        });
 
 //        handler.post(new Runnable() {
 //            @Override
@@ -70,19 +54,19 @@ public class EventInfoFragment extends Fragment {
     }
 
     private void prepareEventInfoContent(Context context) {
-        TextView eventTitle = (TextView) view.findViewById(R.id.event_title);
-        eventTitle.setText(currentActiveEvent.getEventName());
-        TextView eventDescription = (TextView) view.findViewById(R.id.event_info_description);
-        eventDescription.setText(currentActiveEvent.getEventInfo());
-        TextView matchCard = (TextView) view.findViewById(R.id.event_info_match_card);
-        String matchCardText = currentActiveEvent.getMatchCard().replace(NEW_LINE, System.getProperty(LINE_SEPARATOR));
-        matchCard.setText(matchCardText);
-        TextView startTimeTV = (TextView) view.findViewById(R.id.event_info_start_time);
-        startTimeTV.setText(DateVerifier.format(currentActiveEvent.getEventStartTime()));
-        TextView locationTV = (TextView) view.findViewById(R.id.event_info_location);
-        locationTV.setText(currentActiveEvent.getEventLocation());
-        ImageView eventImage = (ImageView) view.findViewById(R.id.event_info_photo);
-        ImageTools.loadImage(context, StringResources.IMGUR_LINK.concat(currentActiveEvent.getEventImage()), eventImage);
+//        TextView eventTitle = (TextView) view.findViewById(R.id.event_title);
+//        eventTitle.setText(currentActiveEvent.getEventName());
+//        TextView eventDescription = (TextView) view.findViewById(R.id.event_info_description);
+//        eventDescription.setText(currentActiveEvent.getEventInfo());
+//        TextView matchCard = (TextView) view.findViewById(R.id.event_info_match_card);
+//        String matchCardText = currentActiveEvent.getMatchCard().replace(NEW_LINE, System.getProperty(LINE_SEPARATOR));
+//        matchCard.setText(matchCardText);
+//        TextView startTimeTV = (TextView) view.findViewById(R.id.event_info_start_time);
+//        startTimeTV.setText(DateVerifier.format(currentActiveEvent.getEventStartTime()));
+//        TextView locationTV = (TextView) view.findViewById(R.id.event_info_location);
+//        locationTV.setText(currentActiveEvent.getEventLocation());
+//        ImageView eventImage = (ImageView) view.findViewById(R.id.event_info_photo);
+//        ImageTools.loadImage(context, StringResources.IMGUR_LINK.concat(currentActiveEvent.getEventImage()), eventImage);
     }
 
 }
