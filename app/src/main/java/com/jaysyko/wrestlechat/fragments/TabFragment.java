@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.TabAdapter;
-import com.jaysyko.wrestlechat.eventManager.CurrentEvents;
 
 public class TabFragment extends Fragment {
 
@@ -34,13 +33,13 @@ public class TabFragment extends Fragment {
          */
         viewPager.setAdapter(new TabAdapter(getChildFragmentManager(), getContext()));
 
-        if (CurrentEvents.getInstance(getContext()).getEvents().size() > 0){
-            view.findViewById(R.id.event_info_viewpager).setVisibility(View.VISIBLE);
-            view.findViewById(R.id.empty_layout).setVisibility(View.GONE);
-        }else{
-            view.findViewById(R.id.event_info_viewpager).setVisibility(View.GONE);
-            view.findViewById(R.id.empty_layout).setVisibility(View.VISIBLE);
-        }
+//        if (CurrentEvents.getInstance(getContext()).getEvents().size() > 0){
+//            view.findViewById(R.id.event_info_viewpager).setVisibility(View.VISIBLE);
+//            view.findViewById(R.id.empty_layout).setVisibility(View.GONE);
+//        }else{
+//            view.findViewById(R.id.event_info_viewpager).setVisibility(View.GONE);
+//            view.findViewById(R.id.empty_layout).setVisibility(View.VISIBLE);
+//        }
 
         /**
          * Now , this is a workaround ,

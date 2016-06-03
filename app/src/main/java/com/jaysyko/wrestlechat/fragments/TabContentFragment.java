@@ -19,11 +19,9 @@ import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
-import com.jaysyko.wrestlechat.eventManager.CurrentEvents;
 import com.jaysyko.wrestlechat.eventManager.OpenEvent;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Event;
-import com.jaysyko.wrestlechat.network.NetworkCallbackObject;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.utils.BundleKeys;
 
@@ -86,7 +84,7 @@ public class TabContentFragment extends Fragment {
                     new Handler().post(new Runnable() {
                         @Override
                         public void run() {
-                            getEvents();
+//                            getEvents();
                             swipeView.setRefreshing(false);
                         }
                     });
@@ -125,14 +123,14 @@ public class TabContentFragment extends Fragment {
         );
     }
 
-    private void getEvents() {
-        CurrentEvents.getInstance(mApplicationContext).updateEvents(new NetworkCallbackObject<Event>() {
-            @Override
-            public void onSuccess(List<Event> response) {
-                generateEventCards(response);
-            }
-        });
-    }
+//    private void getEvents() {
+//        CurrentEvents.getInstance(mApplicationContext).updateEvents(new NetworkCallbackObject<Event>() {
+//            @Override
+//            public void onSuccess(List<Event> response) {
+//                generateEventCards(response);
+//            }
+//        });
+//    }
 
     private void generateEventCards(List<Event> response) {
         if(mAdapter != null){
@@ -152,7 +150,7 @@ public class TabContentFragment extends Fragment {
 
     private void getLocalEvents(){
         Log.i(TAG, "Cache Hit");
-        generateEventCards(CurrentEvents.getInstance(mApplicationContext).getEvents());
+//        generateEventCards(CurrentEvents.getInstance(mApplicationContext).getEvents());
 
     }
 }

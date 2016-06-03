@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.google.gson.annotations.SerializedName;
 import com.jaysyko.wrestlechat.localStorage.LocalStorage;
 import com.jaysyko.wrestlechat.localStorage.StorageFile;
 import com.jaysyko.wrestlechat.utils.ImageTools;
@@ -25,8 +26,12 @@ public class CurrentActiveUser {
     private static final String TAG = CurrentActiveUser.class.getSimpleName();
     private static CurrentActiveUser activeUser;
     private Context context;
+
+    @SerializedName("id")
     private String userID;
+    @SerializedName("username")
     private String username;
+    @SerializedName("profile_image")
     private String profileImageURL;
 
     private CurrentActiveUser(String userID, String username) {

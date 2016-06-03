@@ -6,16 +6,11 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.android.volley.Request;
 import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.auth.UserKeys;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.Message;
-import com.jaysyko.wrestlechat.network.NetworkCallback;
-import com.jaysyko.wrestlechat.network.NetworkRequest;
-import com.jaysyko.wrestlechat.network.NetworkSingleton;
-import com.jaysyko.wrestlechat.network.RESTEndpoints;
 import com.jaysyko.wrestlechat.network.URLS;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
@@ -30,7 +25,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
+//import com.android.volley.Request;
 
 /**
  * MessagingService.java
@@ -225,7 +220,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
             payload.put(Event.EventJSONKeys.NAME.toString(), currentActiveEvent.getCurrentEvent().getEventName());
             payload.put(UserKeys.USERNAME.toString(), currentActiveUser.getUsername());
             payload.put(UserKeys.PROFILE_IMAGE.toString(), currentActiveUser.getProfileImage());
-            saveToDB(payload);
+//            saveToDB(payload);
         } catch (JSONException e) {
             Log.e(TAG, e.getMessage());
         }
@@ -241,33 +236,33 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      * Saves a message to the database
      * @param payload of the sent Message
      */
-    private synchronized void saveToDB(final JSONObject payload) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                HashMap<String, String> params = new HashMap<>();
-                try {
-                    params.put(USER_ID, payload.getString(Message.MessageJSONKeys.USER_ID.toString()));
-                    params.put(EVENT_ID, payload.getString(Message.MessageJSONKeys.EVENT_ID.toString()));
-                    params.put(MESSAGE_BODY, payload.getString(Message.MessageJSONKeys.BODY.toString()));
-                } catch (JSONException e) {
-                    Log.e(TAG, e.getMessage());
-                }
-                Request request = new NetworkRequest(new NetworkCallback() {
-                    @Override
-                    public void onSuccess(String response) {
-                        Log.i(TAG, "Message Saved to DB");
-                    }
-
-                    @Override
-                    public void onFail(String response) {
-                        Log.e(TAG, response);
-                    }
-                }).post(RESTEndpoints.MESSAGES, params);
-                NetworkSingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
-            }
-        });
-    }
+//    private synchronized void saveToDB(final JSONObject payload) {
+//        handler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                HashMap<String, String> params = new HashMap<>();
+//                try {
+//                    params.put(USER_ID, payload.getString(Message.MessageJSONKeys.USER_ID.toString()));
+//                    params.put(EVENT_ID, payload.getString(Message.MessageJSONKeys.EVENT_ID.toString()));
+//                    params.put(MESSAGE_BODY, payload.getString(Message.MessageJSONKeys.BODY.toString()));
+//                } catch (JSONException e) {
+//                    Log.e(TAG, e.getMessage());
+//                }
+//                Request request = new NetworkRequest(new NetworkCallback() {
+//                    @Override
+//                    public void onSuccess(String response) {
+//                        Log.i(TAG, "Message Saved to DB");
+//                    }
+//
+//                    @Override
+//                    public void onFail(String response) {
+//                        Log.e(TAG, response);
+//                    }
+//                }).post(RESTEndpoints.MESSAGES, params);
+//                NetworkSingleton.getInstance(getApplicationContext()).addToRequestQueue(request);
+//            }
+//        });
+//    }
 
     /**
      * Disconnects you from the MQTT Broker

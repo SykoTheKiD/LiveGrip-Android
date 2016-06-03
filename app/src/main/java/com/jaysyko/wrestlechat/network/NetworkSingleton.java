@@ -2,9 +2,9 @@ package com.jaysyko.wrestlechat.network;
 
 import android.content.Context;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
+//import com.android.volley.Request;
+//import com.android.volley.RequestQueue;
+//import com.android.volley.toolbox.Volley;
 
 /**
  * NetworkSingleton.java
@@ -15,11 +15,11 @@ import com.android.volley.toolbox.Volley;
 public class NetworkSingleton {
     private static NetworkSingleton mInstance;
     private Context mContext;
-    private RequestQueue mRequestQueue;
+//    private RequestQueue mRequestQueue;
 
     private NetworkSingleton(Context context) {
         this.mContext = context;
-        this.mRequestQueue = getRequestQueue();
+//        this.mRequestQueue = getRequestQueue();
     }
 
     /**
@@ -39,19 +39,19 @@ public class NetworkSingleton {
      * Get the active request queue
      * @return the Volley request queue
      */
-    private RequestQueue getRequestQueue() {
-        if (mRequestQueue == null) {
-            mRequestQueue = Volley.newRequestQueue(mContext.getApplicationContext());
-        }
-        return mRequestQueue;
-    }
+//    private RequestQueue getRequestQueue() {
+//        if (mRequestQueue == null) {
+//            mRequestQueue = Volley.newRequestQueue(mContext.getApplicationContext());
+//        }
+//        return mRequestQueue;
+//    }
 
     /**
      * Add a Volley Request to the request queue
      * @param request Volley Request
      * @param <T> Request Type
      */
-    public <T> void addToRequestQueue(Request<T> request) {
-        getRequestQueue().add(request);
-    }
+//    public <T> void addToRequestQueue(Request<T> request) {
+//        getRequestQueue().add(request);
+//    }
 }

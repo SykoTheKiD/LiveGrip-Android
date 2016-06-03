@@ -1,5 +1,7 @@
 package com.jaysyko.wrestlechat.models;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Events.java
  * Model for the Event object in the database
@@ -10,8 +12,22 @@ package com.jaysyko.wrestlechat.models;
 
 public class Event {
 
-    private String eventID, eventName, eventInfo, matchCard, eventImage, eventLocation;
-    private String eventStartTime, eventEndTime;
+    @SerializedName("id")
+    private String eventID;
+    @SerializedName("name")
+    private String eventName;
+    @SerializedName("info")
+    private String eventInfo;
+    @SerializedName("match_card")
+    private String matchCard;
+    @SerializedName("image")
+    private String eventImage;
+    @SerializedName("location")
+    private String eventLocation;
+    @SerializedName("start_time")
+    private String eventStartTime;
+    @SerializedName("end_time")
+    private String eventEndTime;
 
     public Event(String eventID, String eventName, String eventInfo, String matchCard, String eventImage, String eventLocation, String eventStartTime, String eventEndTime) {
         this.eventID = eventID;
