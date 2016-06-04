@@ -30,6 +30,8 @@ import com.jaysyko.wrestlechat.network.UserData;
 import com.jaysyko.wrestlechat.network.responses.UserResponse;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 
 public final class LoginActivity extends AppCompatActivity {
@@ -38,9 +40,11 @@ public final class LoginActivity extends AppCompatActivity {
     private static final String USERNAME_INTENT_KEY = "username";
     private String username, password;
     private Handler handler = new Handler();
-    private Button loginButton, signUpButton;
-    private TextView signUpText;
-    private EditText usernameField, passwordField;
+    @BindView(R.id.sign_in_button) Button loginButton;
+    @BindView(R.id.sign_up_button) Button signUpButton;
+    @BindView(R.id.sign_up_text_view) TextView signUpText;
+    @BindView(R.id.username_text_view) EditText usernameField;
+    @BindView(R.id.login_password_et) EditText passwordField;
     private Context mContext;
     private Intent intent;
     private boolean signIn = true;
@@ -49,15 +53,11 @@ public final class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
         // Redirect to Events page if logged in;
         mContext = getApplicationContext();
         intent = new Intent(mContext, EventListActivity.class);
-        loginButton = (Button) findViewById(R.id.sign_in_button);
-        signUpButton = (Button) findViewById(R.id.sign_up_button);
-        signUpText = (TextView) findViewById(R.id.sign_up_text_view);
-        usernameField = (EditText) findViewById(R.id.username_text_view);
         usernameField.setText(getIntent().getStringExtra(USERNAME_INTENT_KEY));
-        passwordField = (EditText) findViewById(R.id.login_password_et);
         handler.post(new Runnable() {
             @Override
             public void run() {

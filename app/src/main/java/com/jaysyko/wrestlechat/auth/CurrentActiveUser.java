@@ -13,7 +13,7 @@ public class CurrentActiveUser {
     private User user;
 
     private CurrentActiveUser(User user) {
-        activeUser.user = user;
+        this.user = user;
     }
 
 
@@ -28,7 +28,7 @@ public class CurrentActiveUser {
     }
 
     public User getCurrentUser(){
-        return activeUser.user;
+        return user;
     }
 
     public void destroySession(){

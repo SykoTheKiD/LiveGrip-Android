@@ -21,7 +21,7 @@ import retrofit2.Call;
  *
  * @author Jay Syko
  */
-public class CurrentEvents {
+public final class CurrentEvents {
     private static final String TAG = CurrentEvents.class.getSimpleName();
     private static CurrentEvents ourInstance = new CurrentEvents();
     private List<Event> mEventsList = new ArrayList<>();

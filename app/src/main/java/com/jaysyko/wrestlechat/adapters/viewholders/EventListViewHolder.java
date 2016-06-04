@@ -20,9 +20,9 @@ public final class EventListViewHolder extends RecyclerView.ViewHolder {
 
     public EventListViewHolder(View itemLayoutView) {
         super(itemLayoutView);
-        txtViewTitle = (TextView) itemLayoutView.findViewById(R.id.event_name);
+        txtViewTitle = (TextView) itemLayoutView.findViewById(R.id.event_title);
         imgViewIcon = (KenBurnsView) itemLayoutView.findViewById(R.id.event_image);
         txtViewLocation = (TextView) itemLayoutView.findViewById(R.id.event_location);
-        txtViewLiveStatus = (TextView) itemLayoutView.findViewById(R.id.event_live);
+        txtViewLiveStatus = (TextView) itemLayoutView.findViewById(R.id.event_time);
     }
 }
