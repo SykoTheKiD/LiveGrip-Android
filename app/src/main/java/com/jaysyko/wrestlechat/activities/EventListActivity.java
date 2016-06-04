@@ -45,7 +45,7 @@ public class EventListActivity extends AppCompatActivity{
         final View headerLayout = mNavigationView != null ? mNavigationView.inflateHeaderView(R.layout.nav_header_event_list) : null;
         TextView headerUsername = (TextView) (headerLayout != null ? headerLayout.findViewById(R.id.drawer_username) : null);
         if (headerUsername != null) {
-            headerUsername.setText(CurrentActiveUser.getCurrentUser().getUsername());
+            headerUsername.setText(CurrentActiveUser.getInstance().getCurrentUser().getUsername());
         }
 
         /**
@@ -76,7 +76,7 @@ public class EventListActivity extends AppCompatActivity{
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                CurrentActiveUser.getCurrentUser().logout();
+                                CurrentActiveUser.getInstance().destroySession();
                                 Intent intent = new Intent(mApplicationContext, LoginActivity.class);
                                 startActivity(intent);
                                 finish();

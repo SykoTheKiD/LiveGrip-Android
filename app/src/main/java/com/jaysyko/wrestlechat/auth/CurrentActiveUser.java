@@ -27,7 +27,7 @@ public class CurrentActiveUser {
         }
     }
 
-    public User getUser(){
+    public User getCurrentUser(){
         return activeUser.user;
     }
 

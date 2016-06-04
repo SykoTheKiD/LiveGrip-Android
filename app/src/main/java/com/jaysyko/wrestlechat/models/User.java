@@ -14,7 +14,7 @@ public class User {
     @SerializedName("profile_image")
     private String profile_image;
 
-    public String getProfile_image() {
+    public String getProfileImage() {
         return profile_image;
     }
 

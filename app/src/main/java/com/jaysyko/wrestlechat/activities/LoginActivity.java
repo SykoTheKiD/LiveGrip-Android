@@ -22,8 +22,9 @@ import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formTypes.LoginForm;
 import com.jaysyko.wrestlechat.forms.formTypes.SignUpForm;
+import com.jaysyko.wrestlechat.network.ApiInterface;
+import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
-import com.jaysyko.wrestlechat.network.NetworkSingleton;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.UserData;
 import com.jaysyko.wrestlechat.network.responses.UserResponse;
@@ -35,7 +36,6 @@ public final class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
     private static final String USERNAME_INTENT_KEY = "username";
-    private static final String SUCCESS = "success";
     private String username, password;
     private Handler handler = new Handler();
     private Button loginButton, signUpButton;
@@ -100,20 +100,22 @@ public final class LoginActivity extends AppCompatActivity {
                     if (isPlayServicesInstalled()) {
                         Form form = new SignUpForm(username, password).validate();
                         if (form.isValid()) {
-                            NetworkSingleton networkSingleton = NetworkSingleton.getInstance();
-                            Call<UserResponse> call = networkSingleton.getApiService().createUser(new UserData(
-                                    username, password
-                            ));
-                            networkSingleton.request(call, new NetworkCallback<UserResponse>() {
+                            ApiInterface apiManager = ApiManager.getApiService();
+                            Call<UserResponse> call = apiManager.createUser(
+                                    new UserData(
+                                            username, password
+                                    )
+                            );
+                            ApiManager.request(call, new NetworkCallback<UserResponse>() {
                                 @Override
                                 public void onSuccess(UserResponse response) {
+                                    getDeviceIDForGCM();
                                     loginUser(response);
                                 }
-
                                 @Override
                                 public void onFail(String t) {
                                     Log.e(TAG, t);
-                                    Dialog.makeToast(mContext, getString(R.string.an_error_occured));
+                                    Dialog.makeToast(mContext, t);
                                 }
                             });
                         } else {
@@ -138,26 +140,21 @@ public final class LoginActivity extends AppCompatActivity {
                 if (NetworkState.isConnected(mContext)) {
                     Form form = new LoginForm(username, password).validate();
                     if (form.isValid()) {
-                        NetworkSingleton networkSingleton = NetworkSingleton.getInstance();
-                        Call<UserResponse> call = networkSingleton.getApiService().getUser(
+                        ApiInterface apiManager = ApiManager.getApiService();
+                        Call<UserResponse> call = apiManager.getUser(
                                 new UserData(
                                     username, password
                                 )
                         );
-                        networkSingleton.request(call, new NetworkCallback<UserResponse>() {
+                        ApiManager.request(call, new NetworkCallback<UserResponse>() {
                             @Override
                             public void onSuccess(UserResponse response) {
-                                if(response.getStatus().equals(SUCCESS)){
                                     loginUser(response);
-                                }else{
-                                    Dialog.makeToast(mContext, response.getMessage());
-                                }
                             }
-
                             @Override
                             public void onFail(String t) {
                                 Log.e(TAG, t);
-                                Dialog.makeToast(mContext, getString(R.string.an_error_occured));
+                                Dialog.makeToast(mContext, t);
                             }
                         });
                     } else {
@@ -193,7 +190,7 @@ public final class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    public void getDeviceIDForGCM(final String username) {
+    public void getDeviceIDForGCM() {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... taskParams) {

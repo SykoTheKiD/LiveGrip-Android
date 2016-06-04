@@ -130,6 +130,6 @@
     <string name="chat_rules">Chat Rules</string>
     <string name="action_reddit">Go to Reddit</string>
     <string name="action_user_profile">Manage Profile</string>
-    <string name="an_error_occured">An error has occured</string>
+    <string name="an_error_occurred">An error has occurred</string>
 
 </resources>

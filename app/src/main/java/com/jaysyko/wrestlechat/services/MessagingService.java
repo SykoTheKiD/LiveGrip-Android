@@ -6,11 +6,12 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.jaysyko.wrestlechat.eventManager.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.auth.UserKeys;
+import com.jaysyko.wrestlechat.eventManager.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.Message;
+import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.network.URLS;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
@@ -35,7 +36,7 @@ import org.json.JSONObject;
  */
 public class MessagingService extends Service implements MqttCallback, MqttTraceHandler, IMqttActionListener {
     private static final String TAG = MessagingService.class.getSimpleName();
-    private static final String CLIENT_ID = CurrentActiveUser.getCurrentUser().getUsername();
+    private static final String CLIENT_ID = CurrentActiveUser.getInstance().getCurrentUser().getUsername();
     private static final String MOSQUITO_URL = URLS.getMosquittoURL();
     private static final int CONNECTION_TIMEOUT = 10000;
     private static final int KEEP_ALIVE_INTERVAL = 600000;
@@ -211,10 +212,10 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      */
     public void send(String body) {
         JSONObject payload = new JSONObject();
-        CurrentActiveUser currentActiveUser = CurrentActiveUser.getCurrentUser();
+        User currentActiveUser = CurrentActiveUser.getInstance().getCurrentUser();
         CurrentActiveEvent currentActiveEvent = CurrentActiveEvent.getInstance();
         try {
-            payload.put(UserKeys.ID.toString(), currentActiveUser.getUserID());
+            payload.put(UserKeys.ID.toString(), currentActiveUser.getId());
             payload.put(Event.EventJSONKeys.ID.toString(), currentActiveEvent.getCurrentEvent().getEventID());
             payload.put(Message.MessageJSONKeys.BODY.toString(), body);
             payload.put(Event.EventJSONKeys.NAME.toString(), currentActiveEvent.getCurrentEvent().getEventName());

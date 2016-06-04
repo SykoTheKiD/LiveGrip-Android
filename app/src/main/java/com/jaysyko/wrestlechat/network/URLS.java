@@ -7,8 +7,8 @@ package com.jaysyko.wrestlechat.network;
  * @author Jay Syko
  */
 public final class URLS {
-    private static final String DEVELOPMENT_SERVER_URL = "127.0.0.1:3000/";
-    private static final String DEVELOPMENT_MOSQUITTO_URL = "localhost:8080";
+    private static final String DEVELOPMENT_SERVER_URL = "http://10.0.3.2:3000/";
+    private static final String DEVELOPMENT_MOSQUITTO_URL = "10.0.3.2:8080";
 
     private static final String PRODUCTION_SERVER_URL = "";
     private static final String PRODUCTION_MOSQUITTO_URL = "";

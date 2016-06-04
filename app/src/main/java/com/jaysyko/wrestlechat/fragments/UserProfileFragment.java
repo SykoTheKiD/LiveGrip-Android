@@ -14,15 +14,14 @@ import android.widget.ImageView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
-import com.jaysyko.wrestlechat.dialogs.Dialog;
-import com.jaysyko.wrestlechat.network.NetworkState;
+import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
 public class UserProfileFragment extends Fragment {
 
     private Context mApplicationContext;
     private Handler handler = new Handler();
-    private CurrentActiveUser currentActiveUser;
+    private User currentActiveUser;
     private ImageView profilePicture;
 
     @Override
@@ -31,7 +30,7 @@ public class UserProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
         getActivity().setTitle(getString(R.string.manage_profile));
-        currentActiveUser = CurrentActiveUser.getCurrentUser();
+        currentActiveUser = CurrentActiveUser.getInstance().getCurrentUser();
         mApplicationContext = getActivity();
         profilePicture = (ImageView) view.findViewById(R.id.profile_picture);
         ImageTools.loadImage(mApplicationContext, currentActiveUser.getProfileImage(), profilePicture);
@@ -53,15 +52,15 @@ public class UserProfileFragment extends Fragment {
                         builder.setPositiveButton(getString(R.string.ok_dialog), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if (NetworkState.isConnected(mApplicationContext)) {
-                                    if (!(CurrentActiveUser.getCurrentUser().setProfileImageURL(input.getText().toString()))) {
-                                        Dialog.makeToast(mApplicationContext, getString(R.string.bad_image_type));
-                                    } else {
-                                        ImageTools.loadImage(mApplicationContext, currentActiveUser.getProfileImage(), profilePicture);
-                                    }
-                                } else {
-                                    Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
-                                }
+//                                if (NetworkState.isConnected(mApplicationContext)) {
+//                                    if (!(CurrentActiveUser.getCurrentUser().setProfileImageURL(input.getText().toString()))) {
+//                                        Dialog.makeToast(mApplicationContext, getString(R.string.bad_image_type));
+//                                    } else {
+//                                        ImageTools.loadImage(mApplicationContext, currentActiveUser.getProfileImage(), profilePicture);
+//                                    }
+//                                } else {
+//                                    Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
+//                                }
                             }
                         });
                         builder.setNegativeButton(getString(R.string.cancel_dialog), new DialogInterface.OnClickListener() {

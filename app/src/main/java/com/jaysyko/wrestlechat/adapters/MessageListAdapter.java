@@ -42,7 +42,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
     private final MessageGenerator uiComponents = new MessageType(context);
     public MessageListAdapter(Context context, List<Message> messages) {
         super(context, ZERO, messages);
-        this.mUsername = CurrentActiveUser.getCurrentUser().getUsername();
+        this.mUsername = CurrentActiveUser.getInstance().getCurrentUser().getUsername();
     }
 
     /**
