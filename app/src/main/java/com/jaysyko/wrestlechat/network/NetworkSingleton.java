@@ -1,10 +1,10 @@
 package com.jaysyko.wrestlechat.network;
 
-import android.content.Context;
-
-//import com.android.volley.Request;
-//import com.android.volley.RequestQueue;
-//import com.android.volley.toolbox.Volley;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * NetworkSingleton.java
@@ -13,45 +13,47 @@ import android.content.Context;
  * @author Jay Syko
  */
 public class NetworkSingleton {
-    private static NetworkSingleton mInstance;
-    private Context mContext;
-//    private RequestQueue mRequestQueue;
+    private static NetworkSingleton mInstance = new NetworkSingleton();
+    private static Retrofit retrofit;
+    private ApiInterface apiService;
 
-    private NetworkSingleton(Context context) {
-        this.mContext = context;
-//        this.mRequestQueue = getRequestQueue();
+    private NetworkSingleton() {
+        apiService = getClient().create(ApiInterface.class);
+    }
+
+    static Retrofit getClient() {
+        if (retrofit==null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(URLS.getServerURL())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit;
     }
 
     /**
      * Get an instance of the class
-     *
-     * @param context of the calling Class
      * @return instance
      */
-    public static synchronized NetworkSingleton getInstance(Context context) {
-        if(mInstance == null){
-            mInstance = new NetworkSingleton(context);
-        }
+    public static synchronized NetworkSingleton getInstance() {
         return mInstance;
     }
 
-    /**
-     * Get the active request queue
-     * @return the Volley request queue
-     */
-//    private RequestQueue getRequestQueue() {
-//        if (mRequestQueue == null) {
-//            mRequestQueue = Volley.newRequestQueue(mContext.getApplicationContext());
-//        }
-//        return mRequestQueue;
-//    }
+    public ApiInterface getApiService() {
+        return apiService;
+    }
 
-    /**
-     * Add a Volley Request to the request queue
-     * @param request Volley Request
-     * @param <T> Request Type
-     */
-//    public <T> void addToRequestQueue(Request<T> request) {
-//        getRequestQueue().add(request);
-//    }
+    public <T> void request(Call<T> call, final NetworkCallback<T> callback){
+        call.enqueue(new Callback<T>() {
+            @Override
+            public void onResponse(Call<T> call, Response<T> response) {
+                callback.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<T> call, Throwable t) {
+                callback.onFail(t.getMessage());
+            }
+        });
+    }
 }

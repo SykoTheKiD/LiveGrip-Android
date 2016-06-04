@@ -6,9 +6,9 @@ package com.jaysyko.wrestlechat.network;
  * Callback for when a request to a URL was successful
  * @author Jay Syko
  */
-public interface NetworkCallback {
-    void onSuccess(String response);
+public interface NetworkCallback<T> {
+    void onSuccess(T response);
 
-    void onFail(String response);
+    void onFail(String t);
 }
 

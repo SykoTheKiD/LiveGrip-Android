@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
+import com.jaysyko.wrestlechat.eventManager.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.utils.StringResources;
 

@@ -32,7 +32,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
+import com.jaysyko.wrestlechat.eventManager.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;

@@ -6,7 +6,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
+import com.jaysyko.wrestlechat.eventManager.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.auth.UserKeys;
 import com.jaysyko.wrestlechat.models.Event;

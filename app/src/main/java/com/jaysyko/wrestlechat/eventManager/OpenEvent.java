@@ -3,7 +3,6 @@ package com.jaysyko.wrestlechat.eventManager;
 import android.content.Context;
 import android.content.Intent;
 
-import com.jaysyko.wrestlechat.activeEvent.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.activities.EventInfoActivity;
 import com.jaysyko.wrestlechat.activities.MessagingActivity;
 import com.jaysyko.wrestlechat.date.DateVerifier;

@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat.activeEvent;
+package com.jaysyko.wrestlechat.eventManager;
 
 import com.jaysyko.wrestlechat.models.Event;
 
