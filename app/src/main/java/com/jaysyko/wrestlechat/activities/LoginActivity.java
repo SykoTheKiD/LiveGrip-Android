@@ -29,7 +29,7 @@ import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.UserData;
 import com.jaysyko.wrestlechat.network.responses.UserResponse;
-import com.jaysyko.wrestlechat.sqlite.DBDAO.UserDBDAO;
+import com.jaysyko.wrestlechat.sqlite.daos.UserDao;
 
 import retrofit2.Call;
 
@@ -44,7 +44,7 @@ public final class LoginActivity extends AppCompatActivity {
     private EditText usernameField, passwordField;
     private Context mContext;
     private Intent intent;
-    private UserDBDAO userDBDAO;
+    private UserDao userDao;
     private boolean signIn = true;
 
     @Override
@@ -60,8 +60,8 @@ public final class LoginActivity extends AppCompatActivity {
         // Redirect to Events page if logged in;
         mContext = getApplicationContext();
 
-        userDBDAO = new UserDBDAO(this);
-        userDBDAO.open();
+        userDao = new UserDao(this);
+        userDao.open();
         intent = new Intent(mContext, EventListActivity.class);
         handler.post(new Runnable() {
             @Override
@@ -155,11 +155,6 @@ public final class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(UserResponse response) {
                                 loginUser(response);
-                                CurrentActiveUser instance = CurrentActiveUser.getInstance();
-                                User currentUser = instance.getCurrentUser();
-                                User u = userDBDAO.getUser(currentUser.getId());
-                                Dialog.makeToast(mContext, u.getUsername());
-                                userDBDAO.close();
                             }
                             @Override
                             public void onFail(String t) {
@@ -180,7 +175,8 @@ public final class LoginActivity extends AppCompatActivity {
     private void loginUser(UserResponse response) {
         User user = response.getData();
         CurrentActiveUser.setActiveUser(user);
-        userDBDAO.createUser(user);
+        userDao.createUser(user);
+        userDao.close();
         startActivity(intent);
         finish();
     }

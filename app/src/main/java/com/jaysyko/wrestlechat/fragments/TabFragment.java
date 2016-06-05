@@ -33,7 +33,7 @@ public class TabFragment extends Fragment {
          */
         viewPager.setAdapter(new TabAdapter(getChildFragmentManager(), getContext()));
 
-//        if (CurrentEvents.getInstance(getContext()).getEvents().size() > 0){
+//        if (CurrentEvents.getInstance(getContext()).getEventsFromNetwork().size() > 0){
 //            view.findViewById(R.id.event_info_viewpager).setVisibility(View.VISIBLE);
 //            view.findViewById(R.id.empty_layout).setVisibility(View.GONE);
 //        }else{

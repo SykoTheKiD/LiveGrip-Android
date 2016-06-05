@@ -34,7 +34,7 @@ public class CurrentActiveUserTest {
 //            mPayload = new JSONObject();
 //            mPayload.put(UserKeys.ID.toString(), "1");
 //            mPayload.put(UserKeys.USERNAME.toString(), "jaysyko");
-//            mPayload.put(UserKeys.PROFILE_IMAGE.toString(), "http://cdn.urbanislandz.com/wp-content/uploads/2015/09/The-Weeknd1.jpg");
+//            mPayload.put(UserKeys.USER_PROFILE_IMAGE_COLUMN.toString(), "http://cdn.urbanislandz.com/wp-content/uploads/2015/09/The-Weeknd1.jpg");
 //            mUser = CurrentActiveUser.newInstance().newUser(mContext, mPayload);
 //        } catch (JSONException e) {
 //            e.printStackTrace();

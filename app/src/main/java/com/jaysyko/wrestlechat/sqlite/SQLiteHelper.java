@@ -15,21 +15,21 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String USER_TABLE = "user";
 
     public static final String ID_COLUMN = "id";
-    public static final String USER_ID = "user_id";
-    public static final String USERNAME_COLUMN = "username";
-    public static final String PROFILE_IMAGE = "profile_image";
+    public static final String USER_ID_COLUMN = "user_id";
+    public static final String USER_USERNAME_COLUMN = "username";
+    public static final String USER_PROFILE_IMAGE_COLUMN = "profile_image";
 
     public static final String CREATE_USER_TABLE = "CREATE TABLE "
             + USER_TABLE
             + "("
             + ID_COLUMN + " INTEGER PRIMARY KEY, "
-            + USER_ID + " INTEGER, "
-            + USERNAME_COLUMN + " TEXT, "
-            + PROFILE_IMAGE + " TEXT"
+            + USER_ID_COLUMN + " INTEGER, "
+            + USER_USERNAME_COLUMN + " TEXT, "
+            + USER_PROFILE_IMAGE_COLUMN + " TEXT"
             +")";
 
     public static final String EVENTS_TABLE = "events";
-    public static final String EVENT_ID = "event_id";
+    public static final String EVENT_ID_COLUMN = "event_id";
     public static final String EVENT_NAME_COLUMN = "name";
     public static final String EVENT_LOCATION_COLUMN = "location";
     public static final String EVENT_START_TIME_COLUMN = "start_time";
@@ -42,7 +42,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             + EVENTS_TABLE
             + "("
             + ID_COLUMN + " INTEGER PRIMARY KEY,  "
-            + EVENT_ID + " INTEGER, "
+            + EVENT_ID_COLUMN + " INTEGER, "
             + EVENT_NAME_COLUMN + " TEXT, "
             + EVENT_LOCATION_COLUMN + " TEXT, "
             + EVENT_START_TIME_COLUMN + " TIMESTAMP, "

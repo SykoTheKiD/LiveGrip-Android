@@ -9,7 +9,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,29 +28,29 @@ import com.jaysyko.wrestlechat.utils.BundleKeys;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class TabContentFragment extends Fragment {
-    private static final String TAG = TabContentFragment.class.getSimpleName();
     private static final int VIBRATE_MILLISECONDS = 40;
     private final Handler handler = new Handler();
     private Context mApplicationContext;
     private EventListAdapter mAdapter;
     private RelativeLayout layout;
-    final Runnable initSwipeRefresh = new Runnable() {
+    private final Runnable initSwipeRefresh = new Runnable() {
         @Override
         public void run() {
             initSwipeRefresh();
         }
     };
     private int state;
-    private List<Event> mEventsList = new ArrayList<>();
+    private List<Event> mEventsList;
+    private CurrentEvents currentEvents;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layout = (RelativeLayout) inflater.inflate(R.layout.fragment_event_list, null);
         mApplicationContext = getContext();
         this.state = getArguments().getInt(BundleKeys.STATE_KEY);
+        currentEvents = CurrentEvents.getInstance(mApplicationContext);
+        mEventsList = currentEvents.getEvents();
         handler.post(initSwipeRefresh);
         handler.post(new Runnable() {
             @Override
@@ -62,7 +61,7 @@ public class TabContentFragment extends Fragment {
                 mAdapter = new EventListAdapter(new ArrayList<Event>(), mApplicationContext);
                 recyclerView.setAdapter(mAdapter);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
-                getLocalEvents();
+                currentEvents.getEvents();
             }
         });
         return layout;
@@ -71,7 +70,7 @@ public class TabContentFragment extends Fragment {
     @Override
     public void onStart(){
         super.onStart();
-        getLocalEvents();
+        currentEvents.getEvents();
     }
 
     private void initSwipeRefresh() {
@@ -85,7 +84,7 @@ public class TabContentFragment extends Fragment {
                     new Handler().post(new Runnable() {
                         @Override
                         public void run() {
-//                            getEvents();
+                            generateEventCards(currentEvents.getEventsFromNetwork());
                             swipeView.setRefreshing(false);
                         }
                     });
@@ -97,9 +96,9 @@ public class TabContentFragment extends Fragment {
         });
     }
 
-    private synchronized void updateRecyclerView(List<Event> eventObjects) {
+    private synchronized void updateRecyclerView() {
         mAdapter.itemsData.clear();
-        mAdapter.itemsData.addAll(eventObjects);
+        mAdapter.itemsData.addAll(mEventsList);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -127,22 +126,14 @@ public class TabContentFragment extends Fragment {
     private void generateEventCards(List<Event> response) {
         if(mAdapter != null){
             mEventsList.clear();
-            Event current;
-            for (int index = 0; index < response.size(); index++) {
-                current = response.get(index);
-                String start_time = current.getEventStartTime();
-                String end_time = current.getEventEndTime();
+            for (Event event: response) {
+                String start_time = event.getEventStartTime();
+                String end_time = event.getEventEndTime();
                 if (DateVerifier.goLive(start_time, end_time).getReason() == state) {
-                    mEventsList.add(current);
+                    mEventsList.add(event);
                 }
             }
-            updateRecyclerView(mEventsList);
+            updateRecyclerView();
         }
-    }
-
-    private void getLocalEvents(){
-        Log.i(TAG, "Cache Hit");
-        generateEventCards(CurrentEvents.getInstance(mApplicationContext).getEvents());
-
     }
 }

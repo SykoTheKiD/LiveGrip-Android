@@ -40,8 +40,8 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     private static final int CONNECTION_TIMEOUT = 10000;
     private static final int KEEP_ALIVE_INTERVAL = 600000;
     private static final String DUMMY_PASSWORD = "password";
-//    private static final String USER_ID = "user_id";
-//    private static final String EVENT_ID = "event_id";
+//    private static final String USER_ID_COLUMN = "user_id";
+//    private static final String EVENT_ID_COLUMN = "event_id";
 //    private static final String MESSAGE_BODY = "body";
 //    private static final Handler handler = new Handler();
     private final MessagingServiceBinder mBinder = new MessagingServiceBinder(this);
@@ -242,8 +242,8 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
 //            public void run() {
 //                HashMap<String, String> params = new HashMap<>();
 //                try {
-//                    params.put(USER_ID, payload.getString(Message.MessageJSONKeys.USER_ID.toString()));
-//                    params.put(EVENT_ID, payload.getString(Message.MessageJSONKeys.EVENT_ID.toString()));
+//                    params.put(USER_ID_COLUMN, payload.getString(Message.MessageJSONKeys.USER_ID_COLUMN.toString()));
+//                    params.put(EVENT_ID_COLUMN, payload.getString(Message.MessageJSONKeys.EVENT_ID_COLUMN.toString()));
 //                    params.put(MESSAGE_BODY, payload.getString(Message.MessageJSONKeys.BODY.toString()));
 //                } catch (JSONException e) {
 //                    Log.e(TAG, e.getMessage());
