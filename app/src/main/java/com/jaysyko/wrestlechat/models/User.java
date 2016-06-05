@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class User {
 
     @SerializedName("id")
-    private String id;
+    private int id;
     @SerializedName("username")
     private String username;
     @SerializedName("profile_image")
@@ -22,11 +22,11 @@ public class User {
         this.profile_image = profile_image;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

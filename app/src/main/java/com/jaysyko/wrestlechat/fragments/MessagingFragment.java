@@ -37,8 +37,6 @@ import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formTypes.MessagingForm;
-import com.jaysyko.wrestlechat.localStorage.LocalStorage;
-import com.jaysyko.wrestlechat.localStorage.StorageFile;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.network.NetworkState;
@@ -65,7 +63,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private View view;
     private Handler handler = new Handler();
     private boolean mServiceBound = false;
-    private String mCurrentEventId = CurrentActiveEvent.getInstance().getCurrentEvent().getEventID();
+    private int mCurrentEventId = CurrentActiveEvent.getInstance().getCurrentEvent().getEventID();
     private Intent mChatServiceIntent;
     private MessagingService messagingService;
     private SharedPreferences sharedPreferences;
@@ -80,11 +78,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            if (!sharedPreferences.getBoolean(mCurrentEventId, false)) {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean(mCurrentEventId, true);
-                editor.apply();
-            }
             mMessagingServiceBinder = (MessagingServiceBinder) service;
             mMessagingServiceBinder.setMessageArrivedListener(MessagingFragment.this);
             messagingService = mMessagingServiceBinder.getService();
@@ -116,7 +109,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
 
         btSend = (ImageButton) view.findViewById(R.id.send_button);
-        sharedPreferences = new LocalStorage(mApplicationContext, StorageFile.MESSAGING).getSharedPreferences();
         handler.post(initMessageAdapter);
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override

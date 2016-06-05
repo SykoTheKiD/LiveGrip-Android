@@ -22,16 +22,15 @@ import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formTypes.LoginForm;
 import com.jaysyko.wrestlechat.forms.formTypes.SignUpForm;
+import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.network.ApiInterface;
 import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.UserData;
 import com.jaysyko.wrestlechat.network.responses.UserResponse;
-import com.jaysyko.wrestlechat.utils.StringResources;
+import com.jaysyko.wrestlechat.sqlite.DBDAO.UserDBDAO;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 
 public final class LoginActivity extends AppCompatActivity {
@@ -40,24 +39,30 @@ public final class LoginActivity extends AppCompatActivity {
     private static final String USERNAME_INTENT_KEY = "username";
     private String username, password;
     private Handler handler = new Handler();
-    @BindView(R.id.sign_in_button) Button loginButton;
-    @BindView(R.id.sign_up_button) Button signUpButton;
-    @BindView(R.id.sign_up_text_view) TextView signUpText;
-    @BindView(R.id.username_text_view) EditText usernameField;
-    @BindView(R.id.login_password_et) EditText passwordField;
+    private Button loginButton, signUpButton;
+    private TextView signUpText;
+    private EditText usernameField, passwordField;
     private Context mContext;
     private Intent intent;
+    private UserDBDAO userDBDAO;
     private boolean signIn = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
+        loginButton = (Button) findViewById(R.id.sign_in_button);
+        signUpButton = (Button) findViewById(R.id.sign_up_button);
+        signUpText = (TextView) findViewById(R.id.sign_up_text_view);
+        usernameField = (EditText) findViewById(R.id.username_text_view);
+        usernameField.setText(getIntent().getStringExtra(USERNAME_INTENT_KEY));
+        passwordField = (EditText) findViewById(R.id.login_password_et);
         // Redirect to Events page if logged in;
         mContext = getApplicationContext();
+
+        userDBDAO = new UserDBDAO(this);
+        userDBDAO.open();
         intent = new Intent(mContext, EventListActivity.class);
-        usernameField.setText(getIntent().getStringExtra(USERNAME_INTENT_KEY));
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -149,7 +154,9 @@ public final class LoginActivity extends AppCompatActivity {
                         ApiManager.request(call, new NetworkCallback<UserResponse>() {
                             @Override
                             public void onSuccess(UserResponse response) {
-                                    loginUser(response);
+                                loginUser(response);
+                                User u = userDBDAO.getUser(CurrentActiveUser.getInstance().getCurrentUser().getId());
+                                Dialog.makeToast(mContext, u.getUsername());
                             }
                             @Override
                             public void onFail(String t) {
@@ -168,8 +175,9 @@ public final class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser(UserResponse response) {
-        CurrentActiveUser.newInstance(response.getData());
-        Dialog.makeToast(mContext, getString(R.string.welcome_back).concat(StringResources.BLANK_SPACE).concat(username));
+        User user = response.getData();
+        CurrentActiveUser.newInstance(user);
+        userDBDAO.createUser(user);
         startActivity(intent);
         finish();
     }

@@ -10,10 +10,10 @@ import com.google.gson.annotations.SerializedName;
  * @author Jay Syko
  */
 
-public class Event {
+public class Event{
 
     @SerializedName("id")
-    private String eventID;
+    private int eventID;
     @SerializedName("name")
     private String eventName;
     @SerializedName("info")
@@ -29,7 +29,7 @@ public class Event {
     @SerializedName("end_time")
     private String eventEndTime;
 
-    public Event(String eventID, String eventName, String eventInfo, String matchCard, String eventImage, String eventLocation, String eventStartTime, String eventEndTime) {
+    public Event(int eventID, String eventName, String eventInfo, String matchCard, String eventImage, String eventLocation, String eventStartTime, String eventEndTime) {
         this.eventID = eventID;
         this.eventName = eventName;
         this.eventInfo = eventInfo;
@@ -40,13 +40,12 @@ public class Event {
         this.eventEndTime = eventEndTime;
     }
 
-
     /**
      * Returns the current event's EVENT_ID_KEY
      *
      * @return String
      */
-    public String getEventID() {
+    public int getEventID() {
         return this.eventID;
     }
 
@@ -123,13 +122,7 @@ public class Event {
      */
     public enum EventJSONKeys {
         ID("id"),
-        NAME("name"),
-        INFO("info"),
-        MATCH_CARD("match_card"),
-        IMAGE("image"),
-        LOCATION("location"),
-        START_TIME("start_time"),
-        END_TIME("end_time");
+        NAME("name");
 
         private String key;
 
