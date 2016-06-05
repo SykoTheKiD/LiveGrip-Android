@@ -15,14 +15,21 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String USER_TABLE = "user";
 
     public static final String ID_COLUMN = "id";
+    public static final String USER_ID = "user_id";
     public static final String USERNAME_COLUMN = "username";
     public static final String PROFILE_IMAGE = "profile_image";
 
-    public static final String CREATE_USER_TABLE = "CREATE TABLE"
-            + USER_TABLE + "(" + ID_COLUMN + " INTEGER PRIMARY KEY, "
-            + USERNAME_COLUMN + " TEXT, " + PROFILE_IMAGE + " TEXT)";
+    public static final String CREATE_USER_TABLE = "CREATE TABLE "
+            + USER_TABLE
+            + "("
+            + ID_COLUMN + " INTEGER PRIMARY KEY, "
+            + USER_ID + " INTEGER, "
+            + USERNAME_COLUMN + " TEXT, "
+            + PROFILE_IMAGE + " TEXT"
+            +")";
 
     public static final String EVENTS_TABLE = "events";
+    public static final String EVENT_ID = "event_id";
     public static final String EVENT_NAME_COLUMN = "name";
     public static final String EVENT_LOCATION_COLUMN = "location";
     public static final String EVENT_START_TIME_COLUMN = "start_time";
@@ -31,15 +38,19 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String EVENT_MATCH_CARD_COLUMN = "match_card";
     public static final String EVENT_IMAGE_COLUMN = "event_image";
 
-    public static final String CREATE_EVENTS_TABLE = "CREATE TABLE"
-            + EVENTS_TABLE + "(" + ID_COLUMN + " INTEGER PRIMARY KEY,  "
+    public static final String CREATE_EVENTS_TABLE = "CREATE TABLE "
+            + EVENTS_TABLE
+            + "("
+            + ID_COLUMN + " INTEGER PRIMARY KEY,  "
+            + EVENT_ID + " INTEGER, "
             + EVENT_NAME_COLUMN + " TEXT, "
             + EVENT_LOCATION_COLUMN + " TEXT, "
             + EVENT_START_TIME_COLUMN + " TIMESTAMP, "
             + EVENT_END_TIME_COLUMN + " TIMESTAMP, "
             + EVENT_INFO_COLUMN + " TEXT, "
             + EVENT_MATCH_CARD_COLUMN + " TEXT, "
-            + EVENT_IMAGE_COLUMN + " TEXT)";
+            + EVENT_IMAGE_COLUMN + " TEXT"
+            +")";
 
     private static SQLiteHelper instance;
 

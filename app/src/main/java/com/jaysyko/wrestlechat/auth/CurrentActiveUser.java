@@ -9,7 +9,7 @@ import com.jaysyko.wrestlechat.models.User;
  * @author Jay Syko
  */
 public class CurrentActiveUser {
-    private static CurrentActiveUser activeUser;
+    private static CurrentActiveUser activeUser = new CurrentActiveUser(null);
     private User user;
 
     private CurrentActiveUser(User user) {
@@ -21,9 +21,9 @@ public class CurrentActiveUser {
         return activeUser;
     }
 
-    public static void newInstance(User user){
-        if(activeUser == null){
-            activeUser = new CurrentActiveUser(user);
+    public static void setActiveUser(User user){
+        if(activeUser.user == null){
+            activeUser.user = user;
         }
     }
 
@@ -32,6 +32,6 @@ public class CurrentActiveUser {
     }
 
     public void destroySession(){
-        activeUser = null;
+        user = null;
     }
 }

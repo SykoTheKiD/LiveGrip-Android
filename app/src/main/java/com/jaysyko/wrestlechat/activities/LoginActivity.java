@@ -155,8 +155,11 @@ public final class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(UserResponse response) {
                                 loginUser(response);
-                                User u = userDBDAO.getUser(CurrentActiveUser.getInstance().getCurrentUser().getId());
+                                CurrentActiveUser instance = CurrentActiveUser.getInstance();
+                                User currentUser = instance.getCurrentUser();
+                                User u = userDBDAO.getUser(currentUser.getId());
                                 Dialog.makeToast(mContext, u.getUsername());
+                                userDBDAO.close();
                             }
                             @Override
                             public void onFail(String t) {
@@ -176,7 +179,7 @@ public final class LoginActivity extends AppCompatActivity {
 
     private void loginUser(UserResponse response) {
         User user = response.getData();
-        CurrentActiveUser.newInstance(user);
+        CurrentActiveUser.setActiveUser(user);
         userDBDAO.createUser(user);
         startActivity(intent);
         finish();

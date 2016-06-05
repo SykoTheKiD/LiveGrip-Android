@@ -22,6 +22,7 @@ public class UserDBDAO {
     private String[] allColumns =
             {
                     SQLiteHelper.ID_COLUMN,
+                    SQLiteHelper.USER_ID,
                     SQLiteHelper.USERNAME_COLUMN,
                     SQLiteHelper.PROFILE_IMAGE
             };
@@ -40,10 +41,13 @@ public class UserDBDAO {
 
     public User createUser(User user){
         ContentValues values = new ContentValues();
+        values.put(SQLiteHelper.USER_ID, user.getId());
         values.put(SQLiteHelper.USERNAME_COLUMN, user.getUsername());
         values.put(SQLiteHelper.PROFILE_IMAGE, user.getProfileImage());
+        long insertId = database.insert(SQLiteHelper.USER_TABLE, null,
+                values);
         Cursor cursor = database.query(SQLiteHelper.USER_TABLE,
-                allColumns, SQLiteHelper.ID_COLUMN + " = " + user.getId(), null,
+                allColumns, SQLiteHelper.ID_COLUMN + " = " + insertId, null,
                 null, null, null);
         cursor.moveToFirst();
         User newUser = cursorToUser(cursor);
@@ -52,7 +56,7 @@ public class UserDBDAO {
     }
 
     public void deleteUser(User user){
-        database.delete(SQLiteHelper.USER_TABLE, SQLiteHelper.ID_COLUMN + "=" + user.getId(), null);
+        database.delete(SQLiteHelper.USER_TABLE, SQLiteHelper.USER_ID + "=" + user.getId(), null);
     }
 
     public List<User> getAllUser() {
@@ -75,26 +79,24 @@ public class UserDBDAO {
     public User getUser(int id){
         SQLiteDatabase db = sqLiteHelper.getReadableDatabase();
         Cursor cursor = db.query(SQLiteHelper.USER_TABLE,
-                new String[]{SQLiteHelper.ID_COLUMN, SQLiteHelper.USERNAME_COLUMN, SQLiteHelper.PROFILE_IMAGE},
-                SQLiteHelper.ID_COLUMN + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
-        if(cursor != null){
-            cursor.moveToFirst();
+                allColumns,
+                SQLiteHelper.USER_ID + "=?", new String[]{String.valueOf(id)}, null, null, null, null);
+        if(cursor != null && cursor.moveToFirst()){
             User user = new User();
-            user.setId(cursor.getInt(0));
-            user.setUsername(cursor.getString(1));
-            user.setProfile_image(cursor.getString(2));
+            user.setId(cursor.getInt(1));
+            user.setUsername(cursor.getString(2));
+            user.setProfile_image(cursor.getString(3));
             cursor.close();
             return user;
         }
         return null;
     }
 
-
     private User cursorToUser(Cursor cursor){
         User user = new User();
-        user.setId(cursor.getInt(0));
-        user.setUsername(cursor.getString(1));
-        user.setProfile_image(cursor.getString(2));
+        user.setId(cursor.getInt(cursor.getColumnIndex(SQLiteHelper.USER_ID)));
+        user.setUsername(cursor.getString(cursor.getColumnIndex(SQLiteHelper.USERNAME_COLUMN)));
+        user.setProfile_image(cursor.getString(cursor.getColumnIndex(SQLiteHelper.PROFILE_IMAGE)));
         return user;
     }
 

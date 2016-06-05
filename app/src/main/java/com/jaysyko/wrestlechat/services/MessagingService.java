@@ -2,7 +2,6 @@ package com.jaysyko.wrestlechat.services;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -41,14 +40,14 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     private static final int CONNECTION_TIMEOUT = 10000;
     private static final int KEEP_ALIVE_INTERVAL = 600000;
     private static final String DUMMY_PASSWORD = "password";
-    private static final String USER_ID = "user_id";
-    private static final String EVENT_ID = "event_id";
-    private static final String MESSAGE_BODY = "body";
-    private static final Handler handler = new Handler();
+//    private static final String USER_ID = "user_id";
+//    private static final String EVENT_ID = "event_id";
+//    private static final String MESSAGE_BODY = "body";
+//    private static final Handler handler = new Handler();
     private final MessagingServiceBinder mBinder = new MessagingServiceBinder(this);
     private MqttAndroidClient mClient;
     private boolean mIsConnecting;
-    private String room = CurrentActiveEvent.getInstance().getCurrentEvent().getEventID();
+    private int room = CurrentActiveEvent.getInstance().getCurrentEvent().getEventID();
 
     /**
      * Return an instance of the MQTT Android client
@@ -144,7 +143,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      */
     private void subscribe() {
         try {
-            getClient().subscribe(room, 2, null, this);
+            getClient().subscribe(String.valueOf(room), 2, null, this);
         } catch (MqttException e) {
             Log.e(TAG, e.getMessage());
         }
@@ -227,7 +226,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         }
 
         try {
-            mClient.publish(room, payload.toString().getBytes(), 2, false, null, this);
+            mClient.publish(String.valueOf(room), payload.toString().getBytes(), 2, false, null, this);
         } catch (MqttException e) {
             Log.e(TAG, e.getMessage());
         }
