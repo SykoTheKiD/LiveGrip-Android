@@ -3,6 +3,7 @@ package com.jaysyko.wrestlechat.adapters;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,6 +66,8 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListViewHolder> 
         // - get data from your itemsData at this position
         // - replace the contents of the view with that itemsData
         Event currentCard = itemsData.get(position);
+        Log.i("TERM" , currentCard.getEventName());
+        Log.i("TERM" , currentCard.getEventImage());
         viewHolder.txtViewTitle.setText(currentCard.getEventName());
         viewHolder.txtViewLocation.setText(currentCard.getEventLocation());
         ImageTools.loadImage(this.context, StringResources.IMGUR_LINK.concat(currentCard.getEventImage()), viewHolder.imgViewIcon);

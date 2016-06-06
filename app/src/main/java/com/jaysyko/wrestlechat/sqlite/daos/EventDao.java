@@ -38,7 +38,9 @@ public class EventDao {
     }
 
     public void open() throws SQLException {
-        database = sqLiteHelper.getWritableDatabase();
+        if(database == null){
+            database = sqLiteHelper.getWritableDatabase();
+        }
     }
 
     public void close(){
@@ -62,12 +64,16 @@ public class EventDao {
         database.delete(SQLiteHelper.EVENTS_TABLE, SQLiteHelper.ID_COLUMN + SQLOperators.EQUALS + event.getEventID(), null);
     }
 
+    public void refresh(){
+        database.execSQL("DROP TABLE IF EXISTS " + SQLiteHelper.EVENTS_TABLE);
+        database.execSQL(SQLiteHelper.CREATE_EVENTS_TABLE);
+    }
+
     public List<Event> getAllEvents() {
         List<Event> events = new ArrayList<>();
 
         Cursor cursor = database.query(SQLiteHelper.EVENTS_TABLE,
                 allColumns, null, null, null, null, null);
-
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Event event = cursorToEvent(cursor);
@@ -90,9 +96,9 @@ public class EventDao {
                 cursor.getInt(cursor.getColumnIndex(SQLiteHelper.EVENT_ID_COLUMN)),
                 cursor.getString(cursor.getColumnIndex(SQLiteHelper.EVENT_NAME_COLUMN)),
                 cursor.getString(cursor.getColumnIndex(SQLiteHelper.EVENT_INFO_COLUMN)),
+                cursor.getString(cursor.getColumnIndex(SQLiteHelper.EVENT_MATCH_CARD_COLUMN)),
                 cursor.getString(cursor.getColumnIndex(SQLiteHelper.EVENT_IMAGE_COLUMN)),
                 cursor.getString(cursor.getColumnIndex(SQLiteHelper.EVENT_LOCATION_COLUMN)),
-                cursor.getString(cursor.getColumnIndex(SQLiteHelper.EVENT_MATCH_CARD_COLUMN)),
                 cursor.getString(cursor.getColumnIndex(SQLiteHelper.EVENT_START_TIME_COLUMN)),
                 cursor.getString(cursor.getColumnIndex(SQLiteHelper.EVENT_END_TIME_COLUMN))
         );

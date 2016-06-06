@@ -50,6 +50,8 @@ public final class CurrentEvents {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
+                        eventDao.open();
+                        eventDao.refresh();
                         eventDao.addAll(mEventsList);
                     }
                 });
@@ -66,10 +68,9 @@ public final class CurrentEvents {
 
     public List<Event> getEvents(){
         eventDao.open();
+        mEventsList.clear();
         mEventsList.addAll(eventDao.getAllEvents());
-        eventDao.close();
         return mEventsList;
-
     }
 
 }

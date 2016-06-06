@@ -9,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,29 +29,29 @@ import com.jaysyko.wrestlechat.utils.BundleKeys;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class TabContentFragment extends Fragment {
+    private static final String TAG = TabContentFragment.class.getSimpleName();
     private static final int VIBRATE_MILLISECONDS = 40;
     private final Handler handler = new Handler();
     private Context mApplicationContext;
     private EventListAdapter mAdapter;
     private RelativeLayout layout;
-    private final Runnable initSwipeRefresh = new Runnable() {
+    final Runnable initSwipeRefresh = new Runnable() {
         @Override
         public void run() {
             initSwipeRefresh();
         }
     };
     private int state;
-    private List<Event> mEventsList;
-    private CurrentEvents currentEvents;
+    private List<Event> mEventsList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layout = (RelativeLayout) inflater.inflate(R.layout.fragment_event_list, null);
         mApplicationContext = getContext();
         this.state = getArguments().getInt(BundleKeys.STATE_KEY);
-        currentEvents = CurrentEvents.getInstance(mApplicationContext);
-        mEventsList = currentEvents.getEvents();
         handler.post(initSwipeRefresh);
         handler.post(new Runnable() {
             @Override
@@ -61,7 +62,7 @@ public class TabContentFragment extends Fragment {
                 mAdapter = new EventListAdapter(new ArrayList<Event>(), mApplicationContext);
                 recyclerView.setAdapter(mAdapter);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
-                currentEvents.getEvents();
+                getLocalEvents();
             }
         });
         return layout;
@@ -70,7 +71,6 @@ public class TabContentFragment extends Fragment {
     @Override
     public void onStart(){
         super.onStart();
-        currentEvents.getEvents();
     }
 
     private void initSwipeRefresh() {
@@ -84,7 +84,7 @@ public class TabContentFragment extends Fragment {
                     new Handler().post(new Runnable() {
                         @Override
                         public void run() {
-                            generateEventCards(currentEvents.getEventsFromNetwork());
+//                            generateEventCards(CurrentEvents.getInstance(mApplicationContext).getEventsFromNetwork());
                             swipeView.setRefreshing(false);
                         }
                     });
@@ -96,9 +96,9 @@ public class TabContentFragment extends Fragment {
         });
     }
 
-    private synchronized void updateRecyclerView() {
+    private synchronized void updateRecyclerView(List<Event> eventObjects) {
         mAdapter.itemsData.clear();
-        mAdapter.itemsData.addAll(mEventsList);
+        mAdapter.itemsData.addAll(eventObjects);
         mAdapter.notifyDataSetChanged();
     }
 
@@ -124,6 +124,7 @@ public class TabContentFragment extends Fragment {
     }
 
     private void generateEventCards(List<Event> response) {
+        Log.i(TAG, "GENERATED CARDS");
         if(mAdapter != null){
             mEventsList.clear();
             for (Event event: response) {
@@ -133,7 +134,14 @@ public class TabContentFragment extends Fragment {
                     mEventsList.add(event);
                 }
             }
-            updateRecyclerView();
+            updateRecyclerView(mEventsList);
         }
+    }
+
+    private void getLocalEvents(){
+        CurrentEvents instance = CurrentEvents.getInstance(mApplicationContext);
+        List<Event> events = instance.getEvents();
+        generateEventCards(events);
+
     }
 }

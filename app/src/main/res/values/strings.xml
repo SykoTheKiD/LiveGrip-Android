@@ -71,7 +71,7 @@
 
     <!-- Example settings for Notifications -->
     <string name="pref_header_chat_bubble">Chat Message Style</string>
-    <string name="online_status_live">Live</string>
+    <string name="online_status_live">LIVE</string>
     <string name="lorem_date">MM/DD/YYYY</string>
     <string name="action_sign_up">Sign Up</string>
     <string name="drawer_legal">Legal</string>

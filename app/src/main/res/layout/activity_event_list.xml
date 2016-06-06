@@ -11,16 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:background="#f44336"
+        android:background="#E63946"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginLeft="122dp"
-            android:contentDescription="@string/app_name"
-            android:gravity="center"
-            android:src="@drawable/logo" />
+        <!--<ImageView-->
+            <!--android:layout_width="25dp"-->
+            <!--android:layout_height="25dp"-->
+            <!--android:layout_marginLeft="122dp"-->
+            <!--android:contentDescription="@string/app_name"-->
+            <!--android:gravity="center"-->
+            <!--android:src="@drawable/logo" />-->
 
 
     </android.support.v7.widget.Toolbar>

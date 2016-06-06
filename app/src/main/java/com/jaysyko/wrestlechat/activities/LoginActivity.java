@@ -29,6 +29,7 @@ import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.UserData;
 import com.jaysyko.wrestlechat.network.responses.UserResponse;
+import com.jaysyko.wrestlechat.sessionManager.Session;
 import com.jaysyko.wrestlechat.sqlite.daos.UserDao;
 
 import retrofit2.Call;
@@ -177,6 +178,7 @@ public final class LoginActivity extends AppCompatActivity {
         CurrentActiveUser.setActiveUser(user);
         userDao.createUser(user);
         userDao.close();
+        Session.newSession();
         startActivity(intent);
         finish();
     }
