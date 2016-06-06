@@ -2,8 +2,8 @@ package com.jaysyko.wrestlechat.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,8 +66,6 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListViewHolder> 
         // - get data from your itemsData at this position
         // - replace the contents of the view with that itemsData
         Event currentCard = itemsData.get(position);
-        Log.i("TERM" , currentCard.getEventName());
-        Log.i("TERM" , currentCard.getEventImage());
         viewHolder.txtViewTitle.setText(currentCard.getEventName());
         viewHolder.txtViewLocation.setText(currentCard.getEventLocation());
         ImageTools.loadImage(this.context, StringResources.IMGUR_LINK.concat(currentCard.getEventImage()), viewHolder.imgViewIcon);
@@ -75,6 +73,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListViewHolder> 
         if (DateVerifier.goLive(currentCard.getEventStartTime(), currentCard.getEventEndTime()).goLive()) {
             viewHolder.txtViewLiveStatus.setText(R.string.online_status_live);
             viewHolder.txtViewLiveStatus.setTextColor(Color.parseColor(LIVE_TEXT_COLOUR));
+            viewHolder.txtViewLiveStatus.setTypeface(null, Typeface.BOLD);
             viewHolder.txtViewLiveStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, LIVE_TEXT_SIZE);
         } else {
             String eventDate = DateVerifier.format(currentCard.getEventStartTime());

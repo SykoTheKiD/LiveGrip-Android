@@ -32,44 +32,30 @@
         android:scrollbars="none"
         android:scrollingCache="true" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/new_message_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="#ffffff"
-        android:paddingBottom="10dp"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:paddingTop="5dp">
+        android:layout_alignParentBottom="true">
 
-        <EditText
-            android:id="@+id/new_message_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="false"
-            android:layout_alignTop="@+id/send_button"
-            android:layout_toLeftOf="@+id/send_button"
-            android:layout_toStartOf="@+id/send_button"
-            android:gravity="top"
-            android:hint="@string/message_hint"
-            android:paddingEnd="0dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="0dp"
-            android:paddingStart="10dp"
-            android:textIsSelectable="false" />
+    <EditText
+        android:id="@+id/message_et"
+        android:layout_width="0dp"
+        android:background="@android:color/transparent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft ="5dp"
+        android:layout_marginEnd  ="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="4"
+        android:inputType="textAutoCorrect" />
 
-        <ImageButton
-            android:id="@+id/send_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/ic_send_black_36dp"
-            android:contentDescription="@string/app_name" />
-
-    </RelativeLayout>
+    <Button
+        android:text="@string/send"
+        android:background="@android:color/holo_blue_light"
+        android:textColor="@color/cardview_light_background"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+    </LinearLayout>
 </RelativeLayout>

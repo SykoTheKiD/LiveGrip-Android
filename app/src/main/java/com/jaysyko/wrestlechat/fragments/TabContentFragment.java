@@ -62,7 +62,7 @@ public class TabContentFragment extends Fragment {
                 mAdapter = new EventListAdapter(new ArrayList<Event>(), mApplicationContext);
                 recyclerView.setAdapter(mAdapter);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
-                getLocalEvents();
+                getEvents();
             }
         });
         return layout;
@@ -84,12 +84,11 @@ public class TabContentFragment extends Fragment {
                     new Handler().post(new Runnable() {
                         @Override
                         public void run() {
-//                            generateEventCards(CurrentEvents.getInstance(mApplicationContext).getEventsFromNetwork());
                             swipeView.setRefreshing(false);
                         }
                     });
                 } else {
-                    Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
+
                     swipeView.setRefreshing(false);
                 }
             }
@@ -138,10 +137,15 @@ public class TabContentFragment extends Fragment {
         }
     }
 
-    private void getLocalEvents(){
+    private void getEvents(){
         CurrentEvents instance = CurrentEvents.getInstance(mApplicationContext);
-        List<Event> events = instance.getEvents();
+        List<Event> events;
+        if(NetworkState.isConnected(mApplicationContext)){
+            events = instance.getEventsFromNetwork();
+        }else{
+            Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
+            events = instance.getEvents();
+        }
         generateEventCards(events);
-
     }
 }

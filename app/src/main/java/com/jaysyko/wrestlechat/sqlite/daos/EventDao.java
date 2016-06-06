@@ -65,7 +65,7 @@ public class EventDao {
     }
 
     public void refresh(){
-        database.execSQL("DROP TABLE IF EXISTS " + SQLiteHelper.EVENTS_TABLE);
+        database.execSQL(SQLOperators.DROP_TABLE_IF_EXISTS + SQLiteHelper.EVENTS_TABLE);
         database.execSQL(SQLiteHelper.CREATE_EVENTS_TABLE);
     }
 
