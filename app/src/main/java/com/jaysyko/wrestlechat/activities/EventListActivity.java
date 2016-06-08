@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
-import com.jaysyko.wrestlechat.fragments.TabFragment;
+import com.jaysyko.wrestlechat.fragments.EventListFragment;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
@@ -55,7 +55,7 @@ public class EventListActivity extends AppCompatActivity{
 
         mFragmentManager = getSupportFragmentManager();
         mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.container_view, new TabFragment()).commit();
+        mFragmentTransaction.replace(R.id.container_view, new EventListFragment()).commit();
         /**
          * Setup click events on the Navigation View Items.
          */

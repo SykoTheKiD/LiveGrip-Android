@@ -3,8 +3,7 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="350dp"
-    android:layout_margin="8dp"
-    card_view:cardUseCompatPadding="true">
+    android:layout_margin="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"

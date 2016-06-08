@@ -108,7 +108,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
         ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
 
-        btSend = (ImageButton) view.findViewById(R.id.send_button);
+//        btSend = (ImageButton) view.findViewById(R.id.send_button);
         handler.post(initMessageAdapter);
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,7 +161,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
 
     // Setup message field and posting
     private void initMessageAdapter() {
-        etMessage = (EditText) view.findViewById(R.id.new_message_edit_text);
+//        etMessage = (EditText) view.findViewById(R.id.new_message_edit_text);
         etMessage.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
