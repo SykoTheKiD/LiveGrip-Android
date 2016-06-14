@@ -1,6 +1,15 @@
 package com.jaysyko.wrestlechat.models;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Events.java
@@ -11,6 +20,9 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class Event{
+
+    private static final String TAG = Event.class.getSimpleName();
+    private static final String MATCHES = "matches";
 
     @SerializedName("id")
     private int eventID;
@@ -74,6 +86,28 @@ public class Event{
      */
     public String getMatchCard() {
         return this.matchCard;
+    }
+
+    /**
+     * Return a list of matches
+     *
+     * @return List
+     */
+
+    public List<String> getMatchList() {
+        List<String> ret = new ArrayList<>();
+        String matchCard = getMatchCard();
+        try {
+            JSONObject matches = new JSONObject(matchCard);
+            JSONArray matchesArray = (JSONArray) matches.get(MATCHES);
+            for (int i = 0; i < matchesArray.length(); i++) {
+                ret.add(matchesArray.getString(i));
+            }
+
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage());
+        }
+        return ret;
     }
 
     /**

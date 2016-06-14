@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,13 +31,13 @@ public class EventListFragment extends Fragment {
     private Context mApplicationContext;
     private EventListAdapter mAdapter;
     private RelativeLayout layout;
+    private List<Event> mEventsList = new ArrayList<>();
     final Runnable initSwipeRefresh = new Runnable() {
         @Override
         public void run() {
             initSwipeRefresh();
         }
     };
-    private List<Event> mEventsList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,7 +52,7 @@ public class EventListFragment extends Fragment {
                 eventListClickListener(recyclerView);
                 mAdapter = new EventListAdapter(mEventsList, mApplicationContext);
                 recyclerView.setAdapter(mAdapter);
-                getEvents();
+                getEvents(false);
             }
         });
         return layout;
@@ -70,7 +69,7 @@ public class EventListFragment extends Fragment {
                     new Handler().post(new Runnable() {
                         @Override
                         public void run() {
-                            getEvents();
+                            getEvents(true);
                             swipeView.setRefreshing(false);
                         }
                     });
@@ -110,9 +109,9 @@ public class EventListFragment extends Fragment {
     }
 
 
-    private void getEvents(){
+    private void getEvents(boolean hard) {
         CurrentEvents instance = CurrentEvents.getInstance(mApplicationContext);
-        List<Event> events = instance.getEvents();
+        List<Event> events = (hard) ? instance.getEventsFromNetwork() : instance.getEvents();
         mEventsList.clear();
         mEventsList.addAll(events);
         updateRecyclerView(mEventsList);

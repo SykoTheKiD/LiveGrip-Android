@@ -14,7 +14,6 @@ import com.jaysyko.wrestlechat.adapters.viewholders.EventListViewHolder;
 import com.jaysyko.wrestlechat.date.DateVerifier;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.utils.ImageTools;
-import com.jaysyko.wrestlechat.utils.StringResources;
 
 import java.util.List;
 
@@ -68,7 +67,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListViewHolder> 
         Event currentCard = itemsData.get(position);
         viewHolder.txtViewTitle.setText(currentCard.getEventName());
         viewHolder.txtViewLocation.setText(currentCard.getEventLocation());
-        ImageTools.loadImage(this.context, StringResources.IMGUR_LINK.concat(currentCard.getEventImage()), viewHolder.imgViewIcon);
+        ImageTools.loadImage(this.context, currentCard.getEventImage(), viewHolder.imgViewIcon);
 
         if (DateVerifier.goLive(currentCard.getEventStartTime(), currentCard.getEventEndTime()).goLive()) {
             viewHolder.txtViewLiveStatus.setText(R.string.online_status_live);

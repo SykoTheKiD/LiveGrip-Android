@@ -6,15 +6,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,10 +41,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
 
     private static final String TAG = MessagingFragment.class.getSimpleName();
     private static final int SEND_DELAY = 1500;
-    private static final String FONT_COLOR_HTML = "<font color=\"#FFFFFFF\">";
-    private static final String FONT_HTML = "</font>";
-    private static final String DEFAULT_SETTINGS_VALUE = "0";
-    private static final String MESSAGING_WALLPAPER = "messagingWallpaper";
+    private static final String FONT_COLOR_HTML = "<font color=\"#FFFFFFF\">", FONT_HTML = "</font>";
     private static ArrayList<Message> mMessages = new ArrayList<>();
     private static MessageListAdapter mAdapter;
     private EditText etMessage;
@@ -56,10 +50,8 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private View view;
     private Handler handler = new Handler();
     private boolean mServiceBound = false;
-    private int mCurrentEventId = CurrentActiveEvent.getInstance().getCurrentEvent().getEventID();
     private Intent mChatServiceIntent;
     private MessagingService messagingService;
-    private SharedPreferences sharedPreferences;
     private Runnable initMessageAdapter = new Runnable() {
         @Override
         public void run() {
@@ -90,6 +82,9 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         Activity activity = getActivity();
         activity.setTitle(Html.fromHtml(FONT_COLOR_HTML + mCurrentEvent.getEventName() + FONT_HTML));
         mChatServiceIntent = new Intent(activity, MessagingService.class);
+        if (!mServiceBound) {
+            getActivity().startService(mChatServiceIntent);
+        }
     }
 
     @Override
@@ -97,7 +92,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_messaging, container, false);
         mApplicationContext = getActivity();
-//        getActivity().getWindow().setBackgroundDrawable(null);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
         ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
 
@@ -120,23 +114,13 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
                 saveMessage(etMessage.getText().toString().trim());
             }
         });
-        try {
-            final MediaPlayer mp = MediaPlayer.create(mApplicationContext, R.raw.music_marimba_chord);
-            if (mp.isPlaying()) {
-                mp.stop();
-                mp.release();
-            }
-            mp.start();
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-        }
     }
 
     private void saveMessage(String body) {
         Form form = new MessagingForm(body).validate();
         if (NetworkState.isConnected(mApplicationContext)) {
             if (form.isValid()) {
-//                messagingService.send(body);
+                messagingService.send(body);
                 etMessage.setText(StringResources.NULL_TEXT);
             } else {
                 Dialog.makeToast(mApplicationContext, getString(Form.getSimpleMessage(form.getReason())));
@@ -179,31 +163,16 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     @Override
     public void onStart() {
         super.onStart();
-//        mApplicationContext.bindService(mChatServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
-//        if (!mServiceBound) {
-//            getActivity().startService(mChatServiceIntent);
-//        }
-//        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-//        Integer bg = Integer.parseInt(settings.getString(MESSAGING_WALLPAPER, DEFAULT_SETTINGS_VALUE));
-//        if (!bg.equals(Integer.valueOf(DEFAULT_SETTINGS_VALUE))) {
-//            TypedArray typedArray = getActivity().getResources().obtainTypedArray(R.array.background_resources);
-//            Bitmap backgroundImage = BitmapFactory.decodeResource(getResources(), typedArray.getResourceId(bg, Integer.valueOf(DEFAULT_SETTINGS_VALUE)));
-//            BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), backgroundImage);
-//            bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-//                view.findViewById(R.id.chat_list_view).setBackground(bitmapDrawable);
-//            }
-//            typedArray.recycle();
-//        }
+        mApplicationContext.bindService(mChatServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onStop() {
+        super.onStop();
         if (mServiceBound) {
 //            mMessagingServiceBinder.getService().disconnect();
             getActivity().unbindService(mServiceConnection);
-            getActivity().stopService(mChatServiceIntent);
+//            getActivity().stopService(mChatServiceIntent);
             mServiceBound = false;
         }
     }
