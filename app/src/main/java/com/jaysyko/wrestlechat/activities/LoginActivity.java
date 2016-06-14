@@ -2,7 +2,6 @@ package com.jaysyko.wrestlechat.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -12,10 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.iid.InstanceID;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
@@ -103,33 +98,30 @@ public final class LoginActivity extends AppCompatActivity {
                 username = usernameField.getText().toString();
                 password = passwordField.getText().toString();
                 if (NetworkState.isConnected(mContext)) {
-                    if (isPlayServicesInstalled()) {
-                        Form form = new SignUpForm(username, password).validate();
-                        if (form.isValid()) {
-                            ApiInterface apiManager = ApiManager.getApiService();
-                            Call<UserResponse> call = apiManager.createUser(
-                                    new UserData(
-                                            username, password
-                                    )
-                            );
-                            ApiManager.request(call, new NetworkCallback<UserResponse>() {
-                                @Override
-                                public void onSuccess(UserResponse response) {
-                                    getDeviceIDForGCM();
-                                    loginUser(response);
-                                }
-                                @Override
-                                public void onFail(String t) {
-                                    Log.e(TAG, t);
-                                    Dialog.makeToast(mContext, t);
-                                }
-                            });
-                        } else {
-                            Dialog.makeToast(mContext, getString(Form.getSimpleMessage(form.getReason())));
-                        }
+                    Form form = new SignUpForm(username, password).validate();
+                    if (form.isValid()) {
+                        ApiInterface apiManager = ApiManager.getApiService();
+                        Call<UserResponse> call = apiManager.createUser(
+                                new UserData(
+                                        username, password
+                                )
+                        );
+                        ApiManager.request(call, new NetworkCallback<UserResponse>() {
+                            @Override
+                            public void onSuccess(UserResponse response) {
+                                loginUser(response);
+                            }
+
+                            @Override
+                            public void onFail(String t) {
+                                Log.e(TAG, t);
+                                Dialog.makeToast(mContext, t);
+                            }
+                        });
                     } else {
-                        Dialog.makeToast(mContext, getString(R.string.no_play_services));
+                        Dialog.makeToast(mContext, getString(Form.getSimpleMessage(form.getReason())));
                     }
+
                 } else {
                     Dialog.makeToast(mContext, getString(R.string.no_network));
                 }
@@ -149,7 +141,7 @@ public final class LoginActivity extends AppCompatActivity {
                         ApiInterface apiManager = ApiManager.getApiService();
                         Call<UserResponse> call = apiManager.getUser(
                                 new UserData(
-                                    username, password
+                                        username, password
                                 )
                         );
                         ApiManager.request(call, new NetworkCallback<UserResponse>() {
@@ -157,6 +149,7 @@ public final class LoginActivity extends AppCompatActivity {
                             public void onSuccess(UserResponse response) {
                                 loginUser(response);
                             }
+
                             @Override
                             public void onFail(String t) {
                                 Log.e(TAG, t);
@@ -181,39 +174,5 @@ public final class LoginActivity extends AppCompatActivity {
         Session.newSession();
         startActivity(intent);
         finish();
-    }
-
-    //code to check Google play services availability.
-    private boolean isPlayServicesInstalled() {
-        GoogleApiAvailability getGoogleAvailability = GoogleApiAvailability.getInstance();
-        int availabilityCode = getGoogleAvailability.isGooglePlayServicesAvailable(this);
-        if (availabilityCode != ConnectionResult.SUCCESS) {
-            if (getGoogleAvailability.isUserResolvableError(availabilityCode)) {
-                getGoogleAvailability.getErrorDialog(this, availabilityCode, 9000).show();
-            } else {
-                Log.i(TAG, "Google Play Services not detected");
-                finish();
-            }
-            return false;
-        }
-        return true;
-    }
-
-    public void getDeviceIDForGCM() {
-        new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... taskParams) {
-                final StringBuilder token = new StringBuilder();
-                try {
-                    InstanceID gcmTokenInstanceID = InstanceID.getInstance(mContext);
-                    //we will get gcm_defaultSenderId by applying plugin: 'com.google.gms.google-services'
-                    token.append(gcmTokenInstanceID.getToken(getString(R.string.gcm_defaultSenderId), GoogleCloudMessaging.INSTANCE_ID_SCOPE, null));
-                } catch (Exception e) {
-                    Log.e(TAG, "GCM Registration Token: " + e.getMessage());
-                }
-                //Keep this token securely, we use this to send message, refer in URL we have added this ID as parameter
-                return token.toString();
-            }
-        }.execute(null, null, null);
     }
 }

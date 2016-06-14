@@ -58,9 +58,9 @@ public final class CurrentEvents {
             }
 
             @Override
-            public void onFail(String t) {
-                Log.e(TAG, t);
-                Dialog.makeToast(mApplicationContext, t);
+            public void onFail(String error) {
+                Log.e(TAG, error);
+                Dialog.makeToast(mApplicationContext, error);
             }
         });
         return mEventsList;

@@ -81,7 +81,7 @@ public class EventListFragment extends Fragment {
     }
 
     private synchronized void updateRecyclerView(List<Event> eventObjects) {
-        if(mAdapter != null){
+        if (mAdapter != null) {
             mAdapter.itemsData = eventObjects;
             mAdapter.notifyDataSetChanged();
         }
@@ -111,7 +111,15 @@ public class EventListFragment extends Fragment {
 
     private void getEvents(boolean hard) {
         CurrentEvents instance = CurrentEvents.getInstance(mApplicationContext);
-        List<Event> events = (hard) ? instance.getEventsFromNetwork() : instance.getEvents();
+        List<Event> events;
+        if (hard) {
+            events = instance.getEventsFromNetwork();
+        } else {
+            events = instance.getEvents();
+            if (events.size() == 0) {
+                events = instance.getEventsFromNetwork();
+            }
+        }
         mEventsList.clear();
         mEventsList.addAll(events);
         updateRecyclerView(mEventsList);
