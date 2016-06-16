@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import java.util.List;
 
 public class EventListFragment extends Fragment {
 
+    private static final String TAG = EventListFragment.class.getSimpleName();
     private static final int VIBRATE_MILLISECONDS = 40;
     private final Handler handler = new Handler();
     private Context mApplicationContext;
@@ -47,7 +49,7 @@ public class EventListFragment extends Fragment {
         handler.post(new Runnable() {
             @Override
             public void run() {
-                RecyclerView recyclerView = (RecyclerView) layout.findViewById(R.id.recyclerView);
+                RecyclerView recyclerView = (RecyclerView) layout.findViewById(R.id.events_recyclerView);
                 recyclerView.setLayoutManager(new LinearLayoutManager(mApplicationContext));
                 eventListClickListener(recyclerView);
                 mAdapter = new EventListAdapter(mEventsList, mApplicationContext);
@@ -58,6 +60,9 @@ public class EventListFragment extends Fragment {
         return layout;
     }
 
+    /**
+     * Initialize Pull to Refresh
+     */
     private void initSwipeRefresh() {
         final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) layout.findViewById(R.id.swipe_container);
         swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
@@ -108,15 +113,17 @@ public class EventListFragment extends Fragment {
         );
     }
 
-
     private void getEvents(boolean hard) {
         CurrentEvents instance = CurrentEvents.getInstance(mApplicationContext);
         List<Event> events;
         if (hard) {
+            Log.i(TAG, "Cache Miss");
             events = instance.getEventsFromNetwork();
         } else {
+            Log.i(TAG, "Cache Hit");
             events = instance.getEvents();
             if (events.size() == 0) {
+                Log.i(TAG, "Cache Empty");
                 events = instance.getEventsFromNetwork();
             }
         }

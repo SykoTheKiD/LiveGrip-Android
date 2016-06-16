@@ -71,7 +71,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-//            mMessagingServiceBinder.getService().disconnect();
+            mMessagingServiceBinder.getService().disconnect();
             mServiceBound = false;
         }
     };
@@ -170,9 +170,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     public void onStop() {
         super.onStop();
         if (mServiceBound) {
-//            mMessagingServiceBinder.getService().disconnect();
             getActivity().unbindService(mServiceConnection);
-//            getActivity().stopService(mChatServiceIntent);
             mServiceBound = false;
         }
     }
