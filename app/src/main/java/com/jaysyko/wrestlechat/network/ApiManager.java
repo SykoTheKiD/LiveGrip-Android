@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiManager {
 
      static final Retrofit RETROFIT = new Retrofit.Builder()
-            .baseUrl(URLS.getServerURL())
+            .baseUrl(BaseURL.getServerURL())
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 

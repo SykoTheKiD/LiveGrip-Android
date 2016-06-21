@@ -3,13 +3,14 @@ package com.jaysyko.wrestlechat.network;
 import com.jaysyko.wrestlechat.network.requestData.MessageData;
 import com.jaysyko.wrestlechat.network.requestData.UserData;
 import com.jaysyko.wrestlechat.network.responses.EventResponse;
-import com.jaysyko.wrestlechat.network.responses.MessageSaveResponse;
 import com.jaysyko.wrestlechat.network.responses.MessageGetResponse;
+import com.jaysyko.wrestlechat.network.responses.MessageSaveResponse;
 import com.jaysyko.wrestlechat.network.responses.UserResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 /**
@@ -17,26 +18,37 @@ import retrofit2.http.POST;
  */
 public interface ApiInterface {
 
-    @GET("events")
-    Call<EventResponse> getEvents();
+    String EVENTS = "events";
+    String LOGIN = "auth/login";
+    String REGISTER = "auth/register";
+    String MESSAGES_SAVE = "messages/save";
+    String MESSAGES_EVENT = "messages/event";
+    String AUTHORIZATION = "Authorization";
 
-    @POST("auth/login")
+    @POST(LOGIN)
     Call<UserResponse> getUser(
             @Body UserData data
     );
 
-    @POST("auth/register")
+    @POST(REGISTER)
     Call<UserResponse> createUser(
             @Body UserData data
     );
 
-    @POST("messages/save")
+    @GET(EVENTS)
+    Call<EventResponse> getEvents(
+            @Header(AUTHORIZATION) String token
+    );
+
+    @POST(MESSAGES_SAVE)
     Call<MessageSaveResponse> saveMessage(
+            @Header(AUTHORIZATION) String token,
             @Body MessageData data
     );
 
-    @POST("messages/event")
+    @POST(MESSAGES_EVENT)
     Call<MessageGetResponse> createMessage(
+            @Header(AUTHORIZATION) String token,
             @Body MessageData data
     );
 }

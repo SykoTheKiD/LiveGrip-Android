@@ -8,7 +8,7 @@ import com.jaysyko.wrestlechat.utils.StringResources;
  *
  * @author Jay Syko
  */
-public final class URLS {
+public final class BaseURL {
     private static final String DEVELOPMENT_SERVER_URL = "http://10.0.3.2:3000/";
     private static final String DEVELOPMENT_MOSQUITTO_PROTOCOL = "tcp://";
     private static final String DEVELOPMENT_MOSQUITTO_URL = "10.0.3.2";

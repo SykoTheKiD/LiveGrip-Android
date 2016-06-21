@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 
+import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.network.ApiManager;
@@ -41,12 +42,12 @@ public final class CurrentEvents {
     }
 
     public List<Event> getEventsFromNetwork() {
-        Call<EventResponse> call = ApiManager.getApiService().getEvents();
+        Call<EventResponse> call = ApiManager.getApiService().getEvents(CurrentActiveUser.getInstance().getCurrentUser().getAuthToken());
         ApiManager.request(call, new NetworkCallback<EventResponse>() {
             @Override
             public void onSuccess(EventResponse response) {
                 mEventsList.clear();
-                mEventsList.addAll(response.getEvents());
+                mEventsList.addAll(response.getData());
                 handler.post(new Runnable() {
                     @Override
                     public void run() {

@@ -11,7 +11,7 @@ import com.jaysyko.wrestlechat.eventManager.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.models.User;
-import com.jaysyko.wrestlechat.network.URLS;
+import com.jaysyko.wrestlechat.network.BaseURL;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.android.service.MqttTraceHandler;
@@ -37,7 +37,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
 
     private static final String TAG = MessagingService.class.getSimpleName();
     private static final String CLIENT_ID = String.valueOf(CurrentActiveUser.getInstance().getCurrentUser().getId());
-    private static final String MOSQUITO_URL = URLS.getMosquittoURL();
+    private static final String MOSQUITO_URL = BaseURL.getMosquittoURL();
     private static final int CONNECTION_TIMEOUT = 10000;
     private static final int KEEP_ALIVE_INTERVAL = 600000;
     private static final String DUMMY_PASSWORD = "password";
