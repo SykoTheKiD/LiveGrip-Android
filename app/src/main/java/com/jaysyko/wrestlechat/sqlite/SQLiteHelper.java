@@ -18,6 +18,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String USER_ID_COLUMN = "user_id";
     public static final String USER_USERNAME_COLUMN = "username";
     public static final String USER_PROFILE_IMAGE_COLUMN = "profile_image";
+    public static final String USER_AUTH_TOKEN_COLUMN = "token";
 
     public static final String CREATE_USER_TABLE = "CREATE TABLE "
             + USER_TABLE
@@ -25,7 +26,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             + ID_COLUMN + " INTEGER PRIMARY KEY, "
             + USER_ID_COLUMN + " INTEGER, "
             + USER_USERNAME_COLUMN + " TEXT, "
-            + USER_PROFILE_IMAGE_COLUMN + " TEXT"
+            + USER_PROFILE_IMAGE_COLUMN + " TEXT, "
+            + USER_AUTH_TOKEN_COLUMN + " TEXT"
             +")";
 
     public static final String EVENTS_TABLE = "events";

@@ -1,6 +1,10 @@
 package com.jaysyko.wrestlechat.network;
 
+import com.jaysyko.wrestlechat.network.requestData.MessageData;
+import com.jaysyko.wrestlechat.network.requestData.UserData;
 import com.jaysyko.wrestlechat.network.responses.EventResponse;
+import com.jaysyko.wrestlechat.network.responses.MessageSaveResponse;
+import com.jaysyko.wrestlechat.network.responses.MessageGetResponse;
 import com.jaysyko.wrestlechat.network.responses.UserResponse;
 
 import retrofit2.Call;
@@ -24,5 +28,15 @@ public interface ApiInterface {
     @POST("auth/register")
     Call<UserResponse> createUser(
             @Body UserData data
+    );
+
+    @POST("messages/save")
+    Call<MessageSaveResponse> saveMessage(
+            @Body MessageData data
+    );
+
+    @POST("messages/event")
+    Call<MessageGetResponse> createMessage(
+            @Body MessageData data
     );
 }

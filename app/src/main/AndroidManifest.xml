@@ -85,20 +85,9 @@
 
 
         <!-- [Custom service gets push notification from server, add code in this service to show notifications] -->
-        <service
-            android:name=".services.GCMListenerService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            </intent-filter>
-        </service>
 
         <activity android:name=".activities.NewsActivity" />
 
-        <service
-            android:name=".services.EventStartNotifierService"
-            android:enabled="true"
-            android:exported="true" />
     </application>
 
 </manifest>

@@ -1,26 +1,18 @@
 package com.jaysyko.wrestlechat.network.responses;
 
 import com.google.gson.annotations.SerializedName;
-import com.jaysyko.wrestlechat.models.User;
 
 /**
- * Created by jarushaan on 2016-06-04
+ * Created by jarushaan on 2016-06-18
  */
-public class ErrorResponse {
-    @SerializedName(JSONKeys.STATUS)
+public class BaseResponse<T> {
+
+    @SerializedName(ResponseKeys.STATUS)
     private String status;
-    @SerializedName(JSONKeys.MESSAGE)
+    @SerializedName(ResponseKeys.MESSAGE)
     private String message;
-    @SerializedName(JSONKeys.PAYLOAD)
-    private User data;
-
-    public User getData() {
-        return data;
-    }
-
-    public void setData(User data) {
-        this.data = data;
-    }
+    @SerializedName(ResponseKeys.PAYLOAD)
+    private T data;
 
     public String getMessage() {
         return message;
@@ -38,5 +30,12 @@ public class ErrorResponse {
         this.status = status;
     }
 
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 
 }

@@ -1,6 +1,6 @@
 package com.jaysyko.wrestlechat.network;
 
-import com.jaysyko.wrestlechat.network.responses.ErrorResponse;
+import com.jaysyko.wrestlechat.network.responses.AuthErrorResponse;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -14,17 +14,17 @@ import retrofit2.Response;
  */
 public class ApiErrorManager {
 
-    public static ErrorResponse parseError(Response<?> response) {
-        Converter<ResponseBody, ErrorResponse> converter =
+    public static AuthErrorResponse parseError(Response<?> response) {
+        Converter<ResponseBody, AuthErrorResponse> converter =
                 ApiManager.RETROFIT
-                        .responseBodyConverter(ErrorResponse.class, new Annotation[0]);
+                        .responseBodyConverter(AuthErrorResponse.class, new Annotation[0]);
 
-        ErrorResponse error;
+        AuthErrorResponse error;
 
         try {
             error = converter.convert(response.errorBody());
         } catch (IOException e) {
-            return new ErrorResponse();
+            return new AuthErrorResponse();
         }
 
         return error;

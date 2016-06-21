@@ -22,7 +22,7 @@ import com.jaysyko.wrestlechat.network.ApiInterface;
 import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkState;
-import com.jaysyko.wrestlechat.network.UserData;
+import com.jaysyko.wrestlechat.network.requestData.UserData;
 import com.jaysyko.wrestlechat.network.responses.UserResponse;
 import com.jaysyko.wrestlechat.sessionManager.Session;
 import com.jaysyko.wrestlechat.sqlite.daos.UserDao;

@@ -1,8 +1,6 @@
 package com.jaysyko.wrestlechat.network;
 
-import android.util.Log;
-
-import com.jaysyko.wrestlechat.network.responses.ErrorResponse;
+import com.jaysyko.wrestlechat.network.responses.AuthErrorResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,8 +35,8 @@ public class ApiManager {
                 if(response.isSuccessful()){
                     callback.onSuccess(response.body());
                 }else{
-                    ErrorResponse errorResponse = ApiErrorManager.parseError(response);
-                    callback.onFail(errorResponse.getMessage());
+                    AuthErrorResponse authErrorResponse = ApiErrorManager.parseError(response);
+                    callback.onFail(authErrorResponse.getMessage());
                 }
 
             }

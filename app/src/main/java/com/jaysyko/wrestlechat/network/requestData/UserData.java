@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat.network;
+package com.jaysyko.wrestlechat.network.requestData;
 
 /**
  * Created by jarushaan on 2016-06-03

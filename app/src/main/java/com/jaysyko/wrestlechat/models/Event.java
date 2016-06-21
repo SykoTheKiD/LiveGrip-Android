@@ -22,23 +22,22 @@ import java.util.List;
 public class Event{
 
     private static final String TAG = Event.class.getSimpleName();
-    private static final String MATCHES = "matches";
 
-    @SerializedName("id")
+    @SerializedName(Utils.ID)
     private int eventID;
-    @SerializedName("name")
+    @SerializedName(Utils.NAME)
     private String eventName;
-    @SerializedName("info")
+    @SerializedName(Utils.INFO)
     private String eventInfo;
-    @SerializedName("match_card")
+    @SerializedName(Utils.MATCH_CARD)
     private String matchCard;
-    @SerializedName("image")
+    @SerializedName(Utils.IMAGE)
     private String eventImage;
-    @SerializedName("location")
+    @SerializedName(Utils.LOCATION)
     private String eventLocation;
-    @SerializedName("start_time")
+    @SerializedName(Utils.START_TIME)
     private String eventStartTime;
-    @SerializedName("end_time")
+    @SerializedName(Utils.END_TIME)
     private String eventEndTime;
 
     public Event(int eventID, String eventName, String eventInfo, String matchCard, String eventImage, String eventLocation, String eventStartTime, String eventEndTime) {
@@ -99,7 +98,7 @@ public class Event{
         String matchCard = getMatchCard();
         try {
             JSONObject matches = new JSONObject(matchCard);
-            JSONArray matchesArray = (JSONArray) matches.get(MATCHES);
+            JSONArray matchesArray = (JSONArray) matches.get(Utils.EVENT_DETAILS);
             for (int i = 0; i < matchesArray.length(); i++) {
                 ret.add(matchesArray.getString(i));
             }
@@ -148,25 +147,5 @@ public class Event{
     @Override
     public String toString(){
         return this.eventName;
-    }
-
-
-    /**
-     * JSON keys to index the JSON Events response from the API
-     */
-    public enum EventJSONKeys {
-        ID("id"),
-        NAME("name");
-
-        private String key;
-
-        EventJSONKeys(String key) {
-            this.key = key;
-        }
-
-        @Override
-        public String toString() {
-            return this.key;
-        }
     }
 }

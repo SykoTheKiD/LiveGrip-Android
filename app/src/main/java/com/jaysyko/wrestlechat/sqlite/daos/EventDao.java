@@ -61,11 +61,11 @@ public class EventDao {
     }
 
     public void deleteEvent(Event event){
-        database.delete(SQLiteHelper.EVENTS_TABLE, SQLiteHelper.ID_COLUMN + SQLOperators.EQUALS + event.getEventID(), null);
+        database.delete(SQLiteHelper.EVENTS_TABLE, SQLiteHelper.ID_COLUMN + Operators.EQUALS + event.getEventID(), null);
     }
 
     public void refresh(){
-        database.execSQL(SQLOperators.DROP_TABLE_IF_EXISTS + SQLiteHelper.EVENTS_TABLE);
+        database.execSQL(Operators.DROP_TABLE_IF_EXISTS + SQLiteHelper.EVENTS_TABLE);
         database.execSQL(SQLiteHelper.CREATE_EVENTS_TABLE);
     }
 

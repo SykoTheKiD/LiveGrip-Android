@@ -3,7 +3,7 @@ package com.jaysyko.wrestlechat.network.responses;
 /**
  * Created by jarushaan on 2016-06-03
  */
-public class JSONKeys {
+public class ResponseKeys {
 
     public static final String STATUS = "status";
     public static final String MESSAGE = "message";

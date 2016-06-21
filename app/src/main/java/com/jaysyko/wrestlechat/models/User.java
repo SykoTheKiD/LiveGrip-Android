@@ -7,12 +7,22 @@ import com.google.gson.annotations.SerializedName;
  */
 public class User {
 
-    @SerializedName("id")
+    @SerializedName(Utils.ID)
     private int id;
-    @SerializedName("username")
+    @SerializedName(Utils.USERNAME)
     private String username;
-    @SerializedName("profile_image")
+    @SerializedName(Utils.PROFILE_IMAGE)
     private String profile_image;
+    @SerializedName(Utils.TOKEN)
+    private String authToken;
+
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
 
     public String getProfileImage() {
         return profile_image;

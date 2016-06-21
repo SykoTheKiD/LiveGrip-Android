@@ -41,18 +41,21 @@ public class UserDao {
         values.put(SQLiteHelper.USER_ID_COLUMN, user.getId());
         values.put(SQLiteHelper.USER_USERNAME_COLUMN, user.getUsername());
         values.put(SQLiteHelper.USER_PROFILE_IMAGE_COLUMN, user.getProfileImage());
-        long insertId = database.insert(SQLiteHelper.USER_TABLE, null, values);
+        values.put(SQLiteHelper.USER_AUTH_TOKEN_COLUMN, user.getAuthToken());
+        database.insert(SQLiteHelper.USER_TABLE, null, values);
     }
 
     public void deleteUser(User user){
-        database.delete(SQLiteHelper.USER_TABLE, SQLiteHelper.USER_ID_COLUMN + SQLOperators.EQUALS + user.getId(), null);
+        database.delete(SQLiteHelper.USER_TABLE, SQLiteHelper.USER_ID_COLUMN + Operators.EQUALS + user.getId(), null);
     }
 
     public User getUser(int id){
         SQLiteDatabase db = sqLiteHelper.getReadableDatabase();
         Cursor cursor = db.query(SQLiteHelper.USER_TABLE,
                 allColumns,
-                SQLiteHelper.USER_ID_COLUMN +SQLOperators.EQUALS_IF, new String[]{String.valueOf(id)}, null, null, null, null);
+                SQLiteHelper.USER_ID_COLUMN + Operators.EQUALS_IF,
+                new String[]{String.valueOf(id)},
+                null, null, null, null);
         if(cursor != null && cursor.moveToFirst()){
             return cursorToUser(cursor);
         }
@@ -64,6 +67,7 @@ public class UserDao {
         user.setId(cursor.getInt(cursor.getColumnIndex(SQLiteHelper.USER_ID_COLUMN)));
         user.setUsername(cursor.getString(cursor.getColumnIndex(SQLiteHelper.USER_USERNAME_COLUMN)));
         user.setProfile_image(cursor.getString(cursor.getColumnIndex(SQLiteHelper.USER_PROFILE_IMAGE_COLUMN)));
+        user.setAuthToken(cursor.getString(cursor.getColumnIndex(SQLiteHelper.USER_AUTH_TOKEN_COLUMN)));
         return user;
     }
 
