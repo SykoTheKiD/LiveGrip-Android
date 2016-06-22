@@ -1,6 +1,7 @@
 package com.jaysyko.wrestlechat.auth;
 
 import com.jaysyko.wrestlechat.models.User;
+import com.jaysyko.wrestlechat.sessionManager.Session;
 
 /**
  * CurrentActiveUser.java
@@ -32,6 +33,7 @@ public class CurrentActiveUser {
     }
 
     public void destroySession(){
+        Session.destroySession();
         user = null;
     }
 }

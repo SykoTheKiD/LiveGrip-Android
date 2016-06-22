@@ -13,6 +13,7 @@ import java.io.Serializable;
 
 public class Message implements Serializable {
 
+
     private String username;
     private String body;
     private String userImage;
