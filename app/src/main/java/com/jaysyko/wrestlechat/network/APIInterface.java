@@ -12,9 +12,13 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
- * Created by jarushaan on 2016-06-03
+ * ApiInterface.java
+ * An Interface for the LiveGrip API
+ *
+ * @author Jay Syko
  */
 public interface ApiInterface {
 
@@ -22,8 +26,9 @@ public interface ApiInterface {
     String LOGIN = "auth/login";
     String REGISTER = "auth/register";
     String MESSAGES_SAVE = "messages/save";
-    String MESSAGES_EVENT = "messages/event";
+    String MESSAGES_EVENT = "messages&event={eventID}";
     String AUTHORIZATION = "Authorization";
+    String EVENT_ID = "eventID";
 
     @POST(LOGIN)
     Call<UserResponse> getUser(
@@ -47,8 +52,8 @@ public interface ApiInterface {
     );
 
     @POST(MESSAGES_EVENT)
-    Call<MessageGetResponse> createMessage(
+    Call<MessageGetResponse> getMessages(
             @Header(AUTHORIZATION) String token,
-            @Body MessageData data
+            @Query(EVENT_ID) int id
     );
 }

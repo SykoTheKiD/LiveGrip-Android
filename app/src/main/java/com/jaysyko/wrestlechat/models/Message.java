@@ -16,15 +16,35 @@ public class Message implements Serializable {
     private String username;
     private String body;
     private String userImage;
+    private int eventID;
+    private int userID;
 
-    public Message(String username, String body, String userImage) {
+    public Message(String username, String body, String userImage, int eventID, int userID) {
         this.username = username;
         if (userImage == null) {
             this.userImage = ImageTools.defaultProfileImage(username);
         } else {
             this.userImage = userImage;
         }
+        this.eventID = eventID;
+        this.userID = userID;
         this.body = body;
+    }
+
+    public int getEventID() {
+        return eventID;
+    }
+
+    public void setEventID(int eventID) {
+        this.eventID = eventID;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     /**
@@ -58,20 +78,4 @@ public class Message implements Serializable {
         return this.body;
     }
 
-    /**
-     * @author Jay Syko
-     */
-    public enum MessageJSONKeys {
-        USERNAME("username"), BODY("body"), PROFILE_IMAGE("profile_image"), EVENT_ID("id"), USER_ID("id");
-        private String key;
-
-        MessageJSONKeys(String key) {
-            this.key = key;
-        }
-
-        @Override
-        public String toString() {
-            return this.key;
-        }
-    }
 }

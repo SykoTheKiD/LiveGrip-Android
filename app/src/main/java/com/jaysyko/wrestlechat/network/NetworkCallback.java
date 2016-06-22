@@ -9,6 +9,6 @@ package com.jaysyko.wrestlechat.network;
 public interface NetworkCallback<T> {
     void onSuccess(T response);
 
-    void onFail(String t);
+    void onFail(String error);
 }
 

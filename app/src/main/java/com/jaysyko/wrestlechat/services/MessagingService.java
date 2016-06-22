@@ -6,9 +6,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
-import com.jaysyko.wrestlechat.auth.UserKeys;
 import com.jaysyko.wrestlechat.eventManager.CurrentActiveEvent;
-import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.network.BaseURL;
@@ -38,9 +36,8 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     private static final String TAG = MessagingService.class.getSimpleName();
     private static final String CLIENT_ID = String.valueOf(CurrentActiveUser.getInstance().getCurrentUser().getId());
     private static final String MOSQUITO_URL = BaseURL.getMosquittoURL();
-    private static final int CONNECTION_TIMEOUT = 10000;
-    private static final int KEEP_ALIVE_INTERVAL = 600000;
-    private static final String DUMMY_PASSWORD = "password";
+    private static final int CONNECTION_TIMEOUT = 10000, KEEP_ALIVE_INTERVAL = 600000;
+    public static final String PROFILE_IMAGE = "profile_image", DUMMY_PASSWORD = "password", USERNAME = "username",  BODY = "body", ID = "id", NAME = "name";
     private final MessagingServiceBinder mBinder = new MessagingServiceBinder(this);
     private MqttAndroidClient mClient;
     private boolean mIsConnecting;
@@ -114,14 +111,16 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         Log.i(TAG, messageJSON.toString());
         String profileImage = null;
         try {
-            profileImage = messageJSON.getString(Message.MessageJSONKeys.PROFILE_IMAGE.toString());
+            profileImage = messageJSON.getString(PROFILE_IMAGE);
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
         }
         Message newMessage = new Message(
-                messageJSON.getString(Message.MessageJSONKeys.USERNAME.toString()),
-                messageJSON.getString(Message.MessageJSONKeys.BODY.toString()),
-                profileImage
+                messageJSON.getString(USERNAME),
+                messageJSON.getString(BODY),
+                profileImage,
+                CurrentActiveEvent.getInstance().getCurrentEvent().getEventID(),
+                CurrentActiveUser.getInstance().getCurrentUser().getId()
         );
         mBinder.messageArrived(newMessage);
     }
@@ -213,12 +212,12 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         User currentActiveUser = CurrentActiveUser.getInstance().getCurrentUser();
         CurrentActiveEvent currentActiveEvent = CurrentActiveEvent.getInstance();
         try {
-            payload.put(UserKeys.ID.toString(), currentActiveUser.getId());
-            payload.put(Event.EventJSONKeys.ID.toString(), currentActiveEvent.getCurrentEvent().getEventID());
-            payload.put(Message.MessageJSONKeys.BODY.toString(), body);
-            payload.put(Event.EventJSONKeys.NAME.toString(), currentActiveEvent.getCurrentEvent().getEventName());
-            payload.put(UserKeys.USERNAME.toString(), currentActiveUser.getUsername());
-            payload.put(UserKeys.PROFILE_IMAGE.toString(), currentActiveUser.getProfileImage());
+            payload.put(ID, currentActiveUser.getId());
+            payload.put(ID, currentActiveEvent.getCurrentEvent().getEventID());
+            payload.put(BODY, body);
+            payload.put(NAME, currentActiveEvent.getCurrentEvent().getEventName());
+            payload.put(USERNAME, currentActiveUser.getUsername());
+            payload.put(PROFILE_IMAGE, currentActiveUser.getProfileImage());
         } catch (JSONException e) {
             Log.e(TAG, e.getMessage());
         }
