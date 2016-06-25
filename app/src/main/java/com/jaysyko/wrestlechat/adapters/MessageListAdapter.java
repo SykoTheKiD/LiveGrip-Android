@@ -17,11 +17,11 @@ import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.viewholders.MessageViewHolder;
-import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.messageTypes.MessageGenerator;
 import com.jaysyko.wrestlechat.messageTypes.MessagePosition;
 import com.jaysyko.wrestlechat.messageTypes.MessageType;
 import com.jaysyko.wrestlechat.models.Message;
+import com.jaysyko.wrestlechat.sessionManager.Session;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import java.util.List;
@@ -42,7 +42,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
     private final MessageGenerator uiComponents = new MessageType(context);
     public MessageListAdapter(Context context, List<Message> messages) {
         super(context, ZERO, messages);
-        this.mUsername = CurrentActiveUser.getInstance().getCurrentUser().getUsername();
+        this.mUsername = Session.getInstance().getCurrentUser().getUsername();
     }
 
     /**

@@ -2,7 +2,6 @@ package com.jaysyko.wrestlechat.eventManager;
 
 import android.util.Log;
 
-import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.network.ApiInterface;
 import com.jaysyko.wrestlechat.network.ApiManager;
@@ -10,6 +9,7 @@ import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.requestData.MessageData;
 import com.jaysyko.wrestlechat.network.responses.MessageGetResponse;
 import com.jaysyko.wrestlechat.network.responses.MessageSaveResponse;
+import com.jaysyko.wrestlechat.sessionManager.Session;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class Messenger {
 
     private static final String TAG = Messenger.class.getSimpleName();
     private static final ApiInterface apiManager = ApiManager.getApiService();
-    private static final String USER_AUTH_TOKEN = CurrentActiveUser.getInstance().getCurrentUser().getAuthToken();
+    private static final String USER_AUTH_TOKEN = Session.getInstance().getCurrentUser().getAuthToken();
     private static final Call<MessageGetResponse> getMessagesCall = apiManager.getMessages(
             USER_AUTH_TOKEN,
             CurrentActiveEvent.getInstance().getCurrentEvent().getEventID()

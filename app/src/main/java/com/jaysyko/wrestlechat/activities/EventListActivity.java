@@ -16,10 +16,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.fragments.EventListFragment;
 import com.jaysyko.wrestlechat.network.NetworkState;
+import com.jaysyko.wrestlechat.sessionManager.Session;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 public class EventListActivity extends AppCompatActivity{
@@ -45,7 +45,7 @@ public class EventListActivity extends AppCompatActivity{
         final View headerLayout = mNavigationView != null ? mNavigationView.inflateHeaderView(R.layout.nav_header_event_list) : null;
         TextView headerUsername = (TextView) (headerLayout != null ? headerLayout.findViewById(R.id.drawer_username) : null);
         if (headerUsername != null) {
-            headerUsername.setText(CurrentActiveUser.getInstance().getCurrentUser().getUsername());
+            headerUsername.setText(Session.getInstance().getCurrentUser().getUsername());
         }
 
         /**
@@ -76,7 +76,7 @@ public class EventListActivity extends AppCompatActivity{
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                CurrentActiveUser.getInstance().destroySession();
+                                Session.getInstance().destroySession();
                                 Intent intent = new Intent(mApplicationContext, LoginActivity.class);
                                 startActivity(intent);
                                 finish();

@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.eventManager.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.network.BaseURL;
+import com.jaysyko.wrestlechat.sessionManager.Session;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.android.service.MqttTraceHandler;
@@ -33,11 +33,11 @@ import org.json.JSONObject;
  */
 public class MessagingService extends Service implements MqttCallback, MqttTraceHandler, IMqttActionListener {
 
+    public static final String PROFILE_IMAGE = "profile_image", DUMMY_PASSWORD = "password", USERNAME = "username", BODY = "body", ID = "id", NAME = "name";
     private static final String TAG = MessagingService.class.getSimpleName();
-    private static final String CLIENT_ID = String.valueOf(CurrentActiveUser.getInstance().getCurrentUser().getId());
+    private static final String CLIENT_ID = String.valueOf(Session.getInstance().getCurrentUser().getId());
     private static final String MOSQUITO_URL = BaseURL.getMosquittoURL();
     private static final int CONNECTION_TIMEOUT = 10000, KEEP_ALIVE_INTERVAL = 600000;
-    public static final String PROFILE_IMAGE = "profile_image", DUMMY_PASSWORD = "password", USERNAME = "username",  BODY = "body", ID = "id", NAME = "name";
     private final MessagingServiceBinder mBinder = new MessagingServiceBinder(this);
     private MqttAndroidClient mClient;
     private boolean mIsConnecting;
@@ -120,7 +120,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
                 messageJSON.getString(BODY),
                 profileImage,
                 CurrentActiveEvent.getInstance().getCurrentEvent().getEventID(),
-                CurrentActiveUser.getInstance().getCurrentUser().getId()
+                Session.getInstance().getCurrentUser().getId()
         );
         mBinder.messageArrived(newMessage);
     }
@@ -209,7 +209,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      */
     public void send(String body) {
         JSONObject payload = new JSONObject();
-        User currentActiveUser = CurrentActiveUser.getInstance().getCurrentUser();
+        User currentActiveUser = Session.getInstance().getCurrentUser();
         CurrentActiveEvent currentActiveEvent = CurrentActiveEvent.getInstance();
         try {
             payload.put(ID, currentActiveUser.getId());

@@ -1,5 +1,6 @@
 package com.jaysyko.wrestlechat.models;
 
+import com.google.gson.annotations.SerializedName;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import java.io.Serializable;
@@ -13,9 +14,11 @@ import java.io.Serializable;
 
 public class Message implements Serializable {
 
-
+    @SerializedName("")
     private String username;
+    @SerializedName("")
     private String body;
+    @SerializedName("")
     private String userImage;
     private int eventID;
     private int userID;

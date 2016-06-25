@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.auth.CurrentActiveUser;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formTypes.LoginForm;
@@ -25,7 +24,6 @@ import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.requestData.UserData;
 import com.jaysyko.wrestlechat.network.responses.UserResponse;
 import com.jaysyko.wrestlechat.sessionManager.Session;
-import com.jaysyko.wrestlechat.sqlite.daos.UserDao;
 
 import retrofit2.Call;
 
@@ -40,13 +38,18 @@ public final class LoginActivity extends AppCompatActivity {
     private EditText usernameField, passwordField;
     private Context mContext;
     private Intent intent;
-    private UserDao userDao;
     private boolean signIn = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mContext = getApplicationContext();
+        intent = new Intent(mContext, EventListActivity.class);
+        if (Session.getInstance().isLoggedIn(mContext)) {
+            startActivity(intent);
+            finish();
+        }
         loginButton = (Button) findViewById(R.id.sign_in_button);
         signUpButton = (Button) findViewById(R.id.sign_up_button);
         signUpText = (TextView) findViewById(R.id.sign_up_text_view);
@@ -54,11 +57,6 @@ public final class LoginActivity extends AppCompatActivity {
         usernameField.setText(getIntent().getStringExtra(USERNAME_INTENT_KEY));
         passwordField = (EditText) findViewById(R.id.login_password_et);
         // Redirect to Events page if logged in;
-        mContext = getApplicationContext();
-
-        userDao = new UserDao(this);
-        userDao.open();
-        intent = new Intent(mContext, EventListActivity.class);
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -151,9 +149,9 @@ public final class LoginActivity extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onFail(String t) {
-                                Log.e(TAG, t);
-                                Dialog.makeToast(mContext, t);
+                            public void onFail(String error) {
+                                Log.e(TAG, error);
+                                Dialog.makeToast(mContext, error);
                             }
                         });
                     } else {
@@ -168,10 +166,7 @@ public final class LoginActivity extends AppCompatActivity {
 
     private void loginUser(UserResponse response) {
         User user = response.getData();
-        CurrentActiveUser.setActiveUser(user);
-        userDao.createUser(user);
-        userDao.close();
-        Session.newSession();
+        Session.getInstance().newSession(mContext, user);
         startActivity(intent);
         finish();
     }
