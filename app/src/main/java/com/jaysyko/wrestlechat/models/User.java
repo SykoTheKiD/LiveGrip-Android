@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class User {
 
+    private static final String PREFIX = "Token ";
     @SerializedName(Utils.ID)
     private int id;
     @SerializedName(Utils.USERNAME)
@@ -17,7 +18,7 @@ public class User {
     private String authToken;
 
     public String getAuthToken() {
-        return authToken;
+        return PREFIX + authToken;
     }
 
     public void setAuthToken(String authToken) {

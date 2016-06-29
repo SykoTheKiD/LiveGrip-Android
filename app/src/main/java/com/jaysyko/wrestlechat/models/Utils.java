@@ -16,4 +16,6 @@ public class Utils {
     protected static final String START_TIME = "start_time";
     protected static final String END_TIME = "end_time";
     protected static final String EVENT_DETAILS = "matches";
+    static final String MESSAGE_USER = "user";
+    static final String MESSAGE_BODY = "body";
 }

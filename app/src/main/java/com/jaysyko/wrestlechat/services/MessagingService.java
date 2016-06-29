@@ -6,10 +6,11 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.jaysyko.wrestlechat.eventManager.CurrentActiveEvent;
+import com.jaysyko.wrestlechat.eventManager.Messenger;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.network.BaseURL;
-import com.jaysyko.wrestlechat.sessionManager.Session;
+import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.android.service.MqttTraceHandler;
@@ -23,8 +24,6 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-//import com.android.volley.Request;
-
 /**
  * MessagingService.java
  *
@@ -34,8 +33,9 @@ import org.json.JSONObject;
 public class MessagingService extends Service implements MqttCallback, MqttTraceHandler, IMqttActionListener {
 
     public static final String PROFILE_IMAGE = "profile_image", DUMMY_PASSWORD = "password", USERNAME = "username", BODY = "body", ID = "id", NAME = "name";
+    static final int QOS = 1;
     private static final String TAG = MessagingService.class.getSimpleName();
-    private static final String CLIENT_ID = String.valueOf(Session.getInstance().getCurrentUser().getId());
+    private static final String CLIENT_ID = String.valueOf(SessionManager.getCurrentUser().getId());
     private static final String MOSQUITO_URL = BaseURL.getMosquittoURL();
     private static final int CONNECTION_TIMEOUT = 10000, KEEP_ALIVE_INTERVAL = 600000;
     private final MessagingServiceBinder mBinder = new MessagingServiceBinder(this);
@@ -108,19 +108,10 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         String payload = message.toString();
         JSONObject messageJSON = new JSONObject(payload);
-        Log.i(TAG, messageJSON.toString());
-        String profileImage = null;
-        try {
-            profileImage = messageJSON.getString(PROFILE_IMAGE);
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-        }
         Message newMessage = new Message(
                 messageJSON.getString(USERNAME),
                 messageJSON.getString(BODY),
-                profileImage,
-                CurrentActiveEvent.getInstance().getCurrentEvent().getEventID(),
-                Session.getInstance().getCurrentUser().getId()
+                messageJSON.getString(PROFILE_IMAGE)
         );
         mBinder.messageArrived(newMessage);
     }
@@ -207,26 +198,28 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      *
      * @param body Body of message in JSON format that contains all the messages details
      */
-    public void send(String body) {
-        JSONObject payload = new JSONObject();
-        User currentActiveUser = Session.getInstance().getCurrentUser();
-        CurrentActiveEvent currentActiveEvent = CurrentActiveEvent.getInstance();
+    public void send(final String body) {
+        final JSONObject payload = new JSONObject();
+        final User currentActiveUser = SessionManager.getCurrentUser();
+        final CurrentActiveEvent currentActiveEvent = CurrentActiveEvent.getInstance();
+        final String username = currentActiveUser.getUsername();
+        final String profileImage = currentActiveUser.getProfileImage();
         try {
             payload.put(ID, currentActiveUser.getId());
-            payload.put(ID, currentActiveEvent.getCurrentEvent().getEventID());
             payload.put(BODY, body);
             payload.put(NAME, currentActiveEvent.getCurrentEvent().getEventName());
-            payload.put(USERNAME, currentActiveUser.getUsername());
-            payload.put(PROFILE_IMAGE, currentActiveUser.getProfileImage());
+            payload.put(USERNAME, username);
+            payload.put(PROFILE_IMAGE, profileImage);
         } catch (JSONException e) {
             Log.e(TAG, e.getMessage());
         }
 
         try {
-            mClient.publish(String.valueOf(room), payload.toString().getBytes(), 2, false, null, this);
+            mClient.publish(String.valueOf(room), payload.toString().getBytes(), QOS, false, null, this);
         } catch (MqttException e) {
             Log.e(TAG, e.getMessage());
         }
+        Messenger.saveMessage(new Message(username, body, profileImage));
     }
 
     /**

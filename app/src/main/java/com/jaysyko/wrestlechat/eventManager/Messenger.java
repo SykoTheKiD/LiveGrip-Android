@@ -9,7 +9,7 @@ import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.requestData.MessageData;
 import com.jaysyko.wrestlechat.network.responses.MessageGetResponse;
 import com.jaysyko.wrestlechat.network.responses.MessageSaveResponse;
-import com.jaysyko.wrestlechat.sessionManager.Session;
+import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class Messenger {
 
     private static final String TAG = Messenger.class.getSimpleName();
     private static final ApiInterface apiManager = ApiManager.getApiService();
-    private static final String USER_AUTH_TOKEN = Session.getInstance().getCurrentUser().getAuthToken();
+    private static final String USER_AUTH_TOKEN = SessionManager.getCurrentUser().getAuthToken();
     private static final Call<MessageGetResponse> getMessagesCall = apiManager.getMessages(
             USER_AUTH_TOKEN,
             CurrentActiveEvent.getInstance().getCurrentEvent().getEventID()
@@ -49,7 +49,11 @@ public class Messenger {
 
         final Call<MessageSaveResponse> saveMessagesCall = apiManager.saveMessage(
                 USER_AUTH_TOKEN,
-                new MessageData(message.getEventID(), message.getUserID(), message.getBody())
+                new MessageData(
+                        CurrentActiveEvent.getInstance().getCurrentEvent().getEventID(),
+                        SessionManager.getCurrentUser().getId(),
+                        message.getBody()
+                )
         );
 
         ApiManager.request(saveMessagesCall, new NetworkCallback<MessageSaveResponse>() {

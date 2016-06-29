@@ -14,41 +14,17 @@ import java.io.Serializable;
 
 public class Message implements Serializable {
 
-    @SerializedName("")
-    private String username;
-    @SerializedName("")
+    @SerializedName(Utils.MESSAGE_USER)
+    private MessageUser messageUser;
+    @SerializedName(Utils.MESSAGE_BODY)
     private String body;
-    @SerializedName("")
-    private String userImage;
-    private int eventID;
-    private int userID;
 
-    public Message(String username, String body, String userImage, int eventID, int userID) {
-        this.username = username;
+    public Message(String username, String body, String userImage) {
         if (userImage == null) {
-            this.userImage = ImageTools.defaultProfileImage(username);
-        } else {
-            this.userImage = userImage;
+            userImage = ImageTools.defaultProfileImage(username);
         }
-        this.eventID = eventID;
-        this.userID = userID;
+        this.messageUser = new MessageUser(username, userImage);
         this.body = body;
-    }
-
-    public int getEventID() {
-        return eventID;
-    }
-
-    public void setEventID(int eventID) {
-        this.eventID = eventID;
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
     }
 
     /**
@@ -57,16 +33,15 @@ public class Message implements Serializable {
      * @return username
      */
     public String getUsername() {
-        return this.username;
+        return this.messageUser.getMessageUsername();
     }
 
     /**
      * @return userImage
      */
     public String getUserImage() {
-        return this.userImage;
+        return this.messageUser.getMessageUserImage();
     }
-
 
     /**
      * Returns the message contents
@@ -80,6 +55,34 @@ public class Message implements Serializable {
     @Override
     public String toString() {
         return this.body;
+    }
+
+    private class MessageUser {
+        @SerializedName(Utils.USERNAME)
+        private String messageUsername;
+        @SerializedName(Utils.PROFILE_IMAGE)
+        private String messageUserImage;
+
+        public MessageUser(String username, String profileImage) {
+            setMessageUsername(username);
+            setMessageUserImage(profileImage);
+        }
+
+        public String getMessageUserImage() {
+            return messageUserImage;
+        }
+
+        public void setMessageUserImage(String messageUserImage) {
+            this.messageUserImage = messageUserImage;
+        }
+
+        public String getMessageUsername() {
+            return messageUsername;
+        }
+
+        public void setMessageUsername(String messageUsername) {
+            this.messageUsername = messageUsername;
+        }
     }
 
 }

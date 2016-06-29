@@ -25,6 +25,7 @@ import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.eventManager.CurrentActiveEvent;
+import com.jaysyko.wrestlechat.eventManager.Messenger;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formTypes.MessagingForm;
 import com.jaysyko.wrestlechat.models.Event;
@@ -55,6 +56,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private Runnable initMessageAdapter = new Runnable() {
         @Override
         public void run() {
+            mMessages.addAll(Messenger.getMessages());
             initMessageAdapter();
         }
     };
@@ -94,7 +96,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         mApplicationContext = getActivity();
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
         ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
-
         btSend = (Button) view.findViewById(R.id.send_button);
         handler.post(initMessageAdapter);
         btSend.setOnClickListener(new View.OnClickListener() {

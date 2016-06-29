@@ -23,7 +23,7 @@ import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.requestData.UserData;
 import com.jaysyko.wrestlechat.network.responses.UserResponse;
-import com.jaysyko.wrestlechat.sessionManager.Session;
+import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 
 import retrofit2.Call;
 
@@ -46,7 +46,7 @@ public final class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         mContext = getApplicationContext();
         intent = new Intent(mContext, EventListActivity.class);
-        if (Session.getInstance().isLoggedIn(mContext)) {
+        if (SessionManager.isLoggedIn(mContext)) {
             startActivity(intent);
             finish();
         }
@@ -166,7 +166,7 @@ public final class LoginActivity extends AppCompatActivity {
 
     private void loginUser(UserResponse response) {
         User user = response.getData();
-        Session.getInstance().newSession(mContext, user);
+        SessionManager.newSession(mContext, user);
         startActivity(intent);
         finish();
     }
