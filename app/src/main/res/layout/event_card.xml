@@ -1,9 +1,8 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="350dp"
     android:layout_margin="10dp"
     app:cardUseCompatPadding="true">
 
@@ -16,8 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="380dp"
             android:tint="@color/black"
-            android:tintMode="multiply"
-            tools:targetApi="lollipop" />
+            android:tintMode="multiply" />
 
         <TextView
             android:id="@+id/event_location"
