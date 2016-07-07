@@ -9,7 +9,7 @@ import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.responses.EventResponse;
-import com.jaysyko.wrestlechat.sessionManager.Session;
+import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 import com.jaysyko.wrestlechat.sqlite.daos.EventDao;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public final class CurrentEvents {
     }
 
     public List<Event> getEventsFromNetwork() {
-        Call<EventResponse> call = ApiManager.getApiService().getEvents(Session.getInstance().getCurrentUser().getAuthToken());
+        Call<EventResponse> call = ApiManager.getApiService().getEvents(SessionManager.getCurrentUser().getAuthToken());
         ApiManager.request(call, new NetworkCallback<EventResponse>() {
             @Override
             public void onSuccess(EventResponse response) {

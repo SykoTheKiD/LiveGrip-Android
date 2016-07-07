@@ -21,7 +21,7 @@ import com.jaysyko.wrestlechat.messageTypes.MessageGenerator;
 import com.jaysyko.wrestlechat.messageTypes.MessagePosition;
 import com.jaysyko.wrestlechat.messageTypes.MessageType;
 import com.jaysyko.wrestlechat.models.Message;
-import com.jaysyko.wrestlechat.sessionManager.Session;
+import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import java.util.List;
@@ -42,7 +42,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
     private final MessageGenerator uiComponents = new MessageType(context);
     public MessageListAdapter(Context context, List<Message> messages) {
         super(context, ZERO, messages);
-        this.mUsername = Session.getInstance().getCurrentUser().getUsername();
+        this.mUsername = SessionManager.getCurrentUser().getUsername();
     }
 
     /**

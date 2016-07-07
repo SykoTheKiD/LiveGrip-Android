@@ -17,7 +17,7 @@ import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formTypes.LoginForm;
 import com.jaysyko.wrestlechat.forms.formTypes.SignUpForm;
 import com.jaysyko.wrestlechat.models.User;
-import com.jaysyko.wrestlechat.network.ApiInterface;
+import com.jaysyko.wrestlechat.network.APIInterface;
 import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkState;
@@ -98,7 +98,7 @@ public final class LoginActivity extends AppCompatActivity {
                 if (NetworkState.isConnected(mContext)) {
                     Form form = new SignUpForm(username, password).validate();
                     if (form.isValid()) {
-                        ApiInterface apiManager = ApiManager.getApiService();
+                        APIInterface apiManager = ApiManager.getApiService();
                         Call<UserResponse> call = apiManager.createUser(
                                 new UserData(
                                         username, password
@@ -136,7 +136,7 @@ public final class LoginActivity extends AppCompatActivity {
                 if (NetworkState.isConnected(mContext)) {
                     Form form = new LoginForm(username, password).validate();
                     if (form.isValid()) {
-                        ApiInterface apiManager = ApiManager.getApiService();
+                        APIInterface apiManager = ApiManager.getApiService();
                         Call<UserResponse> call = apiManager.getUser(
                                 new UserData(
                                         username, password

@@ -14,7 +14,7 @@ import android.widget.ImageView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.models.User;
-import com.jaysyko.wrestlechat.sessionManager.Session;
+import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
 public class UserProfileFragment extends Fragment {
@@ -30,7 +30,7 @@ public class UserProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
         getActivity().setTitle(getString(R.string.manage_profile));
-        currentActiveUser = Session.getInstance().getCurrentUser();
+        currentActiveUser = SessionManager.getCurrentUser();
         mApplicationContext = getActivity();
         profilePicture = (ImageView) view.findViewById(R.id.profile_picture);
         ImageTools.loadImage(mApplicationContext, currentActiveUser.getProfileImage(), profilePicture);

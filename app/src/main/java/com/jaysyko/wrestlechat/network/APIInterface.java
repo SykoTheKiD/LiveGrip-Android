@@ -20,7 +20,7 @@ import retrofit2.http.Query;
  *
  * @author Jay Syko
  */
-public interface ApiInterface {
+public interface APIInterface {
 
     String EVENTS = "events";
     String LOGIN = "auth/login";

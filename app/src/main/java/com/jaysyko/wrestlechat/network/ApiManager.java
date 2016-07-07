@@ -22,9 +22,9 @@ public class ApiManager {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
-    private static final ApiInterface API_SERVICE = RETROFIT.create(ApiInterface.class);
+    private static final APIInterface API_SERVICE = RETROFIT.create(APIInterface.class);
 
-    public static ApiInterface getApiService() {
+    public static APIInterface getApiService() {
         return API_SERVICE;
     }
 

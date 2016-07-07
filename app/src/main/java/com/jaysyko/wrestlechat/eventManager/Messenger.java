@@ -3,7 +3,7 @@ package com.jaysyko.wrestlechat.eventManager;
 import android.util.Log;
 
 import com.jaysyko.wrestlechat.models.Message;
-import com.jaysyko.wrestlechat.network.ApiInterface;
+import com.jaysyko.wrestlechat.network.APIInterface;
 import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.requestData.MessageData;
@@ -22,7 +22,7 @@ import retrofit2.Call;
 public class Messenger {
 
     private static final String TAG = Messenger.class.getSimpleName();
-    private static final ApiInterface apiManager = ApiManager.getApiService();
+    private static final APIInterface apiManager = ApiManager.getApiService();
     private static final String USER_AUTH_TOKEN = SessionManager.getCurrentUser().getAuthToken();
     private static final Call<MessageGetResponse> getMessagesCall = apiManager.getMessages(
             USER_AUTH_TOKEN,
