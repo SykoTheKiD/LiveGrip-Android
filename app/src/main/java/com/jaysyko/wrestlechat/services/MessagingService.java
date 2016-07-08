@@ -219,7 +219,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         } catch (MqttException e) {
             Log.e(TAG, e.getMessage());
         }
-        Messenger.saveMessage(new Message(username, body, profileImage));
+        Messenger.saveMessage(body);
     }
 
     /**

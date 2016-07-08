@@ -3,6 +3,7 @@ package com.jaysyko.wrestlechat.eventManager;
 import android.util.Log;
 
 import com.jaysyko.wrestlechat.models.Message;
+import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.network.APIInterface;
 import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
@@ -45,14 +46,17 @@ public class Messenger {
         return ret;
     }
 
-    public static void saveMessage(final Message message) {
+    public static void saveMessage(final String body) {
 
+        final User currentUser = SessionManager.getCurrentUser();
         final Call<MessageSaveResponse> saveMessagesCall = apiManager.saveMessage(
                 USER_AUTH_TOKEN,
                 new MessageData(
                         CurrentActiveEvent.getInstance().getCurrentEvent().getEventID(),
-                        SessionManager.getCurrentUser().getId(),
-                        message.getBody()
+                        currentUser.getId(),
+                        body,
+                        currentUser.getUsername(),
+                        currentUser.getProfileImage()
                 )
         );
 

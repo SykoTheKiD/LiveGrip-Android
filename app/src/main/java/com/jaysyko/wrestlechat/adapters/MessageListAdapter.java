@@ -64,7 +64,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
             @Override
             public void run() {
                 final ImageView profileView = isMe ? holder.imageRight : holder.imageLeft;
-                ImageTools.loadImage(context, message.getUserImage(), profileView);
+                ImageTools.loadImage(context, message.getProfileImage(), profileView);
             }
         });
         // Show-hide image based on the logged-in user.

@@ -14,75 +14,90 @@ import java.io.Serializable;
 
 public class Message implements Serializable {
 
-    @SerializedName(Utils.MESSAGE_USER)
-    private MessageUser messageUser;
+    @SerializedName(Utils.USER_ID)
+    private int userID;
+    @SerializedName(Utils.USERNAME)
+    private String username;
+    @SerializedName(Utils.PROFILE_IMAGE)
+    private String profileImage;
+    @SerializedName(Utils.EVENT_ID)
+    private int eventID;
+    @SerializedName(Utils.MESSAGE_ID)
+    private int messageID;
     @SerializedName(Utils.MESSAGE_BODY)
     private String body;
+    @SerializedName(Utils.ID)
+    private String id;
 
-    public Message(String username, String body, String userImage) {
-        if (userImage == null) {
-            userImage = ImageTools.defaultProfileImage(username);
-        }
-        this.messageUser = new MessageUser(username, userImage);
+    public Message(int userId, String username, String profileImage, int eventId, int messageId, String body, String id) {
+        this.userID = userId;
+        this.username = username;
+        this.profileImage = profileImage == null ? ImageTools.defaultProfileImage(username) : profileImage;
+        this.eventID = eventId;
+        this.messageID = messageId;
+        this.body = body;
+        this.id = id;
+    }
+
+    public Message(String username, String profileImage, String body) {
+        this.username = username;
+        this.profileImage = profileImage;
         this.body = body;
     }
 
-    /**
-     * Returns the owner of the message
-     *
-     * @return username
-     */
-    public String getUsername() {
-        return this.messageUser.getMessageUsername();
+    private String getId() {
+        return id;
     }
 
-    /**
-     * @return userImage
-     */
-    public String getUserImage() {
-        return this.messageUser.getMessageUserImage();
+    private void setId(String id) {
+        this.id = id;
     }
 
-    /**
-     * Returns the message contents
-     *
-     * @return body String
-     */
     public String getBody() {
-        return this.body;
+        return body;
     }
 
-    @Override
-    public String toString() {
-        return this.body;
+    public void setBody(String body) {
+        this.body = body;
     }
 
-    private class MessageUser {
-        @SerializedName(Utils.USERNAME)
-        private String messageUsername;
-        @SerializedName(Utils.PROFILE_IMAGE)
-        private String messageUserImage;
-
-        public MessageUser(String username, String profileImage) {
-            setMessageUsername(username);
-            setMessageUserImage(profileImage);
-        }
-
-        public String getMessageUserImage() {
-            return messageUserImage;
-        }
-
-        public void setMessageUserImage(String messageUserImage) {
-            this.messageUserImage = messageUserImage;
-        }
-
-        public String getMessageUsername() {
-            return messageUsername;
-        }
-
-        public void setMessageUsername(String messageUsername) {
-            this.messageUsername = messageUsername;
-        }
+    public int getMessageID() {
+        return messageID;
     }
 
+    public void setMessageID(int messageID) {
+        this.messageID = messageID;
+    }
+
+    public int getEventID() {
+        return eventID;
+    }
+
+    public void setEventID(int eventID) {
+        this.eventID = eventID;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
 }

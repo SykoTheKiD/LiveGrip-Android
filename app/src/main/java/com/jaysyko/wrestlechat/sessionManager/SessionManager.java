@@ -23,15 +23,13 @@ public class SessionManager {
      * @param user    User
      */
     public static void newSession(Context context, User user) {
-        if (Session.getInstance() == null) {
-            SharedPreferences.Editor editor = getSessionSharedPrefs(context).edit();
-            Gson userGson = new Gson();
-            String userJson = userGson.toJson(user);
-            editor.putString(CURRENT_USER, userJson);
-            editor.putBoolean(IS_LOGGED_IN, true);
-            editor.apply();
-            Session.getInstance().setCurrentUser(user);
-        }
+//        SharedPreferences.Editor editor = getSessionSharedPrefs(context).edit();
+//        Gson userGson = new Gson();
+//        String userJson = userGson.toJson(user);
+//        editor.putString(CURRENT_USER, userJson);
+//        editor.putBoolean(IS_LOGGED_IN, true);
+//        editor.apply();
+        Session.getInstance().setCurrentUser(user);
     }
 
     /**
