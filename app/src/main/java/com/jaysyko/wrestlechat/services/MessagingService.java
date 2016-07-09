@@ -110,8 +110,8 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         JSONObject messageJSON = new JSONObject(payload);
         Message newMessage = new Message(
                 messageJSON.getString(USERNAME),
-                messageJSON.getString(BODY),
-                messageJSON.getString(PROFILE_IMAGE)
+                messageJSON.getString(PROFILE_IMAGE),
+                messageJSON.getString(BODY)
         );
         mBinder.messageArrived(newMessage);
     }

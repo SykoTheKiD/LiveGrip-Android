@@ -14,13 +14,15 @@
         android:background="#E63946"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <!--<ImageView-->
-            <!--android:layout_width="25dp"-->
-            <!--android:layout_height="25dp"-->
-            <!--android:layout_marginLeft="122dp"-->
-            <!--android:contentDescription="@string/app_name"-->
-            <!--android:gravity="center"-->
-            <!--android:src="@drawable/logo" />-->
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="130dp"
+            android:layout_marginStart="130dp"
+            android:contentDescription="@string/app_name"
+            android:foregroundGravity="center_vertical|center_horizontal"
+            android:gravity="center_horizontal"
+            android:src="@drawable/logo" />
 
 
     </android.support.v7.widget.Toolbar>
@@ -43,9 +45,9 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:layout_marginTop="-24dp"
+            android:background="#ffffff"
             app:itemTextColor="#212121"
-            app:menu="@menu/drawer_menu"
-            android:background="#ffffff">
+            app:menu="@menu/drawer_menu">
 
         </android.support.design.widget.NavigationView>
 

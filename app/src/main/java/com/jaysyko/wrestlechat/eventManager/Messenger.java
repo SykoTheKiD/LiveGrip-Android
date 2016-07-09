@@ -40,7 +40,7 @@ public class Messenger {
 
             @Override
             public void onFail(String error) {
-                Log.e(TAG, error);
+                Log.e(TAG, "" + error);
             }
         });
         return ret;
@@ -68,7 +68,8 @@ public class Messenger {
 
             @Override
             public void onFail(String error) {
-                Log.e(TAG, error);
+                Log.e(TAG, "" + error);
+                Log.e(TAG, "Message was not saved to DB");
             }
         });
     }

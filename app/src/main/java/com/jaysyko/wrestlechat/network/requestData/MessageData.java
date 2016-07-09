@@ -5,23 +5,23 @@ package com.jaysyko.wrestlechat.network.requestData;
  */
 public class MessageData {
 
-    private int eventID, userID;
-    private String body, username, profileImage;
+    private int event_id, user_id;
+    private String body, username, profile_image;
 
     public MessageData(int eventID, int userID, String body, String username, String profileImage) {
-        this.eventID = eventID;
-        this.userID = userID;
+        this.event_id = eventID;
+        this.user_id = userID;
         this.body = body;
         this.username = username;
-        this.profileImage = profileImage;
+        this.profile_image = profileImage;
     }
 
     public int getEventID() {
-        return this.eventID;
+        return this.event_id;
     }
 
     public int getUserID() {
-        return this.userID;
+        return this.user_id;
     }
 
     public String getBody() {
@@ -33,6 +33,6 @@ public class MessageData {
     }
 
     public String getProfileImage() {
-        return this.profileImage;
+        return this.profile_image;
     }
 }

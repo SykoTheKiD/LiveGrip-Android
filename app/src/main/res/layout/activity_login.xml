@@ -17,8 +17,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/logo"
-        android:visibility="invisible" />
+        android:src="@drawable/logo" />
 
     <EditText
         android:id="@+id/username_text_view"
@@ -58,9 +57,8 @@
         style="?android:textAppearanceSmall"
         android:layout_width="160dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/login_password_et"
+        android:layout_below="@+id/sign_up_text_view"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="39dp"
         android:background="#3F0D12"
         android:text="@string/action_sign_up"
         android:textColor="#fff"

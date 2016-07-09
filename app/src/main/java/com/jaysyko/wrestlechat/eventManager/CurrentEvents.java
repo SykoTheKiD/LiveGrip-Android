@@ -73,5 +73,4 @@ public final class CurrentEvents {
         mEventsList.addAll(eventDao.getAllEvents());
         return mEventsList;
     }
-
 }

@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
+import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.eventManager.CurrentEvents;
 import com.jaysyko.wrestlechat.eventManager.OpenEvent;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
@@ -54,7 +55,6 @@ public class EventListFragment extends Fragment {
                 eventListClickListener(recyclerView);
                 mAdapter = new EventListAdapter(mEventsList, mApplicationContext);
                 recyclerView.setAdapter(mAdapter);
-                getEvents(false);
             }
         });
         return layout;
@@ -74,7 +74,7 @@ public class EventListFragment extends Fragment {
                     new Handler().post(new Runnable() {
                         @Override
                         public void run() {
-                            getEvents(true);
+                            getEvents();
                             swipeView.setRefreshing(false);
                         }
                     });
@@ -113,22 +113,28 @@ public class EventListFragment extends Fragment {
         );
     }
 
-    private void getEvents(boolean hard) {
+    private void getEvents() {
         CurrentEvents instance = CurrentEvents.getInstance(mApplicationContext);
         List<Event> events;
-        if (hard) {
+        if (NetworkState.isConnected(mApplicationContext)) {
             Log.i(TAG, "Cache Miss");
             events = instance.getEventsFromNetwork();
         } else {
             Log.i(TAG, "Cache Hit");
             events = instance.getEvents();
-            if (events.size() == 0) {
-                Log.i(TAG, "Cache Empty");
-                events = instance.getEventsFromNetwork();
-            }
+            Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
+        }
+        if (events.isEmpty()) {
+            Dialog.makeToast(mApplicationContext, getString(R.string.no_events));
         }
         mEventsList.clear();
         mEventsList.addAll(events);
         updateRecyclerView(mEventsList);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getEvents();
     }
 }
