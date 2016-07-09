@@ -23,7 +23,7 @@ public class Message implements Serializable {
     @SerializedName(Utils.EVENT_ID)
     private int eventID;
     @SerializedName(Utils.MESSAGE_ID)
-    private int messageID;
+    private long messageID;
     @SerializedName(Utils.MESSAGE_BODY)
     private String body;
     @SerializedName(Utils.ID)
@@ -61,7 +61,7 @@ public class Message implements Serializable {
         this.body = body;
     }
 
-    public int getMessageID() {
+    public long getMessageID() {
         return messageID;
     }
 

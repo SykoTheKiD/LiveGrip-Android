@@ -1,8 +1,8 @@
 package com.jaysyko.wrestlechat.network;
 
 import com.jaysyko.wrestlechat.application.App;
-import com.jaysyko.wrestlechat.network.requestData.MessageData;
 import com.jaysyko.wrestlechat.network.requestData.AuthData;
+import com.jaysyko.wrestlechat.network.requestData.MessageData;
 import com.jaysyko.wrestlechat.network.responses.EventResponse;
 import com.jaysyko.wrestlechat.network.responses.MessageGetResponse;
 import com.jaysyko.wrestlechat.network.responses.MessageSaveResponse;
@@ -13,7 +13,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
+import retrofit2.http.Path;
 
 /**
  * ApiInterface.java
@@ -52,9 +52,9 @@ public interface APIInterface {
             @Body MessageData data
     );
 
-    @POST(MESSAGES_EVENT)
+    @GET(MESSAGES_EVENT)
     Call<MessageGetResponse> getMessages(
             @Header(AUTHORIZATION) String token,
-            @Query(EVENT_ID) int id
+            @Path(EVENT_ID) int id
     );
 }

@@ -12,6 +12,7 @@ import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,18 +26,23 @@ import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.eventManager.CurrentActiveEvent;
-import com.jaysyko.wrestlechat.eventManager.Messenger;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formTypes.MessagingForm;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.Message;
+import com.jaysyko.wrestlechat.network.ApiManager;
+import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkState;
+import com.jaysyko.wrestlechat.network.responses.MessageGetResponse;
 import com.jaysyko.wrestlechat.services.IMessageArrivedListener;
 import com.jaysyko.wrestlechat.services.MessagingService;
 import com.jaysyko.wrestlechat.services.MessagingServiceBinder;
+import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
 
 public class MessagingFragment extends Fragment implements IMessageArrivedListener {
 
@@ -56,7 +62,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private Runnable initMessageAdapter = new Runnable() {
         @Override
         public void run() {
-            mMessages.addAll(Messenger.getMessages());
             initMessageAdapter();
         }
     };
@@ -168,11 +173,41 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        if(mAdapter.getCount() == 0){
+            getChatHistory();
+        }
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
         if (mServiceBound) {
             getActivity().unbindService(mServiceConnection);
             mServiceBound = false;
+        }
+    }
+
+    private void getChatHistory() {
+        if(NetworkState.isConnected(mApplicationContext)){
+            Call<MessageGetResponse> getMessagesCall = ApiManager.getApiService().getMessages(
+                    SessionManager.getCurrentUser().getAuthToken(),
+                    CurrentActiveEvent.getInstance().getCurrentEvent().getEventID()
+            );
+            ApiManager.request(getMessagesCall, new NetworkCallback<MessageGetResponse>() {
+                @Override
+                public void onSuccess(MessageGetResponse response) {
+                    mAdapter.addAll(response.getData());
+                }
+
+                @Override
+                public void onFail(String error) {
+                    Log.e(TAG, "" + error);
+                }
+            });
+        }else{
+            Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
         }
     }
 }
