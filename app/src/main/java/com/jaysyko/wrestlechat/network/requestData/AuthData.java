@@ -3,12 +3,12 @@ package com.jaysyko.wrestlechat.network.requestData;
 /**
  * Created by jarushaan on 2016-06-03
  */
-public class UserData {
+public class AuthData {
 
     private String username;
     private String password;
 
-    public UserData(String username, String password){
+    public AuthData(String username, String password){
         this.username = username;
         this.password = password;
     }

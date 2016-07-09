@@ -1,7 +1,8 @@
 package com.jaysyko.wrestlechat.network;
 
+import com.jaysyko.wrestlechat.application.App;
 import com.jaysyko.wrestlechat.network.requestData.MessageData;
-import com.jaysyko.wrestlechat.network.requestData.UserData;
+import com.jaysyko.wrestlechat.network.requestData.AuthData;
 import com.jaysyko.wrestlechat.network.responses.EventResponse;
 import com.jaysyko.wrestlechat.network.responses.MessageGetResponse;
 import com.jaysyko.wrestlechat.network.responses.MessageSaveResponse;
@@ -22,7 +23,7 @@ import retrofit2.http.Query;
  */
 public interface APIInterface {
 
-    String EVENTS = "events";
+    String EVENTS = "events&app_version=" + App.APP_VERSION;
     String LOGIN = "auth/login";
     String REGISTER = "auth/register";
     String MESSAGES_SAVE = "messages/save";
@@ -32,12 +33,12 @@ public interface APIInterface {
 
     @POST(LOGIN)
     Call<UserResponse> getUser(
-            @Body UserData data
+            @Body AuthData data
     );
 
     @POST(REGISTER)
     Call<UserResponse> createUser(
-            @Body UserData data
+            @Body AuthData data
     );
 
     @GET(EVENTS)

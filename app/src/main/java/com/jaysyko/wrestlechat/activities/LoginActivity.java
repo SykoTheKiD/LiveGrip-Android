@@ -21,7 +21,7 @@ import com.jaysyko.wrestlechat.network.APIInterface;
 import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkState;
-import com.jaysyko.wrestlechat.network.requestData.UserData;
+import com.jaysyko.wrestlechat.network.requestData.AuthData;
 import com.jaysyko.wrestlechat.network.responses.UserResponse;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 
@@ -100,9 +100,7 @@ public final class LoginActivity extends AppCompatActivity {
                     if (form.isValid()) {
                         APIInterface apiManager = ApiManager.getApiService();
                         Call<UserResponse> call = apiManager.createUser(
-                                new UserData(
-                                        username, password
-                                )
+                                new AuthData(username, password)
                         );
                         ApiManager.request(call, new NetworkCallback<UserResponse>() {
                             @Override
@@ -138,9 +136,7 @@ public final class LoginActivity extends AppCompatActivity {
                     if (form.isValid()) {
                         APIInterface apiManager = ApiManager.getApiService();
                         Call<UserResponse> call = apiManager.getUser(
-                                new UserData(
-                                        username, password
-                                )
+                                new AuthData(username, password)
                         );
                         ApiManager.request(call, new NetworkCallback<UserResponse>() {
                             @Override
