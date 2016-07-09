@@ -47,7 +47,6 @@ public class EventListActivity extends AppCompatActivity{
         if (headerUsername != null) {
             headerUsername.setText(SessionManager.getCurrentUser().getUsername());
         }
-
         /**
          * Lets inflate the very first fragment
          * Here we are inflating the TabFragment as the first Fragment

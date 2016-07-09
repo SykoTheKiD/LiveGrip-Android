@@ -33,6 +33,7 @@ public final class CurrentEvents {
     private Handler handler = new Handler();
 
     private CurrentEvents() {
+        getEventsFromNetwork();
     }
 
     public static CurrentEvents getInstance(Context context) {
@@ -48,20 +49,24 @@ public final class CurrentEvents {
             public void onSuccess(EventResponse response) {
                 mEventsList.clear();
                 mEventsList.addAll(response.getData());
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        eventDao.open();
-                        eventDao.refresh();
-                        eventDao.addAll(mEventsList);
-                    }
-                });
+                if(eventDao != null){
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            eventDao.open();
+                            eventDao.refresh();
+                            eventDao.addAll(mEventsList);
+                        }
+                    });
+                }
             }
 
             @Override
             public void onFail(String error) {
                 Log.e(TAG, error);
-                Dialog.makeToast(mApplicationContext, error);
+                if(mApplicationContext != null){
+                    Dialog.makeToast(mApplicationContext, error);
+                }
             }
         });
         return mEventsList;

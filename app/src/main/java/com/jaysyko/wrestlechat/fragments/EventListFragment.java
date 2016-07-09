@@ -17,14 +17,20 @@ import android.widget.RelativeLayout;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
-import com.jaysyko.wrestlechat.eventManager.CurrentEvents;
 import com.jaysyko.wrestlechat.eventManager.OpenEvent;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
 import com.jaysyko.wrestlechat.models.Event;
+import com.jaysyko.wrestlechat.network.ApiManager;
+import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkState;
+import com.jaysyko.wrestlechat.network.responses.EventResponse;
+import com.jaysyko.wrestlechat.sessionManager.SessionManager;
+import com.jaysyko.wrestlechat.sqlite.daos.EventDao;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
 
 public class EventListFragment extends Fragment {
 
@@ -35,6 +41,7 @@ public class EventListFragment extends Fragment {
     private EventListAdapter mAdapter;
     private RelativeLayout layout;
     private List<Event> mEventsList = new ArrayList<>();
+    private EventDao eventDao;
     final Runnable initSwipeRefresh = new Runnable() {
         @Override
         public void run() {
@@ -46,6 +53,8 @@ public class EventListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layout = (RelativeLayout) inflater.inflate(R.layout.fragment_event_list, null);
         mApplicationContext = getContext();
+        getEvents();
+        eventDao = new EventDao(mApplicationContext);
         handler.post(initSwipeRefresh);
         handler.post(new Runnable() {
             @Override
@@ -114,27 +123,35 @@ public class EventListFragment extends Fragment {
     }
 
     private void getEvents() {
-        CurrentEvents instance = CurrentEvents.getInstance(mApplicationContext);
-        List<Event> events;
-        if (NetworkState.isConnected(mApplicationContext)) {
-            Log.i(TAG, "Cache Miss");
-            events = instance.getEventsFromNetwork();
-        } else {
-            Log.i(TAG, "Cache Hit");
-            events = instance.getEvents();
+        if(NetworkState.isConnected(mApplicationContext)){
+            Call<EventResponse> call = ApiManager.getApiService().getEvents(SessionManager.getCurrentUser().getAuthToken());
+            ApiManager.request(call, new NetworkCallback<EventResponse>() {
+                @Override
+                public void onSuccess(EventResponse response) {
+                    Log.v(TAG, "Successfully received events from network");
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            eventDao.open();
+                            eventDao.refresh();
+                            eventDao.addAll(mEventsList);
+                        }
+                    });
+                    mEventsList.clear();
+                    mEventsList.addAll(response.getData());
+                }
+                @Override
+                public void onFail(String error) {
+                    Log.e(TAG, error);
+                    Dialog.makeToast(mApplicationContext, error);
+                }
+            });
+        }else{
+            eventDao.open();
+            mEventsList.clear();
+            mEventsList.addAll(eventDao.getAllEvents());
             Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
         }
-        if (events.isEmpty()) {
-            Dialog.makeToast(mApplicationContext, getString(R.string.no_events));
-        }
-        mEventsList.clear();
-        mEventsList.addAll(events);
         updateRecyclerView(mEventsList);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        getEvents();
     }
 }
