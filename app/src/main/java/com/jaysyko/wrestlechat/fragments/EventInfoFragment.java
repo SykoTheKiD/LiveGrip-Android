@@ -41,6 +41,7 @@ public class EventInfoFragment extends Fragment {
         ((AppCompatActivity) activity).setSupportActionBar(toolbar);
         prepareEventInfoContent(activity);
         ListView eventDetails = (ListView) view.findViewById(R.id.events_list_view);
+        eventDetails.setEmptyView(view.findViewById(R.id.empty_layout));
         EventDetailsAdapter adapter = new EventDetailsAdapter(getActivity(), currentActiveEvent.getMatchList());
         eventDetails.setAdapter(adapter);
 //        handler.post(new Runnable() {

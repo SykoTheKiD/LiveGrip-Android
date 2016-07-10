@@ -1,25 +1,44 @@
 package com.jaysyko.wrestlechat.eventManager;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 
 import com.jaysyko.wrestlechat.activities.EventInfoActivity;
 import com.jaysyko.wrestlechat.activities.MessagingActivity;
 import com.jaysyko.wrestlechat.date.DateVerifier;
-import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.models.Event;
 
 public class OpenEvent {
 
-    public static void openConversation(Event event, Context context) {
+    public static void openConversation(final Event event, final Context context) {
         com.jaysyko.wrestlechat.date.LiveStatus status = DateVerifier.goLive(event.getEventStartTime(), event.getEventEndTime());
         if (status.goLive()) {
             CurrentActiveEvent.getInstance().setCurrentEvent(event);
             Intent intent = new Intent(context, MessagingActivity.class);
             context.startActivity(intent);
         } else {
-            openEventInfo(event, context);
-            Dialog.makeToast(context, context.getString(status.getReason()));
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+            alertDialogBuilder.setTitle(status.getReason());
+            alertDialogBuilder.setMessage("The event has not started, select an action");
+
+            alertDialogBuilder.setPositiveButton("See Event Info", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    openEventInfo(event, context);
+                }
+            });
+
+            alertDialogBuilder.setNegativeButton("Notify on Start", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
         }
     }
 

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="350dp"
     android:layout_margin="10dp"
+    android:descendantFocusability="blocksDescendants"
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
@@ -58,6 +59,22 @@
             android:paddingLeft="10dp"
             android:textColor="#fff"
             android:textSize="25sp" />
+
+        <ImageButton
+            android:id="@+id/add_event_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/event_location"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@null"
+            android:clickable="true"
+            android:contentDescription="@string/app_name"
+            android:focusable="true"
+            android:src="@drawable/ic_add_alert_white_36dp"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

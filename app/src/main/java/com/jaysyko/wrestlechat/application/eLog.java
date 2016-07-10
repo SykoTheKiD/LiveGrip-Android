@@ -7,7 +7,7 @@ import android.util.Log;
  */
 public class eLog {
 
-    private static final boolean LOGGING = true;
+    private static final boolean LOGGING = App.debug;
 
     public static void i (String TAG, String msg){
         if (LOGGING){

@@ -175,8 +175,10 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     @Override
     public void onResume(){
         super.onResume();
-        if(mAdapter.getCount() == 0){
-            getChatHistory();
+        if (mAdapter != null) {
+            if (mAdapter.getCount() == 0) {
+                getChatHistory();
+            }
         }
     }
 

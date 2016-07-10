@@ -97,7 +97,7 @@ public class EventListFragment extends Fragment {
         }
     }
 
-    private void eventListClickListener(RecyclerView recyclerView) {
+    private void eventListClickListener(final RecyclerView recyclerView) {
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(
                         mApplicationContext, recyclerView,
@@ -148,7 +148,9 @@ public class EventListFragment extends Fragment {
             mEventsList.addAll(eventDao.getAllEvents());
             Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
         }
-        swipeView.setRefreshing(false);
+        if (swipeView != null) {
+            swipeView.setRefreshing(false);
+        }
         updateRecyclerView(mEventsList);
     }
 }

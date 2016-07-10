@@ -1,5 +1,6 @@
 package com.jaysyko.wrestlechat.network;
 
+import com.jaysyko.wrestlechat.application.App;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 /**
@@ -21,14 +22,12 @@ public final class BaseURL {
     private static final String PRODUCTION_MOSQUITTO_PORT = "8001";
     private static final String PRODUCTION_MOSQUITTO = PRODUCTION_MOSQUITTO_PROTOCOL + PRODUCTION_MOSQUITTO_URL + StringResources.COLON + PRODUCTION_MOSQUITTO_PORT;
 
-    private static boolean debug = true;
-
     public static String getServerURL() {
-        return (debug) ? DEVELOPMENT_SERVER_URL : PRODUCTION_SERVER_URL;
+        return (App.debug) ? DEVELOPMENT_SERVER_URL : PRODUCTION_SERVER_URL;
     }
 
     public static String getMosquittoURL() {
-        return (debug) ? DEVELOPMENT_MOSQUITTO : PRODUCTION_MOSQUITTO;
+        return (App.debug) ? DEVELOPMENT_MOSQUITTO : PRODUCTION_MOSQUITTO;
     }
 
 }

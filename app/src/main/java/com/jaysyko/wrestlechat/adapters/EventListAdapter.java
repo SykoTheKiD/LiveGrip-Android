@@ -51,7 +51,6 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListViewHolder> 
                 .inflate(R.layout.event_card, null);
 
         // create ViewHolder
-
         return new EventListViewHolder(itemLayoutView);
     }
 
@@ -79,6 +78,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListViewHolder> 
             viewHolder.txtViewLiveStatus.setTextColor(Color.parseColor(NON_LIVE_TEXT_COLOUR));
             viewHolder.txtViewLiveStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, NON_LIVE_TEXT_SIZE);
             viewHolder.txtViewLiveStatus.setText(eventDate);
+            viewHolder.addToCalendar.setVisibility(View.VISIBLE);
         }
     }
 
