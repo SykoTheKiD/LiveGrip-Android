@@ -3,8 +3,8 @@ package com.jaysyko.wrestlechat.services;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.util.Log;
 
+import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.eventManager.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.eventManager.Messenger;
 import com.jaysyko.wrestlechat.models.Message;
@@ -82,7 +82,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         try {
             mClient.connect(connectOptions, null, this);
         } catch (MqttException e) {
-            Log.e(TAG, e.getMessage());
+            eLog.e(TAG, e.getMessage());
         }
 
     }
@@ -94,7 +94,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      */
     @Override
     public void connectionLost(Throwable cause) {
-        Log.i(TAG, "Connection Lost");
+        eLog.i(TAG, "Connection Lost");
     }
 
     /**
@@ -122,7 +122,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      */
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
-        Log.i(TAG, "Delivered");
+        eLog.i(TAG, "Delivered");
     }
 
     /**
@@ -132,7 +132,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         try {
             getClient().subscribe(String.valueOf(room), 2, null, this);
         } catch (MqttException e) {
-            Log.e(TAG, e.getMessage());
+            eLog.e(TAG, e.getMessage());
         }
     }
 
@@ -143,8 +143,8 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      */
     @Override
     public void traceDebug(String source, String message) {
-        Log.d(TAG, source);
-        Log.d(TAG, message);
+        eLog.i(TAG, source);
+        eLog.i(TAG, message);
     }
 
     /**
@@ -155,8 +155,8 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      */
     @Override
     public void traceError(String source, String message) {
-        Log.d(TAG, source);
-        Log.d(TAG, message);
+        eLog.e(TAG, source);
+        eLog.e(TAG, message);
     }
 
     /**
@@ -166,8 +166,8 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      */
     @Override
     public void traceException(String source, String message, Exception e) {
-        Log.d(TAG, source);
-        Log.d(TAG, message);
+        eLog.e(TAG, source);
+        eLog.e(TAG, message);
     }
 
     /**
@@ -190,7 +190,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      */
     @Override
     public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-        Log.e(TAG, "Error:".concat(exception.toString()));
+        eLog.e(TAG, "Error:".concat(exception.toString()));
     }
 
     /**
@@ -211,13 +211,13 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
             payload.put(USERNAME, username);
             payload.put(PROFILE_IMAGE, profileImage);
         } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            eLog.e(TAG, e.getMessage());
         }
 
         try {
             mClient.publish(String.valueOf(room), payload.toString().getBytes(), QOS, false, null, this);
         } catch (MqttException e) {
-            Log.e(TAG, e.getMessage());
+            eLog.e(TAG, e.getMessage());
         }
         Messenger.saveMessage(body);
     }
@@ -228,9 +228,9 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     public void disconnect() {
         try {
             this.mClient.disconnect();
-            Log.i(TAG, "disconnected");
+            eLog.i(TAG, "disconnected");
         } catch (MqttException e) {
-            Log.e(TAG, e.getMessage());
+            eLog.e(TAG, e.getMessage());
         }
     }
 

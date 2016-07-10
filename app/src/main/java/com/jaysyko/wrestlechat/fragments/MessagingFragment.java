@@ -12,7 +12,6 @@ import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +23,7 @@ import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
+import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.eventManager.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.forms.Form;
@@ -203,7 +203,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
 
                 @Override
                 public void onFail(String error) {
-                    Log.e(TAG, "" + error);
+                    eLog.e(TAG, error);
                 }
             });
         }else{

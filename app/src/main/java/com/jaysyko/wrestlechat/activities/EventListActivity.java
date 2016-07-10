@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.fragments.EventListFragment;
 import com.jaysyko.wrestlechat.network.NetworkState;
@@ -23,6 +24,8 @@ import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 public class EventListActivity extends AppCompatActivity{
+
+    private static final String TAG = EventListActivity.class.getSimpleName();
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
     FragmentManager mFragmentManager;
@@ -76,6 +79,7 @@ public class EventListActivity extends AppCompatActivity{
                             @Override
                             public void run() {
                                 SessionManager.destroySession(mApplicationContext);
+                                eLog.i(TAG, "Session Destroyed");
                                 Intent intent = new Intent(mApplicationContext, LoginActivity.class);
                                 startActivity(intent);
                                 finish();

@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 /**
  * @author Jay Syko on 2016-07-09.
  */
-public class EventReminder extends Service {
+public class EventReminderService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {

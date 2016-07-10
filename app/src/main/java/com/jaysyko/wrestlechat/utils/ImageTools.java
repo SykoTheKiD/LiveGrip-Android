@@ -8,9 +8,9 @@ package com.jaysyko.wrestlechat.utils;
  */
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.ImageView;
 
+import com.jaysyko.wrestlechat.application.eLog;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigInteger;
@@ -50,7 +50,7 @@ public final class ImageTools {
             final BigInteger bigInt = new BigInteger(hash);
             hex.append(bigInt.abs().toString(RADIX));
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+            eLog.e(TAG, e.getMessage());
         }
         return GRAVATAR_LINK.concat(hex.toString()).concat(GRAVATAR_IMAGE_TYPE);
     }
@@ -64,9 +64,9 @@ public final class ImageTools {
     public static Boolean isLinkToImage(String url) {
         if (url != null) {
             String patternToMatch = "\\.jpg|\\.png*";
-            Pattern p = Pattern.compile(patternToMatch);
-            Matcher m = p.matcher(url);
-            return m.find();
+            Pattern pattern = Pattern.compile(patternToMatch);
+            Matcher matches = pattern.matcher(url);
+            return matches.find();
         }
         return false;
     }

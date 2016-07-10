@@ -5,13 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formTypes.LoginForm;
@@ -110,7 +110,7 @@ public final class LoginActivity extends AppCompatActivity {
 
                             @Override
                             public void onFail(String t) {
-                                Log.e(TAG, t);
+                                eLog.e(TAG, t);
                                 Dialog.makeToast(mContext, t);
                             }
                         });
@@ -146,7 +146,7 @@ public final class LoginActivity extends AppCompatActivity {
 
                             @Override
                             public void onFail(String error) {
-                                Log.e(TAG, error);
+                                eLog.e(TAG, error);
                                 Dialog.makeToast(mContext, error);
                             }
                         });

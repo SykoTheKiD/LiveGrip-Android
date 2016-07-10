@@ -1,8 +1,7 @@
 package com.jaysyko.wrestlechat.models;
 
-import android.util.Log;
-
 import com.google.gson.annotations.SerializedName;
+import com.jaysyko.wrestlechat.application.eLog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -104,7 +103,7 @@ public class Event{
             }
 
         } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
+            eLog.e(TAG, e.getMessage());
         }
         return ret;
     }

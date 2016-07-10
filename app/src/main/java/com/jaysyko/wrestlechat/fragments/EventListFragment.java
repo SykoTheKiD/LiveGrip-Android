@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import android.widget.RelativeLayout;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
+import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.eventManager.OpenEvent;
 import com.jaysyko.wrestlechat.listeners.RecyclerItemClickListener;
@@ -42,6 +42,7 @@ public class EventListFragment extends Fragment {
     private RelativeLayout layout;
     private List<Event> mEventsList = new ArrayList<>();
     private EventDao eventDao;
+    private SwipeRefreshLayout swipeView;
     final Runnable initSwipeRefresh = new Runnable() {
         @Override
         public void run() {
@@ -73,23 +74,18 @@ public class EventListFragment extends Fragment {
      * Initialize Pull to Refresh
      */
     private void initSwipeRefresh() {
-        final SwipeRefreshLayout swipeView = (SwipeRefreshLayout) layout.findViewById(R.id.swipe_container);
+        swipeView = (SwipeRefreshLayout) layout.findViewById(R.id.swipe_container);
         swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 swipeView.setRefreshing(true);
-                if (NetworkState.isConnected(mApplicationContext)) {
-                    new Handler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            getEvents();
-                            swipeView.setRefreshing(false);
-                        }
-                    });
-                } else {
-                    swipeView.setRefreshing(false);
-                }
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        getEvents();
+                    }
+                });
             }
         });
     }
@@ -128,7 +124,7 @@ public class EventListFragment extends Fragment {
             ApiManager.request(call, new NetworkCallback<EventResponse>() {
                 @Override
                 public void onSuccess(EventResponse response) {
-                    Log.v(TAG, "Successfully received events from network");
+                    eLog.i(TAG, "Successfully received events from network");
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
@@ -142,7 +138,7 @@ public class EventListFragment extends Fragment {
                 }
                 @Override
                 public void onFail(String error) {
-                    Log.e(TAG, error);
+                    eLog.e(TAG, error);
                     Dialog.makeToast(mApplicationContext, error);
                 }
             });
@@ -152,6 +148,7 @@ public class EventListFragment extends Fragment {
             mEventsList.addAll(eventDao.getAllEvents());
             Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
         }
+        swipeView.setRefreshing(false);
         updateRecyclerView(mEventsList);
     }
 }
