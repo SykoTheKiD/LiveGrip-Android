@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
-
     <application
         android:name=".application.Initializer"
         android:allowBackup="true"
@@ -71,16 +70,16 @@
         <service android:name="org.eclipse.paho.android.service.MqttService" />
 
         <!-- [START the default gcm receiver] -->
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+        <!--<receiver-->
+        <!--android:name="com.google.android.gms.gcm.GcmReceiver"-->
+        <!--android:exported="true"-->
+        <!--android:permission="com.google.android.c2dm.permission.SEND">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="com.google.android.c2dm.intent.RECEIVE" />-->
 
-                <category android:name="com.jaysyko.wrestlechat" />
-            </intent-filter>
-        </receiver>
+        <!--<category android:name="com.jaysyko.wrestlechat" />-->
+        <!--</intent-filter>-->
+        <!--</receiver>-->
         <!-- [End default gcm receiver] -->
 
 
@@ -88,6 +87,15 @@
 
         <activity android:name=".activities.NewsActivity" />
 
+        <receiver
+            android:name=".receivers.MyReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".services.MyService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

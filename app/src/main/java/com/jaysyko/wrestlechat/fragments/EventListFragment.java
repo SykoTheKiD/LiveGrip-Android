@@ -1,6 +1,9 @@
 package com.jaysyko.wrestlechat.fragments;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
@@ -24,10 +27,12 @@ import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.responses.EventResponse;
+import com.jaysyko.wrestlechat.receivers.MyReceiver;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 import com.jaysyko.wrestlechat.sqlite.daos.EventDao;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -56,6 +61,24 @@ public class EventListFragment extends Fragment {
         mApplicationContext = getContext();
         getEvents();
         eventDao = new EventDao(mApplicationContext);
+
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.MONTH, 6);
+        calendar.set(Calendar.YEAR, 2016);
+        calendar.set(Calendar.DAY_OF_MONTH, 10);
+
+        calendar.set(Calendar.HOUR_OF_DAY, 8);
+        calendar.set(Calendar.MINUTE, 29);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.AM_PM, Calendar.PM);
+
+        Intent myIntent = new Intent(mApplicationContext, MyReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(mApplicationContext, 0, myIntent, 0);
+
+        AlarmManager alarmManager = (AlarmManager) mApplicationContext.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+
         handler.post(initSwipeRefresh);
         handler.post(new Runnable() {
             @Override
