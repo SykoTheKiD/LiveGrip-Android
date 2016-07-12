@@ -88,12 +88,12 @@
         <activity android:name=".activities.NewsActivity" />
 
         <receiver
-            android:name=".receivers.MyReceiver"
+            android:name=".receivers.EventStartReceiver"
             android:enabled="true"
             android:exported="true" />
 
         <service
-            android:name=".services.MyService"
+            android:name=".services.EventStartNotifierService"
             android:enabled="true"
             android:exported="true"></service>
     </application>

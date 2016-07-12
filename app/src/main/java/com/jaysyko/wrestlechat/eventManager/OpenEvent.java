@@ -12,8 +12,12 @@ import com.jaysyko.wrestlechat.models.Event;
 
 public class OpenEvent {
 
+
+
     public static void openConversation(final Event event, final Context context) {
+        final boolean eventNotify = event.isNotify();
         com.jaysyko.wrestlechat.date.LiveStatus status = DateVerifier.goLive(event.getEventStartTime(), event.getEventEndTime());
+        String notifyMessage = eventNotify ? "Cancel Notification" : "Set Notification";
         if (status.goLive()) {
             CurrentActiveEvent.getInstance().setCurrentEvent(event);
             Intent intent = new Intent(context, MessagingActivity.class);
@@ -30,13 +34,16 @@ public class OpenEvent {
                 }
             });
 
-            alertDialogBuilder.setNegativeButton("Notify on Start", new DialogInterface.OnClickListener() {
+            alertDialogBuilder.setNegativeButton(notifyMessage, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
+                    if(eventNotify){
+                        Alarm.cancelAlarm(event, context);
+                    }else{
+                        Alarm.setAlarm(event, context);
+                    }
                 }
             });
-
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         }

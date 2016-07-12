@@ -38,6 +38,7 @@ public class Event{
     private String eventStartTime;
     @SerializedName(Utils.END_TIME)
     private String eventEndTime;
+    private boolean notify = false;
 
     public Event(int eventID, String eventName, String eventInfo, String matchCard, String eventImage, String eventLocation, String eventStartTime, String eventEndTime) {
         this.eventID = eventID;
@@ -143,9 +144,32 @@ public class Event{
         return this.eventEndTime;
     }
 
+    public boolean isNotify() {
+        return notify;
+    }
+
+    public void setNotify(boolean notify) {
+        this.notify = notify;
+    }
+
     @Override
     public String toString(){
         return this.eventName;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Event event = (Event) o;
+
+        return eventID == event.eventID;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return eventID;
+    }
 }

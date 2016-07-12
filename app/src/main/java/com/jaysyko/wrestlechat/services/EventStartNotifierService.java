@@ -11,7 +11,7 @@ import android.support.v4.app.NotificationCompat;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.activities.LoginActivity;
 
-public class MyService extends Service {
+public class EventStartNotifierService extends Service {
 
     @Override
     public IBinder onBind(Intent arg0) {
@@ -22,12 +22,12 @@ public class MyService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        NotificationManager mManager = (NotificationManager) this.getApplicationContext().getSystemService(this.getApplicationContext().NOTIFICATION_SERVICE);
-        Intent intent1 = new Intent(this.getApplicationContext(), LoginActivity.class);
+        NotificationManager mManager = (NotificationManager) this.getApplicationContext().getSystemService(getApplicationContext().NOTIFICATION_SERVICE);
+        Intent intent1 = new Intent(getApplicationContext(), LoginActivity.class);
 
         intent1.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        PendingIntent pendingNotificationIntent = PendingIntent.getActivity(this.getApplicationContext(), 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingNotificationIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.ic_launcher)

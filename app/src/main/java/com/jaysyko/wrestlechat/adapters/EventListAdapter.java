@@ -78,7 +78,13 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListViewHolder> 
             viewHolder.txtViewLiveStatus.setTextColor(Color.parseColor(NON_LIVE_TEXT_COLOUR));
             viewHolder.txtViewLiveStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, NON_LIVE_TEXT_SIZE);
             viewHolder.txtViewLiveStatus.setText(eventDate);
-            viewHolder.addToCalendar.setVisibility(View.VISIBLE);
+            if(currentCard.isNotify()){
+                viewHolder.removeFromCalendar.setVisibility(View.VISIBLE);
+                viewHolder.addToCalendar.setVisibility(View.GONE);
+            }else{
+                viewHolder.addToCalendar.setVisibility(View.VISIBLE);
+                viewHolder.removeFromCalendar.setVisibility(View.GONE);
+            }
         }
     }
 
