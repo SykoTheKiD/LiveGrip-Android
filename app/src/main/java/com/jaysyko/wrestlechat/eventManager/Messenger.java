@@ -6,7 +6,7 @@ import com.jaysyko.wrestlechat.network.APIInterface;
 import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.requestData.MessageData;
-import com.jaysyko.wrestlechat.network.responses.MessageSaveResponse;
+import com.jaysyko.wrestlechat.network.responses.GenericResponse;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 
 import retrofit2.Call;
@@ -23,7 +23,7 @@ public class Messenger {
     public static void saveMessage(final String body) {
 
         final User currentUser = SessionManager.getCurrentUser();
-        final Call<MessageSaveResponse> saveMessagesCall = apiManager.saveMessage(
+        final Call<GenericResponse> saveMessagesCall = apiManager.saveMessage(
                 USER_AUTH_TOKEN,
                 new MessageData(
                         CurrentActiveEvent.getInstance().getCurrentEvent().getEventID(),
@@ -34,9 +34,9 @@ public class Messenger {
                 )
         );
 
-        ApiManager.request(saveMessagesCall, new NetworkCallback<MessageSaveResponse>() {
+        ApiManager.request(saveMessagesCall, new NetworkCallback<GenericResponse>() {
             @Override
-            public void onSuccess(MessageSaveResponse response) {
+            public void onSuccess(GenericResponse response) {
                 eLog.i(TAG, "Message Saved");
             }
 

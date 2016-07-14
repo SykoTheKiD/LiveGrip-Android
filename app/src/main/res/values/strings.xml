@@ -132,5 +132,6 @@
     <string name="action_user_profile">Manage Profile</string>
     <string name="an_error_occurred">An error has occurred</string>
     <string name="send">Send</string>
+    <string name="tap_on_image_to_change">Tap On Image to Change</string>
 
 </resources>

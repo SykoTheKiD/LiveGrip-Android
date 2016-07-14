@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.viewholders.EventListViewHolder;
 import com.jaysyko.wrestlechat.date.DateVerifier;
+import com.jaysyko.wrestlechat.date.LiveStatus;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
@@ -68,7 +69,8 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListViewHolder> 
         viewHolder.txtViewLocation.setText(currentCard.getEventLocation());
         ImageTools.loadImage(this.context, currentCard.getEventImage(), viewHolder.imgViewIcon);
 
-        if (DateVerifier.goLive(currentCard.getEventStartTime(), currentCard.getEventEndTime()).goLive()) {
+        final LiveStatus liveStatus = DateVerifier.goLive(currentCard.getEventStartTime(), currentCard.getEventEndTime());
+        if (liveStatus.goLive()) {
             viewHolder.txtViewLiveStatus.setText(R.string.online_status_live);
             viewHolder.txtViewLiveStatus.setTextColor(Color.parseColor(LIVE_TEXT_COLOUR));
             viewHolder.txtViewLiveStatus.setTypeface(null, Typeface.BOLD);
@@ -78,12 +80,17 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListViewHolder> 
             viewHolder.txtViewLiveStatus.setTextColor(Color.parseColor(NON_LIVE_TEXT_COLOUR));
             viewHolder.txtViewLiveStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, NON_LIVE_TEXT_SIZE);
             viewHolder.txtViewLiveStatus.setText(eventDate);
-            if(currentCard.isNotify()){
+            if(liveStatus.getReason() == R.string.online_status_not_live){
+                if(currentCard.isNotify()){
+                    viewHolder.removeFromCalendar.setVisibility(View.VISIBLE);
+                    viewHolder.addToCalendar.setVisibility(View.GONE);
+                }else{
+                    viewHolder.addToCalendar.setVisibility(View.VISIBLE);
+                    viewHolder.removeFromCalendar.setVisibility(View.GONE);
+                }
+            }else{
                 viewHolder.removeFromCalendar.setVisibility(View.VISIBLE);
                 viewHolder.addToCalendar.setVisibility(View.GONE);
-            }else{
-                viewHolder.addToCalendar.setVisibility(View.VISIBLE);
-                viewHolder.removeFromCalendar.setVisibility(View.GONE);
             }
         }
     }

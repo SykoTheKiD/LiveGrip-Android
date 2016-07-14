@@ -3,9 +3,10 @@ package com.jaysyko.wrestlechat.network;
 import com.jaysyko.wrestlechat.application.App;
 import com.jaysyko.wrestlechat.network.requestData.AuthData;
 import com.jaysyko.wrestlechat.network.requestData.MessageData;
+import com.jaysyko.wrestlechat.network.requestData.UpdateUserImageData;
 import com.jaysyko.wrestlechat.network.responses.EventResponse;
 import com.jaysyko.wrestlechat.network.responses.MessageGetResponse;
-import com.jaysyko.wrestlechat.network.responses.MessageSaveResponse;
+import com.jaysyko.wrestlechat.network.responses.GenericResponse;
 import com.jaysyko.wrestlechat.network.responses.UserResponse;
 
 import retrofit2.Call;
@@ -30,6 +31,7 @@ public interface APIInterface {
     String MESSAGES_EVENT = "messages&event={eventID}";
     String AUTHORIZATION = "Authorization";
     String EVENT_ID = "eventID";
+    String USER_UPDATE_PROFILE_IMAGE = "user/update/profile_image";
 
     @POST(LOGIN)
     Call<UserResponse> getUser(
@@ -47,7 +49,7 @@ public interface APIInterface {
     );
 
     @POST(MESSAGES_SAVE)
-    Call<MessageSaveResponse> saveMessage(
+    Call<GenericResponse> saveMessage(
             @Header(AUTHORIZATION) String token,
             @Body MessageData data
     );
@@ -56,5 +58,11 @@ public interface APIInterface {
     Call<MessageGetResponse> getMessages(
             @Header(AUTHORIZATION) String token,
             @Path(EVENT_ID) int id
+    );
+
+    @POST(USER_UPDATE_PROFILE_IMAGE)
+    Call<GenericResponse> updateProfileImage(
+            @Header(AUTHORIZATION) String token,
+            @Body UpdateUserImageData newImage
     );
 }

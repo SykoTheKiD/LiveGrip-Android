@@ -87,12 +87,6 @@ public class EventListFragment extends Fragment {
             @Override
             public void onRefresh() {
                 swipeView.setRefreshing(true);
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        getEvents();
-                    }
-                });
             }
         });
     }
@@ -173,5 +167,16 @@ public class EventListFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         NotifyListStore.getInstance().storeList(mApplicationContext);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                getEvents();
+            }
+        });
     }
 }

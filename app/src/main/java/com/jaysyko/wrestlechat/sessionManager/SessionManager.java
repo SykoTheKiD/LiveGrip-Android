@@ -4,53 +4,58 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.models.User;
+import com.jaysyko.wrestlechat.sharedPreferences.PreferenceKeys;
+import com.jaysyko.wrestlechat.sharedPreferences.PreferenceProvider;
+import com.jaysyko.wrestlechat.sharedPreferences.Preferences;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 /**
+ * Session.java
+ *
+ * A session object when the user logs in
  * @author Jay Syko on 2016-06-26.
  */
-public class SessionManager {
+public final class SessionManager {
 
-    private static final String CURRENT_USER = "currentUser";
-    private static final String IS_LOGGED_IN = "isLoggedIn";
-    private static final String SESSION = "session";
+    private static final String TAG = SessionManager.class.getSimpleName();
 
     /**
-     * Creates a new active session for a logged in user
+     * <p>Creates a new active session for a logged in user</p>
      *
      * @param context Context
      * @param user    User
      */
     public static void newSession(Context context, User user) {
-//        SharedPreferences.Editor editor = getSessionSharedPrefs(context).edit();
-//        Gson userGson = new Gson();
-//        String userJson = userGson.toJson(user);
-//        editor.putString(CURRENT_USER, userJson);
-//        editor.putBoolean(IS_LOGGED_IN, true);
-//        editor.apply();
+        SharedPreferences.Editor editor = PreferenceProvider.getEditor(context, Preferences.SESSION);
+        Gson userGson = new Gson();
+        String userJson = userGson.toJson(user);
+        editor.putString(PreferenceKeys.CURRENT_USER, userJson);
+        editor.putBoolean(PreferenceKeys.IS_LOGGED_IN, true);
+        editor.apply();
         Session.getInstance().setCurrentUser(user);
     }
 
     /**
-     * Destroys the current user session (logged out)
+     * <p>Destroys the current user session (logged out)</p>
      *
      * @param context Context
      */
     public static void destroySession(Context context) {
         Session.getInstance().endSession();
-        SharedPreferences.Editor editor = getSessionSharedPrefs(context).edit();
+        SharedPreferences.Editor editor = PreferenceProvider.getEditor(context, Preferences.SESSION);
         editor.clear();
         editor.apply();
     }
 
     /**
-     * Checks to see if a previously created session is available
+     * <p>Checks to see if a previously created session is available</p>
      *
      * @return boolean | Previously logged in our not
      */
     public static boolean isLoggedIn(Context context) {
-        boolean loggedIn = getSessionSharedPrefs(context).getBoolean(IS_LOGGED_IN, false);
+        boolean loggedIn = PreferenceProvider.getSharedPreferences(context, Preferences.SESSION).getBoolean(PreferenceKeys.IS_LOGGED_IN, false);
         if (loggedIn) {
             loggedIn = restore(context);
         }
@@ -58,18 +63,24 @@ public class SessionManager {
     }
 
     /**
-     * Restore a user object from a previous session
+     * <p>Restore a user object from a previous session</p>
      *
      * @return user
      */
     private static boolean restore(Context context) {
         Gson gson = new Gson();
-        String json = getSessionSharedPrefs(context).getString(CURRENT_USER, StringResources.NULL_TEXT);
+        final SharedPreferences sessionSharedPrefs = PreferenceProvider.getSharedPreferences(context, Preferences.SESSION);
+        String json = sessionSharedPrefs.getString(PreferenceKeys.CURRENT_USER, StringResources.NULL_TEXT);
+        String newProfileImage = sessionSharedPrefs.getString(PreferenceKeys.NEW_PROFILE_IMAGE, StringResources.NULL_TEXT);
         if (!json.equals(StringResources.NULL_TEXT)) {
             User user = gson.fromJson(json, User.class);
             final Session session = Session.getInstance();
             if (session != null) {
+                if(!newProfileImage.equals(StringResources.NULL_TEXT)){
+                    user.setLocalProfileImage(newProfileImage);
+                }
                 session.setCurrentUser(user);
+                eLog.i(TAG, user.toString());
             }
             return true;
         }
@@ -77,17 +88,7 @@ public class SessionManager {
     }
 
     /**
-     * Returns the SharedPreferences file for Session Management
-     *
-     * @param context Context
-     * @return SharedPreferences
-     */
-    private static SharedPreferences getSessionSharedPrefs(Context context) {
-        return context.getSharedPreferences(SESSION, Context.MODE_PRIVATE);
-    }
-
-    /**
-     * Gets the Current Session's user
+     * <p>Gets the Current Session's user</p>
      *
      * @return User
      */

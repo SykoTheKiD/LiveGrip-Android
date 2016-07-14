@@ -40,7 +40,7 @@ public class EventStartNotifierService extends Service {
 
         mManager.notify(0, notification);
 
-        return 1;
+        return START_STICKY;
     }
 
     @Override
