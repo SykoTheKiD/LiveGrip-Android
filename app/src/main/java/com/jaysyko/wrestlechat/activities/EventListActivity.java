@@ -17,10 +17,13 @@ import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.application.eLog;
+import com.jaysyko.wrestlechat.customImageView.RoundedImageView;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.fragments.EventListFragment;
+import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
+import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 public class EventListActivity extends AppCompatActivity{
@@ -46,9 +49,12 @@ public class EventListActivity extends AppCompatActivity{
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.navDrawerItems);
         final View headerLayout = mNavigationView != null ? mNavigationView.inflateHeaderView(R.layout.nav_header_event_list) : null;
-        TextView headerUsername = (TextView) (headerLayout != null ? headerLayout.findViewById(R.id.drawer_username) : null);
-        if (headerUsername != null) {
-            headerUsername.setText(SessionManager.getCurrentUser().getUsername());
+        final TextView headerUsername = (TextView) (headerLayout != null ? headerLayout.findViewById(R.id.drawer_username) : null);
+        final RoundedImageView headerProfileImage = (RoundedImageView) (headerLayout != null ? headerLayout.findViewById(R.id.header_profile_image) : null);
+        if (headerUsername != null && headerProfileImage != null) {
+            final User currentUser = SessionManager.getCurrentUser();
+            headerUsername.setText(currentUser.getUsername());
+            ImageTools.loadImage(mApplicationContext, currentUser.getProfileImage(), headerProfileImage);
         }
         /**
          * Lets inflate the very first fragment
