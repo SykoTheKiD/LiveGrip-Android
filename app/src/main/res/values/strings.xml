@@ -13,7 +13,6 @@
     <string name="action_logout">Logout</string>
 
     <!-- Strings related to Messaging Screen -->
-    <string name="message_hint">Enter Message</string>
     <string name="description_other_profile_image">Other Profile Image</string>
     <string name="description_my_profile_image">My Profile Image</string>
 
@@ -26,36 +25,11 @@
 
     <!-- Strings related to Login Screen -->
     <string name="blank_username">Username/Password cannot be blank</string>
-    <string name="username_taken">Sorry that username has been taken</string>
-    <string name="incorrect_login_info">Wrong username/password combo</string>
-    <string name="welcome_back">Welcome Back,</string>
 
     <!-- Strings related to Settings Screen -->
     <string name="action_settings">Settings</string>
-    <string name="pref_title_display_name">Display name</string>
-    <string name="pref_default_display_name">John Smith</string>
-    <string name="error_loading_events">Error loading events</string>
-    <string name="pref_title_select_background_image">Select Background</string>
-    <string-array name="pref_example_list_values">
-        <item>Black Diamond</item>
-        <item>Green Pentagons</item>
-        <item>-Flat Black</item>
-    </string-array>
 
     <!-- Strings related to Filler Text -->
-    <string name="lorem_ipsum_short">
-         "Material is the metaphor.\n\n"
-        "A material metaphor is the unifying theory of a rationalized space and a system of motion."
-        "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
-        "technologically advanced and open to imagination and magic.\n"
-        "Surfaces and edges of the material provide visual cues that are grounded in reality. The "
-        "use of familiar tactile attributes helps users quickly understand affordances. Yet the "
-        "flexibility of the material creates new affordances that supercede those in the physical "
-        "world, without breaking the rules of physics.\n"
-        "The fundamentals of light, surface, and movement are key to conveying how objects move, "
-        "interact, and exist in space and in relation to each other. Realistic lighting shows "
-        "seams, divides space, and indicates moving parts.\n\n"
-    </string>
     <string name="lorem_ipsum_long">
         "Wrestle Chat was inspired by the community at r/SquaredCircle.\n\n"
         "Wrestle Chat was created for those who want feel as if they are watching wrestling with others who enjoy wrestling as much as they do.\n\n"
@@ -70,31 +44,20 @@
 
 
     <!-- Example settings for Notifications -->
-    <string name="pref_header_chat_bubble">Chat Message Style</string>
     <string name="online_status_live">LIVE</string>
-    <string name="lorem_date">MM/DD/YYYY</string>
     <string name="action_sign_up">Sign Up</string>
     <string name="drawer_legal">Legal</string>
     <string name="action_profile">Profile</string>
     <string name="title_activity_legal">Legal</string>
-    <string name="lorem_username">Jay Syko</string>
     <string name="app_share">Hey come chat with other wrestling fans on \u0023WrestleChatApp! https://goo.gl/al7ZIK</string>
     <string name="online_status_not_live">The event hasn\'t started yet</string>
-    <string name="event_info_match_card_title">Match Card</string>
-    <string name="event_info_location_title">Location</string>
-    <string name="event_info_time_title">Time</string>
-    <string name="event_info_details_title">Event Details</string>
     <string name="legal_info">\n\nNames, images and titles all belong to their respective owners.\n\nWrestling event info content belongs to Wikipedia and the WikiMedia Foundation.\n</string>
     <string name="no_account_dialog">Don\'t have an account? Sign Up</string>
     <string name="have_account_login">Already have an account? Sign In</string>
-    <string name="sign_in_to_app">Sign In to LiveGrip</string>
-    <string name="sign_up_to_app">Sign Up to LiveGrip</string>
     <string name="about_tweet">Tweet Me</string>
     <string name="message_too_short">Message can\'t be blank</string>
     <string name="message_too_long">Message can\'t exceed 230 characters</string>
     <string name="invalid_username">Username cannot exceed 25 characters</string>
-    <string name="hey_check_out">Hey check out the</string>
-    <string name="sent_from_wrestlechat">- sent from \u0023WrestleChatApp @ https://goo.gl/al7ZIK</string>
     <string name="app_share_title">Share Wrestle Chat</string>
     <string name="no_events">Match Card To Be Announced</string>
     <string name="no_network">No Network Access</string>
@@ -107,30 +70,16 @@
         This is an ad unit EVENT_ID_KEY for a banner test ad. Replace with your own banner ad unit id.
         For more information, see https://support.google.com/admob/answer/3052638
     <!- -->
-    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="banner_ad_unit_id_prod">ca-app-pub-5139358082902358/5020745028</string>
     <string name="custom_image_title">Enter Link to .jpg or .png image</string>
     <string name="bad_image_type">Invalid Image Type</string>
     <string name="cancel_dialog">Cancel</string>
     <string name="ok_dialog">Save</string>
-    <string name="saved_successfully">Profile Updated</string>
-    <string name="new_password_title">New Password</string>
-    <string name="save">Save</string>
-    <string name="tap_image_set_new">Tap Image to Set a New One</string>
-    <string name="tab_title_live">Live</string>
-    <string name="tab_title_upcoming">Upcoming</string>
-    <string name="tab_title_replay">Finished</string>
     <string name="nav_section_others">Others</string>
-    <string name="password_changed_relogin">Password changed please re-login</string>
-    <string name="error_has_occurred">An error has occurred no changes made</string>
     <string name="manage_profile">Manage Profile</string>
 
-    <string name="user_created">Account Created! Please Re-Login</string>
-    <string name="no_play_services">Google Play Services not Installed</string>
     <string name="chat_rules">Chat Rules</string>
     <string name="action_reddit">Go to Reddit</string>
     <string name="action_user_profile">Manage Profile</string>
-    <string name="an_error_occurred">An error has occurred</string>
     <string name="send">Send</string>
     <string name="tap_on_image_to_change">Tap On Image to Change</string>
 

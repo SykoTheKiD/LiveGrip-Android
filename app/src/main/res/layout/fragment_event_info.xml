@@ -70,7 +70,6 @@
         android:visibility="gone">
 
         <ImageView
-            android:id="@+id/no_events"
             android:layout_width="140dp"
             android:layout_height="168dp"
             android:layout_alignParentBottom="true"
@@ -85,7 +84,6 @@
             android:src="@drawable/crowd" />
 
         <TextView
-            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
