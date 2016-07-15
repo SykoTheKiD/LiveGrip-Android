@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.fragments.EventInfoFragment;
 
-public class EventInfoActivity extends BaseActivity {
+public final class EventInfoActivity extends BaseActivity {
 
     @Override
     protected Fragment createFragment() {

@@ -103,4 +103,16 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListViewHolder> 
     public int getItemCount() {
         return this.itemsData.size();
     }
+//
+//    @Override
+//    protected Animator[] getAnimators(View view) {
+//        return new Animator[]{
+//                ObjectAnimator.ofFloat(view, "translationY", view.getMeasuredHeight(), 0)
+//        };
+//    }
+//
+//    @Override
+//    public long getItemId(final int position) {
+//        return getWrappedAdapter().getItemId(position);
+//    }
 }

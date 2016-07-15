@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -72,6 +73,7 @@ public class EventListFragment extends Fragment {
                 eventListClickListener(recyclerView);
                 mAdapter = new EventListAdapter(mEventsList, mApplicationContext);
                 recyclerView.setAdapter(mAdapter);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
             }
         });
         return layout;
@@ -87,6 +89,7 @@ public class EventListFragment extends Fragment {
             @Override
             public void onRefresh() {
                 swipeView.setRefreshing(true);
+                getEvents();
             }
         });
     }
@@ -105,14 +108,14 @@ public class EventListFragment extends Fragment {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                OpenEvent.openConversation(mEventsList.get(position), mApplicationContext);
+                                OpenEvent.openConversation(mEventsList.get(position), getActivity(), view);
                             }
 
                             @Override
                             public void onItemLongClick(View view, int position) {
                                 Vibrator vibe = (Vibrator) mApplicationContext.getSystemService(Context.VIBRATOR_SERVICE);
                                 vibe.vibrate(VIBRATE_MILLISECONDS);
-                                OpenEvent.openEventInfo(mEventsList.get(position), mApplicationContext);
+                                OpenEvent.openEventInfo(mEventsList.get(position), getActivity(), view);
                             }
                         }
                 )

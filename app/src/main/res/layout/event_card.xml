@@ -14,7 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="380dp"
             android:tint="@color/black"
-            android:tintMode="multiply" />
+            android:tintMode="multiply"
+            android:transitionName="@string/transition_name_circle" />
 
         <TextView
             android:id="@+id/event_location"

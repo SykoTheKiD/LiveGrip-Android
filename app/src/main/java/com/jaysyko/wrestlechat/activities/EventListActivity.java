@@ -28,7 +28,7 @@ import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
-public class EventListActivity extends AppCompatActivity{
+public final class EventListActivity extends AppCompatActivity {
 
     private static final String TAG = EventListActivity.class.getSimpleName();
     DrawerLayout mDrawerLayout;
