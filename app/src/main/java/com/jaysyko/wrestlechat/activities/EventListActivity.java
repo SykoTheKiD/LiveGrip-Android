@@ -13,6 +13,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
@@ -45,7 +47,6 @@ public class EventListActivity extends AppCompatActivity{
         /**
          *Setup the DrawerLayout and NavigationView
          */
-        getWindow().setBackgroundDrawable(null);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.navDrawerItems);
         final View headerLayout = mNavigationView != null ? mNavigationView.inflateHeaderView(R.layout.nav_header_event_list) : null;
@@ -121,6 +122,12 @@ public class EventListActivity extends AppCompatActivity{
 
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide);
+        if (toolbar != null) {
+            toolbar.startAnimation(animation);
+        } else {
+            eLog.e(TAG, "Toolbar is null");
+        }
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
     }

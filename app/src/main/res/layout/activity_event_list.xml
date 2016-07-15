@@ -6,7 +6,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,13 +15,11 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <ImageView
+            android:id="@+id/toolbar_logo"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_marginLeft="130dp"
-            android:layout_marginStart="130dp"
+            android:layout_gravity="center"
             android:contentDescription="@string/app_name"
-            android:foregroundGravity="center_vertical|center_horizontal"
-            android:gravity="center_horizontal"
             android:src="@drawable/logo" />
 
 

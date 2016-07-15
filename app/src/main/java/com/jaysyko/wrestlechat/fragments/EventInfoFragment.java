@@ -23,7 +23,6 @@ import com.jaysyko.wrestlechat.utils.ImageTools;
 public class EventInfoFragment extends Fragment {
 
     private final Event currentActiveEvent = CurrentActiveEvent.getInstance().getCurrentEvent();
-//    private Handler handler = new Handler();
     private View view;
 
     @Override
@@ -36,6 +35,10 @@ public class EventInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_event_info, container, false);
+        /**
+         * Animation animation1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide);
+         image.startAnimation(animation1);
+         */
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         final Activity activity = getActivity();
         ((AppCompatActivity) activity).setSupportActionBar(toolbar);
