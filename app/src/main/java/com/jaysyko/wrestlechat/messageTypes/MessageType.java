@@ -59,10 +59,10 @@ public class MessageType implements MessageGenerator {
                 int resID = R.drawable.bubble_left_brown;
                 switch (bg) {
                     case 1:
-                        resID = R.drawable.bubble_right_red;
+                        resID = R.drawable.bubble_left_red;
                         break;
                     case 2:
-                        resID = R.drawable.bubble_right_green;
+                        resID = R.drawable.bubble_left_green;
                         break;
                 }
                 textView.setBackgroundResource(resID);
