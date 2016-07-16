@@ -26,7 +26,7 @@ public final class User {
     private static final String TAG = User.class.getSimpleName();
     private static final String AUTH_PREFIX = "Token ";
     private static final String BAD_IMAGE_URL_MESSAGE = "Bad Image URL";
-    private static final Handler handler = new Handler();
+    //    private static final Handler handler = new Handler();
     @SerializedName(Utils.ID)
     private int id;
     @SerializedName(Utils.USERNAME)
@@ -58,7 +58,7 @@ public final class User {
                 public void onSuccess(GenericResponse response) {
                     eLog.i(TAG, response.getMessage());
                     eLog.i(TAG, "Profile Image Updated");
-                    handler.post(new Runnable() {
+                    new Handler().post(new Runnable() {
                         @Override
                         public void run() {
                             SharedPreferences.Editor editor = PreferenceProvider.getEditor(context, Preferences.SESSION);

@@ -1,5 +1,6 @@
 package com.jaysyko.wrestlechat.network;
 
+import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.network.responses.AuthErrorResponse;
 
 import retrofit2.Call;
@@ -23,6 +24,7 @@ public class ApiManager {
             .build();
 
     private static final APIInterface API_SERVICE = RETROFIT.create(APIInterface.class);
+    private static final String TAG = ApiManager.class.getSimpleName();
 
     public static APIInterface getApiService() {
         return API_SERVICE;
@@ -36,7 +38,9 @@ public class ApiManager {
                     callback.onSuccess(response.body());
                 }else{
                     AuthErrorResponse authErrorResponse = ApiErrorManager.parseError(response);
-                    callback.onFail(authErrorResponse.getMessage());
+                    final String message = authErrorResponse.getMessage();
+                    eLog.e(TAG, message);
+                    callback.onFail(message);
                 }
 
             }
