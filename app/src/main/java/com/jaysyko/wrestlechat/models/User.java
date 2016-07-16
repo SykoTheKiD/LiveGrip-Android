@@ -56,14 +56,11 @@ public final class User {
             ApiManager.request(call, new NetworkCallback<GenericResponse>() {
                 @Override
                 public void onSuccess(GenericResponse response) {
-                    eLog.i(TAG, response.getMessage());
                     eLog.i(TAG, "Profile Image Updated");
                     new Handler().post(new Runnable() {
                         @Override
                         public void run() {
-                            SharedPreferences.Editor editor = PreferenceProvider.getEditor(context, Preferences.SESSION);
-                            editor.putString(PreferenceKeys.NEW_PROFILE_IMAGE, profileImage);
-                            PreferenceProvider.closeEditor(editor);
+                            updateProfileImage(context, profileImage);
                         }
                     });
                 }
@@ -77,6 +74,12 @@ public final class User {
         }else{
             throw new ImageURLError(BAD_IMAGE_URL_MESSAGE);
         }
+    }
+
+    private void updateProfileImage(Context context, String profileImage) {
+        SharedPreferences.Editor editor = PreferenceProvider.getEditor(context, Preferences.SESSION);
+        editor.putString(PreferenceKeys.NEW_PROFILE_IMAGE, profileImage);
+        PreferenceProvider.closeEditor(editor);
     }
 
     public void setLocalProfileImage(String profileImage){

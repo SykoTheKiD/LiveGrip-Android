@@ -47,6 +47,7 @@ public final class SessionManager {
         SharedPreferences.Editor editor = PreferenceProvider.getEditor(context, Preferences.SESSION);
         editor.clear();
         editor.apply();
+        eLog.i(TAG, String.valueOf(isLoggedIn(context)));
     }
 
     /**

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.receivers.EventStartReceiver;
 import com.jaysyko.wrestlechat.sharedPreferences.PreferenceProvider;
@@ -22,7 +23,7 @@ import java.util.List;
  * @author Jay Syko on 2016-07-11.
  */
 public class NotifyListStore implements Serializable, NotifyStore {
-
+    private static final String TAG = NotifyListStore.class.getSimpleName();
     private static final String SAVED_EVENTS = "savedEvents";
     private LinkedList<SavedEvent> events = new LinkedList<>();
     private static NotifyListStore instance = new NotifyListStore();
@@ -126,6 +127,7 @@ public class NotifyListStore implements Serializable, NotifyStore {
                 remove(event, context);
             }
         }
+        eLog.i(TAG, "Successfully cleaned events");
         return newEvents;
     }
 

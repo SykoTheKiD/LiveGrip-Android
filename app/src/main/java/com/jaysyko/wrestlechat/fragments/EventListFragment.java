@@ -56,7 +56,6 @@ public class EventListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layout = (RelativeLayout) inflater.inflate(R.layout.fragment_event_list, null);
         mApplicationContext = getContext();
-        getEvents();
         eventDao = new EventDao(mApplicationContext);
         handler.post(initSwipeRefresh);
         handler.post(new Runnable() {
@@ -129,22 +128,23 @@ public class EventListFragment extends Fragment {
                 @Override
                 public void onSuccess(final EventResponse response) {
                     eLog.i(TAG, "Successfully received events from network");
+                    final List<Event> responseData = response.getData();
+                    setEventsList(responseData);
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
                             eventDao.open();
                             eventDao.refresh();
-                            eventDao.addAll(mEventsList);
+                            eventDao.addAll(responseData);
                         }
                     });
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            mEventsList.clear();
-                            mEventsList.addAll(
-                                    NotifyListStore.getInstance()
-                                            .clean(response.getData(),
-                                                    mApplicationContext));
+                            final List<Event> cleanedEventsList = NotifyListStore
+                                    .getInstance()
+                                    .clean(responseData, mApplicationContext);
+                            setEventsList(cleanedEventsList);
                         }
                     });
                 }
@@ -155,6 +155,7 @@ public class EventListFragment extends Fragment {
                 }
             });
         }else{
+            eLog.i(TAG, "Successfully received events from cache");
             eventDao.open();
             mEventsList.clear();
             mEventsList.addAll(eventDao.getAllEvents());
@@ -163,6 +164,11 @@ public class EventListFragment extends Fragment {
         if (swipeView != null) {
             swipeView.setRefreshing(false);
         }
+    }
+
+    private void setEventsList(List<Event> events){
+        mEventsList.clear();
+        mEventsList.addAll(events);
         updateRecyclerView(mEventsList);
     }
 
