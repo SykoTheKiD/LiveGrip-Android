@@ -93,14 +93,16 @@ public class Event{
      * @return List
      */
 
-    public List<String> getMatchList() {
-        List<String> ret = new ArrayList<>();
+    public List<EventCard> getMatchList() {
+        List<EventCard> ret = new ArrayList<>();
         String matchCard = getMatchCard();
         try {
             JSONObject matches = new JSONObject(matchCard);
             JSONArray matchesArray = (JSONArray) matches.get(Utils.EVENT_DETAILS);
+            JSONObject match;
             for (int i = 0; i < matchesArray.length(); i++) {
-                ret.add(matchesArray.getString(i));
+                match = matchesArray.getJSONObject(i);
+                ret.add(new EventCard(match.getString("segment_name"), match.getString("image"), match.getString("additional_detail")));
             }
 
         } catch (JSONException e) {
@@ -171,5 +173,28 @@ public class Event{
     @Override
     public int hashCode() {
         return eventID;
+    }
+
+    public class EventCard {
+        private String segment, image, additionalDetail;
+
+        EventCard(String segment, String image, String additionalDetail) {
+            this.segment = segment;
+            this.image = image;
+            this.additionalDetail = additionalDetail;
+        }
+
+        public String getSegment() {
+            return segment;
+        }
+
+        public String getImage() {
+            return image;
+        }
+
+        public String getAdditionalDetail(){
+            return additionalDetail;
+        }
+
     }
 }

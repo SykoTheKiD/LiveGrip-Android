@@ -6,21 +6,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.viewholders.EventDetailsViewHolder;
+import com.jaysyko.wrestlechat.models.Event;
+import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import java.util.List;
 
 /**
  * Created by jarushaan on 2016-06-13
  */
-public class EventDetailsAdapter extends ArrayAdapter<String> {
+public class EventDetailsAdapter extends ArrayAdapter<Event.EventCard> {
 
     private static final int ZERO = 0;
 
-    public EventDetailsAdapter(Context context, List<String> details) {
+    public EventDetailsAdapter(Context context, List<Event.EventCard> details) {
         super(context, ZERO, details);
     }
 
@@ -37,9 +40,11 @@ public class EventDetailsAdapter extends ArrayAdapter<String> {
         if (convertView == null) {
             convertView = getView(parent);
         }
-        String detail = getItem(position);
+        Event.EventCard detail = getItem(position);
         final EventDetailsViewHolder holder = (EventDetailsViewHolder) convertView.getTag();
-        holder.detail.setText(detail);
+        holder.detail.setText(detail.getSegment());
+        holder.additionalDetail.setText(detail.getAdditionalDetail());
+        ImageTools.loadImage(getContext(), detail.getImage(), holder.image);
         return convertView;
     }
 
@@ -55,6 +60,8 @@ public class EventDetailsAdapter extends ArrayAdapter<String> {
                 inflate(R.layout.event_detail, parent, false);
         final EventDetailsViewHolder holder = new EventDetailsViewHolder();
         holder.detail = (TextView) convertView.findViewById(R.id.event_detail);
+        holder.image = (ImageView) convertView.findViewById(R.id.event_detail_image);
+        holder.additionalDetail = (TextView) convertView.findViewById(R.id.additional_detail);
         convertView.setTag(holder);
         return convertView;
     }
