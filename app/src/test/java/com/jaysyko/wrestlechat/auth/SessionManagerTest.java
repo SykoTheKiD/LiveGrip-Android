@@ -4,95 +4,87 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.jaysyko.wrestlechat.models.User;
+import com.jaysyko.wrestlechat.network.APIInterface;
+import com.jaysyko.wrestlechat.network.ApiManager;
+import com.jaysyko.wrestlechat.network.NetworkCallback;
+import com.jaysyko.wrestlechat.network.requestData.AuthData;
+import com.jaysyko.wrestlechat.network.responses.UserResponse;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
+import com.jaysyko.wrestlechat.sharedPreferences.PreferenceProvider;
+import com.jaysyko.wrestlechat.sharedPreferences.Preferences;
 
-import junit.framework.Assert;
-
+import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+
+import retrofit2.Call;
+
 
 /**
- * Created by jarushaan on 2016-04-05
+ * @author Jay Syko
  */
 public class SessionManagerTest {
 
-    @Mock
-    Context mContext;
-
-    @Mock
-    SharedPreferences mSharedPreferences;
-
-    @Mock
-    SharedPreferences.Editor mEditor;
-
-    User user;
+    @Mock Context mContext;
+    @Mock PreferenceProvider preferenceProvider;
+    @Mock SharedPreferences mSharedPreferences;
+    @Mock SharedPreferences.Editor mEditor;
+    final User user = new User();
 
     @Before
     public void setUp(){
-        user = new User();
+        // Create a dummy user object
         user.setId(1);
-        user.setAuthToken("test_auth_token");
-        user.setUsername("jaysyko");
-        user.setProfileImage("profile_image.jpg");
+
+        // Mock Android instance classes
+        mContext = Mockito.mock(Context.class);
+        mSharedPreferences = Mockito.mock(SharedPreferences.class);
+        mEditor = Mockito.mock(SharedPreferences.Editor.class);
     }
 
     @Test
     public void userSessionCreationTest(){
-        mContext = Mockito.mock(Context.class);
+        MockitoAnnotations.initMocks(this);
         Assert.assertNotNull(mContext);
+        Mockito.when(PreferenceProvider.getSharedPreferences(mContext, Preferences.SESSION)).thenReturn(mSharedPreferences);
+        Mockito.when(PreferenceProvider.getEditor(mContext, Preferences.SESSION)).thenReturn(mEditor);
         SessionManager.newSession(mContext, user);
-        Assert.assertEquals(true, SessionManager.isLoggedIn(mContext));
+        Assert.assertEquals(1, SessionManager.getCurrentUser().getId());
     }
 
-//    @Mock
-//    Context mContext;
-//
-//    @Mock
-//    SharedPreferences mSharedPreferences;
-//
-//    @Mock
-//    SharedPreferences.Editor mEditor;
-//
-//    JSONObject mPayload;
-//    CurrentActiveUser mUser;
-//    LocalStorage mLocalStorage;
-//
-//    @SuppressLint("CommitPrefEdits")
-//    @Before
-//    public void setup() {
-//        initMocks(this);
-//        mLocalStorage = new LocalStorage(mContext, StorageFile.AUTH);
-//        when(mLocalStorage.getSharedPreferences()).thenReturn(mSharedPreferences);
-//        when(mSharedPreferences.edit()).thenReturn(mEditor);
-//    }
-//
-//    @Before
-//    public void setUp() throws Exception {
-//        Assert.assertNotNull(mContext);
-//        try {
-//            mPayload = new JSONObject();
-//            mPayload.put(UserKeys.ID.toString(), "1");
-//            mPayload.put(UserKeys.USERNAME.toString(), "jaysyko");
-//            mPayload.put(UserKeys.USER_PROFILE_IMAGE_COLUMN.toString(), "http://cdn.urbanislandz.com/wp-content/uploads/2015/09/The-Weeknd1.jpg");
-//            mUser = CurrentActiveUser.newInstance().newUser(mContext, mPayload);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-//
-//    @Test
-//    public void testNewUserGood() {
-//        Assert.assertEquals(mUser.getUsername(), "jaysyko");
-//        Assert.assertEquals(mUser.getUserID(), "1");
-//        Assert.assertEquals(mUser.getProfileImage(), "http://cdn.urbanislandz.com/wp-content/uploads/2015/09/The-Weeknd1.jpg");
-//    }
-//
-//    @After
-//    public void cleanUp() {
-//        mEditor.clear();
-//    }
+    @Test
+    public void userLoginNetworkTest(){
+        APIInterface apiManager = ApiManager.getApiService();
+        Call<UserResponse> call = apiManager.getUser(new AuthData("ronaldo", "pass"));
+        ApiManager.request(call, new NetworkCallback<UserResponse>() {
+            @Override
+            public void onSuccess(UserResponse response) {
+                Assert.assertEquals("success", response.getStatus());
+            }
+
+            @Override
+            public void onFail(String error) {
+                Assert.fail(error);
+            }
+        });
+    }
+
+    @Test
+    public void destroyUserSession(){
+        Mockito.when(PreferenceProvider.getSharedPreferences(mContext, Preferences.SESSION)).thenReturn(mSharedPreferences);
+        Mockito.when(PreferenceProvider.getEditor(mContext, Preferences.SESSION)).thenReturn(mEditor);
+        SessionManager.destroySession(mContext);
+        Assert.assertEquals(null, SessionManager.getCurrentUser());
+
+    }
+
+    @After
+    public void cleanUp(){
+        mEditor.clear();
+    }
 
 }
