@@ -2,8 +2,6 @@ package com.jaysyko.wrestlechat.activities;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -17,7 +15,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generic);
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         FragmentManager fm = getFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.container_view);
 

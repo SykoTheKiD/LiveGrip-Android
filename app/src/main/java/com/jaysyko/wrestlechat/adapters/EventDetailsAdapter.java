@@ -43,7 +43,10 @@ public class EventDetailsAdapter extends ArrayAdapter<Event.EventCard> {
         Event.EventCard detail = getItem(position);
         final EventDetailsViewHolder holder = (EventDetailsViewHolder) convertView.getTag();
         holder.detail.setText(detail.getSegment());
-        holder.additionalDetail.setText(detail.getAdditionalDetail());
+        final String additionalDetail = detail.getAdditionalDetail();
+        if (additionalDetail != null) {
+            holder.additionalDetail.setText(additionalDetail);
+        }
         ImageTools.loadImage(getContext(), detail.getImage(), holder.image);
         return convertView;
     }

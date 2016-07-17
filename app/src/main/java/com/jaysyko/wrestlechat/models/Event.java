@@ -21,6 +21,9 @@ import java.util.List;
 public class Event{
 
     private static final String TAG = Event.class.getSimpleName();
+    private static final String ADDITIONAL_DETAIL = "additional_detail";
+    private static final String SEGMENT_NAME = "segment_name";
+    private static final String IMAGE = "image";
 
     @SerializedName(Utils.ID)
     private int eventID;
@@ -102,7 +105,13 @@ public class Event{
             JSONObject match;
             for (int i = 0; i < matchesArray.length(); i++) {
                 match = matchesArray.getJSONObject(i);
-                ret.add(new EventCard(match.getString("segment_name"), match.getString("image"), match.getString("additional_detail")));
+                try {
+                    String additionalDetail = match.getString(ADDITIONAL_DETAIL);
+                    ret.add(new EventCard(match.getString(SEGMENT_NAME), match.getString(IMAGE), additionalDetail));
+                } catch (JSONException e) {
+                    eLog.e(TAG, e.getMessage());
+                    ret.add(new EventCard(match.getString(SEGMENT_NAME), match.getString(IMAGE)));
+                }
             }
 
         } catch (JSONException e) {
@@ -182,6 +191,11 @@ public class Event{
             this.segment = segment;
             this.image = image;
             this.additionalDetail = additionalDetail;
+        }
+
+        EventCard(String segment, String image) {
+            this.segment = segment;
+            this.image = image;
         }
 
         public String getSegment() {
