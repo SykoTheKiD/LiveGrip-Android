@@ -33,16 +33,16 @@ import org.json.JSONObject;
 public class MessagingService extends Service implements MqttCallback, MqttTraceHandler, IMqttActionListener {
 
     public static final String PROFILE_IMAGE = "profile_image", DUMMY_PASSWORD = "password", USERNAME = "username", BODY = "body", ID = "id", NAME = "name";
-    static final int QOS = 1;
+    static final int QOS = 2;
     private static final String TAG = MessagingService.class.getSimpleName();
-    private static final String CLIENT_ID = String.valueOf(SessionManager.getCurrentUser().getId());
     private static final String MOSQUITO_URL = BaseURL.getMosquittoURL();
     private static final int CONNECTION_TIMEOUT = 10000, KEEP_ALIVE_INTERVAL = 600000;
     private final MessagingServiceBinder mBinder = new MessagingServiceBinder(this);
+    private String CLIENT_ID = String.valueOf(SessionManager.getCurrentUser().getId());
     private MqttAndroidClient mClient;
     private boolean mIsConnecting;
     private int room = CurrentActiveEvent.getInstance().getCurrentEvent().getEventID();
-
+    private boolean connect = false;
     /**
      * Return an instance of the MQTT Android client
      *
@@ -60,31 +60,45 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      */
     @Override
     public IBinder onBind(Intent intent) {
+        connect = true;
         connect();
         return this.mBinder;
     }
 
+    @Override
+    public boolean onUnbind(Intent intent) {
+        super.onUnbind(intent);
+        eLog.i(TAG, "onUnbind called");
+        connect = false;
+        return true;
+    }
 
     /**
      * Connects the device the the MQTT Broker
      */
     private void connect() {
-        mClient = new MqttAndroidClient(this, MOSQUITO_URL, CLIENT_ID);
-        MqttConnectOptions connectOptions = new MqttConnectOptions();
-        connectOptions.setCleanSession(false);
-        connectOptions.setConnectionTimeout(CONNECTION_TIMEOUT);
-        connectOptions.setKeepAliveInterval(KEEP_ALIVE_INTERVAL);
-        connectOptions.setUserName(CLIENT_ID);
-        connectOptions.setPassword(DUMMY_PASSWORD.toCharArray());
-        mClient.setCallback(this);
-        mClient.setTraceCallback(this);
-        mIsConnecting = true;
-        try {
-            mClient.connect(connectOptions, null, this);
-        } catch (MqttException e) {
-            eLog.e(TAG, e.getMessage());
+        eLog.i(TAG, String.valueOf(connect));
+        if (connect) {
+            eLog.i(TAG, "Connecting");
+            mClient = new MqttAndroidClient(this, MOSQUITO_URL, CLIENT_ID);
+            MqttConnectOptions connectOptions = new MqttConnectOptions();
+            connectOptions.setCleanSession(false);
+            connectOptions.setConnectionTimeout(CONNECTION_TIMEOUT);
+            connectOptions.setKeepAliveInterval(KEEP_ALIVE_INTERVAL);
+            connectOptions.setUserName(CLIENT_ID);
+            connectOptions.setPassword(DUMMY_PASSWORD.toCharArray());
+            mClient.setCallback(this);
+            mClient.setTraceCallback(this);
+            mIsConnecting = true;
+            try {
+                if (connect) {
+                    this.mClient.connect(connectOptions, null, this);
+                    eLog.i(TAG, "Connected");
+                }
+            } catch (MqttException e) {
+                eLog.e(TAG, e.getMessage());
+            }
         }
-
     }
 
     /**
@@ -94,6 +108,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      */
     @Override
     public void connectionLost(Throwable cause) {
+        connect = false;
         eLog.i(TAG, "Connection Lost");
     }
 
@@ -130,7 +145,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      */
     private void subscribe() {
         try {
-            getClient().subscribe(String.valueOf(room), 2, null, this);
+            getClient().subscribe(String.valueOf(room), QOS, null, this);
         } catch (MqttException e) {
             eLog.e(TAG, e.getMessage());
         }
@@ -149,7 +164,6 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
 
     /**
      * Debug the connection
-     *
      * @param source  of broker
      * @param message from broker
      */
@@ -190,7 +204,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      */
     @Override
     public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-        eLog.e(TAG, "Error:".concat(exception.toString()));
+        eLog.e(TAG, exception.getMessage());
     }
 
     /**
@@ -226,6 +240,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      * Disconnects you from the MQTT Broker
      */
     public void disconnect() {
+        connect = false;
         try {
             this.mClient.disconnect();
             eLog.i(TAG, "disconnected");
@@ -240,6 +255,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     @Override
     public void onDestroy() {
         super.onDestroy();
-        disconnect();
+        connect = false;
+        eLog.i(TAG, "Mqtt Service Destroyed");
     }
 }

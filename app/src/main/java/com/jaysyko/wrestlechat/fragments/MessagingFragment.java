@@ -70,6 +70,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
+            eLog.i(TAG, "Service Connected");
             mMessagingServiceBinder = (MessagingServiceBinder) service;
             mMessagingServiceBinder.setMessageArrivedListener(MessagingFragment.this);
             messagingService = mMessagingServiceBinder.getService();
@@ -78,7 +79,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            mMessagingServiceBinder.getService().disconnect();
+            eLog.i(TAG, "Service Disconnected");
             mServiceBound = false;
         }
     };
@@ -173,7 +174,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         if (mAdapter != null) {
             if (mAdapter.getCount() == 0) {
@@ -186,13 +187,15 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     public void onStop() {
         super.onStop();
         if (mServiceBound) {
-            getActivity().unbindService(mServiceConnection);
             mServiceBound = false;
+            mMessagingServiceBinder.getService().disconnect();
+            mApplicationContext.unbindService(mServiceConnection);
+            eLog.i(TAG, "Service detached");
         }
     }
 
     private void getChatHistory() {
-        if(NetworkState.isConnected(mApplicationContext)){
+        if (NetworkState.isConnected(mApplicationContext)) {
             Call<MessageGetResponse> getMessagesCall = ApiManager.getApiService().getMessages(
                     SessionManager.getCurrentUser().getAuthToken(),
                     CurrentActiveEvent.getInstance().getCurrentEvent().getEventID()
@@ -208,7 +211,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
                     eLog.e(TAG, error);
                 }
             });
-        }else{
+        } else {
             Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
         }
     }
