@@ -42,7 +42,7 @@ public class Messenger {
 
             @Override
             public void onFail(String error) {
-                eLog.e(TAG, "" + error);
+                eLog.e(TAG, error);
                 eLog.e(TAG, "Message was not saved to DB");
             }
         });

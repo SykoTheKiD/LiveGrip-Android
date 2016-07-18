@@ -147,7 +147,7 @@ public final class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onFail(String error) {
                                 eLog.e(TAG, error);
-                                Dialog.makeToast(mContext, error);
+                                Dialog.makeToast(mContext, getString(R.string.error_has_occured));
                             }
                         });
                     } else {

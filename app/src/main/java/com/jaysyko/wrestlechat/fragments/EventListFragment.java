@@ -87,7 +87,6 @@ public class EventListFragment extends Fragment {
         swipeView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeView.setRefreshing(true);
                 getEvents();
             }
         });
@@ -122,6 +121,9 @@ public class EventListFragment extends Fragment {
     }
 
     private void getEvents() {
+        if(swipeView != null){
+            swipeView.setRefreshing(true);
+        }
         if(NetworkState.isConnected(mApplicationContext)){
             Call<EventResponse> call = ApiManager.getApiService().getEvents(SessionManager.getCurrentUser().getAuthToken());
             ApiManager.request(call, new NetworkCallback<EventResponse>() {
@@ -151,7 +153,7 @@ public class EventListFragment extends Fragment {
                 @Override
                 public void onFail(String error) {
                     eLog.e(TAG, error);
-                    Dialog.makeToast(mApplicationContext, error);
+                    Dialog.makeToast(mApplicationContext, getString(R.string.error_has_occured));
                 }
             });
         }else{
@@ -181,7 +183,7 @@ public class EventListFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        new Handler().post(new Runnable() {
+        handler.post(new Runnable() {
             @Override
             public void run() {
                 getEvents();
