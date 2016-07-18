@@ -33,8 +33,8 @@ import org.json.JSONObject;
 public class MessagingService extends Service implements MqttCallback, MqttTraceHandler, IMqttActionListener {
 
     public static final String PROFILE_IMAGE = "profile_image", DUMMY_PASSWORD = "password", USERNAME = "username", BODY = "body", ID = "id", NAME = "name";
-    static final int QOS = 2;
-    private static final String TAG = MessagingService.class.getSimpleName();
+    public static final String TAG = MessagingService.class.getSimpleName();
+    static final int QOS = 1;
     private static final String MOSQUITO_URL = BaseURL.getMosquittoURL();
     private static final int CONNECTION_TIMEOUT = 10000, KEEP_ALIVE_INTERVAL = 600000;
     private final MessagingServiceBinder mBinder = new MessagingServiceBinder(this);
@@ -87,6 +87,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
             connectOptions.setKeepAliveInterval(KEEP_ALIVE_INTERVAL);
             connectOptions.setUserName(CLIENT_ID);
             connectOptions.setPassword(DUMMY_PASSWORD.toCharArray());
+            connectOptions.setCleanSession(true);
             mClient.setCallback(this);
             mClient.setTraceCallback(this);
             mIsConnecting = true;

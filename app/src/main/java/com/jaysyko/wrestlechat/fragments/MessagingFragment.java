@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
@@ -146,20 +145,24 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     // Setup message field and posting
     private void initMessageAdapter() {
         etMessage = (EditText) view.findViewById(R.id.new_message_edit_text);
-        etMessage.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        etMessage.setFocusableInTouchMode(true);
+        etMessage.requestFocus();
+        etMessage.setOnKeyListener(new View.OnKeyListener() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     onSend();
                 }
-                return false;
+                return true;
             }
         });
-        ListView lvChat = (ListView) view.findViewById(R.id.chat_list_view);
+        final ListView lvChat = (ListView) view.findViewById(R.id.chat_list_view);
         // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen. Don't scroll to the bottom otherwise.
-        lvChat.setTranscriptMode(1);
         mAdapter = new MessageListAdapter(mApplicationContext, mMessages);
+        lvChat.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         lvChat.setAdapter(mAdapter);
+        getChatHistory();
+        lvChat.setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
     }
 
     @Override
@@ -176,11 +179,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     @Override
     public void onResume() {
         super.onResume();
-        if (mAdapter != null) {
-            if (mAdapter.getCount() == 0) {
-                getChatHistory();
-            }
-        }
     }
 
     @Override
@@ -194,6 +192,12 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mApplicationContext.stopService(mChatServiceIntent);
+    }
+
     private void getChatHistory() {
         if (NetworkState.isConnected(mApplicationContext)) {
             Call<MessageGetResponse> getMessagesCall = ApiManager.getApiService().getMessages(
@@ -203,6 +207,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
             ApiManager.request(getMessagesCall, new NetworkCallback<MessageGetResponse>() {
                 @Override
                 public void onSuccess(MessageGetResponse response) {
+                    eLog.i(TAG, "Fetched Chat History");
                     mAdapter.addAll(response.getData());
                 }
 
