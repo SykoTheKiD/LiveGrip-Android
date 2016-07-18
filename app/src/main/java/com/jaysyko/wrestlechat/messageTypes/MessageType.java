@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,8 @@ import android.widget.RelativeLayout;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.customTextView.AutoResizeTextView;
 import com.jaysyko.wrestlechat.models.Message;
+import com.jaysyko.wrestlechat.sharedPreferences.PreferenceProvider;
+import com.jaysyko.wrestlechat.sharedPreferences.Preferences;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
 public class MessageType implements MessageGenerator {
@@ -37,7 +38,7 @@ public class MessageType implements MessageGenerator {
     private AutoResizeTextView textMessage() {
         AutoResizeTextView textView = new AutoResizeTextView(this.context);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this.context);
+        SharedPreferences settings = PreferenceProvider.getSharedPreferences(context, Preferences.SETTINGS);
         Integer bg = Integer.parseInt(settings.getString(CHAT_BUBBLE_STYLE, DEFAULT_SETTINGS_VALUE));
         switch (this.position) {
             case USER:

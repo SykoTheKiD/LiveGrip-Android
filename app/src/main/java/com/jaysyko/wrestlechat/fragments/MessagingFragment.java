@@ -6,6 +6,13 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -37,6 +44,8 @@ import com.jaysyko.wrestlechat.services.IMessageArrivedListener;
 import com.jaysyko.wrestlechat.services.MessagingService;
 import com.jaysyko.wrestlechat.services.MessagingServiceBinder;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
+import com.jaysyko.wrestlechat.sharedPreferences.PreferenceProvider;
+import com.jaysyko.wrestlechat.sharedPreferences.Preferences;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 import java.util.ArrayList;
@@ -48,6 +57,8 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private static final String TAG = MessagingFragment.class.getSimpleName();
     private static final int SEND_DELAY = 1500;
     private static final String FONT_COLOR_HTML = "<font color=\"#FFFFFFF\">", FONT_HTML = "</font>";
+    private static final String DEFAULT_SETTINGS_VALUE = "0";
+    private static final String MESSAGING_WALLPAPER = "messagingWallpaper";
     private static ArrayList<Message> mMessages = new ArrayList<>();
     private static MessageListAdapter mAdapter;
     private EditText etMessage;
@@ -174,6 +185,20 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     public void onStart() {
         super.onStart();
         mApplicationContext.bindService(mChatServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+        SharedPreferences settings = PreferenceProvider.getSharedPreferences(mApplicationContext, Preferences.SETTINGS);
+        Integer bg = Integer.parseInt(settings.getString(MESSAGING_WALLPAPER, DEFAULT_SETTINGS_VALUE));
+        if (!bg.equals(Integer.valueOf(DEFAULT_SETTINGS_VALUE))) {
+            TypedArray typedArray = getActivity().getResources().obtainTypedArray(R.array.background_resources);
+            Bitmap backgroundImage = BitmapFactory.decodeResource(getResources(), typedArray.getResourceId(bg, Integer.valueOf(DEFAULT_SETTINGS_VALUE)));
+            BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), backgroundImage);
+            bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                view.findViewById(R.id.chat_list_view).setBackground(bitmapDrawable);
+            } else {
+                view.findViewById(R.id.chat_list_view).setBackgroundDrawable(bitmapDrawable);
+            }
+            typedArray.recycle();
+        }
     }
 
     @Override
