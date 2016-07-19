@@ -1,6 +1,8 @@
 package com.jaysyko.wrestlechat.application;
 
 import android.app.Application;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Initializer.java
@@ -16,5 +18,6 @@ public class Initializer extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
     }
 }

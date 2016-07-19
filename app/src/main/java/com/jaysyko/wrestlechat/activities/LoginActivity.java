@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.analytics.AuthTracker;
 import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.forms.Form;
@@ -105,12 +106,18 @@ public final class LoginActivity extends AppCompatActivity {
                         ApiManager.request(call, new NetworkCallback<UserResponse>() {
                             @Override
                             public void onSuccess(UserResponse response) {
-                                loginUser(response);
+                                loginUser(response, true);
                             }
 
                             @Override
                             public void onFail(String t) {
                                 eLog.e(TAG, t);
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        AuthTracker.trackSignUp(false);
+                                    }
+                                });
                                 Dialog.makeToast(mContext, t);
                             }
                         });
@@ -141,12 +148,18 @@ public final class LoginActivity extends AppCompatActivity {
                         ApiManager.request(call, new NetworkCallback<UserResponse>() {
                             @Override
                             public void onSuccess(UserResponse response) {
-                                loginUser(response);
+                                loginUser(response, false);
                             }
 
                             @Override
                             public void onFail(String error) {
                                 eLog.e(TAG, error);
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        AuthTracker.trackLogin(false);
+                                    }
+                                });
                                 Dialog.makeToast(mContext, getString(R.string.error_has_occured));
                             }
                         });
@@ -160,9 +173,19 @@ public final class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void loginUser(UserResponse response) {
+    private void loginUser(UserResponse response, final boolean isSignUp) {
         User user = response.getData();
         SessionManager.newSession(mContext, user);
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                if(isSignUp){
+                    AuthTracker.trackSignUp(true);
+                }else{
+                    AuthTracker.trackLogin(true);
+                }
+            }
+        });
         startActivity(intent);
         finish();
     }

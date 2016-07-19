@@ -18,6 +18,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.analytics.ShareTracker;
 import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.customImageView.RoundedImageView;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
@@ -98,6 +99,12 @@ public final class EventListActivity extends AppCompatActivity {
                 }
 
                 if (itemId == R.id.nav_share) {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            ShareTracker.trackShare();
+                        }
+                    });
                     Intent share = new Intent(Intent.ACTION_SEND);
                     share.setType(StringResources.PLAIN_CONTENT_TYPE);
                     share.putExtra(Intent.EXTRA_TEXT, R.string.app_share);

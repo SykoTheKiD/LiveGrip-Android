@@ -80,6 +80,9 @@
             android:name=".services.EventStartNotifierService"
             android:enabled="true"
             android:exported="false"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="02dbff54ea76253b2702bf789ca6bce41ccd7d7b" />
     </application>
 
 </manifest>

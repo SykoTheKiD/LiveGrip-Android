@@ -3,6 +3,7 @@ package com.jaysyko.wrestlechat.sessionManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.models.User;
@@ -35,6 +36,8 @@ public final class SessionManager {
         editor.putBoolean(PreferenceKeys.IS_LOGGED_IN, true);
         editor.apply();
         Session.getInstance().setCurrentUser(user);
+        logUser(user);
+
     }
 
     /**
@@ -96,4 +99,12 @@ public final class SessionManager {
     public static User getCurrentUser() {
         return Session.getInstance().getCurrentUser();
     }
+
+    private static void logUser(User user) {
+        // You can call any combination of these three methods
+        Crashlytics.setUserIdentifier(String.valueOf(user.getId()));
+        Crashlytics.setUserEmail(user.getUsername());
+        Crashlytics.setUserName(user.getAuthToken());
+    }
+
 }

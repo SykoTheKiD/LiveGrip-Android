@@ -22,7 +22,6 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/logo" />
 
-
     </android.support.v7.widget.Toolbar>
 
 
