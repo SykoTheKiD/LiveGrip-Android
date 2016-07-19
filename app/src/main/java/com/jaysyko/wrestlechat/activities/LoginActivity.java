@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
@@ -39,6 +40,7 @@ public final class LoginActivity extends AppCompatActivity {
     private EditText usernameField, passwordField;
     private Context mContext;
     private Intent intent;
+    private ProgressBar progressBar;
     private boolean signIn = true;
 
     @Override
@@ -51,6 +53,7 @@ public final class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
         loginButton = (Button) findViewById(R.id.sign_in_button);
         signUpButton = (Button) findViewById(R.id.sign_up_button);
         signUpText = (TextView) findViewById(R.id.sign_up_text_view);
@@ -99,6 +102,13 @@ public final class LoginActivity extends AppCompatActivity {
                 if (NetworkState.isConnected(mContext)) {
                     Form form = new SignUpForm(username, password).validate();
                     if (form.isValid()) {
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar.setVisibility(View.VISIBLE);
+                                signUpButton.setVisibility(View.GONE);
+                            }
+                        }, 500);
                         APIInterface apiManager = ApiManager.getApiService();
                         Call<UserResponse> call = apiManager.createUser(
                                 new AuthData(username, password)
@@ -106,19 +116,33 @@ public final class LoginActivity extends AppCompatActivity {
                         ApiManager.request(call, new NetworkCallback<UserResponse>() {
                             @Override
                             public void onSuccess(UserResponse response) {
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        signUpButton.setVisibility(View.VISIBLE);
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+                                }, 500);
                                 loginUser(response, true);
                             }
 
                             @Override
                             public void onFail(String t) {
                                 eLog.e(TAG, t);
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        signUpButton.setVisibility(View.VISIBLE);
+                                        progressBar.setVisibility(View.GONE);
+                                    }
+                                }, 500);
                                 handler.post(new Runnable() {
                                     @Override
                                     public void run() {
                                         AuthTracker.trackSignUp(false);
                                     }
                                 });
-                                Dialog.makeToast(mContext, t);
+                                Dialog.makeToast(mContext, getString(R.string.error_has_occured));
                             }
                         });
                     } else {
@@ -141,6 +165,13 @@ public final class LoginActivity extends AppCompatActivity {
                 if (NetworkState.isConnected(mContext)) {
                     Form form = new LoginForm(username, password).validate();
                     if (form.isValid()) {
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar.setVisibility(View.VISIBLE);
+                                loginButton.setVisibility(View.GONE);
+                            }
+                        }, 500);
                         APIInterface apiManager = ApiManager.getApiService();
                         Call<UserResponse> call = apiManager.getUser(
                                 new AuthData(username, password)
@@ -148,12 +179,26 @@ public final class LoginActivity extends AppCompatActivity {
                         ApiManager.request(call, new NetworkCallback<UserResponse>() {
                             @Override
                             public void onSuccess(UserResponse response) {
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        progressBar.setVisibility(View.GONE);
+                                        loginButton.setVisibility(View.VISIBLE);
+                                    }
+                                }, 500);
                                 loginUser(response, false);
                             }
 
                             @Override
                             public void onFail(String error) {
                                 eLog.e(TAG, error);
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        progressBar.setVisibility(View.GONE);
+                                        loginButton.setVisibility(View.VISIBLE);
+                                    }
+                                }, 500);
                                 handler.post(new Runnable() {
                                     @Override
                                     public void run() {

@@ -151,7 +151,6 @@ public class NotifyListStore implements Serializable, NotifyStore {
             SavedEvent that = (SavedEvent) o;
 
             return event.equals(that.event);
-
         }
 
         @Override

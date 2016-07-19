@@ -18,13 +18,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ApiManager {
 
-     static final Retrofit RETROFIT = new Retrofit.Builder()
+    private static final String TAG = ApiManager.class.getSimpleName();
+    static final Retrofit RETROFIT = new Retrofit.Builder()
             .baseUrl(BaseURL.getServerURL())
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
     private static final APIInterface API_SERVICE = RETROFIT.create(APIInterface.class);
-    private static final String TAG = ApiManager.class.getSimpleName();
 
     public static APIInterface getApiService() {
         return API_SERVICE;
@@ -34,15 +34,14 @@ public class ApiManager {
         call.enqueue(new Callback<T>() {
             @Override
             public void onResponse(Call<T> call, Response<T> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     callback.onSuccess(response.body());
-                }else{
+                } else {
                     AuthErrorResponse authErrorResponse = ApiErrorManager.parseError(response);
                     final String message = authErrorResponse.getMessage();
                     eLog.e(TAG, message);
                     callback.onFail(message);
                 }
-
             }
 
             @Override

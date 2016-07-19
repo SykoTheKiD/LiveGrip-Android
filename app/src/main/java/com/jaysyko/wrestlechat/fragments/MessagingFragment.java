@@ -163,8 +163,9 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     onSend();
+                    return true;
                 }
-                return true;
+                return false;
             }
         });
         final ListView lvChat = (ListView) view.findViewById(R.id.chat_list_view);
