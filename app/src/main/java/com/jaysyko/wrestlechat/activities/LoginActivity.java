@@ -24,6 +24,7 @@ import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.requestData.AuthData;
+import com.jaysyko.wrestlechat.network.responses.BadRequestResponse;
 import com.jaysyko.wrestlechat.network.responses.UserResponse;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 
@@ -127,8 +128,8 @@ public final class LoginActivity extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onFail(String t) {
-                                eLog.e(TAG, t);
+                            public void onFail(BadRequestResponse t) {
+                                eLog.e(TAG, t.getMessage());
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
@@ -142,7 +143,15 @@ public final class LoginActivity extends AppCompatActivity {
                                         AuthTracker.trackSignUp(false);
                                     }
                                 });
-                                Dialog.makeToast(mContext, getString(R.string.error_has_occured));
+                                final int responseCode = t.getCode();
+                                switch (responseCode) {
+                                    case 400:
+                                        Dialog.makeToast(mContext, getString(R.string.username_taken));
+                                        break;
+                                    default:
+                                        Dialog.makeToast(mContext, getString(R.string.error_has_occured));
+                                        break;
+                                }
                             }
                         });
                     } else {
@@ -190,8 +199,8 @@ public final class LoginActivity extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onFail(String error) {
-                                eLog.e(TAG, error);
+                            public void onFail(BadRequestResponse error) {
+                                eLog.e(TAG, error.getMessage());
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
@@ -205,7 +214,21 @@ public final class LoginActivity extends AppCompatActivity {
                                         AuthTracker.trackLogin(false);
                                     }
                                 });
-                                Dialog.makeToast(mContext, getString(R.string.error_has_occured));
+                                final int responseCode = error.getCode();
+                                switch (responseCode) {
+                                    case 400:
+                                        Dialog.makeToast(mContext, getString(R.string.error_has_occured));
+                                        break;
+                                    case 401:
+                                        Dialog.makeToast(mContext, getString(R.string.account_disabled));
+                                        break;
+                                    case 404:
+                                        Dialog.makeToast(mContext, getString(R.string.user_not_found));
+                                        break;
+                                    default:
+                                        Dialog.makeToast(mContext, getString(R.string.error_has_occured));
+                                        break;
+                                }
                             }
                         });
                     } else {
@@ -231,6 +254,7 @@ public final class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+        Dialog.makeToast(mContext, getString(R.string.hello) + response.getData().getUsername() + "!");
         startActivity(intent);
         finish();
     }

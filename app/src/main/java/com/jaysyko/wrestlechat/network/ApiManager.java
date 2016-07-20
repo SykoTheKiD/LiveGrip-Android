@@ -2,6 +2,7 @@ package com.jaysyko.wrestlechat.network;
 
 import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.network.responses.AuthErrorResponse;
+import com.jaysyko.wrestlechat.network.responses.BadRequestResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,12 +19,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ApiManager {
 
-    private static final String TAG = ApiManager.class.getSimpleName();
     static final Retrofit RETROFIT = new Retrofit.Builder()
             .baseUrl(BaseURL.getServerURL())
             .addConverterFactory(GsonConverterFactory.create())
             .build();
-
+    private static final String TAG = ApiManager.class.getSimpleName();
     private static final APIInterface API_SERVICE = RETROFIT.create(APIInterface.class);
 
     public static APIInterface getApiService() {
@@ -40,13 +40,13 @@ public class ApiManager {
                     AuthErrorResponse authErrorResponse = ApiErrorManager.parseError(response);
                     final String message = authErrorResponse.getMessage();
                     eLog.e(TAG, message);
-                    callback.onFail(message);
+                    callback.onFail(new BadRequestResponse(response.code(), message));
                 }
             }
 
             @Override
             public void onFailure(Call<T> call, Throwable t) {
-                callback.onFail(t.getMessage());
+                callback.onFail(new BadRequestResponse(-1, t.getMessage()));
             }
         });
     }

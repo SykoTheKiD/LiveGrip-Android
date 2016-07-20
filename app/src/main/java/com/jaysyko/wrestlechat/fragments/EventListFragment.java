@@ -25,6 +25,7 @@ import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkState;
+import com.jaysyko.wrestlechat.network.responses.BadRequestResponse;
 import com.jaysyko.wrestlechat.network.responses.EventResponse;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 import com.jaysyko.wrestlechat.sqlite.daos.EventDao;
@@ -151,8 +152,8 @@ public class EventListFragment extends Fragment {
                     });
                 }
                 @Override
-                public void onFail(String error) {
-                    eLog.e(TAG, error);
+                public void onFail(BadRequestResponse error) {
+                    eLog.e(TAG, error.getMessage());
                     Dialog.makeToast(mApplicationContext, getString(R.string.error_has_occured));
                 }
             });

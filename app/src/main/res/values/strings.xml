@@ -86,5 +86,9 @@
     <string name="transition_name_circle">transition:CIRCLE</string>
     <string name="transition_name_phone">transition:PHONE</string>
     <string name="error_has_occured">An Error has Occurred</string>
+    <string name="username_taken">Username in use</string>
+    <string name="account_disabled">Your account has been disabled</string>
+    <string name="user_not_found">Invalid Login</string>
+    <string name="hello">Hello</string>
 
 </resources>

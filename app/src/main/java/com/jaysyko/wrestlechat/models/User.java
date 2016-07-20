@@ -10,6 +10,7 @@ import com.jaysyko.wrestlechat.exceptions.ImageURLError;
 import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.requestData.UpdateUserImageData;
+import com.jaysyko.wrestlechat.network.responses.BadRequestResponse;
 import com.jaysyko.wrestlechat.network.responses.GenericResponse;
 import com.jaysyko.wrestlechat.sharedPreferences.PreferenceKeys;
 import com.jaysyko.wrestlechat.sharedPreferences.PreferenceProvider;
@@ -66,8 +67,8 @@ public final class User {
                 }
 
                 @Override
-                public void onFail(String error) {
-                    eLog.e(TAG, error);
+                public void onFail(BadRequestResponse error) {
+                    eLog.e(TAG, error.getMessage());
                 }
             });
 

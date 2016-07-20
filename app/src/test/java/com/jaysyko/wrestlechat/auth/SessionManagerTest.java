@@ -8,6 +8,7 @@ import com.jaysyko.wrestlechat.network.APIInterface;
 import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.requestData.AuthData;
+import com.jaysyko.wrestlechat.network.responses.BadRequestResponse;
 import com.jaysyko.wrestlechat.network.responses.UserResponse;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 import com.jaysyko.wrestlechat.sharedPreferences.PreferenceProvider;
@@ -29,11 +30,11 @@ import retrofit2.Call;
  */
 public class SessionManagerTest {
 
+    final User user = new User();
     @Mock Context mContext;
     @Mock PreferenceProvider preferenceProvider;
     @Mock SharedPreferences mSharedPreferences;
     @Mock SharedPreferences.Editor mEditor;
-    final User user = new User();
 
     @Before
     public void setUp(){
@@ -67,8 +68,8 @@ public class SessionManagerTest {
             }
 
             @Override
-            public void onFail(String error) {
-                Assert.fail(error);
+            public void onFail(BadRequestResponse error) {
+                Assert.fail(error.getMessage());
             }
         });
     }

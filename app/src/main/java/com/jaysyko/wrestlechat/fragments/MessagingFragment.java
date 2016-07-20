@@ -39,6 +39,7 @@ import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkState;
+import com.jaysyko.wrestlechat.network.responses.BadRequestResponse;
 import com.jaysyko.wrestlechat.network.responses.MessageGetResponse;
 import com.jaysyko.wrestlechat.services.IMessageArrivedListener;
 import com.jaysyko.wrestlechat.services.MessagingService;
@@ -227,8 +228,8 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
                 }
 
                 @Override
-                public void onFail(String error) {
-                    eLog.e(TAG, error);
+                public void onFail(BadRequestResponse error) {
+                    eLog.e(TAG, error.getMessage());
                 }
             });
         } else {
