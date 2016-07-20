@@ -156,12 +156,11 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     // Setup message field and posting
     private void initMessageAdapter() {
         etMessage = (EditText) view.findViewById(R.id.new_message_edit_text);
-        etMessage.setFocusableInTouchMode(true);
-        etMessage.requestFocus();
         etMessage.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    eLog.i(TAG, "Enter pressed");
                     onSend();
                     return true;
                 }
@@ -188,6 +187,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         mApplicationContext.bindService(mChatServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
         SharedPreferences settings = PreferenceProvider.getSharedPreferences(mApplicationContext, Preferences.SETTINGS);
         Integer bg = Integer.parseInt(settings.getString(MESSAGING_WALLPAPER, DEFAULT_SETTINGS_VALUE));
+        eLog.i(TAG, String.valueOf(bg));
         if (!bg.equals(Integer.valueOf(DEFAULT_SETTINGS_VALUE))) {
             TypedArray typedArray = getActivity().getResources().obtainTypedArray(R.array.background_resources);
             Bitmap backgroundImage = BitmapFactory.decodeResource(getResources(), typedArray.getResourceId(bg, Integer.valueOf(DEFAULT_SETTINGS_VALUE)));
@@ -203,24 +203,13 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
+    public void onDestroy() {
+        super.onDestroy();
         if (mServiceBound) {
             mServiceBound = false;
-            mMessagingServiceBinder.getService().disconnect();
             mApplicationContext.unbindService(mServiceConnection);
             eLog.i(TAG, "Service detached");
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
         mApplicationContext.stopService(mChatServiceIntent);
     }
 
