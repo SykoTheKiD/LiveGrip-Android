@@ -50,14 +50,6 @@ public final class EventListActivity extends AppCompatActivity {
          */
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.navDrawerItems);
-        final View headerLayout = mNavigationView != null ? mNavigationView.inflateHeaderView(R.layout.nav_header_event_list) : null;
-        final TextView headerUsername = (TextView) (headerLayout != null ? headerLayout.findViewById(R.id.drawer_username) : null);
-        final RoundedImageView headerProfileImage = (RoundedImageView) (headerLayout != null ? headerLayout.findViewById(R.id.header_profile_image) : null);
-        if (headerUsername != null && headerProfileImage != null) {
-            final User currentUser = SessionManager.getCurrentUser();
-            headerUsername.setText(currentUser.getUsername());
-            ImageTools.loadImage(mApplicationContext, currentUser.getProfileImage(), headerProfileImage);
-        }
         /**
          * Lets inflate the very first fragment
          * Here we are inflating the TabFragment as the first Fragment
@@ -137,5 +129,23 @@ public final class EventListActivity extends AppCompatActivity {
         }
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                final View headerLayout = mNavigationView != null ? mNavigationView.inflateHeaderView(R.layout.nav_header_event_list) : null;
+                final TextView headerUsername = (TextView) (headerLayout != null ? headerLayout.findViewById(R.id.drawer_username) : null);
+                final RoundedImageView headerProfileImage = (RoundedImageView) (headerLayout != null ? headerLayout.findViewById(R.id.header_profile_image) : null);
+                if (headerUsername != null && headerProfileImage != null) {
+                    final User currentUser = SessionManager.getCurrentUser();
+                    headerUsername.setText(currentUser.getUsername());
+                    ImageTools.loadImage(mApplicationContext, currentUser.getProfileImage(), headerProfileImage);
+                }
+            }
+        });
     }
 }

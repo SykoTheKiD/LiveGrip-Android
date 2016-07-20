@@ -150,11 +150,17 @@ public class EventListFragment extends Fragment {
                             setEventsList(cleanedEventsList);
                         }
                     });
+                    if (swipeView != null) {
+                        swipeView.setRefreshing(false);
+                    }
                 }
                 @Override
                 public void onFail(BadRequestResponse error) {
                     eLog.e(TAG, error.getMessage());
                     Dialog.makeToast(mApplicationContext, getString(R.string.error_has_occured));
+                    if (swipeView != null) {
+                        swipeView.setRefreshing(false);
+                    }
                 }
             });
         }else{
@@ -163,9 +169,9 @@ public class EventListFragment extends Fragment {
             mEventsList.clear();
             mEventsList.addAll(eventDao.getAllEvents());
             Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
-        }
-        if (swipeView != null) {
-            swipeView.setRefreshing(false);
+            if (swipeView != null) {
+                swipeView.setRefreshing(false);
+            }
         }
     }
 

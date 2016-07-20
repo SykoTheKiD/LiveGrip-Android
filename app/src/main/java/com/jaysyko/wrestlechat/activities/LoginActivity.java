@@ -254,7 +254,7 @@ public final class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-        Dialog.makeToast(mContext, getString(R.string.hello) + response.getData().getUsername() + "!");
+        Dialog.makeToast(mContext, getString(R.string.hello) + " " + response.getData().getUsername() + "!");
         startActivity(intent);
         finish();
     }
