@@ -24,6 +24,15 @@ public class FailedRequestResponse {
     }
 
     public int getCode(final Context context) {
+        checkValid(context);
+        return this.code;
+    }
+
+    public String getMessage() {
+        return this.message;
+    }
+
+    private void checkValid(final Context context){
         switch (this.code){
             case 403:
                 handler.post(new Runnable() {
@@ -38,10 +47,5 @@ public class FailedRequestResponse {
                 });
                 break;
         }
-        return this.code;
-    }
-
-    public String getMessage() {
-        return this.message;
     }
 }

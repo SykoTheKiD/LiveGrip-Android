@@ -27,7 +27,6 @@ public final class User {
     private static final String TAG = User.class.getSimpleName();
     private static final String AUTH_PREFIX = "Token ";
     private static final String BAD_IMAGE_URL_MESSAGE = "Bad Image URL";
-    //    private static final Handler handler = new Handler();
     @SerializedName(Utils.ID)
     private int id;
     @SerializedName(Utils.USERNAME)
@@ -68,6 +67,7 @@ public final class User {
 
                 @Override
                 public void onFail(FailedRequestResponse error) {
+                    error.getCode(context);
                     eLog.e(TAG, error.getMessage());
                 }
             });

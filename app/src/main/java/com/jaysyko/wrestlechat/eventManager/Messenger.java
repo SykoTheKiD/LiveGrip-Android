@@ -1,5 +1,8 @@
 package com.jaysyko.wrestlechat.eventManager;
 
+import android.content.Context;
+
+import com.jaysyko.wrestlechat.application.Initializer;
 import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.network.APIInterface;
@@ -45,6 +48,10 @@ public class Messenger {
             public void onFail(FailedRequestResponse error) {
                 eLog.e(TAG, error.getMessage());
                 eLog.e(TAG, "Message was not saved to DB");
+                final Context context = Initializer.getAppContext();
+                if(context != null){
+                    error.getCode(context);
+                }
             }
         });
     }
