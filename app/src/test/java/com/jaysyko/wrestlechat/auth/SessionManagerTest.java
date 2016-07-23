@@ -8,7 +8,7 @@ import com.jaysyko.wrestlechat.network.APIInterface;
 import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.requestData.AuthData;
-import com.jaysyko.wrestlechat.network.responses.BadRequestResponse;
+import com.jaysyko.wrestlechat.network.responses.FailedRequestResponse;
 import com.jaysyko.wrestlechat.network.responses.UserResponse;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 import com.jaysyko.wrestlechat.sharedPreferences.PreferenceProvider;
@@ -48,7 +48,7 @@ public class SessionManagerTest {
     }
 
     @Test
-    public void userSessionCreationTest(){
+    public void userSessionCreationTest() throws Exception {
         MockitoAnnotations.initMocks(this);
         Assert.assertNotNull(mContext);
         Mockito.when(PreferenceProvider.getSharedPreferences(mContext, Preferences.SESSION)).thenReturn(mSharedPreferences);
@@ -68,7 +68,7 @@ public class SessionManagerTest {
             }
 
             @Override
-            public void onFail(BadRequestResponse error) {
+            public void onFail(FailedRequestResponse error) {
                 Assert.fail(error.getMessage());
             }
         });

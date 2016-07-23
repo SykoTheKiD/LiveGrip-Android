@@ -25,7 +25,7 @@ import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkState;
-import com.jaysyko.wrestlechat.network.responses.BadRequestResponse;
+import com.jaysyko.wrestlechat.network.responses.FailedRequestResponse;
 import com.jaysyko.wrestlechat.network.responses.EventResponse;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 import com.jaysyko.wrestlechat.sqlite.daos.EventDao;
@@ -128,6 +128,9 @@ public class EventListFragment extends Fragment {
         if(NetworkState.isConnected(mApplicationContext)){
             Call<EventResponse> call = ApiManager.getApiService().getEvents(SessionManager.getCurrentUser().getAuthToken());
             ApiManager.request(call, new NetworkCallback<EventResponse>() {
+
+
+
                 @Override
                 public void onSuccess(final EventResponse response) {
                     eLog.i(TAG, "Successfully received events from network");
@@ -155,12 +158,12 @@ public class EventListFragment extends Fragment {
                     }
                 }
                 @Override
-                public void onFail(BadRequestResponse error) {
+                public void onFail(FailedRequestResponse error) {
                     eLog.e(TAG, error.getMessage());
-                    Dialog.makeToast(mApplicationContext, getString(R.string.error_has_occured));
                     if (swipeView != null) {
                         swipeView.setRefreshing(false);
                     }
+                    Dialog.makeToast(mApplicationContext, getString(R.string.error_has_occured));
                 }
             });
         }else{

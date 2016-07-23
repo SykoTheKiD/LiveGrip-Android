@@ -205,7 +205,9 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
      */
     @Override
     public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
-        eLog.e(TAG, exception.getMessage());
+        if(exception != null){
+            eLog.e(TAG, exception.getMessage());
+        }
     }
 
     /**

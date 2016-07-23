@@ -2,7 +2,7 @@ package com.jaysyko.wrestlechat.network;
 
 import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.network.responses.AuthErrorResponse;
-import com.jaysyko.wrestlechat.network.responses.BadRequestResponse;
+import com.jaysyko.wrestlechat.network.responses.FailedRequestResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,13 +40,13 @@ public class ApiManager {
                     AuthErrorResponse authErrorResponse = ApiErrorManager.parseError(response);
                     final String message = authErrorResponse.getMessage();
                     eLog.e(TAG, message);
-                    callback.onFail(new BadRequestResponse(response.code(), message));
+                    callback.onFail(new FailedRequestResponse(response.code(), message));
                 }
             }
 
             @Override
             public void onFailure(Call<T> call, Throwable t) {
-                callback.onFail(new BadRequestResponse(-1, t.getMessage()));
+                callback.onFail(new FailedRequestResponse(-1, t.getMessage()));
             }
         });
     }

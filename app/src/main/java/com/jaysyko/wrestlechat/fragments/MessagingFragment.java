@@ -39,7 +39,7 @@ import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkState;
-import com.jaysyko.wrestlechat.network.responses.BadRequestResponse;
+import com.jaysyko.wrestlechat.network.responses.FailedRequestResponse;
 import com.jaysyko.wrestlechat.network.responses.MessageGetResponse;
 import com.jaysyko.wrestlechat.services.IMessageArrivedListener;
 import com.jaysyko.wrestlechat.services.MessagingService;
@@ -77,12 +77,11 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         }
     };
     private Event mCurrentEvent = CurrentActiveEvent.getInstance().getCurrentEvent();
-    private MessagingServiceBinder mMessagingServiceBinder;
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             eLog.i(TAG, "Service Connected");
-            mMessagingServiceBinder = (MessagingServiceBinder) service;
+            MessagingServiceBinder mMessagingServiceBinder = (MessagingServiceBinder) service;
             mMessagingServiceBinder.setMessageArrivedListener(MessagingFragment.this);
             messagingService = mMessagingServiceBinder.getService();
             mServiceBound = true;
@@ -228,7 +227,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
                 }
 
                 @Override
-                public void onFail(BadRequestResponse error) {
+                public void onFail(FailedRequestResponse error) {
                     eLog.e(TAG, error.getMessage());
                 }
             });

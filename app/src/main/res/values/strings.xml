@@ -90,5 +90,6 @@
     <string name="account_disabled">Your account has been disabled</string>
     <string name="user_not_found">Invalid Login</string>
     <string name="hello">Hello</string>
+    <string name="relogin">Please login again</string>
 
 </resources>

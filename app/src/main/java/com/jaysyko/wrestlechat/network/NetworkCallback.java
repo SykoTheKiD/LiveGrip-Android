@@ -1,6 +1,6 @@
 package com.jaysyko.wrestlechat.network;
 
-import com.jaysyko.wrestlechat.network.responses.BadRequestResponse;
+import com.jaysyko.wrestlechat.network.responses.FailedRequestResponse;
 
 /**
  * NetworkCallback.java
@@ -10,7 +10,6 @@ import com.jaysyko.wrestlechat.network.responses.BadRequestResponse;
  */
 public interface NetworkCallback<T> {
     void onSuccess(T response);
-
-    void onFail(BadRequestResponse error);
+    void onFail(FailedRequestResponse error);
 }
 

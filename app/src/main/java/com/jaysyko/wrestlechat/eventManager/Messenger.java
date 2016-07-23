@@ -6,7 +6,7 @@ import com.jaysyko.wrestlechat.network.APIInterface;
 import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.requestData.MessageData;
-import com.jaysyko.wrestlechat.network.responses.BadRequestResponse;
+import com.jaysyko.wrestlechat.network.responses.FailedRequestResponse;
 import com.jaysyko.wrestlechat.network.responses.GenericResponse;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 
@@ -42,7 +42,7 @@ public class Messenger {
             }
 
             @Override
-            public void onFail(BadRequestResponse error) {
+            public void onFail(FailedRequestResponse error) {
                 eLog.e(TAG, error.getMessage());
                 eLog.e(TAG, "Message was not saved to DB");
             }

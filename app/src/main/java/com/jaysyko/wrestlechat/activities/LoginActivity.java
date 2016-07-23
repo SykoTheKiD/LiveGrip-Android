@@ -24,7 +24,7 @@ import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.requestData.AuthData;
-import com.jaysyko.wrestlechat.network.responses.BadRequestResponse;
+import com.jaysyko.wrestlechat.network.responses.FailedRequestResponse;
 import com.jaysyko.wrestlechat.network.responses.UserResponse;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 
@@ -128,7 +128,7 @@ public final class LoginActivity extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onFail(BadRequestResponse t) {
+                            public void onFail(FailedRequestResponse t) {
                                 eLog.e(TAG, t.getMessage());
                                 handler.postDelayed(new Runnable() {
                                     @Override
@@ -143,7 +143,7 @@ public final class LoginActivity extends AppCompatActivity {
                                         AuthTracker.trackSignUp(false);
                                     }
                                 });
-                                final int responseCode = t.getCode();
+                                final int responseCode = t.getCode(mContext);
                                 switch (responseCode) {
                                     case 400:
                                         Dialog.makeToast(mContext, getString(R.string.username_taken));
@@ -199,7 +199,7 @@ public final class LoginActivity extends AppCompatActivity {
                             }
 
                             @Override
-                            public void onFail(BadRequestResponse error) {
+                            public void onFail(FailedRequestResponse error) {
                                 eLog.e(TAG, error.getMessage());
                                 handler.postDelayed(new Runnable() {
                                     @Override
@@ -214,11 +214,8 @@ public final class LoginActivity extends AppCompatActivity {
                                         AuthTracker.trackLogin(false);
                                     }
                                 });
-                                final int responseCode = error.getCode();
+                                final int responseCode = error.getCode(mContext);
                                 switch (responseCode) {
-                                    case 400:
-                                        Dialog.makeToast(mContext, getString(R.string.error_has_occured));
-                                        break;
                                     case 401:
                                         Dialog.makeToast(mContext, getString(R.string.account_disabled));
                                         break;
