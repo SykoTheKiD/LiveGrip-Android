@@ -56,6 +56,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private static final int SEND_DELAY = 1500;
     private static final String FONT_COLOR_HTML = "<font color=\"#FFFFFFF\">", FONT_HTML = "</font>";
     private View view;
+    private boolean init;
     private Button btSend;
     private EditText etMessage;
     private Context mApplicationContext;
@@ -76,7 +77,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         super.onCreate(savedInstanceState);
         Activity activity = getActivity();
         activity.setTitle(Html.fromHtml(FONT_COLOR_HTML + mCurrentEvent.getEventName() + FONT_HTML));
-
         serviceProvider = (MessagingActivity) getActivity();
         serviceProvider.getMessagingServiceBinder().setMessageArrivedListener(this);
     }
@@ -131,6 +131,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
 
     // Setup message field and posting
     private void initMessageAdapter() {
+        init = true;
         etMessage = (EditText) view.findViewById(R.id.new_message_edit_text);
         etMessage.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -150,11 +151,14 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         lvChat.setAdapter(mAdapter);
         getChatHistory();
         lvChat.setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
+        init = false;
     }
 
     @Override
     public void messageArrived(Message message) {
-        mAdapter.add(message);
+        if(!init){
+            mAdapter.add(message);
+        }
     }
 
     @Override
