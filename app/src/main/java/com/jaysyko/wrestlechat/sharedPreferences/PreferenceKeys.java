@@ -7,4 +7,7 @@ public class PreferenceKeys {
     public static final String NEW_PROFILE_IMAGE = "new_profile_image";
     public static final String IS_LOGGED_IN = "isLoggedIn";
     public static final String CURRENT_USER = "currentUser";
+    public static final String DEFAULT_SETTINGS_VALUE = "0";
+    public static final String SETTINGS_MESSAGING_WALLPAPER = "messagingWallpaper";
+
 }
