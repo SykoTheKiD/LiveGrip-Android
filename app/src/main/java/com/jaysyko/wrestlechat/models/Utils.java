@@ -20,4 +20,5 @@ public class Utils {
     static final String EVENT_ID = "event_id";
     static final String MESSAGE_ID = "message_id";
     static final String USER_ID = "user_id";
+    static final String EXPIRY_DATE = "expiry";
 }

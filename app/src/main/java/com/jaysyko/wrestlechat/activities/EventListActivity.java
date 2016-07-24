@@ -32,6 +32,7 @@ import com.jaysyko.wrestlechat.utils.StringResources;
 public final class EventListActivity extends AppCompatActivity {
 
     private static final String TAG = EventListActivity.class.getSimpleName();
+    private RoundedImageView headerProfileImage;
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
     FragmentManager mFragmentManager;
@@ -50,6 +51,15 @@ public final class EventListActivity extends AppCompatActivity {
          */
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.navDrawerItems);
+
+        final View headerLayout = mNavigationView != null ? mNavigationView.inflateHeaderView(R.layout.nav_header_event_list) : null;
+        final TextView headerUsername = (TextView) (headerLayout != null ? headerLayout.findViewById(R.id.drawer_username) : null);
+        headerProfileImage = (RoundedImageView) (headerLayout != null ? headerLayout.findViewById(R.id.header_profile_image) : null);
+        if (headerUsername != null && headerProfileImage != null) {
+            final User currentUser = SessionManager.getCurrentUser();
+            headerUsername.setText(currentUser.getUsername());
+        }
+
         /**
          * Lets inflate the very first fragment
          * Here we are inflating the TabFragment as the first Fragment
@@ -68,47 +78,51 @@ public final class EventListActivity extends AppCompatActivity {
                 mDrawerLayout.closeDrawers();
 
                 int itemId = menuItem.getItemId();
-                if (itemId == R.id.nav_my_profile) {
-                    Intent intent = new Intent(mApplicationContext, UserProfileActivity.class);
-                    startActivity(intent);
-                 }
-
-                if (itemId == R.id.nav_logout) {
-                    if (NetworkState.isConnected(mApplicationContext)) {
+                switch (itemId){
+                    case(R.id.nav_my_profile):
+                        Intent profileIntent = new Intent(mApplicationContext, UserProfileActivity.class);
+                        startActivity(profileIntent);
+                        break;
+                    case(R.id.nav_settings):
+                        Intent settingsIntent = new Intent(mApplicationContext, SettingsActivity.class);
+                        startActivity(settingsIntent);
+                        break;
+                    case(R.id.nav_logout):
+                        if (NetworkState.isConnected(mApplicationContext)) {
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    SessionManager.destroySession(mApplicationContext);
+                                    eLog.i(TAG, "Session Destroyed");
+                                    Intent intent = new Intent(mApplicationContext, LoginActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            });
+                        } else {
+                            Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
+                        }
+                        break;
+                    case(R.id.nav_legal):
+                        Intent legalIntent = new Intent(mApplicationContext, LegalActivity.class);
+                        startActivity(legalIntent);
+                        break;
+                    case(R.id.nav_share):
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                SessionManager.destroySession(mApplicationContext);
-                                eLog.i(TAG, "Session Destroyed");
-                                Intent intent = new Intent(mApplicationContext, LoginActivity.class);
-                                startActivity(intent);
-                                finish();
+                                ShareTracker.trackShare();
                             }
                         });
-                    } else {
-                        Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
-                    }
-                }
-
-                if (itemId == R.id.nav_share) {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            ShareTracker.trackShare();
-                        }
-                    });
-                    Intent share = new Intent(Intent.ACTION_SEND);
-                    share.setType(StringResources.PLAIN_CONTENT_TYPE);
-                    share.putExtra(Intent.EXTRA_TEXT, R.string.app_share);
-                    startActivity(Intent.createChooser(share, getString(R.string.app_share_title)));
-                }
-                if (itemId == R.id.nav_about) {
-                    Intent aboutIntent = new Intent(mApplicationContext, AboutActivity.class);
-                    startActivity(aboutIntent);
-                }
-                if (itemId == R.id.nav_legal) {
-                    Intent legalIntent = new Intent(mApplicationContext, LegalActivity.class);
-                    startActivity(legalIntent);
+                        Intent share = new Intent(Intent.ACTION_SEND);
+                        share.setType(StringResources.PLAIN_CONTENT_TYPE);
+                        share.putExtra(Intent.EXTRA_TEXT, R.string.app_share);
+                        startActivity(Intent.createChooser(share, getString(R.string.app_share_title)));
+                        break;
+                    case(R.id.nav_about):
+                        Intent aboutIntent = new Intent(mApplicationContext, AboutActivity.class);
+                        startActivity(aboutIntent);
+                        break;
                 }
                  return false;
             }
@@ -134,18 +148,6 @@ public final class EventListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                final View headerLayout = mNavigationView != null ? mNavigationView.inflateHeaderView(R.layout.nav_header_event_list) : null;
-                final TextView headerUsername = (TextView) (headerLayout != null ? headerLayout.findViewById(R.id.drawer_username) : null);
-                final RoundedImageView headerProfileImage = (RoundedImageView) (headerLayout != null ? headerLayout.findViewById(R.id.header_profile_image) : null);
-                if (headerUsername != null && headerProfileImage != null) {
-                    final User currentUser = SessionManager.getCurrentUser();
-                    headerUsername.setText(currentUser.getUsername());
-                    ImageTools.loadImage(mApplicationContext, currentUser.getProfileImage(), headerProfileImage);
-                }
-            }
-        });
+        ImageTools.loadImage(mApplicationContext, SessionManager.getCurrentUser().getProfileImage(), headerProfileImage);
     }
 }

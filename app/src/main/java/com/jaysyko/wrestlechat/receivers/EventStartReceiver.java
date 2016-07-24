@@ -12,7 +12,7 @@ public class EventStartReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent service1 = new Intent(context, EventStartNotifierService.class);
-        context.startService(service1);
+        Intent service = new Intent(context, EventStartNotifierService.class);
+        context.startService(service);
     }
 }

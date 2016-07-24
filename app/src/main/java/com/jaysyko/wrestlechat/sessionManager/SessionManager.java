@@ -72,21 +72,25 @@ public final class SessionManager {
      * @return user
      */
     private static boolean restore(Context context) {
-        Gson gson = new Gson();
-        final SharedPreferences sessionSharedPrefs = PreferenceProvider.getSharedPreferences(context, Preferences.SESSION);
-        String json = sessionSharedPrefs.getString(PreferenceKeys.CURRENT_USER, StringResources.NULL_TEXT);
-        String newProfileImage = sessionSharedPrefs.getString(PreferenceKeys.NEW_PROFILE_IMAGE, StringResources.NULL_TEXT);
-        if (!json.equals(StringResources.NULL_TEXT)) {
-            User user = gson.fromJson(json, User.class);
-            final Session session = Session.getInstance();
-            if (session != null) {
-                if(!newProfileImage.equals(StringResources.NULL_TEXT)){
-                    user.setLocalProfileImage(newProfileImage);
+        try{
+            Gson gson = new Gson();
+            final SharedPreferences sessionSharedPrefs = PreferenceProvider.getSharedPreferences(context, Preferences.SESSION);
+            String json = sessionSharedPrefs.getString(PreferenceKeys.CURRENT_USER, StringResources.NULL_TEXT);
+            String newProfileImage = sessionSharedPrefs.getString(PreferenceKeys.NEW_PROFILE_IMAGE, StringResources.NULL_TEXT);
+            if (!json.equals(StringResources.NULL_TEXT)) {
+                User user = gson.fromJson(json, User.class);
+                final Session session = Session.getInstance();
+                if (session != null) {
+                    if(!newProfileImage.equals(StringResources.NULL_TEXT)){
+                        user.setLocalProfileImage(newProfileImage);
+                    }
+                    session.setCurrentUser(user);
+                    eLog.i(TAG, user.toString());
                 }
-                session.setCurrentUser(user);
-                eLog.i(TAG, user.toString());
+                return true;
             }
-            return true;
+        }catch (Exception e){
+            eLog.e(TAG, e.getMessage());
         }
         return false;
     }

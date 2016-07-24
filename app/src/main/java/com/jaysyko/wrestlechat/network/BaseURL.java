@@ -10,7 +10,7 @@ import com.jaysyko.wrestlechat.utils.StringResources;
  * @author Jay Syko
  */
 public final class BaseURL {
-    private static final String DEVELOPMENT_SERVER_IP = "192.168.0.12";
+    private static final String DEVELOPMENT_SERVER_IP = "192.168.0.16";
     private static final String DEVELOPMENT_SERVER_URL = "http://" + DEVELOPMENT_SERVER_IP +":3000/";
     private static final String DEVELOPMENT_MOSQUITTO_PROTOCOL = "tcp://";
     private static final String DEVELOPMENT_MOSQUITTO_URL = DEVELOPMENT_SERVER_IP;

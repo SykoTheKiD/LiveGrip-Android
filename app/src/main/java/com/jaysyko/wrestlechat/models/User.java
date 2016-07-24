@@ -34,14 +34,18 @@ public final class User {
     @SerializedName(Utils.PROFILE_IMAGE)
     private String profile_image;
     @SerializedName(Utils.TOKEN)
-    private String authToken;
+    private Token token;
 
     public String getAuthToken() {
-        return AUTH_PREFIX + authToken;
+        return AUTH_PREFIX + token.getToken();
     }
 
-    public void setAuthToken(String authToken) {
-        this.authToken = authToken;
+    public void setAuthToken(Token authToken) {
+        this.token = authToken;
+    }
+
+    public Token getToken(){
+        return token;
     }
 
     public String getProfileImage() {

@@ -28,6 +28,10 @@ public class FailedRequestResponse {
         return this.code;
     }
 
+    public int getCode(){
+        return this.code;
+    }
+
     public String getMessage() {
         return this.message;
     }

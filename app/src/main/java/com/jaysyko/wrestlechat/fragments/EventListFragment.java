@@ -25,8 +25,8 @@ import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkState;
-import com.jaysyko.wrestlechat.network.responses.FailedRequestResponse;
 import com.jaysyko.wrestlechat.network.responses.EventResponse;
+import com.jaysyko.wrestlechat.network.responses.FailedRequestResponse;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 import com.jaysyko.wrestlechat.sqlite.daos.EventDao;
 
@@ -74,6 +74,12 @@ public class EventListFragment extends Fragment {
                 mAdapter = new EventListAdapter(mEventsList, mApplicationContext);
                 recyclerView.setAdapter(mAdapter);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
+            }
+        });
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                getEvents();
             }
         });
         return layout;
@@ -189,16 +195,5 @@ public class EventListFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         NotifyListStore.getInstance().storeList(mApplicationContext);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                getEvents();
-            }
-        });
     }
 }
