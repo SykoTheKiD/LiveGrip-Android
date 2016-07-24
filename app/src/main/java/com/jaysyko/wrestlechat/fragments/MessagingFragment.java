@@ -147,9 +147,10 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         final ListView lvChat = (ListView) view.findViewById(R.id.chat_list_view);
         // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen. Don't scroll to the bottom otherwise.
         mAdapter = new MessageListAdapter(mApplicationContext, mMessages);
-        lvChat.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         lvChat.setAdapter(mAdapter);
         getChatHistory();
+        lvChat.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
+        lvChat.setEmptyView(view.findViewById(R.id.empty_message_layout));
         lvChat.setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
         init = false;
     }

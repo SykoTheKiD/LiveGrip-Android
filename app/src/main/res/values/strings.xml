@@ -91,5 +91,6 @@
     <string name="user_not_found">Invalid Login</string>
     <string name="hello">Hello</string>
     <string name="relogin">Please login again</string>
+    <string name="first_one_message">You\'re the first one here!</string>
 
 </resources>
