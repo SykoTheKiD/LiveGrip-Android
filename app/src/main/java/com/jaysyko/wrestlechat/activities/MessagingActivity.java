@@ -2,13 +2,9 @@ package com.jaysyko.wrestlechat.activities;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,34 +13,8 @@ import android.view.MenuItem;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.fragments.MessagingFragment;
 import com.jaysyko.wrestlechat.services.MessagingService;
-import com.jaysyko.wrestlechat.services.MessagingServiceBinder;
-import com.jaysyko.wrestlechat.services.ServiceProvider;
 
-public class MessagingActivity extends BaseActivity implements ServiceProvider {
-
-    private boolean mBound;
-    private MessagingService mService;
-    private MessagingServiceBinder mBinder;
-
-    private ServiceConnection mConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            mBinder = (MessagingServiceBinder) service;
-            mService = mBinder.getService();
-            mBound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            mBound = false;
-        }
-    };
-
-    @Override
-    protected Fragment createFragment() {
-        return new MessagingFragment();
-    }
+public class MessagingActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,22 +22,6 @@ public class MessagingActivity extends BaseActivity implements ServiceProvider {
         setContentView(R.layout.activity_messaging);
         Intent startServiceIntent = new Intent(this, MessagingService.class);
         startService(startServiceIntent);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Intent intent = new Intent(this, MessagingService.class);
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mBound) {
-            unbindService(mConnection);
-            mBound = false;
-        }
     }
 
     @Override
@@ -125,12 +79,7 @@ public class MessagingActivity extends BaseActivity implements ServiceProvider {
     }
 
     @Override
-    public MessagingService getMessagingService() {
-        return mService;
-    }
-
-    @Override
-    public MessagingServiceBinder getMessagingServiceBinder() {
-        return mBinder;
+    protected Fragment createFragment() {
+        return new MessagingFragment();
     }
 }
