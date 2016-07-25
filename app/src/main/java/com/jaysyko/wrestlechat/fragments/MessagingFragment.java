@@ -50,11 +50,15 @@ import com.jaysyko.wrestlechat.sharedPreferences.PreferenceProvider;
 import com.jaysyko.wrestlechat.sharedPreferences.Preferences;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
+import org.eclipse.paho.client.mqttv3.MqttException;
+
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import retrofit2.Call;
 
-public class MessagingFragment extends Fragment implements IMessageArrivedListener {
+public class MessagingFragment extends Fragment implements IMessageArrivedListener, Observer {
 
     private static final String TAG = MessagingFragment.class.getSimpleName();
     private static final int SEND_DELAY = 1500;
@@ -67,7 +71,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private Context mApplicationContext;
     private MessagingService mService;
     private Handler handler = new Handler();
-    private MessagingServiceBinder mBinder;
     private static MessageListAdapter mAdapter;
     private static ArrayList<Message> mMessages = new ArrayList<>();
     private Runnable initMessageAdapter = new Runnable() {
@@ -82,7 +85,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
 
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
-            mBinder = (MessagingServiceBinder) service;
+            MessagingServiceBinder mBinder = (MessagingServiceBinder) service;
             mService = mBinder.getService();
             mBinder.setMessageArrivedListener(MessagingFragment.this);
             mBound = true;
@@ -99,6 +102,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         super.onCreate(savedInstanceState);
         Activity activity = getActivity();
         activity.setTitle(Html.fromHtml(FONT_COLOR_HTML + mCurrentEvent.getEventName() + FONT_HTML));
+        NetworkState.getInstance().addObserver(this);
     }
 
     @Override
@@ -206,6 +210,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         });
         final ListView lvChat = (ListView) view.findViewById(R.id.chat_list_view);
         // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen. Don't scroll to the bottom otherwise.
+        mMessages.clear();
         mAdapter = new MessageListAdapter(mApplicationContext, mMessages);
         lvChat.setAdapter(mAdapter);
         getChatHistory();
@@ -236,6 +241,20 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
             });
         } else {
             Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
+        }
+    }
+
+    @Override
+    public void update(Observable observable, Object data) {
+        if(observable instanceof NetworkState){
+            if(NetworkState.getInstance().isConnected()){
+                getChatHistory();
+                try {
+                    mService.connect();
+                } catch (MqttException e) {
+                    eLog.e(TAG, e.getMessage());
+                }
+            }
         }
     }
 }

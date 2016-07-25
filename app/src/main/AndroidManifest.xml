@@ -79,10 +79,21 @@
         <service
             android:name=".services.EventStartNotifierService"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="02dbff54ea76253b2702bf789ca6bce41ccd7d7b" />
+
+        <receiver
+            android:name=".receivers.NetworkChangeReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

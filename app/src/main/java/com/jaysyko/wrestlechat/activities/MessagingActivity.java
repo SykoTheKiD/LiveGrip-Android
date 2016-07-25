@@ -11,16 +11,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.fragments.MessagingFragment;
 import com.jaysyko.wrestlechat.services.MessagingService;
 
 public class MessagingActivity extends BaseActivity {
 
+    private static String TAG = MessagingActivity.class.getSimpleName();
+    private Intent startServiceIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messaging);
-        Intent startServiceIntent = new Intent(this, MessagingService.class);
+        startServiceIntent = new Intent(this, MessagingService.class);
         startService(startServiceIntent);
     }
 
@@ -81,5 +85,12 @@ public class MessagingActivity extends BaseActivity {
     @Override
     protected Fragment createFragment() {
         return new MessagingFragment();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopService(startServiceIntent);
+        eLog.i(TAG, "Messaging Service Stopped");
     }
 }

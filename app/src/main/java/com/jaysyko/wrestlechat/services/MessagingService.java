@@ -83,7 +83,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     /**
      * Connects the device the the MQTT Broker
      */
-    private void connect() throws MqttException {
+    public void connect() throws MqttException {
         eLog.i(TAG, "Connecting");
         mClient = new MqttAndroidClient(this, MOSQUITO_URL, CLIENT_ID);
         MqttConnectOptions connectOptions = new MqttConnectOptions();
