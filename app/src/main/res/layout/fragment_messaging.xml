@@ -19,7 +19,6 @@
         android:id="@+id/chat_list_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_above="@+id/new_message_container"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
@@ -28,9 +27,13 @@
         android:background="@android:color/white"
         android:divider="@android:color/transparent"
         android:dividerHeight="20dp"
-        android:padding="15dp"
         android:scrollbars="none"
-        android:scrollingCache="true" />
+        android:scrollingCache="true"
+        android:layout_above="@+id/new_message_container"
+        android:paddingBottom="5dp"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp" />
 
     <LinearLayout
         android:id="@+id/new_message_container"

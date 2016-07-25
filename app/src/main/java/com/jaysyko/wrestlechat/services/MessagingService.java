@@ -257,6 +257,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
     @Override
     public void onDestroy() {
         super.onDestroy();
+        disconnect();
         eLog.i(TAG, "Mqtt Service Destroyed");
     }
 }
