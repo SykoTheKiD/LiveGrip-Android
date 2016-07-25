@@ -26,6 +26,7 @@
             android:name=".activities.MessagingActivity"
             android:label="@string/activity_messaging"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/NoActionBar" />
         <activity
             android:name=".activities.EventInfoActivity"

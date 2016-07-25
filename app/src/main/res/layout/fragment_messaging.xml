@@ -27,6 +27,7 @@
         android:background="@android:color/white"
         android:divider="@android:color/transparent"
         android:dividerHeight="20dp"
+        android:animateLayoutChanges="true"
         android:scrollbars="none"
         android:scrollingCache="true"
         android:layout_above="@+id/new_message_container"
