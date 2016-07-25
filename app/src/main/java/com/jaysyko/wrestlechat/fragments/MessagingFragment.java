@@ -53,6 +53,8 @@ import com.jaysyko.wrestlechat.utils.StringResources;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -230,7 +232,9 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
                 @Override
                 public void onSuccess(MessageGetResponse response) {
                     eLog.i(TAG, "Fetched Chat History");
-                    mAdapter.addAll(response.getData());
+                    final List<Message> responseData = response.getData();
+                    Collections.reverse(responseData);
+                    mAdapter.addAll(responseData);
                 }
 
                 @Override
