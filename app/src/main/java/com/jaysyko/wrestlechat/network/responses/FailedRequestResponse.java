@@ -6,6 +6,7 @@ import android.os.Handler;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.activities.LoginActivity;
+import com.jaysyko.wrestlechat.application.Initializer;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 
@@ -21,14 +22,10 @@ public class FailedRequestResponse {
     public FailedRequestResponse(int code, String message) {
         this.code = code;
         this.message = message;
+        checkSessionValid();
     }
 
-    public int getCode(final Context context) {
-        checkValid(context);
-        return this.code;
-    }
-
-    public int getCode(){
+    public int getCode() {
         return this.code;
     }
 
@@ -36,8 +33,13 @@ public class FailedRequestResponse {
         return this.message;
     }
 
-    private void checkValid(final Context context){
-        switch (this.code){
+    private void checkSessionValid(){
+        final Context context = Initializer.getAppContext();
+        final int code = getCode();
+        switch (code){
+            case 401:
+                Dialog.makeToast(context, context.getString(R.string.account_disabled));
+                break;
             case 403:
                 handler.post(new Runnable() {
                     @Override
@@ -50,6 +52,9 @@ public class FailedRequestResponse {
                     }
                 });
                 break;
+        }
+        if(code < 400 && code >= 500){
+            Dialog.makeToast(context, context.getString(R.string.error_has_occured));
         }
     }
 }

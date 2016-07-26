@@ -143,13 +143,10 @@ public final class LoginActivity extends AppCompatActivity {
                                         AuthTracker.trackSignUp(false);
                                     }
                                 });
-                                final int responseCode = t.getCode(mContext);
+                                final int responseCode = t.getCode();
                                 switch (responseCode) {
                                     case 400:
                                         Dialog.makeToast(mContext, getString(R.string.username_taken));
-                                        break;
-                                    default:
-                                        Dialog.makeToast(mContext, getString(R.string.error_has_occured));
                                         break;
                                 }
                             }
@@ -214,16 +211,10 @@ public final class LoginActivity extends AppCompatActivity {
                                         AuthTracker.trackLogin(false);
                                     }
                                 });
-                                final int responseCode = error.getCode(mContext);
+                                final int responseCode = error.getCode();
                                 switch (responseCode) {
-                                    case 401:
-                                        Dialog.makeToast(mContext, getString(R.string.account_disabled));
-                                        break;
                                     case 404:
                                         Dialog.makeToast(mContext, getString(R.string.user_not_found));
-                                        break;
-                                    default:
-                                        Dialog.makeToast(mContext, getString(R.string.error_has_occured));
                                         break;
                                 }
                             }

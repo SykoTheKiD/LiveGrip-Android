@@ -71,7 +71,6 @@ public final class User {
 
                 @Override
                 public void onFail(FailedRequestResponse error) {
-                    error.getCode(context);
                     eLog.e(TAG, error.getMessage());
                 }
             });

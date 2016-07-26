@@ -239,7 +239,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
 
                 @Override
                 public void onFail(FailedRequestResponse error) {
-                    error.getCode(mApplicationContext);
                     eLog.e(TAG, error.getMessage());
                 }
             });

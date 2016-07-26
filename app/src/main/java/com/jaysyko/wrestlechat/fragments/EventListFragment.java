@@ -134,9 +134,6 @@ public class EventListFragment extends Fragment {
         if(NetworkState.isConnected(mApplicationContext)){
             Call<EventResponse> call = ApiManager.getApiService().getEvents(SessionManager.getCurrentUser().getAuthToken());
             ApiManager.request(call, new NetworkCallback<EventResponse>() {
-
-
-
                 @Override
                 public void onSuccess(final EventResponse response) {
                     eLog.i(TAG, "Successfully received events from network");
@@ -166,11 +163,9 @@ public class EventListFragment extends Fragment {
                 @Override
                 public void onFail(FailedRequestResponse error) {
                     eLog.e(TAG, error.getMessage());
-                    error.getCode(mApplicationContext);
                     if (swipeView != null) {
                         swipeView.setRefreshing(false);
                     }
-                    Dialog.makeToast(mApplicationContext, getString(R.string.account_disabled));
                 }
             });
         }else{
