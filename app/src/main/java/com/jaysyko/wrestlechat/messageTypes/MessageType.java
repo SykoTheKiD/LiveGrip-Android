@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.jaysyko.wrestlechat.R;
-import com.jaysyko.wrestlechat.customTextView.AutoResizeTextView;
+import com.jaysyko.wrestlechat.customViews.AutoResizeTextView;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.sharedPreferences.PreferenceProvider;
 import com.jaysyko.wrestlechat.sharedPreferences.Preferences;

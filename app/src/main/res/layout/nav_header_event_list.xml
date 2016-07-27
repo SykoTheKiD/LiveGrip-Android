@@ -12,13 +12,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <com.jaysyko.wrestlechat.customImageView.RoundedImageView
+    <com.jaysyko.wrestlechat.customViews.RoundedImageView
         android:id="@+id/header_profile_image"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:contentDescription="@string/app_name" />
 
-    <com.jaysyko.wrestlechat.customTextView.AutoResizeTextView
+    <com.jaysyko.wrestlechat.customViews.AutoResizeTextView
         android:id="@+id/drawer_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

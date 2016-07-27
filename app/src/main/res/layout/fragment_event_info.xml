@@ -1,73 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/event_info_fragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.flaviofaria.kenburnsview.KenBurnsView
+    <com.jaysyko.wrestlechat.customViews.CutLayoutView
+        android:layout_width="match_parent"
+        android:layout_height="350dp">
+
+        <ImageView
             android:id="@+id/event_image"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:tint="@color/black"
-            android:tintMode="multiply"
-            android:transitionName="@string/transition_name_circle" />
-
-        <TextView
-            android:id="@+id/event_location"
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:layout_alignBottom="@+id/event_image"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="32dp"
-            android:gravity="bottom|start"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingStart="10dp"
-            android:textColor="#fff"
-            android:textSize="20sp" />
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:contentDescription="@string/app_name"
+            android:layout_gravity="end" />
 
         <TextView
             android:id="@+id/event_title"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="275dp"
             android:layout_alignBottom="@+id/event_location"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginBottom="36dp"
             android:gravity="bottom|start"
-            android:paddingBottom="5dp"
             android:paddingLeft="10dp"
             android:paddingStart="10dp"
             android:textColor="#fff"
             android:textSize="30sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/event_time"
-            android:layout_width="wrap_content"
-            android:layout_height="200dp"
-            android:layout_alignBottom="@+id/event_image"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:gravity="bottom|start"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingStart="10dp"
-            android:textColor="#fff"
-            android:textSize="20sp" />
+    </com.jaysyko.wrestlechat.customViews.CutLayoutView>
 
-        <ListView
-            android:id="@+id/events_list_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/event_image"
-            android:layout_centerHorizontal="true" />
+    <ListView
+        android:id="@+id/events_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:dividerHeight="0dp">
+    </ListView>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/empty_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/event_title"
         android:visibility="gone">
 
         <ImageView
@@ -96,5 +75,4 @@
 
     </RelativeLayout>
 
-
-</RelativeLayout>
+</LinearLayout>

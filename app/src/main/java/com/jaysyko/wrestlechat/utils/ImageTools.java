@@ -8,6 +8,8 @@ package com.jaysyko.wrestlechat.utils;
  */
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.widget.ImageView;
 
 import com.jaysyko.wrestlechat.application.eLog;
@@ -24,6 +26,8 @@ public final class ImageTools {
     private static final String GRAVATAR_IMAGE_TYPE = "?d=identicon";
     private static final int RADIX = 16;
     private static final String ALGORITHM = "MD5";
+    public static final int LIGHT_GREY = Color.parseColor("#a6a6a6");
+    public static final int DARK_GREY = Color.parseColor("#424242");
 
     /**
      * Loads an image from a URL into an ImageView
@@ -69,6 +73,21 @@ public final class ImageTools {
             return matches.find();
         }
         return false;
+    }
+
+    /**
+     *
+     * @param bitmap Image
+     * @return Color
+     */
+    public static int getDominantColor(Bitmap bitmap) {
+        Bitmap newBitmap = Bitmap.createScaledBitmap(bitmap, 1, 1, true);
+        final int color = newBitmap.getPixel(0, 0);
+        newBitmap.recycle();
+        if(color >= LIGHT_GREY){
+            return DARK_GREY;
+        }
+        return color;
     }
 
 }

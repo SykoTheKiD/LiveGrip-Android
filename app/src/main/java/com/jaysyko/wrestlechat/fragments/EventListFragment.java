@@ -113,14 +113,14 @@ public class EventListFragment extends Fragment {
                         new RecyclerItemClickListener.OnItemClickListener() {
                             @Override
                             public void onItemClick(View view, int position) {
-                                OpenEvent.openConversation(mEventsList.get(position), getActivity(), view);
+                                OpenEvent.openConversation(mEventsList.get(position), getActivity());
                             }
 
                             @Override
                             public void onItemLongClick(View view, int position) {
                                 Vibrator vibe = (Vibrator) mApplicationContext.getSystemService(Context.VIBRATOR_SERVICE);
                                 vibe.vibrate(VIBRATE_MILLISECONDS);
-                                OpenEvent.openEventInfo(mEventsList.get(position), getActivity(), view);
+                                OpenEvent.openEventInfo(mEventsList.get(position), getActivity());
                             }
                         }
                 )

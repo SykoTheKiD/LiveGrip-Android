@@ -1,6 +1,6 @@
 package com.jaysyko.wrestlechat.adapters.viewholders;
 
-import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 /**
@@ -8,5 +8,5 @@ import android.widget.TextView;
  */
 public class EventDetailsViewHolder {
     public TextView detail, additionalDetail;
-    public ImageView image;
+    public RatingBar ratingBar;
 }

@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.analytics.ShareTracker;
 import com.jaysyko.wrestlechat.application.eLog;
-import com.jaysyko.wrestlechat.customImageView.RoundedImageView;
+import com.jaysyko.wrestlechat.customViews.RoundedImageView;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.fragments.EventListFragment;
 import com.jaysyko.wrestlechat.models.User;

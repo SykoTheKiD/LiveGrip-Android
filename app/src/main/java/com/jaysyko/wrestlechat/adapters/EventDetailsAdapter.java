@@ -6,13 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.viewholders.EventDetailsViewHolder;
 import com.jaysyko.wrestlechat.models.Event;
-import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import java.util.List;
 
@@ -43,11 +42,12 @@ public class EventDetailsAdapter extends ArrayAdapter<Event.EventCard> {
         Event.EventCard detail = getItem(position);
         final EventDetailsViewHolder holder = (EventDetailsViewHolder) convertView.getTag();
         holder.detail.setText(detail.getSegment());
+        final Integer rating = detail.getRating();
         final String additionalDetail = detail.getAdditionalDetail();
         if (additionalDetail != null) {
             holder.additionalDetail.setText(additionalDetail);
         }
-        ImageTools.loadImage(getContext(), detail.getImage(), holder.image);
+        holder.ratingBar.setRating(rating);
         return convertView;
     }
 
@@ -63,7 +63,7 @@ public class EventDetailsAdapter extends ArrayAdapter<Event.EventCard> {
                 inflate(R.layout.event_detail, parent, false);
         final EventDetailsViewHolder holder = new EventDetailsViewHolder();
         holder.detail = (TextView) convertView.findViewById(R.id.event_detail);
-        holder.image = (ImageView) convertView.findViewById(R.id.event_detail_image);
+        holder.ratingBar = (RatingBar) convertView.findViewById(R.id.ratingBar);
         holder.additionalDetail = (TextView) convertView.findViewById(R.id.additional_detail);
         convertView.setTag(holder);
         return convertView;

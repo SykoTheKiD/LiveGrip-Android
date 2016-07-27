@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat.customImageView;
+package com.jaysyko.wrestlechat.customViews;
 
 import android.content.Context;
 import android.graphics.Bitmap;

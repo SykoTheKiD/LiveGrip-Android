@@ -21,9 +21,9 @@ import java.util.List;
 public class Event{
 
     private static final String TAG = Event.class.getSimpleName();
-    private static final String ADDITIONAL_DETAIL = "additional_detail";
+    private static final String POPULARITY = "rating";
     private static final String SEGMENT_NAME = "segment_name";
-    private static final String IMAGE = "image";
+    private static final String ADDITIONAL_DETAIL = "additional_detail";
 
     @SerializedName(Utils.ID)
     private int eventID;
@@ -106,11 +106,10 @@ public class Event{
             for (int i = 0; i < matchesArray.length(); i++) {
                 match = matchesArray.getJSONObject(i);
                 try {
-                    String additionalDetail = match.getString(ADDITIONAL_DETAIL);
-                    ret.add(new EventCard(match.getString(SEGMENT_NAME), match.getString(IMAGE), additionalDetail));
+                    ret.add(new EventCard(match.getString(SEGMENT_NAME), match.getString(ADDITIONAL_DETAIL), match.getInt(POPULARITY)));
                 } catch (JSONException e) {
                     eLog.e(TAG, e.getMessage());
-                    ret.add(new EventCard(match.getString(SEGMENT_NAME), match.getString(IMAGE)));
+                    ret.add(new EventCard(match.getString(SEGMENT_NAME), match.getInt(POPULARITY)));
                 }
             }
 
@@ -185,29 +184,30 @@ public class Event{
     }
 
     public class EventCard {
-        private String segment, image, additionalDetail;
+        private String segment, additionalDetail;
+        private Integer rating;
 
-        EventCard(String segment, String image, String additionalDetail) {
+        EventCard(String segment, String additionalDetail, int rating) {
             this.segment = segment;
-            this.image = image;
             this.additionalDetail = additionalDetail;
+            this.rating = rating;
         }
 
-        EventCard(String segment, String image) {
+        EventCard(String segment, int rating) {
             this.segment = segment;
-            this.image = image;
+            this.rating = rating;
         }
 
         public String getSegment() {
             return segment;
         }
 
-        public String getImage() {
-            return image;
+        public String getAdditionalDetail() {
+            return additionalDetail;
         }
 
-        public String getAdditionalDetail(){
-            return additionalDetail;
+        public Integer getRating(){
+            return rating;
         }
 
     }
