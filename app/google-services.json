@@ -1,31 +1,42 @@
 {
   "project_info": {
-    "project_number": "875651914553",
-    "project_id": "wrestlechat-1200"
+    "project_number": "576111130083",
+    "firebase_url": "https://livegrip-1262.firebaseio.com",
+    "project_id": "livegrip-1262",
+    "storage_bucket": "livegrip-1262.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:875651914553:android:043e69745e4b053c",
+        "mobilesdk_app_id": "1:576111130083:android:043e69745e4b053c",
         "android_client_info": {
           "package_name": "com.jaysyko.wrestlechat"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "576111130083-ivh6kih6equius77358ti4dlqps6mbu3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyAauZFoQNjzTf-6SPrrjmE_7bv2nePmSNQ"
+          "current_key": "AIzaSyDyxm14-EIvcaaaAVYRC_qkBUiAfwJgVtk"
         }
       ],
       "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-74051908-1"
+          }
+        },
         "appinvite_service": {
           "status": 1,
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 2,
-          "test_banner_ad_unit_id": "ca-app-pub-3940256099942544/6300978111",
-          "test_interstitial_ad_unit_id": "ca-app-pub-3940256099942544/1033173712"
+          "status": 2
         }
       }
     }

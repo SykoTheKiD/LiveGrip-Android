@@ -61,7 +61,7 @@ public class EventInfoFragment extends Fragment {
     }
 
     private void prepareEventInfoContent(final Context context) {
-        Animation animation1 = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.fade_in);
         TextView eventTitle = (TextView) view.findViewById(R.id.event_title);
         eventTitle.setText(currentActiveEvent.getEventName());
         final ImageView eventImage = (ImageView) view.findViewById(R.id.event_image);
@@ -84,7 +84,7 @@ public class EventInfoFragment extends Fragment {
             }
         };
         eventImage.setTag(target);
-        eventImage.startAnimation(animation1);
+        eventImage.startAnimation(animation);
         Picasso.with(context).load(currentActiveEvent.getEventImage()).into(target);
     }
 

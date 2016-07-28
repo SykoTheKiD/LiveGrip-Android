@@ -3,10 +3,11 @@ package com.jaysyko.wrestlechat.network;
 import com.jaysyko.wrestlechat.application.App;
 import com.jaysyko.wrestlechat.network.requestData.AuthData;
 import com.jaysyko.wrestlechat.network.requestData.MessageData;
+import com.jaysyko.wrestlechat.network.requestData.UpdateFCMData;
 import com.jaysyko.wrestlechat.network.requestData.UpdateUserImageData;
 import com.jaysyko.wrestlechat.network.responses.EventResponse;
-import com.jaysyko.wrestlechat.network.responses.MessageGetResponse;
 import com.jaysyko.wrestlechat.network.responses.GenericResponse;
+import com.jaysyko.wrestlechat.network.responses.MessageGetResponse;
 import com.jaysyko.wrestlechat.network.responses.UserResponse;
 
 import retrofit2.Call;
@@ -64,5 +65,11 @@ public interface APIInterface {
     Call<GenericResponse> updateProfileImage(
             @Header(AUTHORIZATION) String token,
             @Body UpdateUserImageData newImage
+    );
+
+    @POST("user/update/fcm")
+    Call<GenericResponse> updateFCMID(
+            @Header(AUTHORIZATION) String token,
+            @Body UpdateFCMData payload
     );
 }
