@@ -27,6 +27,7 @@ import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.responses.EventResponse;
 import com.jaysyko.wrestlechat.network.responses.FailedRequestResponse;
+import com.jaysyko.wrestlechat.services.FirebaseRegisterService;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 import com.jaysyko.wrestlechat.sqlite.daos.EventDao;
 
@@ -80,6 +81,12 @@ public class EventListFragment extends Fragment {
             @Override
             public void run() {
                 getEvents();
+            }
+        });
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                FirebaseRegisterService.registerUserToken();
             }
         });
         return layout;

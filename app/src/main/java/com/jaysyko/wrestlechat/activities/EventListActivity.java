@@ -25,6 +25,7 @@ import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.fragments.EventListFragment;
 import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.network.NetworkState;
+import com.jaysyko.wrestlechat.playServices.PlayServices;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.jaysyko.wrestlechat.utils.StringResources;
@@ -59,6 +60,14 @@ public final class EventListActivity extends AppCompatActivity {
             final User currentUser = SessionManager.getCurrentUser();
             headerUsername.setText(currentUser.getUsername());
         }
+
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                eLog.i(TAG, "Checking Play Services");
+                PlayServices.checkPlayServices(EventListActivity.this);
+            }
+        });
 
         /**
          * Lets inflate the very first fragment
@@ -150,4 +159,5 @@ public final class EventListActivity extends AppCompatActivity {
         super.onResume();
         ImageTools.loadImage(mApplicationContext, SessionManager.getCurrentUser().getProfileImage(), headerProfileImage);
     }
+
 }
