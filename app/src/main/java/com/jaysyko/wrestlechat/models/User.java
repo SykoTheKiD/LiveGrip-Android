@@ -1,8 +1,6 @@
 package com.jaysyko.wrestlechat.models;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Handler;
 
 import com.google.gson.annotations.SerializedName;
 import com.jaysyko.wrestlechat.application.Initializer;
@@ -14,9 +12,7 @@ import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.requestData.UpdateUserImageData;
 import com.jaysyko.wrestlechat.network.responses.FailedRequestResponse;
 import com.jaysyko.wrestlechat.network.responses.GenericResponse;
-import com.jaysyko.wrestlechat.sharedPreferences.PreferenceKeys;
-import com.jaysyko.wrestlechat.sharedPreferences.PreferenceProvider;
-import com.jaysyko.wrestlechat.sharedPreferences.Preferences;
+import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import retrofit2.Call;
@@ -66,18 +62,13 @@ public final class User {
 
     public void setProfileImage(final String profileImage, final Context context) throws ImageURLError {
         if(ImageTools.isLinkToImage(profileImage)){
-            setLocalProfileImage(profileImage);
+            updateProfileImage(profileImage);
             Call<GenericResponse> call = ApiManager.getApiService().updateProfileImage(getAuthToken(), new UpdateUserImageData(getId(), getProfileImage()));
             ApiManager.request(call, new NetworkCallback<GenericResponse>() {
                 @Override
                 public void onSuccess(GenericResponse response) {
                     eLog.i(TAG, "Profile Image Updated");
-                    new Handler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            updateProfileImage(context, profileImage);
-                        }
-                    });
+                    SessionManager.sync(context);
                 }
 
                 @Override
@@ -91,13 +82,13 @@ public final class User {
         }
     }
 
-    private void updateProfileImage(Context context, String profileImage) {
-        SharedPreferences.Editor editor = PreferenceProvider.getEditor(context, Preferences.SESSION);
-        editor.putString(PreferenceKeys.NEW_PROFILE_IMAGE, profileImage);
-        PreferenceProvider.closeEditor(editor);
-    }
+//    private void updateProfileImage(Context context, String profileImage) {
+//        SharedPreferences.Editor editor = PreferenceProvider.getEditor(context, Preferences.SESSION);
+//        editor.putString(PreferenceKeys.NEW_PROFILE_IMAGE, profileImage);
+//        PreferenceProvider.closeEditor(editor);
+//    }
 
-    public void setLocalProfileImage(String profileImage){
+    public void updateProfileImage(String profileImage){
         this.profile_image = profileImage;
     }
 
