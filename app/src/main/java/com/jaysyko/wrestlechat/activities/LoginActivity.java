@@ -231,6 +231,7 @@ public final class LoginActivity extends AppCompatActivity {
 
     private void loginUser(UserResponse response, final boolean isSignUp) {
         User user = response.getData();
+        user.setPassword(password);
         SessionManager.newSession(mContext, user);
         handler.post(new Runnable() {
             @Override

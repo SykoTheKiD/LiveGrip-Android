@@ -5,6 +5,7 @@ package com.jaysyko.wrestlechat.models;
  */
 public class Utils {
     static final String TOKEN = "token";
+    static final String TOKEN_KEY = "key";
     static final String PROFILE_IMAGE = "profile_image";
     static final String USERNAME = "username";
     static final String ID = "id";
@@ -20,5 +21,5 @@ public class Utils {
     static final String EVENT_ID = "event_id";
     static final String MESSAGE_ID = "message_id";
     static final String USER_ID = "user_id";
-    static final String EXPIRY_DATE = "expiry";
+    static final String EXPIRY_DATE = "expiry_date";
 }

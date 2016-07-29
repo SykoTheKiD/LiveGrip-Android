@@ -21,6 +21,11 @@ public class PreferenceProvider {
         if(preference == Preferences.SETTINGS){
             return PreferenceManager.getDefaultSharedPreferences(context);
         }
-        return context.getSharedPreferences(preference.toString(), Context.MODE_PRIVATE);
+
+        final SharedPreferences sharedPreferences = context.getSharedPreferences(preference.toString(), Context.MODE_PRIVATE);
+        if (preference == Preferences.SESSION){
+            return new EncryptedSharedPreferences(context, sharedPreferences);
+        }
+        return sharedPreferences;
     }
 }

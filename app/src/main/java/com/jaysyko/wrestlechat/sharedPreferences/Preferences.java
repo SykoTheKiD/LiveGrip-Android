@@ -4,7 +4,7 @@ package com.jaysyko.wrestlechat.sharedPreferences;
  * @author Jay Syko on 2016-07-11.
  */
 public enum Preferences {
-    NOTIFY_EVENTS("notifyEvents"), SETTINGS("settings"), SESSION("session");
+    NOTIFY_EVENTS("notifyEvents"), SETTINGS("settings"), SESSION("session"), FCM("fcm");
 
     private String fileType;
 
