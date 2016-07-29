@@ -54,7 +54,7 @@ public class FailedRequestResponse {
                 break;
         }
         if(code < 400 && code >= 500){
-            Dialog.makeToast(context, context.getString(R.string.error_has_occured));
+            Dialog.makeToast(context, context.getString(R.string.error_has_occurred));
         }
     }
 }

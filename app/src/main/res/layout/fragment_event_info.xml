@@ -71,8 +71,6 @@
             android:text="@string/no_events"
             android:textSize="20sp"
             android:textStyle="bold" />
-
-
     </RelativeLayout>
 
 </LinearLayout>
