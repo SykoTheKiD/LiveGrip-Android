@@ -13,10 +13,6 @@ public class PreferenceProvider {
         return getSharedPreferences(context, preference).edit();
     }
 
-    public static void closeEditor(SharedPreferences.Editor editor){
-        editor.apply();
-    }
-
     public static SharedPreferences getSharedPreferences(Context context, Preferences preference){
         if(preference == Preferences.SETTINGS){
             return PreferenceManager.getDefaultSharedPreferences(context);
