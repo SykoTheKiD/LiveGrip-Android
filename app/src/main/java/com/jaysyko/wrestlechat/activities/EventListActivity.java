@@ -104,7 +104,7 @@ public final class EventListActivity extends AppCompatActivity {
                         startActivity(settingsIntent);
                         break;
                     case(R.id.nav_logout):
-                        if (NetworkState.isConnected(mApplicationContext)) {
+                        if (NetworkState.isConnected()) {
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {

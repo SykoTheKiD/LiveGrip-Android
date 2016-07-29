@@ -68,7 +68,7 @@ public final class UserProfileFragment extends Fragment {
                         builder.setPositiveButton(getString(R.string.ok_dialog), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if (NetworkState.isConnected(mApplicationContext)) {
+                                if (NetworkState.isConnected()) {
                                     try {
                                         SessionManager.getCurrentUser().setProfileImage(input.getText().toString(), mApplicationContext);
                                         ImageTools.loadImage(mApplicationContext, currentActiveUser.getProfileImage(), profilePicture);

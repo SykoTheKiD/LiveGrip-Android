@@ -100,7 +100,7 @@ public final class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 username = usernameField.getText().toString();
                 password = passwordField.getText().toString();
-                if (NetworkState.isConnected(mContext)) {
+                if (NetworkState.isConnected()) {
                     Form form = new SignUpForm(username, password).validate();
                     if (form.isValid()) {
                         handler.postDelayed(new Runnable() {
@@ -168,7 +168,7 @@ public final class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 username = usernameField.getText().toString();
                 password = passwordField.getText().toString();
-                if (NetworkState.isConnected(mContext)) {
+                if (NetworkState.isConnected()) {
                     Form form = new LoginForm(username, password).validate();
                     if (form.isValid()) {
                         handler.postDelayed(new Runnable() {
