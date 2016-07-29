@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@drawable/nav_header_bg"
+    android:background="#455A64"
     android:clickable="true"
     android:gravity="bottom"
     android:orientation="vertical"
@@ -14,8 +14,8 @@
 
     <com.jaysyko.wrestlechat.customViews.RoundedImageView
         android:id="@+id/header_profile_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:contentDescription="@string/app_name" />
 
     <com.jaysyko.wrestlechat.customViews.AutoResizeTextView

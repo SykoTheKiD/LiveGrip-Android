@@ -1,5 +1,6 @@
 package com.jaysyko.wrestlechat.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,6 +47,7 @@ public class EventListFragment extends Fragment {
     private List<Event> mEventsList = new ArrayList<>();
     private EventDao eventDao;
     private SwipeRefreshLayout swipeView;
+    private Activity activity;
     final Runnable initSwipeRefresh = new Runnable() {
         @Override
         public void run() {
@@ -58,6 +60,7 @@ public class EventListFragment extends Fragment {
         layout = (RelativeLayout) inflater.inflate(R.layout.fragment_event_list, null);
         mApplicationContext = getContext();
         eventDao = new EventDao(mApplicationContext);
+        activity = getActivity();
         handler.post(initSwipeRefresh);
         handler.post(new Runnable() {
             @Override
@@ -162,7 +165,6 @@ public class EventListFragment extends Fragment {
                 }
                 @Override
                 public void onFail(FailedRequestResponse error) {
-                    eLog.e(TAG, error.getMessage());
                     if (swipeView != null) {
                         swipeView.setRefreshing(false);
                     }

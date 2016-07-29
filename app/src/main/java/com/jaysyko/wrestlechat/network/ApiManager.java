@@ -1,6 +1,5 @@
 package com.jaysyko.wrestlechat.network;
 
-import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.network.responses.AuthErrorResponse;
 import com.jaysyko.wrestlechat.network.responses.FailedRequestResponse;
 
@@ -39,7 +38,6 @@ public class ApiManager {
                 } else {
                     AuthErrorResponse authErrorResponse = ApiErrorManager.parseError(response);
                     final String message = authErrorResponse.getMessage();
-                    eLog.e(TAG, message);
                     callback.onFail(new FailedRequestResponse(response.code(), message));
                 }
             }
