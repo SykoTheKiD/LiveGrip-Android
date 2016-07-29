@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 
 import com.google.gson.annotations.SerializedName;
+import com.jaysyko.wrestlechat.application.Initializer;
 import com.jaysyko.wrestlechat.application.eLog;
+import com.jaysyko.wrestlechat.auth.Krit;
 import com.jaysyko.wrestlechat.exceptions.ImageURLError;
 import com.jaysyko.wrestlechat.network.ApiManager;
 import com.jaysyko.wrestlechat.network.NetworkCallback;
@@ -35,6 +37,15 @@ public final class User {
     private String profile_image;
     @SerializedName(Utils.TOKEN)
     private Token token;
+    private String password;
+
+    public String getPassword() {
+        return Krit.decrypt(Initializer.getAppContext(), password);
+    }
+
+    public void setPassword(String password) {
+        this.password = Krit.encrypt(Initializer.getAppContext(), password);
+    }
 
     public String getAuthToken() {
         return AUTH_PREFIX + token.getToken();

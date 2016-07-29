@@ -29,12 +29,12 @@ public final class SessionManager {
      * @param user    User
      */
     public static void newSession(Context context, User user) {
-        SharedPreferences.Editor editor = PreferenceProvider.getEditor(context, Preferences.SESSION);
-        Gson userGson = new Gson();
-        String userJson = userGson.toJson(user);
-        editor.putString(PreferenceKeys.CURRENT_USER, userJson);
-        editor.putBoolean(PreferenceKeys.IS_LOGGED_IN, true);
-        editor.apply();
+//        SharedPreferences.Editor editor = PreferenceProvider.getEditor(context, Preferences.SESSION);
+//        Gson userGson = new Gson();
+//        String userJson = userGson.toJson(user);
+//        editor.putString(PreferenceKeys.CURRENT_USER, userJson);
+//        editor.putBoolean(PreferenceKeys.IS_LOGGED_IN, true);
+//        editor.apply();
         Session.getInstance().setCurrentUser(user);
         AuthTracker.trackUser(user);
 
@@ -85,7 +85,6 @@ public final class SessionManager {
                         user.setLocalProfileImage(newProfileImage);
                     }
                     session.setCurrentUser(user);
-                    eLog.i(TAG, user.toString());
                 }
                 return true;
             }

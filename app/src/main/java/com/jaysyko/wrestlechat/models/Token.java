@@ -7,8 +7,8 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Token {
 
-    @SerializedName(Utils.TOKEN)
-    private String token;
+    @SerializedName(Utils.TOKEN_KEY)
+    private String key;
     @SerializedName(Utils.EXPIRY_DATE)
     private String expiry_date;
 
@@ -16,15 +16,15 @@ public class Token {
         return expiry_date;
     }
 
-    public void setExpiryDate(String expiryDate) {
-        this.expiry_date = expiryDate;
+    public void setExpiryDate(String expiry_date) {
+        this.expiry_date = expiry_date;
     }
 
     public String getToken() {
-        return token;
+        return key;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setKey(String key) {
+        this.key = key;
     }
 }

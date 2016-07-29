@@ -26,6 +26,8 @@ import com.jaysyko.wrestlechat.fragments.EventListFragment;
 import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.playServices.PlayServices;
+import com.jaysyko.wrestlechat.services.AuthTokenRefreshService;
+import com.jaysyko.wrestlechat.services.FCMRegistrationService;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.jaysyko.wrestlechat.utils.StringResources;
@@ -68,6 +70,11 @@ public final class EventListActivity extends AppCompatActivity {
                 PlayServices.checkPlayServices(EventListActivity.this);
             }
         });
+
+        Intent tokenRefresh = new Intent(getApplicationContext(), AuthTokenRefreshService.class);
+        Intent fcmRefresh = new Intent(getApplicationContext(), FCMRegistrationService.class);
+        startService(tokenRefresh);
+        startService(fcmRefresh);
 
         /**
          * Lets inflate the very first fragment
