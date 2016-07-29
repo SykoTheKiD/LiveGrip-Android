@@ -92,6 +92,7 @@
     <string name="ads_app_id">ca-app-pub-5139358082902358~3544011822</string>
     <string name="ad_unit_id">ca-app-pub-5139358082902358/1493241825</string>
     <string name="native_ad_template">M002</string>
+    <string name="server_down">An error occurred please try again later</string>
     <!--Width: 280–1200 dp-->
     <!--Height: 132–1200 dp-->
 
