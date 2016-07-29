@@ -131,7 +131,7 @@ public class EventListFragment extends Fragment {
         if(swipeView != null){
             swipeView.setRefreshing(true);
         }
-        if(NetworkState.isConnected(mApplicationContext)){
+        if(NetworkState.isConnected()){
             Call<EventResponse> call = ApiManager.getApiService().getEvents(SessionManager.getCurrentUser().getAuthToken());
             ApiManager.request(call, new NetworkCallback<EventResponse>() {
                 @Override
