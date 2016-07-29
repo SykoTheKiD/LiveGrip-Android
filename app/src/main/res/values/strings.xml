@@ -65,10 +65,6 @@
     <string name="event_over">The event is over</string>
     <string name="special_chars_username">Username can only contain letters numbers and underscores</string>
 
-    <!-- -
-        This is an ad unit EVENT_ID_KEY for a banner test ad. Replace with your own banner ad unit id.
-        For more information, see https://support.google.com/admob/answer/3052638
-    <!- -->
     <string name="custom_image_title">Enter Link to .jpg or .png image</string>
     <string name="bad_image_type">Invalid Image Type</string>
     <string name="cancel_dialog">Cancel</string>
@@ -85,12 +81,19 @@
     <string name="transition_name_name">transition:NAME</string>
     <string name="transition_name_circle">transition:CIRCLE</string>
     <string name="transition_name_phone">transition:PHONE</string>
-    <string name="error_has_occured">An Error has Occurred</string>
+    <string name="error_has_occurred">An Error has Occurred</string>
     <string name="username_taken">Username in use</string>
     <string name="account_disabled">Your account has been disabled</string>
     <string name="user_not_found">Invalid Login</string>
     <string name="hello">Hello</string>
     <string name="relogin">Please login again</string>
     <string name="first_one_message">You\'re the first one here!</string>
+
+    <string name="ads_app_id">ca-app-pub-5139358082902358~3544011822</string>
+    <string name="ad_unit_id">ca-app-pub-5139358082902358/1493241825</string>
+    <string name="native_ad_template">M002</string>
+    <!--Width: 280–1200 dp-->
+    <!--Height: 132–1200 dp-->
+
 
 </resources>
