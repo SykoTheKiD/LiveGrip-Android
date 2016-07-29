@@ -30,6 +30,7 @@ public class EventInfoFragment extends Fragment {
 
     private static final String TAG = EventInfoFragment.class.getSimpleName();
     private final Event currentActiveEvent = CurrentActiveEvent.getInstance().getCurrentEvent();
+//    private final Handler handler = new Handler();
     private View view;
 
     @Override

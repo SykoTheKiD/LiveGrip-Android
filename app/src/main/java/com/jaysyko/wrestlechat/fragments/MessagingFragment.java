@@ -72,7 +72,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private EditText etMessage;
     private Context mApplicationContext;
     private MessagingService mService;
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
     private static MessageListAdapter mAdapter;
     private static ArrayList<Message> mMessages = new ArrayList<>();
     private Runnable initMessageAdapter = new Runnable() {
@@ -177,7 +177,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
 
     private void saveMessage(String body) {
         Form form = new MessagingForm(body).validate();
-        if (NetworkState.isConnected(mApplicationContext)) {
+        if (NetworkState.isConnected()) {
             if (form.isValid()) {
                 etMessage.setText(StringResources.NULL_TEXT);
                 mService.send(body);
@@ -223,7 +223,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     }
 
     private void getChatHistory() {
-        if (NetworkState.isConnected(mApplicationContext)) {
+        if (NetworkState.isConnected()) {
             Call<MessageGetResponse> getMessagesCall = ApiManager.getApiService().getMessages(
                     SessionManager.getCurrentUser().getAuthToken(),
                     CurrentActiveEvent.getInstance().getCurrentEvent().getEventID()
@@ -250,13 +250,15 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     @Override
     public void update(Observable observable, Object data) {
         if(observable instanceof NetworkState){
-            if(NetworkState.getInstance().isConnected()){
+            if(NetworkState.isConnected()){
                 getChatHistory();
                 try {
                     mService.connect();
                 } catch (MqttException e) {
                     eLog.e(TAG, e.getMessage());
                 }
+            }else{
+                Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
             }
         }
     }

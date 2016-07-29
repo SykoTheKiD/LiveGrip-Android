@@ -26,6 +26,8 @@ import com.jaysyko.wrestlechat.fragments.EventListFragment;
 import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.playServices.PlayServices;
+import com.jaysyko.wrestlechat.services.AuthTokenRefreshService;
+import com.jaysyko.wrestlechat.services.FCMRegistrationService;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.jaysyko.wrestlechat.utils.StringResources;
@@ -69,6 +71,11 @@ public final class EventListActivity extends AppCompatActivity {
             }
         });
 
+        Intent tokenRefresh = new Intent(getApplicationContext(), AuthTokenRefreshService.class);
+        Intent fcmRefresh = new Intent(getApplicationContext(), FCMRegistrationService.class);
+        startService(tokenRefresh);
+        startService(fcmRefresh);
+
         /**
          * Lets inflate the very first fragment
          * Here we are inflating the TabFragment as the first Fragment
@@ -97,7 +104,7 @@ public final class EventListActivity extends AppCompatActivity {
                         startActivity(settingsIntent);
                         break;
                     case(R.id.nav_logout):
-                        if (NetworkState.isConnected(mApplicationContext)) {
+                        if (NetworkState.isConnected()) {
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {

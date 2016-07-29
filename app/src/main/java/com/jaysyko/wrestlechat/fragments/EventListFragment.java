@@ -1,5 +1,6 @@
 package com.jaysyko.wrestlechat.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,7 +28,6 @@ import com.jaysyko.wrestlechat.network.NetworkCallback;
 import com.jaysyko.wrestlechat.network.NetworkState;
 import com.jaysyko.wrestlechat.network.responses.EventResponse;
 import com.jaysyko.wrestlechat.network.responses.FailedRequestResponse;
-import com.jaysyko.wrestlechat.services.FirebaseRegisterService;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 import com.jaysyko.wrestlechat.sqlite.daos.EventDao;
 
@@ -47,6 +47,7 @@ public class EventListFragment extends Fragment {
     private List<Event> mEventsList = new ArrayList<>();
     private EventDao eventDao;
     private SwipeRefreshLayout swipeView;
+    private Activity activity;
     final Runnable initSwipeRefresh = new Runnable() {
         @Override
         public void run() {
@@ -59,6 +60,7 @@ public class EventListFragment extends Fragment {
         layout = (RelativeLayout) inflater.inflate(R.layout.fragment_event_list, null);
         mApplicationContext = getContext();
         eventDao = new EventDao(mApplicationContext);
+        activity = getActivity();
         handler.post(initSwipeRefresh);
         handler.post(new Runnable() {
             @Override
@@ -81,12 +83,6 @@ public class EventListFragment extends Fragment {
             @Override
             public void run() {
                 getEvents();
-            }
-        });
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                FirebaseRegisterService.registerUserToken();
             }
         });
         return layout;
@@ -138,7 +134,7 @@ public class EventListFragment extends Fragment {
         if(swipeView != null){
             swipeView.setRefreshing(true);
         }
-        if(NetworkState.isConnected(mApplicationContext)){
+        if(NetworkState.isConnected()){
             Call<EventResponse> call = ApiManager.getApiService().getEvents(SessionManager.getCurrentUser().getAuthToken());
             ApiManager.request(call, new NetworkCallback<EventResponse>() {
                 @Override
@@ -169,7 +165,6 @@ public class EventListFragment extends Fragment {
                 }
                 @Override
                 public void onFail(FailedRequestResponse error) {
-                    eLog.e(TAG, error.getMessage());
                     if (swipeView != null) {
                         swipeView.setRefreshing(false);
                     }

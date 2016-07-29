@@ -98,9 +98,9 @@ public final class LoginActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                username = usernameField.getText().toString();
-                password = passwordField.getText().toString();
-                if (NetworkState.isConnected(mContext)) {
+                username = usernameField.getText().toString().trim();
+                password = passwordField.getText().toString().trim();
+                if (NetworkState.isConnected()) {
                     Form form = new SignUpForm(username, password).validate();
                     if (form.isValid()) {
                         handler.postDelayed(new Runnable() {
@@ -166,9 +166,9 @@ public final class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                username = usernameField.getText().toString();
-                password = passwordField.getText().toString();
-                if (NetworkState.isConnected(mContext)) {
+                username = usernameField.getText().toString().trim();
+                password = passwordField.getText().toString().trim();
+                if (NetworkState.isConnected()) {
                     Form form = new LoginForm(username, password).validate();
                     if (form.isValid()) {
                         handler.postDelayed(new Runnable() {
@@ -231,6 +231,7 @@ public final class LoginActivity extends AppCompatActivity {
 
     private void loginUser(UserResponse response, final boolean isSignUp) {
         User user = response.getData();
+        user.setPassword(password);
         SessionManager.newSession(mContext, user);
         handler.post(new Runnable() {
             @Override
