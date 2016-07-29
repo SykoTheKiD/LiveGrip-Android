@@ -165,8 +165,6 @@ public class EventListFragment extends Fragment {
                 }
                 @Override
                 public void onFail(FailedRequestResponse error) {
-                    eLog.e(TAG, error.getMessage());
-                    eLog.e(TAG, SessionManager.getCurrentUser().getAuthToken());
                     if (swipeView != null) {
                         swipeView.setRefreshing(false);
                     }
