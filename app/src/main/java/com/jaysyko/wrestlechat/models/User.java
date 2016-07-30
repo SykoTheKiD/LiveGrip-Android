@@ -68,7 +68,7 @@ public final class User {
                 @Override
                 public void onSuccess(GenericResponse response) {
                     eLog.i(TAG, "Profile Image Updated");
-                    SessionManager.sync(context);
+                    SessionManager.syncUser(context);
                 }
 
                 @Override

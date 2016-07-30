@@ -61,7 +61,7 @@ public class AuthTokenRefreshService extends IntentService {
                         eLog.e(TAG, "Token Refreshed");
                         eLog.e(TAG, response.getData().getToken().getToken());
                         currentUser.setAuthToken(response.getData().getToken());
-                        SessionManager.sync(getApplicationContext());
+                        SessionManager.syncUser(getApplicationContext());
                     }
 
                     @Override
