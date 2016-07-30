@@ -30,13 +30,13 @@ public final class SessionManager {
      * @param user    User
      */
     public static void newSession(Context context, User user) {
-        sync(context, user);
+        syncUser(context, user);
         Session.getInstance().setCurrentUser(user);
         AuthTracker.trackUser(user);
 
     }
 
-    private synchronized static void sync(Context context, User user) {
+    private synchronized static void syncUser(Context context, User user) {
         SharedPreferences.Editor editor = PreferenceProvider.getEditor(context, Preferences.SESSION);
         Gson userGson = new Gson();
         String userJson = userGson.toJson(user);
@@ -45,8 +45,8 @@ public final class SessionManager {
         editor.apply();
     }
 
-    public synchronized static void sync(Context context) {
-        sync(context, getCurrentUser());
+    public synchronized static void syncUser(Context context) {
+        syncUser(context, getCurrentUser());
     }
 
 

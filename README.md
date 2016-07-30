@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.com/SykoTheKiD/WrestleChat.svg?token=2yEAfyksPsYtz7mCSf1C&branch=master)](https://travis-ci.com/SykoTheKiD/WrestleChat)
-
 # README #
 
 An Android app that lets you talk to others about wrestling.
