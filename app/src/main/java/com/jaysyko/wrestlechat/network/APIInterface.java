@@ -33,6 +33,7 @@ public interface APIInterface {
     String AUTHORIZATION = "Authorization";
     String EVENT_ID = "eventID";
     String USER_UPDATE_PROFILE_IMAGE = "user/update/profile_image";
+    String USER_UPDATE_FCM = "user/update/fcm";
 
     @POST(LOGIN)
     Call<UserResponse> getUser(
@@ -67,7 +68,7 @@ public interface APIInterface {
             @Body UpdateUserImageData newImage
     );
 
-    @POST("user/update/fcm")
+    @POST(USER_UPDATE_FCM)
     Call<GenericResponse> updateFCMID(
             @Header(AUTHORIZATION) String token,
             @Body UpdateFCMData payload
