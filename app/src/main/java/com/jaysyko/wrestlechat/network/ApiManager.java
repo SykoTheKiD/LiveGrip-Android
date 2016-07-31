@@ -22,8 +22,8 @@ public class ApiManager {
             .baseUrl(BaseURL.getServerURL())
             .addConverterFactory(GsonConverterFactory.create())
             .build();
-    private static final String TAG = ApiManager.class.getSimpleName();
     private static final APIInterface API_SERVICE = RETROFIT.create(APIInterface.class);
+    private static final int SERVER_DOWN_CODE = -1;
 
     public static APIInterface getApiService() {
         return API_SERVICE;
@@ -44,7 +44,7 @@ public class ApiManager {
 
             @Override
             public void onFailure(Call<T> call, Throwable t) {
-                callback.onFail(new FailedRequestResponse(-1, t.getMessage()));
+                callback.onFail(new FailedRequestResponse(SERVER_DOWN_CODE, t.getMessage()));
             }
         });
     }
