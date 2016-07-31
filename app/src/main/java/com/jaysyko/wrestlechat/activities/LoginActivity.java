@@ -27,6 +27,7 @@ import com.jaysyko.wrestlechat.network.requestData.AuthData;
 import com.jaysyko.wrestlechat.network.responses.FailedRequestResponse;
 import com.jaysyko.wrestlechat.network.responses.UserResponse;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
+import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import retrofit2.Call;
 
@@ -112,7 +113,7 @@ public final class LoginActivity extends AppCompatActivity {
                         }, 500);
                         APIInterface apiManager = ApiManager.getApiService();
                         Call<UserResponse> call = apiManager.createUser(
-                                new AuthData(username, password)
+                                new AuthData(username, password, ImageTools.defaultProfileImage(username))
                         );
                         ApiManager.request(call, new NetworkCallback<UserResponse>() {
                             @Override
