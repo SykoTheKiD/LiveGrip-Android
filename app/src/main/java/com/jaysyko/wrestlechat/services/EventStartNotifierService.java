@@ -30,7 +30,7 @@ public class EventStartNotifierService extends Service {
         PendingIntent pendingNotificationIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setSmallIcon(R.drawable.logo)
                         .setContentTitle("My notification")
                         .setContentText("Hello World!")
                         .setWhen(System.currentTimeMillis())
