@@ -57,7 +57,7 @@
     <string name="message_too_short">Message can\'t be blank</string>
     <string name="message_too_long">Message can\'t exceed 230 characters</string>
     <string name="invalid_username">Username cannot exceed 25 characters</string>
-    <string name="app_share_title">Share Wrestle Chat</string>
+    <string name="app_share_title">"Share via"</string>
     <string name="no_events">Match Card To Be Announced</string>
     <string name="no_network">No Network Access</string>
     <string name="valid">Valid</string>
@@ -84,7 +84,7 @@
     <string name="error_has_occurred">An Error has Occurred</string>
     <string name="username_taken">Username in use</string>
     <string name="account_disabled">Your account has been disabled</string>
-    <string name="user_not_found">Invalid Login</string>
+    <string name="user_not_found">Wrong username/password</string>
     <string name="hello">Hello</string>
     <string name="relogin">Please login again</string>
     <string name="first_one_message">You\'re the first one here!</string>
@@ -93,8 +93,5 @@
     <string name="ad_unit_id">ca-app-pub-5139358082902358/1493241825</string>
     <string name="native_ad_template">M002</string>
     <string name="server_down">An error occurred please try again later</string>
-    <!--Width: 280–1200 dp-->
-    <!--Height: 132–1200 dp-->
-
 
 </resources>

@@ -132,7 +132,7 @@ public final class EventListActivity extends AppCompatActivity {
                         });
                         Intent share = new Intent(Intent.ACTION_SEND);
                         share.setType(StringResources.PLAIN_CONTENT_TYPE);
-                        share.putExtra(Intent.EXTRA_TEXT, R.string.app_share);
+                        share.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.app_share));
                         startActivity(Intent.createChooser(share, getString(R.string.app_share_title)));
                         break;
                     case(R.id.nav_about):

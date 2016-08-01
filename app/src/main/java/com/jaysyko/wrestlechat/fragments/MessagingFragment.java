@@ -23,9 +23,11 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.MessageListAdapter;
@@ -199,15 +201,16 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private void initMessageAdapter() {
         init = true;
         etMessage = (EditText) view.findViewById(R.id.new_message_edit_text);
-        etMessage.setOnKeyListener(new View.OnKeyListener() {
+        etMessage.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
                     eLog.i(TAG, "Enter pressed");
                     onSend();
                     return true;
+                }else{
+                    return false;
                 }
-                return false;
             }
         });
         final ListView lvChat = (ListView) view.findViewById(R.id.chat_list_view);
@@ -216,7 +219,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         mAdapter = new MessageListAdapter(mApplicationContext, mMessages);
         lvChat.setAdapter(mAdapter);
         getChatHistory();
-        lvChat.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
         lvChat.setEmptyView(view.findViewById(R.id.empty_message_layout));
         lvChat.setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL);
         init = false;
