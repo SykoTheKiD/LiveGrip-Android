@@ -18,6 +18,8 @@
 
 
 -dontwarn retrofit2.**
+-dontwarn com.squareup.picasso.**
+-dontwarn okio.**
 -keep class retrofit2.** { *; }
 -keepattributes Signature
 -keepattributes Exceptions
