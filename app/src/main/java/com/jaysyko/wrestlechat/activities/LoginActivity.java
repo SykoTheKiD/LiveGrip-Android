@@ -27,23 +27,25 @@ import com.jaysyko.wrestlechat.network.requestData.AuthData;
 import com.jaysyko.wrestlechat.network.responses.FailedRequestResponse;
 import com.jaysyko.wrestlechat.network.responses.UserResponse;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
+import com.jaysyko.wrestlechat.sharedPreferences.PreferenceKeys;
 import com.jaysyko.wrestlechat.utils.ImageTools;
+import com.jaysyko.wrestlechat.utils.StringResources;
 
 import retrofit2.Call;
 
 public final class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
-    private static final String USERNAME_INTENT_KEY = "username";
-    private String username, password;
-    private Handler handler = new Handler();
-    private Button loginButton, signUpButton;
-    private TextView signUpText;
-    private EditText usernameField, passwordField;
-    private Context mContext;
     private Intent intent;
+    private Context mContext;
+    private TextView signUpText;
     private ProgressBar progressBar;
+    private String username, password;
+    private Button loginButton, signUpButton;
+    private EditText usernameField, passwordField;
+
     private boolean signIn = true;
+    private final Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public final class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         mContext = getApplicationContext();
         intent = new Intent(mContext, EventListActivity.class);
+        // Redirect to Events page if logged in;
         if (SessionManager.isLoggedIn(mContext)) {
             startActivity(intent);
             finish();
@@ -60,9 +63,8 @@ public final class LoginActivity extends AppCompatActivity {
         signUpButton = (Button) findViewById(R.id.sign_up_button);
         signUpText = (TextView) findViewById(R.id.sign_up_text_view);
         usernameField = (EditText) findViewById(R.id.username_text_view);
-        usernameField.setText(getIntent().getStringExtra(USERNAME_INTENT_KEY));
+        usernameField.setText(getIntent().getStringExtra(PreferenceKeys.USERNAME_INTENT_KEY));
         passwordField = (EditText) findViewById(R.id.login_password_et);
-        // Redirect to Events page if logged in;
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -244,7 +246,7 @@ public final class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-        Dialog.makeToast(mContext, getString(R.string.hello) + " " + response.getData().getUsername() + "!");
+        Dialog.makeToast(mContext, getString(R.string.hello) + StringResources.BLANK_SPACE + response.getData().getUsername() + "!");
         startActivity(intent);
         finish();
     }
