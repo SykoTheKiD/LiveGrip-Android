@@ -28,7 +28,7 @@
         android:background="@drawable/round"
         android:hint="@string/username_placeholder"
         android:imeOptions="actionNext"
-        android:inputType="text"
+        android:inputType="textCapSentences"
         android:maxLines="1"
         android:paddingLeft="15dp"
         android:paddingStart="15dp"
