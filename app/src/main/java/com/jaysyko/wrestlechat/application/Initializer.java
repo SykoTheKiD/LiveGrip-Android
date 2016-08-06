@@ -24,7 +24,7 @@ public class Initializer extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Fabric.with(this, new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(false).build()).build());
+        Fabric.with(this, new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(App.debug).build()).build());
         Initializer.context = getApplicationContext();
     }
 

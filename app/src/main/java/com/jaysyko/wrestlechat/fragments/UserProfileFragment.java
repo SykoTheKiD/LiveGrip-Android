@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.ads.AdBuilder;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.exceptions.ImageURLError;
 import com.jaysyko.wrestlechat.models.User;
@@ -91,6 +92,12 @@ public final class UserProfileFragment extends Fragment {
                         builder.show();
                     }
                 });
+            }
+        });
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                new AdBuilder(getActivity()).buildAd();
             }
         });
         return view;

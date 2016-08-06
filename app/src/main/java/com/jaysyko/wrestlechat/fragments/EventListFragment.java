@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
+import com.jaysyko.wrestlechat.ads.AdBuilder;
 import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.eventManager.NotifyListStore;
@@ -80,6 +81,12 @@ public class EventListFragment extends Fragment {
             @Override
             public void run() {
                 getEvents();
+            }
+        });
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                new AdBuilder(getActivity()).buildAd();
             }
         });
         return layout;
