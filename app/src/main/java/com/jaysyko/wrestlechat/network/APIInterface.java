@@ -1,6 +1,5 @@
 package com.jaysyko.wrestlechat.network;
 
-import com.jaysyko.wrestlechat.application.App;
 import com.jaysyko.wrestlechat.network.requestData.AuthData;
 import com.jaysyko.wrestlechat.network.requestData.MessageData;
 import com.jaysyko.wrestlechat.network.requestData.UpdateFCMData;
@@ -25,15 +24,19 @@ import retrofit2.http.Path;
  */
 public interface APIInterface {
 
-    String EVENTS = "events&app_version=" + App.APP_VERSION;
-    String LOGIN = "auth/login";
-    String REGISTER = "auth/register";
-    String MESSAGES_SAVE = "messages/save";
-    String MESSAGES_EVENT = "messages&event={eventID}";
-    String AUTHORIZATION = "Authorization";
+    // URLS
+    String API_VERSION = "v1/";
+    String EVENTS = API_VERSION + "events";
+    String LOGIN = API_VERSION + "auth/login";
+    String REGISTER = API_VERSION + "auth/register";
+    String MESSAGES_SAVE = API_VERSION + "messages/save";
+    String MESSAGES_EVENT = API_VERSION + "messages&event={eventID}";
+    String USER_UPDATE_PROFILE_IMAGE = API_VERSION + "user/update/profile_image";
+    String USER_UPDATE_FCM = API_VERSION + "user/update/fcm";
+
+    // URL Params
     String EVENT_ID = "eventID";
-    String USER_UPDATE_PROFILE_IMAGE = "user/update/profile_image";
-    String USER_UPDATE_FCM = "user/update/fcm";
+    String AUTHORIZATION = "Authorization";
 
     @POST(LOGIN)
     Call<UserResponse> getUser(

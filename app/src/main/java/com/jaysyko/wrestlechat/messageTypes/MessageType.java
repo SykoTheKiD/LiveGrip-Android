@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
+import android.text.util.Linkify;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,8 @@ public class MessageType implements MessageGenerator {
                 textView.setTextColor(Color.parseColor(WHITE));
                 break;
         }
+        textView.setAutoLinkMask(Linkify.WEB_URLS);
+        textView.setLinksClickable(true);
         textView.setGravity(Gravity.START);
         textView.setTextSize(TEXT_SIZE);
         textView.setLayoutParams(lp);

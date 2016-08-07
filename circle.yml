@@ -1,0 +1,14 @@
+dependencies:
+  pre:
+    - echo y | android update sdk --no-ui --all --filter "tools"
+    - echo y | android update sdk --no-ui --all --filter "build-tools-23.0.3"
+
+test:
+  override:
+    - emulator -avd circleci-android23 -no-audio -no-window:
+        background: true
+        parallel: true
+    - circle-android wait-for-boot
+    - ./gradlew assembleDebugAndroidTest
+    - ./gradlew test --continue
+    - cp -r app/build/outputs/apk $CIRCLE_ARTIFACTS

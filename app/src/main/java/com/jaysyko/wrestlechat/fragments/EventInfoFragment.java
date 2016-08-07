@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -30,7 +31,7 @@ public class EventInfoFragment extends Fragment {
 
     private static final String TAG = EventInfoFragment.class.getSimpleName();
     private final Event currentActiveEvent = CurrentActiveEvent.getInstance().getCurrentEvent();
-//    private final Handler handler = new Handler();
+    private final Handler handler = new Handler();
     private View view;
 
     @Override
@@ -51,13 +52,6 @@ public class EventInfoFragment extends Fragment {
         eventDetails.setEmptyView(view.findViewById(R.id.empty_layout));
         EventDetailsAdapter adapter = new EventDetailsAdapter(getActivity(), currentActiveEvent.getMatchList());
         eventDetails.setAdapter(adapter);
-
-//        handler.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                new AdBuilder(activity).buildAd();
-//            }
-//        });
         return view;
     }
 

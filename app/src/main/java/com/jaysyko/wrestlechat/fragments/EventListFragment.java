@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.adapters.EventListAdapter;
+import com.jaysyko.wrestlechat.ads.AdBuilder;
 import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.eventManager.NotifyListStore;
@@ -46,6 +47,7 @@ public class EventListFragment extends Fragment {
     private List<Event> mEventsList = new ArrayList<>();
     private EventDao eventDao;
     private SwipeRefreshLayout swipeView;
+    private AdBuilder adBuilder;
     final Runnable initSwipeRefresh = new Runnable() {
         @Override
         public void run() {
@@ -57,6 +59,7 @@ public class EventListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layout = (RelativeLayout) inflater.inflate(R.layout.fragment_event_list, null);
         mApplicationContext = getContext();
+        adBuilder = new AdBuilder(getActivity());
         eventDao = new EventDao(mApplicationContext);
         handler.post(initSwipeRefresh);
         handler.post(new Runnable() {
@@ -80,6 +83,12 @@ public class EventListFragment extends Fragment {
             @Override
             public void run() {
                 getEvents();
+            }
+        });
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                adBuilder.buildAd();
             }
         });
         return layout;
@@ -186,8 +195,21 @@ public class EventListFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        adBuilder.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        adBuilder.onPause();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         NotifyListStore.getInstance().storeList(mApplicationContext);
+        adBuilder.onDestroy();
     }
 }
