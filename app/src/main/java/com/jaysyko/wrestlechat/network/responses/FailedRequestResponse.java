@@ -36,9 +36,6 @@ public class FailedRequestResponse {
     private void checkSessionValid(){
         final Context context = Initializer.getAppContext();
         final int code = getCode();
-        if(code == 401 || code == 403){
-
-        }
         switch (code){
             case 401:
                 Dialog.makeToast(context, context.getString(R.string.account_disabled));
@@ -58,7 +55,7 @@ public class FailedRequestResponse {
             case -1:
                 Dialog.makeToast(context, context.getString(R.string.server_down));
         }
-        if(code < 400 && code >= 500){
+        if(code <= 400 && code >= 500){
             Dialog.makeToast(context, context.getString(R.string.error_has_occurred));
         }
     }
