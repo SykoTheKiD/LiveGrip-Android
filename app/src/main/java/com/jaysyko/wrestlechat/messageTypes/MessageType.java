@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
+import android.text.util.Linkify;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,16 +61,20 @@ public class MessageType implements MessageGenerator {
                 int resID = R.drawable.bubble_left_brown;
                 switch (bg) {
                     case 1:
-                        resID = R.drawable.bubble_left_red;
+                        resID = R.drawable.bubble_left_dark_green;
                         break;
                     case 2:
-                        resID = R.drawable.bubble_left_green;
+                        resID = R.drawable.bubble_left_red;
                         break;
+                    case 3:
+                        resID = R.drawable.bubble_left_black;
                 }
                 textView.setBackgroundResource(resID);
                 textView.setTextColor(Color.parseColor(WHITE));
                 break;
         }
+        textView.setAutoLinkMask(Linkify.WEB_URLS);
+        textView.setLinksClickable(true);
         textView.setGravity(Gravity.START);
         textView.setTextSize(TEXT_SIZE);
         textView.setLayoutParams(lp);

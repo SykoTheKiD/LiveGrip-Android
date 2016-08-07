@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.ads.AdBuilder;
 import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.exceptions.ImageURLError;
 import com.jaysyko.wrestlechat.models.User;
@@ -30,6 +31,7 @@ public final class UserProfileFragment extends Fragment {
     private User currentActiveUser;
     private ImageView profilePicture;
     private TextView username;
+    private AdBuilder adBuilder;
     private static final Handler handler = new Handler();
 
     @Override
@@ -38,6 +40,7 @@ public final class UserProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
         getActivity().setTitle(getString(R.string.manage_profile));
+        adBuilder = new AdBuilder(getActivity());
         currentActiveUser = SessionManager.getCurrentUser();
         mApplicationContext = getActivity();
         profilePicture = (ImageView) view.findViewById(R.id.profile_picture);
@@ -93,6 +96,30 @@ public final class UserProfileFragment extends Fragment {
                 });
             }
         });
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                adBuilder.buildAd();
+            }
+        });
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        adBuilder.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adBuilder.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        adBuilder.onDestroy();
     }
 }

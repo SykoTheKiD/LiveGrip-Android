@@ -15,8 +15,6 @@ public class MessagingTracker {
     public static void trackEvent(Event event){
         Answers.getInstance().logContentView(new ContentViewEvent()
                 .putContentName(event.getEventName())
-                .putContentType(event.getEventLocation())
-                .putCustomAttribute(APP_VERSION, App.APP_VERSION)
-                .putContentId(String.valueOf(event.getEventID())));
+                .putCustomAttribute(APP_VERSION, App.APP_VERSION));
     }
 }

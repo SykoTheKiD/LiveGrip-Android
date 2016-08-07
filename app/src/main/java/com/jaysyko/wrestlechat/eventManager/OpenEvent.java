@@ -53,8 +53,9 @@ public final class OpenEvent {
                         }else{
                             Alarm.setAlarm(event, activity);
                         }
+                    }else{
+                        Dialog.makeToast(activity, activity.getString(R.string.event_over));
                     }
-                    Dialog.makeToast(activity, activity.getString(R.string.event_over));
                 }
             });
             AlertDialog alertDialog = alertDialogBuilder.create();

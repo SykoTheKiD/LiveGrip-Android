@@ -56,7 +56,6 @@ public final class User {
     }
 
     public String getProfileImage() {
-        eLog.i(TAG, profile_image);
         return profile_image;
     }
 
@@ -81,12 +80,6 @@ public final class User {
             throw new ImageURLError(BAD_IMAGE_URL_MESSAGE);
         }
     }
-
-//    private void updateProfileImage(Context context, String profileImage) {
-//        SharedPreferences.Editor editor = PreferenceProvider.getEditor(context, Preferences.SESSION);
-//        editor.putString(PreferenceKeys.NEW_PROFILE_IMAGE, profileImage);
-//        PreferenceProvider.closeEditor(editor);
-//    }
 
     public void updateProfileImage(String profileImage){
         this.profile_image = profileImage;

@@ -38,6 +38,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
 
     private MqttAndroidClient mClient;
     private boolean mIsConnecting;
+
     private final MessagingServiceBinder mBinder = new MessagingServiceBinder(this);
 
     // MQTT Settings
@@ -55,7 +56,7 @@ public class MessagingService extends Service implements MqttCallback, MqttTrace
         super.onCreate();
         try {
             connect();
-        } catch (MqttException e) {
+        } catch (Exception e) {
             eLog.e(TAG, e.getMessage());
         }
     }

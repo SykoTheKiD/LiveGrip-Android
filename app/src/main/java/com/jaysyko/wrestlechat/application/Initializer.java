@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
+
 import io.fabric.sdk.android.Fabric;
 
 /**
@@ -22,7 +24,7 @@ public class Initializer extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(App.debug).build()).build());
         Initializer.context = getApplicationContext();
     }
 

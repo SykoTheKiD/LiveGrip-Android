@@ -3,6 +3,10 @@ package com.jaysyko.wrestlechat.activities;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -31,11 +35,14 @@ import com.jaysyko.wrestlechat.services.FCMRegistrationService;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 import com.jaysyko.wrestlechat.utils.StringResources;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 public final class EventListActivity extends AppCompatActivity {
 
     private static final String TAG = EventListActivity.class.getSimpleName();
     private RoundedImageView headerProfileImage;
+    private View headerLayout;
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
     FragmentManager mFragmentManager;
@@ -55,7 +62,7 @@ public final class EventListActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mNavigationView = (NavigationView) findViewById(R.id.navDrawerItems);
 
-        final View headerLayout = mNavigationView != null ? mNavigationView.inflateHeaderView(R.layout.nav_header_event_list) : null;
+        headerLayout = mNavigationView != null ? mNavigationView.inflateHeaderView(R.layout.nav_header_event_list) : null;
         final TextView headerUsername = (TextView) (headerLayout != null ? headerLayout.findViewById(R.id.drawer_username) : null);
         headerProfileImage = (RoundedImageView) (headerLayout != null ? headerLayout.findViewById(R.id.header_profile_image) : null);
         if (headerUsername != null && headerProfileImage != null) {
@@ -132,7 +139,7 @@ public final class EventListActivity extends AppCompatActivity {
                         });
                         Intent share = new Intent(Intent.ACTION_SEND);
                         share.setType(StringResources.PLAIN_CONTENT_TYPE);
-                        share.putExtra(Intent.EXTRA_TEXT, R.string.app_share);
+                        share.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.app_share));
                         startActivity(Intent.createChooser(share, getString(R.string.app_share_title)));
                         break;
                     case(R.id.nav_about):
@@ -164,7 +171,29 @@ public final class EventListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        ImageTools.loadImage(mApplicationContext, SessionManager.getCurrentUser().getProfileImage(), headerProfileImage);
+        final String profileImage = SessionManager.getCurrentUser().getProfileImage();
+        ImageTools.loadImage(mApplicationContext, profileImage, headerProfileImage);
+        final Target target = new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    headerLayout.setBackground(new BitmapDrawable(getResources(), bitmap));
+                }
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+                eLog.e(TAG, "Header image failed to load");
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+                eLog.i(TAG, "Header image loading");
+            }
+        };
+        headerLayout.setTag(target);
+        Picasso.with(mApplicationContext).load(profileImage).centerCrop().resize(200,150).into(target);
     }
 
 }

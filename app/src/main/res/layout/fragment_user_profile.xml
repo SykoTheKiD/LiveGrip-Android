@@ -41,5 +41,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#ffffff" />
 
+    <include layout="@layout/ad_view"/>
+
 
 </RelativeLayout>

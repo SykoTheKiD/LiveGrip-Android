@@ -10,11 +10,27 @@ public class AuthData {
     private String username;
     private String password;
     private String app_version;
+    private String profile_image;
 
     public AuthData(String username, String password){
         this.username = username;
         this.password = password;
         this.app_version = App.APP_VERSION;
+    }
+
+    public AuthData(String username, String password, String profile_image){
+        this.username = username;
+        this.password = password;
+        this.profile_image = profile_image;
+        this.app_version = App.APP_VERSION;
+    }
+
+    public String getProfile_image() {
+        return profile_image;
+    }
+
+    public void setProfile_image(String profile_image) {
+        this.profile_image = profile_image;
     }
 
     public String getApp_version() {
