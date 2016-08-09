@@ -28,13 +28,13 @@ public final class BaseURL {
 
 
     // Production URL Config
-    private static final String PRODUCTION_SERVER_IP = "159.203.56.214";
+    private static final String PRODUCTION_SERVER_IP = "159.203.29.63";
     private static final String PRODUCTION_SERVER_URL = "http://" + PRODUCTION_SERVER_IP + ":3000/";
 
     // Production Mosquitto Config
     private static final String PRODUCTION_MOSQUITTO_PROTOCOL = "tcp://";
-    private static final String PRODUCTION_MOSQUITTO_URL = PRODUCTION_SERVER_URL;
-    private static final String PRODUCTION_MOSQUITTO_PORT = "8001";
+    private static final String PRODUCTION_MOSQUITTO_URL = PRODUCTION_SERVER_IP;
+    private static final String PRODUCTION_MOSQUITTO_PORT = "8081";
     private static final String PRODUCTION_MOSQUITTO = PRODUCTION_MOSQUITTO_PROTOCOL + PRODUCTION_MOSQUITTO_URL + StringResources.COLON + PRODUCTION_MOSQUITTO_PORT;
 
     private static boolean debug = true;//App.debug;
@@ -46,5 +46,4 @@ public final class BaseURL {
     public static String getMosquittoURL() {
         return (debug) ? DEVELOPMENT_MOSQUITTO : PRODUCTION_MOSQUITTO;
     }
-
 }
