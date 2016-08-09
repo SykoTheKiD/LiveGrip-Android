@@ -33,10 +33,12 @@ public interface APIInterface {
     String MESSAGES_EVENT = API_VERSION + "messages&event={eventID}";
     String USER_UPDATE_PROFILE_IMAGE = API_VERSION + "user/update/profile_image";
     String USER_UPDATE_FCM = API_VERSION + "user/update/fcm";
+    String MESSAGE_HISTORY = API_VERSION + "message_history&event={eventID}&offset={offset}";
 
     // URL Params
     String EVENT_ID = "eventID";
     String AUTHORIZATION = "Authorization";
+    String OFFSET = "offset";
 
     @POST(LOGIN)
     Call<UserResponse> getUser(
@@ -64,6 +66,14 @@ public interface APIInterface {
             @Header(AUTHORIZATION) String token,
             @Path(EVENT_ID) int id
     );
+
+    @GET(MESSAGE_HISTORY)
+    Call<MessageGetResponse> getMessageHistory(
+            @Header(AUTHORIZATION) String token,
+            @Path(EVENT_ID) int id,
+            @Path(OFFSET) int offset
+    );
+
 
     @POST(USER_UPDATE_PROFILE_IMAGE)
     Call<GenericResponse> updateProfileImage(

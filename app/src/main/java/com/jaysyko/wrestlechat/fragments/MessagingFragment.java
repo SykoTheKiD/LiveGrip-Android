@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -74,6 +75,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private EditText etMessage;
     private Context mApplicationContext;
     private MessagingService mService;
+    private int offset = 0;
     private final Handler handler = new Handler();
     private static MessageListAdapter mAdapter;
     private static ArrayList<Message> mMessages = new ArrayList<>();
@@ -84,7 +86,12 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         }
     };
     private Event mCurrentEvent = CurrentActiveEvent.getInstance().getCurrentEvent();
-
+    private Runnable initSwipeAdapter = new Runnable() {
+        @Override
+        public void run() {
+            initSwipeRefresh();
+        }
+    };
     private ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
@@ -118,6 +125,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
         btSend = (Button) view.findViewById(R.id.send_button);
         handler.post(initMessageAdapter);
+        handler.post(initSwipeAdapter);
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,6 +133,48 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
             }
         });
         return view;
+    }
+
+    private void initSwipeRefresh() {
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                if (NetworkState.isConnected()) {
+                    Call<MessageGetResponse> getMessagesCall = ApiManager.getApiService().getMessageHistory(
+                            SessionManager.getCurrentUser().getAuthToken(),
+                            CurrentActiveEvent.getInstance().getCurrentEvent().getEventID(),
+                            offset
+                    );
+                    ApiManager.request(getMessagesCall, new NetworkCallback<MessageGetResponse>() {
+                        @Override
+                        public void onSuccess(MessageGetResponse response) {
+                            eLog.i(TAG, "Fetched Chat History");
+                            final List<Message> responseData = response.getData();
+                            if(!responseData.isEmpty()){
+                                Collections.reverse(responseData);
+                                responseData.addAll(mMessages);
+                                mAdapter.clear();
+                                mAdapter.addAll(responseData);
+                                offset++;
+                            }
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+
+                        @Override
+                        public void onFail(FailedRequestResponse error) {
+                            eLog.e(TAG, error.getMessage());
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    });
+                } else {
+                    Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
+                }
+
+            }
+        });
     }
 
     @Override

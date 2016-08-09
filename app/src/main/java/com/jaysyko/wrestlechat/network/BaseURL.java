@@ -1,5 +1,6 @@
 package com.jaysyko.wrestlechat.network;
 
+import com.jaysyko.wrestlechat.application.App;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
 /**
@@ -10,7 +11,7 @@ import com.jaysyko.wrestlechat.utils.StringResources;
  */
 public final class BaseURL {
 
-    private static boolean genymotion = false;
+    private static boolean genymotion = true;
 
     // Development client URLS
     private static final String GENYMOTION_DEVELOPMENT_SERVER_IP = "10.0.3.2";
@@ -37,7 +38,7 @@ public final class BaseURL {
     private static final String PRODUCTION_MOSQUITTO_PORT = "8081";
     private static final String PRODUCTION_MOSQUITTO = PRODUCTION_MOSQUITTO_PROTOCOL + PRODUCTION_MOSQUITTO_URL + StringResources.COLON + PRODUCTION_MOSQUITTO_PORT;
 
-    private static boolean debug = true;//App.debug;
+    private static boolean debug = App.debug;
 
     public static String getServerURL() {
         return (debug) ? DEVELOPMENT_SERVER_URL : PRODUCTION_SERVER_URL;
