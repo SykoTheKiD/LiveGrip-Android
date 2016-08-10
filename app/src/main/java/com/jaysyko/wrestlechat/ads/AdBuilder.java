@@ -6,6 +6,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.application.App;
 
 /**
  * AdBuilder.java
@@ -28,11 +29,13 @@ public class AdBuilder {
      * Build and load ad into the current activity
      */
     public void buildAd() {
-        mAdView = (AdView) activity.findViewById(R.id.ad_view);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
-        mAdView.loadAd(adRequest);
+        if(!App.debug){
+            mAdView = (AdView) activity.findViewById(R.id.ad_view);
+            AdRequest adRequest = new AdRequest.Builder()
+                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .build();
+            mAdView.loadAd(adRequest);
+        }
     }
 
     public void onResume(){

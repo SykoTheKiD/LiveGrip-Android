@@ -8,7 +8,7 @@ import com.jaysyko.wrestlechat.R;
  *
  * @author Jay Syko
  */
-public final class LiveStatus {
+public final class EventStatus {
 
     public static final int EVENT_NOT_STARTED = R.string.online_status_not_live;
     public static final int EVENT_OVER = R.string.event_over;
@@ -18,7 +18,7 @@ public final class LiveStatus {
     private int reason;
 
 
-    public LiveStatus(boolean live, int reason) {
+    public EventStatus(boolean live, int reason) {
         this.live = live;
         this.reason = reason;
     }
