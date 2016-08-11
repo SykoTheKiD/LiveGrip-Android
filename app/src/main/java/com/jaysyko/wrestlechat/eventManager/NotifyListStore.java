@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.receivers.EventStartReceiver;
@@ -13,10 +14,10 @@ import com.jaysyko.wrestlechat.sharedPreferences.PreferenceProvider;
 import com.jaysyko.wrestlechat.sharedPreferences.Preferences;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
+import java.lang.reflect.Type;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * NotifyListStore.java
@@ -25,9 +26,8 @@ import java.util.List;
 public class NotifyListStore implements Serializable, NotifyStore {
     private static final String TAG = NotifyListStore.class.getSimpleName();
     private static final String SAVED_EVENTS = "savedEvents";
-    private LinkedList<SavedEvent> events = new LinkedList<>();
+    private Set<Event> savedEventHashMap = new HashSet<>();
     private static NotifyListStore instance = new NotifyListStore();
-    private final SavedEvent holder = new SavedEvent(null, null);
     private NotifyListStore() {
 
     }
@@ -39,10 +39,7 @@ public class NotifyListStore implements Serializable, NotifyStore {
      */
     public void add(Event event, Context context){
         event.setNotify(true);
-        events.add(new SavedEvent(event, PendingIntent.getBroadcast(
-                context,
-                event.getEventID(),
-                new Intent(context, EventStartReceiver.class), 0)));
+        savedEventHashMap.add(event);
     }
 
     /**
@@ -52,13 +49,12 @@ public class NotifyListStore implements Serializable, NotifyStore {
      */
     public void remove(Event event, Context context){
         event.setNotify(false);
-        holder.event = event;
-        holder.pendingIntent = PendingIntent.getBroadcast(context,
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
                 event.getEventID(),
-                new Intent(context, EventStartReceiver.class), 0);
-        events.remove(holder);
-        Alarm.cancelAlarm(holder.pendingIntent, context);
-        holder.event = null;
+                new Intent(context, EventStartReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
+        pendingIntent.cancel();
+        savedEventHashMap.remove(event);
+        Alarm.cancelAlarm(pendingIntent, context);
     }
 
     /**
@@ -67,10 +63,7 @@ public class NotifyListStore implements Serializable, NotifyStore {
      * @return boolean
      */
     public boolean contains(Event event){
-        holder.event = event;
-        boolean ret = events.contains(holder);
-        holder.event = null;
-        return ret;
+        return savedEventHashMap.contains(event);
     }
 
     /**
@@ -88,7 +81,7 @@ public class NotifyListStore implements Serializable, NotifyStore {
     public void storeList(Context context){
         SharedPreferences.Editor editor = PreferenceProvider.getEditor(context, Preferences.NOTIFY_EVENTS);
         Gson gson = new Gson();
-        String json = gson.toJson(new ArrayList<>(events));
+        String json = gson.toJson(savedEventHashMap);
         editor.putString(SAVED_EVENTS, json);
         editor.apply();
     }
@@ -101,61 +94,25 @@ public class NotifyListStore implements Serializable, NotifyStore {
         String json = PreferenceProvider.getSharedPreferences(context, Preferences.NOTIFY_EVENTS).getString(SAVED_EVENTS, null);
         Gson gson = new Gson();
         if(json != null){
-            SavedEvent[] eventsArray = gson.fromJson(json, SavedEvent[].class);
-            events = new LinkedList<>(Arrays.asList(eventsArray));
+            Type type = new TypeToken<Set<Event>>() {}.getType();
+            savedEventHashMap = gson.fromJson(json, type);
         }else{
-            events = new LinkedList<>();
+            savedEventHashMap = new HashSet<>();
         }
     }
 
     /**
      * @param newEvents List<Event>
-     * @param context Context
      * @return List<Event>
      */
-    public List<Event> clean(List<Event> newEvents, Context context){
+    public List<Event> clean(List<Event> newEvents){
         // TODO: Improve runtime
         for (Event event: newEvents){
             if(contains(event)){
                 event.setNotify(true);
             }
         }
-
-        for (SavedEvent savedEvent : events) {
-            final Event event = savedEvent.event;
-            if(!newEvents.contains(event)){
-                remove(event, context);
-            }
-        }
         eLog.i(TAG, "Successfully cleaned events");
         return newEvents;
-    }
-
-    /**
-     * An object with the event and its pending intent for an alarm
-     */
-    private class SavedEvent {
-        Event event;
-        PendingIntent pendingIntent;
-
-        SavedEvent(Event event, PendingIntent pendingIntent) {
-            this.event = event;
-            this.pendingIntent = pendingIntent;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            SavedEvent that = (SavedEvent) o;
-
-            return event.equals(that.event);
-        }
-
-        @Override
-        public int hashCode() {
-            return event.hashCode();
-        }
     }
 }

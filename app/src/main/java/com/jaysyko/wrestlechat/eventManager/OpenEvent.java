@@ -17,7 +17,7 @@ import com.jaysyko.wrestlechat.models.Event;
 
 public final class OpenEvent {
     private static final Handler handler = new Handler();
-    public static void openConversation(final Event event, final Activity activity) {
+    public static Event openConversation(final Event event, final Activity activity) {
         final boolean eventNotify = event.isNotify();
         final EventStatus status = EventPublisher.goLive(event.getEventStartTime(), event.getEventEndTime());
         String notifyMessage = eventNotify ? "Cancel Notification" : "Set Notification";
@@ -49,8 +49,10 @@ public final class OpenEvent {
                 public void onClick(DialogInterface dialog, int which) {
                     if(status.getReason() == R.string.online_status_not_live){
                         if(eventNotify){
+                            event.setNotify(false);
                             Alarm.cancelAlarm(event, activity);
                         }else{
+                            event.setNotify(true);
                             Alarm.setAlarm(event, activity);
                         }
                     }else{
@@ -61,6 +63,7 @@ public final class OpenEvent {
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         }
+        return event;
     }
 
     public static void openEventInfo(Event event, Activity activity) {
