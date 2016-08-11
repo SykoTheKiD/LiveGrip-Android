@@ -12,7 +12,7 @@
         <item>3</item>
     </string-array>
     <string-array name="background_resources">
-        <item>@android:color/white</item>
+        <item>@drawable/default_messaging_bg</item>
         <item>@drawable/black_diamond</item>
         <item>@drawable/green_polygon</item>
         <item>@drawable/black_polygon</item>

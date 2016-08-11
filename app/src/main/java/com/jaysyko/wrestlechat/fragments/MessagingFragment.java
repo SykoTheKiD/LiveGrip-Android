@@ -183,22 +183,20 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
 
         Intent intent = new Intent(mApplicationContext, MessagingService.class);
         mApplicationContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-
+        final View viewById = view.findViewById(R.id.chat_list_view);
         SharedPreferences settings = PreferenceProvider.getSharedPreferences(mApplicationContext, Preferences.SETTINGS);
         Integer bg = Integer.parseInt(settings.getString(PreferenceKeys.SETTINGS_MESSAGING_WALLPAPER, PreferenceKeys.DEFAULT_SETTINGS_VALUE));
         eLog.i(TAG, String.valueOf(bg));
-        if (!bg.equals(Integer.valueOf(PreferenceKeys.DEFAULT_SETTINGS_VALUE))) {
-            TypedArray typedArray = getActivity().getResources().obtainTypedArray(R.array.background_resources);
-            Bitmap backgroundImage = BitmapFactory.decodeResource(getResources(), typedArray.getResourceId(bg, Integer.valueOf(PreferenceKeys.DEFAULT_SETTINGS_VALUE)));
-            BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), backgroundImage);
-            bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                view.findViewById(R.id.chat_list_view).setBackground(bitmapDrawable);
-            } else {
-                view.findViewById(R.id.chat_list_view).setBackgroundDrawable(bitmapDrawable);
-            }
-            typedArray.recycle();
+        TypedArray typedArray = getActivity().getResources().obtainTypedArray(R.array.background_resources);
+        Bitmap backgroundImage = BitmapFactory.decodeResource(getResources(), typedArray.getResourceId(bg, Integer.valueOf(PreferenceKeys.DEFAULT_SETTINGS_VALUE)));
+        BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), backgroundImage);
+        bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            viewById.setBackground(bitmapDrawable);
+        } else {
+            viewById.setBackgroundDrawable(bitmapDrawable);
         }
+        typedArray.recycle();
     }
 
     @Override

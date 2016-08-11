@@ -49,6 +49,7 @@
         android:id="@+id/new_message_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#FAFAFA"
         android:layout_alignParentBottom="true">
 
     <EditText
