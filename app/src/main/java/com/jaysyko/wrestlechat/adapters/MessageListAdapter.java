@@ -1,7 +1,6 @@
 package com.jaysyko.wrestlechat.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Handler;
@@ -22,6 +21,9 @@ import com.jaysyko.wrestlechat.messageTypes.MessagePosition;
 import com.jaysyko.wrestlechat.messageTypes.MessageType;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
+import com.jaysyko.wrestlechat.sharedPreferences.PreferenceKeys;
+import com.jaysyko.wrestlechat.sharedPreferences.PreferenceProvider;
+import com.jaysyko.wrestlechat.sharedPreferences.Preferences;
 import com.jaysyko.wrestlechat.utils.ImageTools;
 
 import java.util.List;
@@ -114,6 +116,10 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
      * @param holder MessageViewHolder
      */
     private void senderView(MessageViewHolder holder, Message message) {
+        String usernameColourSetting = PreferenceProvider
+                .getSharedPreferences(getContext(), Preferences.SETTINGS)
+                .getString(PreferenceKeys.SETTINGS_MESSAGING_WALLPAPER, PreferenceKeys.DEFAULT_SETTINGS_VALUE);
+        int usernameColour = ImageTools.getTextColour(usernameColourSetting);
         RelativeLayout senderContainer = holder.sender;
         holder.imageLeft.setVisibility(View.VISIBLE);
         holder.sender.setVisibility(View.VISIBLE);
@@ -121,7 +127,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
         holder.user.setVisibility(View.GONE);
         TextView usernameTV = generateUsername();
         usernameTV.setText(message.getUsername());
-        usernameTV.setTextColor(Color.parseColor(WHITE));
+        usernameTV.setTextColor(usernameColour);
         View view = uiComponents.generateView(MessagePosition.SENDER, message);
         senderContainer.removeAllViews();
         senderContainer.addView(usernameTV);

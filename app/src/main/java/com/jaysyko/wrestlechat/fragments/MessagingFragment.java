@@ -180,7 +180,6 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     @Override
     public void onStart() {
         super.onStart();
-
         Intent intent = new Intent(mApplicationContext, MessagingService.class);
         mApplicationContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
         final View viewById = view.findViewById(R.id.chat_list_view);

@@ -27,7 +27,9 @@ public final class ImageTools {
     private static final int RADIX = 16;
     private static final String ALGORITHM = "MD5";
     public static final int LIGHT_GREY = Color.parseColor("#a6a6a6");
-    public static final int DARK_GREY = Color.parseColor("#424242");
+    public static final int BLACK = Color.parseColor("#424242");
+    public static final int DARK_GREY = BLACK;
+    public static final int WHITE = Color.parseColor("#FAFAFA");
 
     /**
      * Loads an image from a URL into an ImageView
@@ -88,6 +90,21 @@ public final class ImageTools {
             return DARK_GREY;
         }
         return color;
+    }
+
+    public static int getTextColour(String background){
+        switch (background){
+            case("0"):
+                return BLACK;
+            case("1"):
+                return WHITE;
+            case("2"):
+                return BLACK;
+            case("3"):
+                return WHITE;
+            default:
+                return WHITE;
+        }
     }
 
 }
