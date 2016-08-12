@@ -93,5 +93,6 @@
     <string name="ad_unit_id">ca-app-pub-5139358082902358/1493241825</string>
     <string name="native_ad_template">M002</string>
     <string name="server_down">An error occurred please try again later</string>
+    <string name="enter_message">Enter Message</string>
 
 </resources>
