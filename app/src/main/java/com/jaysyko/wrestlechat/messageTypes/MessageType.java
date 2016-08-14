@@ -12,8 +12,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.jaysyko.wrestlechat.R;
+import com.jaysyko.wrestlechat.analytics.MessagingTracker;
 import com.jaysyko.wrestlechat.customViews.AutoResizeTextView;
 import com.jaysyko.wrestlechat.customViews.RoundedCornerImageView;
+import com.jaysyko.wrestlechat.keys.Analytics;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.sharedPreferences.PreferenceProvider;
 import com.jaysyko.wrestlechat.sharedPreferences.Preferences;
@@ -38,6 +40,7 @@ public class MessageType implements MessageGenerator {
      * @return View
      */
     private AutoResizeTextView textMessage() {
+        MessagingTracker.trackMessageType(Analytics.TEXT_MESSAGE);
         AutoResizeTextView textView = new AutoResizeTextView(this.context);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         SharedPreferences settings = PreferenceProvider.getSharedPreferences(context, Preferences.SETTINGS);
@@ -89,6 +92,7 @@ public class MessageType implements MessageGenerator {
      * @return ImageView
      */
     private ImageView imageMessage() {
+        MessagingTracker.trackMessageType(Analytics.IMAGE_MESSAGE);
         ImageView imgMsg = new RoundedCornerImageView(this.context);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(IMAGE_MSG_WIDTH, IMAGE_MSG_HEIGHT);
         switch (this.position) {

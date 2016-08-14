@@ -5,6 +5,6 @@ package com.jaysyko.wrestlechat.application;
  */
 public class App {
 
-    public static final String APP_VERSION = "1.00";
+    public static final String APP_VERSION = "1.01";
     public static boolean debug = true;
 }
