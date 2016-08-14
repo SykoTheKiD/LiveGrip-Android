@@ -12,6 +12,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.activities.LoginActivity;
+import com.jaysyko.wrestlechat.keys.Notifications;
 
 import java.util.Map;
 
@@ -26,7 +27,7 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         if (remoteMessage.getData().size() > 0) {
             final Map<String, String> message = remoteMessage.getData();
-            sendNotification(message.get("title"), message.get("body"));
+            sendNotification(message.get(Notifications.TITLE), message.get(Notifications.BODY));
         }
     }
 
