@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.fragments.MessagingFragment;
+import com.jaysyko.wrestlechat.keys.BundleKeys;
 import com.jaysyko.wrestlechat.services.MessagingService;
 
 public class MessagingActivity extends BaseActivity {
@@ -84,7 +85,11 @@ public class MessagingActivity extends BaseActivity {
 
     @Override
     protected Fragment createFragment() {
-        return new MessagingFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(BundleKeys.SHOW_TOOLBAR, true);
+        MessagingFragment fragment = new MessagingFragment();
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override

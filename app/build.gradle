@@ -18,7 +18,7 @@ android {
         applicationId "com.jaysyko.wrestlechat"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 15
+        versionCode 17
         versionName "15"
         multiDexEnabled true
     }

@@ -22,4 +22,5 @@ public class Utils {
     static final String MESSAGE_ID = "message_id";
     static final String USER_ID = "user_id";
     static final String EXPIRY_DATE = "expiry_date";
+    static final String VIDEO = "event_video";
 }

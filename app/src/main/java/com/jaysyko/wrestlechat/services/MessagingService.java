@@ -11,7 +11,7 @@ import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.network.BaseURL;
 import com.jaysyko.wrestlechat.sessionManager.SessionManager;
-import com.jaysyko.wrestlechat.utils.JSONKeys;
+import com.jaysyko.wrestlechat.keys.JSONKeys;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
 import org.eclipse.paho.android.service.MqttTraceHandler;

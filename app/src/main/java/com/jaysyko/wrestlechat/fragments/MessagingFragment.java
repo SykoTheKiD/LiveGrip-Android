@@ -38,6 +38,7 @@ import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.eventManager.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formTypes.MessagingForm;
+import com.jaysyko.wrestlechat.keys.BundleKeys;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.network.ApiManager;
@@ -122,8 +123,13 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_messaging, container, false);
         mApplicationContext = getActivity();
+        Boolean showToolbar = getArguments().getBoolean(BundleKeys.SHOW_TOOLBAR);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
-        ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
+        if(showToolbar){
+            ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
+        }else{
+            toolbar.setVisibility(View.GONE);
+        }
         btSend = (Button) view.findViewById(R.id.send_button);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         handler.post(initMessageAdapter);

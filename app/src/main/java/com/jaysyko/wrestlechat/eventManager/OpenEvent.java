@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.activities.EventInfoActivity;
 import com.jaysyko.wrestlechat.activities.MessagingActivity;
+import com.jaysyko.wrestlechat.activities.VideoFeedActivity;
 import com.jaysyko.wrestlechat.analytics.MessagingTracker;
 import com.jaysyko.wrestlechat.date.EventPublisher;
 import com.jaysyko.wrestlechat.date.EventStatus;
@@ -29,8 +30,13 @@ public final class OpenEvent {
             }
         });
         if (status.goLive()) {
+            Intent intent;
             CurrentActiveEvent.getInstance().setCurrentEvent(event);
-            Intent intent = new Intent(activity, MessagingActivity.class);
+            if(event.getVideo() != null){
+                intent = new Intent(activity, VideoFeedActivity.class);
+            }else{
+                intent = new Intent(activity, MessagingActivity.class);
+            }
             activity.startActivity(intent);
         } else {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);

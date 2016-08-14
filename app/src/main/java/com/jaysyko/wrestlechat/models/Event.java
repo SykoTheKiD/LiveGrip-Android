@@ -24,6 +24,7 @@ public class Event{
     private static final String POPULARITY = "rating";
     private static final String SEGMENT_NAME = "segment_name";
     private static final String ADDITIONAL_DETAIL = "additional_detail";
+    public static final String DB_NULL = "None";
 
     @SerializedName(Utils.ID)
     private int eventID;
@@ -41,6 +42,8 @@ public class Event{
     private String eventStartTime;
     @SerializedName(Utils.END_TIME)
     private String eventEndTime;
+    @SerializedName(Utils.VIDEO)
+    private String video;
     private boolean notify = false;
 
     public Event(int eventID, String eventName, String eventInfo, String matchCard, String eventImage, String eventLocation, String eventStartTime, String eventEndTime) {
@@ -160,6 +163,17 @@ public class Event{
 
     public void setNotify(boolean notify) {
         this.notify = notify;
+    }
+
+    public void setVideo(String video){
+        this.video = video;
+    }
+
+    public String getVideo(){
+        if(video.equals(DB_NULL)){
+            return null;
+        }
+        return video;
     }
 
     @Override

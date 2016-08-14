@@ -94,5 +94,6 @@
     <string name="native_ad_template">M002</string>
     <string name="server_down">An error occurred please try again later</string>
     <string name="enter_message">Enter Message</string>
+    <string name="title_activity_video_feed">VideoFeedActivity</string>
 
 </resources>
