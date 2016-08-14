@@ -53,7 +53,7 @@
     <EditText
         android:id="@+id/new_message_edit_text"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginEnd  ="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
@@ -64,13 +64,13 @@
         android:background="@android:color/transparent"
         android:inputType="textCapSentences|textMultiLine" />
 
-    <Button
+    <ImageButton
         android:id="@+id/send_button"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_weight="1"
-        android:background="@android:color/holo_blue_light"
-        android:text="@string/send"
-        android:textColor="@color/cardview_light_background" />
+        android:src="@drawable/ic_send_black_24dp"
+        android:background="@null"
+        android:contentDescription="@string/app_name" />
     </LinearLayout>
 </RelativeLayout>

@@ -26,8 +26,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -72,12 +72,13 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private static final String FONT_COLOR_HTML = "<font color=\"#FFFFFFF\">", FONT_HTML = "</font>";
     private View view;
     private boolean init;
-    private Button btSend;
+    private ImageButton btSend;
     private boolean mBound;
     private EditText etMessage;
     private Context mApplicationContext;
     private MessagingService mService;
     private int offset = 0;
+    private ListView lvChat;
     private final Handler handler = new Handler();
     private static MessageListAdapter mAdapter;
     private static ArrayList<Message> mMessages = new ArrayList<>();
@@ -130,7 +131,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         }else{
             toolbar.setVisibility(View.GONE);
         }
-        btSend = (Button) view.findViewById(R.id.send_button);
+        btSend = (ImageButton) view.findViewById(R.id.send_button);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         handler.post(initMessageAdapter);
         handler.post(initSwipeAdapter);
@@ -268,7 +269,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
                 }
             }
         });
-        final ListView lvChat = (ListView) view.findViewById(R.id.chat_list_view);
+        lvChat = (ListView) view.findViewById(R.id.chat_list_view);
         // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen. Don't scroll to the bottom otherwise.
         mMessages.clear();
         mAdapter = new MessageListAdapter(mApplicationContext, mMessages);
@@ -292,6 +293,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
                     final List<Message> responseData = response.getData();
                     Collections.reverse(responseData);
                     mAdapter.addAll(responseData);
+                    lvChat.setSelection(responseData.size());
                 }
 
                 @Override
