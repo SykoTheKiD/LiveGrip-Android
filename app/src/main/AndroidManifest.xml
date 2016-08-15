@@ -69,8 +69,8 @@
         <activity
             android:name=".activities.VideoFeedActivity"
             android:label="@string/title_activity_video_feed"
-            android:theme="@style/NoActionBar"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionBar" />
 
         <!-- Service Declarations -->
         <service
@@ -128,6 +128,11 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".activities.ColourPickerActivity"
+            android:label="@string/title_activity_colour_picker"
+            android:theme="@style/NoActionBar"></activity>
     </application>
 
 </manifest>

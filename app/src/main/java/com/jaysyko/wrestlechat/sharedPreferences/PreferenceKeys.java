@@ -11,4 +11,5 @@ public class PreferenceKeys {
     public static final String FCM_KEY = "fcmKey";
     public static final String FCM_UPDATED = "fcmUpdated";
     public static final String USERNAME_INTENT_KEY = "username";
+    public static final String MESSAGING_BUBBLE_COLOUR = "bubbleColour";
 }

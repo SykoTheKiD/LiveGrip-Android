@@ -95,5 +95,6 @@
     <string name="server_down">An error occurred please try again later</string>
     <string name="enter_message">Say Something&#8230;</string>
     <string name="title_activity_video_feed">VideoFeedActivity</string>
+    <string name="title_activity_colour_picker">ColourPickerActivity</string>
 
 </resources>

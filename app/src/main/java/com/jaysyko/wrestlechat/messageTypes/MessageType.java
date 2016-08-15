@@ -3,6 +3,9 @@ package com.jaysyko.wrestlechat.messageTypes;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.util.Linkify;
 import android.view.Gravity;
@@ -10,13 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.jaysyko.wrestlechat.R;
 import com.jaysyko.wrestlechat.analytics.MessagingTracker;
-import com.jaysyko.wrestlechat.customViews.AutoResizeTextView;
 import com.jaysyko.wrestlechat.customViews.RoundedCornerImageView;
 import com.jaysyko.wrestlechat.keys.Analytics;
 import com.jaysyko.wrestlechat.models.Message;
+import com.jaysyko.wrestlechat.sharedPreferences.PreferenceKeys;
 import com.jaysyko.wrestlechat.sharedPreferences.PreferenceProvider;
 import com.jaysyko.wrestlechat.sharedPreferences.Preferences;
 import com.jaysyko.wrestlechat.utils.ImageTools;
@@ -25,8 +29,7 @@ public class MessageType implements MessageGenerator {
 
     private static final int TEXT_SIZE = 14, IMAGE_MSG_WIDTH = 1000, IMAGE_MSG_HEIGHT = 1000, IMAGE_MSG_PADDING_LEFT = 50, ZERO = 0;
     private static final String WHITE = "#FFFFFF";
-    private static final String DEFAULT_SETTINGS_VALUE = "0";
-    private static final String CHAT_BUBBLE_STYLE = "chatBubbleStyle";
+    private static final int DEFAULT_SETTINGS_VALUE = R.color.colorAccent;
     private Context context;
     private MessagePosition position;
     private Message message;
@@ -39,49 +42,67 @@ public class MessageType implements MessageGenerator {
      * Returns a AutoResizeTextView for regular text messages
      * @return View
      */
-    private AutoResizeTextView textMessage() {
+    private TextView textMessage() {
         MessagingTracker.trackMessageType(Analytics.TEXT_MESSAGE);
-        AutoResizeTextView textView = new AutoResizeTextView(this.context);
+        TextView textView = new TextView(this.context);
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         SharedPreferences settings = PreferenceProvider.getSharedPreferences(context, Preferences.SETTINGS);
-        Integer bg = Integer.parseInt(settings.getString(CHAT_BUBBLE_STYLE, DEFAULT_SETTINGS_VALUE));
+        int bg = settings.getInt(PreferenceKeys.MESSAGING_BUBBLE_COLOUR, DEFAULT_SETTINGS_VALUE);
         switch (this.position) {
             case USER:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                     lp.addRule(RelativeLayout.ALIGN_PARENT_END);
-                } else {
+                }else{
                     lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                 }
-                lp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-                textView.setBackgroundResource(R.drawable.bubble_white);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    final Drawable myIcon = context.getResources().getDrawable( R.drawable.bubble_right, context.getTheme());
+                    final ColorFilter filter = new LightingColorFilter(bg, bg);
+                    if(myIcon != null){
+                        myIcon.setColorFilter(filter);
+                    }
+                    textView.setBackground(myIcon);
+                }else{
+                    final Drawable myIcon = context.getResources().getDrawable(R.drawable.bubble_right);
+                    final ColorFilter filter = new LightingColorFilter(bg, bg);
+                    if(myIcon != null){
+                        myIcon.setColorFilter(filter);
+                    }
+                    textView.setBackgroundDrawable(myIcon);
+                }
+                textView.setPadding(25,15,80,15);
                 break;
             case SENDER:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                     lp.addRule(RelativeLayout.ALIGN_PARENT_START);
-                } else {
+                }else{
                     lp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                 }
-                lp.addRule(RelativeLayout.BELOW, R.id.senderUsernameID);
-                int resID = R.drawable.bubble_left_brown;
-                switch (bg) {
-                    case 1:
-                        resID = R.drawable.bubble_left_dark_green;
-                        break;
-                    case 2:
-                        resID = R.drawable.bubble_left_red;
-                        break;
-                    case 3:
-                        resID = R.drawable.bubble_left_black;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    final Drawable myIcon = context.getResources().getDrawable(R.drawable.bubble_left, context.getTheme());
+                    final ColorFilter filter = new LightingColorFilter(bg, bg);
+                    textView.setBackground(myIcon);
+                    if(myIcon != null){
+                        myIcon.setColorFilter(filter);
+                    }
+                }else{
+                    final Drawable myIcon = context.getResources().getDrawable(R.drawable.bubble_right);
+                    final ColorFilter filter = new LightingColorFilter(bg, bg);
+                    if(myIcon != null){
+                        myIcon.setColorFilter(filter);
+                    }
+                    textView.setBackgroundDrawable(myIcon);
                 }
-                textView.setBackgroundResource(resID);
-                textView.setTextColor(Color.parseColor(WHITE));
+                lp.addRule(RelativeLayout.BELOW, R.id.senderUsernameID);
+                textView.setPadding(80,15,25,15);
                 break;
         }
+        textView.setTextColor(Color.parseColor(WHITE));
+        textView.setLayoutParams(lp);
         textView.setAutoLinkMask(Linkify.WEB_URLS);
         textView.setLinksClickable(true);
         textView.setGravity(Gravity.START);
         textView.setTextSize(TEXT_SIZE);
-        textView.setLayoutParams(lp);
         textView.setId(R.id.textMessageID);
         textView.setText(this.message.getBody());
         return textView;
