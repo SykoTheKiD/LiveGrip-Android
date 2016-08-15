@@ -24,6 +24,10 @@ import com.jaysyko.wrestlechat.sharedPreferences.Preferences;
 public class SettingsFragment extends PreferenceFragment {
 
     private static final String TAG = SettingsFragment.class.getSimpleName();
+    public static final String COLOUR_PICKER_TITLE = "Choose Colour";
+    public static final String DEFAULT_COLOUR = "#ff0000";
+    public static final String POSITIVE_TITLE = "ok";
+    public static final String NEGATIVE_TITLE = "cancel";
     private final Handler handler = new Handler();
 
     @Override
@@ -31,16 +35,16 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
 
-        Preference dialogPreference = getPreferenceScreen().findPreference("colour_preference");
+        Preference dialogPreference = getPreferenceScreen().findPreference(PreferenceKeys.COLOUR_PREFERENCE);
         dialogPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 ColorPickerDialogBuilder
                         .with(getActivity())
-                        .setTitle("Choose color")
-                        .initialColor(Color.parseColor("#ff0000"))
+                        .setTitle(COLOUR_PICKER_TITLE)
+                        .initialColor(Color.parseColor(DEFAULT_COLOUR))
                         .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
                         .density(12)
-                        .setPositiveButton("ok", new ColorPickerClickListener() {
+                        .setPositiveButton(POSITIVE_TITLE, new ColorPickerClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, final int selectedColor, Integer[] allColors) {
                                 handler.post(new Runnable() {
@@ -53,7 +57,7 @@ public class SettingsFragment extends PreferenceFragment {
                                 });
                             }
                         })
-                        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(NEGATIVE_TITLE, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 eLog.i(TAG, "Cancelled Colour Selection");

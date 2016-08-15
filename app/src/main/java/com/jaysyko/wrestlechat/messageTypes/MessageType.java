@@ -30,6 +30,9 @@ public class MessageType implements MessageGenerator {
     private static final int TEXT_SIZE = 14, IMAGE_MSG_WIDTH = 1000, IMAGE_MSG_HEIGHT = 1000, IMAGE_MSG_PADDING_LEFT = 50, ZERO = 0;
     private static final String WHITE = "#FFFFFF";
     private static final int DEFAULT_SETTINGS_VALUE = R.color.colorAccent;
+    public static final int LEFT_BUBBLE_PADDING_LEFT = 25;
+    public static final int BUBBLE_PADDING_DEFAULT = 15;
+    public static final int LEFT_BUBBLE_PADDING_RIGHT = 80;
     private Context context;
     private MessagePosition position;
     private Message message;
@@ -70,7 +73,7 @@ public class MessageType implements MessageGenerator {
                     }
                     textView.setBackgroundDrawable(myIcon);
                 }
-                textView.setPadding(25,15,80,15);
+                textView.setPadding(LEFT_BUBBLE_PADDING_LEFT, BUBBLE_PADDING_DEFAULT, LEFT_BUBBLE_PADDING_RIGHT, BUBBLE_PADDING_DEFAULT);
                 break;
             case SENDER:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -94,7 +97,7 @@ public class MessageType implements MessageGenerator {
                     textView.setBackgroundDrawable(myIcon);
                 }
                 lp.addRule(RelativeLayout.BELOW, R.id.senderUsernameID);
-                textView.setPadding(80,15,25,15);
+                textView.setPadding(LEFT_BUBBLE_PADDING_RIGHT, BUBBLE_PADDING_DEFAULT, LEFT_BUBBLE_PADDING_LEFT, BUBBLE_PADDING_DEFAULT);
                 break;
         }
         textView.setTextColor(Color.parseColor(WHITE));
