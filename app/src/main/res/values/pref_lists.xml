@@ -4,18 +4,21 @@
         <item>Black Diamond</item>
         <item>Green Pentagons</item>
         <item>Flat Black</item>
+        <item>Feathers</item>
     </string-array>
     <string-array name="backgrounds">
         <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
+        <item>4</item>
     </string-array>
     <string-array name="background_resources">
-        <item>@android:color/white</item>
+        <item>@drawable/default_messaging_bg</item>
         <item>@drawable/black_diamond</item>
         <item>@drawable/green_polygon</item>
         <item>@drawable/black_polygon</item>
+        <item>@drawable/feathers</item>
     </string-array>
 
     <string-array name="chat_bubbles">

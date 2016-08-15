@@ -1,4 +1,4 @@
-package com.jaysyko.wrestlechat.utils;
+package com.jaysyko.wrestlechat.keys;
 
 /**
  * @author Jay Syko on 2016-07-24.

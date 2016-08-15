@@ -123,6 +123,7 @@ public class EventListFragment extends Fragment {
                             @Override
                             public void onItemClick(View view, int position) {
                                 OpenEvent.openConversation(mEventsList.get(position), getActivity());
+                                mAdapter.notifyItemChanged(position);
                             }
 
                             @Override
@@ -161,7 +162,7 @@ public class EventListFragment extends Fragment {
                         public void run() {
                             final List<Event> cleanedEventsList = NotifyListStore
                                     .getInstance()
-                                    .clean(responseData, mApplicationContext);
+                                    .clean(responseData);
                             setEventsList(cleanedEventsList);
                         }
                     });

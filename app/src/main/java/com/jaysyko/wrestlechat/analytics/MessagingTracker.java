@@ -17,4 +17,11 @@ public class MessagingTracker {
                 .putContentName(event.getEventName())
                 .putCustomAttribute(APP_VERSION, App.APP_VERSION));
     }
+
+    public static void trackMessageType(String type){
+        Answers.getInstance().logContentView(
+                new ContentViewEvent()
+                .putContentType(type)
+        );
+    }
 }

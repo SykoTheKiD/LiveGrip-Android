@@ -8,18 +8,11 @@
         android:key="messagingWallpaper"
         android:summary="Change the background image of the messaging screen"
         android:title="Messaging Screen" />
-    <ListPreference
-        android:defaultValue="@string/default_value"
-        android:entries="@array/chat_bubbles"
-        android:entryValues="@array/bubbles"
-        android:icon="@drawable/ic_mms_black_24dp"
-        android:key="chatBubbleStyle"
-        android:summary="Change the chat bubble style"
-        android:title="Chat Bubble Style" />
 
-    <!--<T-->
-    <!--android:icon="@drawable/ic_info_black_24dp"-->
-    <!--android:key="username"-->
-    <!--android:summary="App Details"-->
-    <!--android:title="About" />-->
+    <Preference
+        android:title="Messaging Bubble"
+        android:summary="Change the colour of messaging chat bubbles"
+        android:icon="@drawable/ic_mms_black_24dp"
+        android:key="colour_preference" />
+
 </PreferenceScreen>

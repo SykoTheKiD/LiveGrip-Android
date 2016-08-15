@@ -74,7 +74,7 @@
             android:clickable="true"
             android:contentDescription="@string/app_name"
             android:focusable="true"
-            android:src="@drawable/ic_add_alert_white_36dp"
+            android:src="@drawable/ic_alarm_add_white_36dp"
             android:visibility="gone"/>
 
         <ImageButton
@@ -90,7 +90,7 @@
             android:clickable="true"
             android:contentDescription="@string/app_name"
             android:focusable="true"
-            android:src="@drawable/ic_clear_white_36dp"
+            android:src="@drawable/ic_alarm_on_white_36dp"
             android:visibility="gone"/>
 
 

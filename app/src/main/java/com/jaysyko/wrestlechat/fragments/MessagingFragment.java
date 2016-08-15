@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -23,6 +24,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,6 +38,7 @@ import com.jaysyko.wrestlechat.dialogs.Dialog;
 import com.jaysyko.wrestlechat.eventManager.CurrentActiveEvent;
 import com.jaysyko.wrestlechat.forms.Form;
 import com.jaysyko.wrestlechat.forms.formTypes.MessagingForm;
+import com.jaysyko.wrestlechat.keys.BundleKeys;
 import com.jaysyko.wrestlechat.models.Event;
 import com.jaysyko.wrestlechat.models.Message;
 import com.jaysyko.wrestlechat.network.ApiManager;
@@ -74,6 +77,8 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private EditText etMessage;
     private Context mApplicationContext;
     private MessagingService mService;
+    private int offset = 0;
+    private ListView lvChat;
     private final Handler handler = new Handler();
     private static MessageListAdapter mAdapter;
     private static ArrayList<Message> mMessages = new ArrayList<>();
@@ -84,7 +89,12 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         }
     };
     private Event mCurrentEvent = CurrentActiveEvent.getInstance().getCurrentEvent();
-
+    private Runnable initSwipeAdapter = new Runnable() {
+        @Override
+        public void run() {
+            initSwipeRefresh();
+        }
+    };
     private ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
@@ -114,10 +124,17 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_messaging, container, false);
         mApplicationContext = getActivity();
+        Boolean showToolbar = getArguments().getBoolean(BundleKeys.SHOW_TOOLBAR);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.my_toolbar);
-        ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
+        if(showToolbar){
+            ((AppCompatActivity) mApplicationContext).setSupportActionBar(toolbar);
+        }else{
+            toolbar.setVisibility(View.GONE);
+        }
         btSend = (Button) view.findViewById(R.id.send_button);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         handler.post(initMessageAdapter);
+        handler.post(initSwipeAdapter);
         btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,28 +144,67 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         return view;
     }
 
+    private void initSwipeRefresh() {
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                if (NetworkState.isConnected()) {
+                    Call<MessageGetResponse> getMessagesCall = ApiManager.getApiService().getMessageHistory(
+                            SessionManager.getCurrentUser().getAuthToken(),
+                            CurrentActiveEvent.getInstance().getCurrentEvent().getEventID(),
+                            offset
+                    );
+                    ApiManager.request(getMessagesCall, new NetworkCallback<MessageGetResponse>() {
+                        @Override
+                        public void onSuccess(MessageGetResponse response) {
+                            eLog.i(TAG, "Fetched Chat History");
+                            final List<Message> responseData = response.getData();
+                            if(!responseData.isEmpty()){
+                                Collections.reverse(responseData);
+                                responseData.addAll(mMessages);
+                                mAdapter.clear();
+                                mAdapter.addAll(responseData);
+                                offset++;
+                            }
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+
+                        @Override
+                        public void onFail(FailedRequestResponse error) {
+                            eLog.e(TAG, error.getMessage());
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    });
+                } else {
+                    Dialog.makeToast(mApplicationContext, getString(R.string.no_network));
+                }
+
+            }
+        });
+    }
+
     @Override
     public void onStart() {
         super.onStart();
-
         Intent intent = new Intent(mApplicationContext, MessagingService.class);
         mApplicationContext.bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-
+        final View viewById = view.findViewById(R.id.chat_list_view);
         SharedPreferences settings = PreferenceProvider.getSharedPreferences(mApplicationContext, Preferences.SETTINGS);
         Integer bg = Integer.parseInt(settings.getString(PreferenceKeys.SETTINGS_MESSAGING_WALLPAPER, PreferenceKeys.DEFAULT_SETTINGS_VALUE));
         eLog.i(TAG, String.valueOf(bg));
-        if (!bg.equals(Integer.valueOf(PreferenceKeys.DEFAULT_SETTINGS_VALUE))) {
-            TypedArray typedArray = getActivity().getResources().obtainTypedArray(R.array.background_resources);
-            Bitmap backgroundImage = BitmapFactory.decodeResource(getResources(), typedArray.getResourceId(bg, Integer.valueOf(PreferenceKeys.DEFAULT_SETTINGS_VALUE)));
-            BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), backgroundImage);
-            bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                view.findViewById(R.id.chat_list_view).setBackground(bitmapDrawable);
-            } else {
-                view.findViewById(R.id.chat_list_view).setBackgroundDrawable(bitmapDrawable);
-            }
-            typedArray.recycle();
+        TypedArray typedArray = getActivity().getResources().obtainTypedArray(R.array.background_resources);
+        Bitmap backgroundImage = BitmapFactory.decodeResource(getResources(), typedArray.getResourceId(bg, Integer.valueOf(PreferenceKeys.DEFAULT_SETTINGS_VALUE)));
+        BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), backgroundImage);
+        bitmapDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            viewById.setBackground(bitmapDrawable);
+        } else {
+            viewById.setBackgroundDrawable(bitmapDrawable);
         }
+        typedArray.recycle();
     }
 
     @Override
@@ -213,7 +269,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
                 }
             }
         });
-        final ListView lvChat = (ListView) view.findViewById(R.id.chat_list_view);
+        lvChat = (ListView) view.findViewById(R.id.chat_list_view);
         // Automatically scroll to the bottom when a data set change notification is received and only if the last item is already visible on screen. Don't scroll to the bottom otherwise.
         mMessages.clear();
         mAdapter = new MessageListAdapter(mApplicationContext, mMessages);
@@ -237,6 +293,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
                     final List<Message> responseData = response.getData();
                     Collections.reverse(responseData);
                     mAdapter.addAll(responseData);
+                    lvChat.setSelection(responseData.size());
                 }
 
                 @Override

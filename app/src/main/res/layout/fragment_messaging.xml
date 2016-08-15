@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".fragments.MessagingFragment">
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -14,6 +12,13 @@
         android:background="#f44336"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/new_message_container"
+        android:layout_below="@+id/my_toolbar">
 
     <ListView
         android:id="@+id/chat_list_view"
@@ -36,21 +41,25 @@
         android:paddingLeft="5dp"
         android:paddingTop="5dp" />
 
+    </android.support.v4.widget.SwipeRefreshLayout>
+
     <LinearLayout
         android:id="@+id/new_message_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#FAFAFA"
         android:layout_alignParentBottom="true">
 
     <EditText
         android:id="@+id/new_message_edit_text"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginEnd  ="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginStart="5dp"
         android:layout_weight="4"
+        android:hint="@string/enter_message"
         android:imeOptions="actionSend"
         android:background="@android:color/transparent"
         android:inputType="textCapSentences|textMultiLine" />
@@ -62,6 +71,6 @@
         android:layout_weight="1"
         android:background="@android:color/holo_blue_light"
         android:text="@string/send"
-        android:textColor="@color/cardview_light_background" />
+        android:textColor="@color/cardview_light_background"/>
     </LinearLayout>
 </RelativeLayout>
