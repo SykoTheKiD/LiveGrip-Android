@@ -42,18 +42,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e5c836d-cc8b-4e51-a88e-4e9b28d7f60c" name="Default" comment="Fixed all responses are errors">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/activities/ColourPickerActivity.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/ColourPickerFragment.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_colour_picker.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_colour_picker.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/res/menu/menu_colour_picker.xml" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-nodpi/feathers.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-nodpi/ignasi_pattern_s.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-nodpi/wavy_man.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app-release.apk" afterPath="$PROJECT_DIR$/app/app-release.apk" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/jarushaan.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/jarushaan.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/messageTypes/MessageType.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/messageTypes/MessageType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/network/BaseURL.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/network/BaseURL.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_messaging.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_messaging.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/application/App.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/application/App.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/models/Event.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/models/Event.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/pref_lists.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/pref_lists.xml" />
     </list>
     <ignored path="LiveGrip-Android.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -110,7 +107,20 @@
     <favorites_list name="LiveGrip-Android" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="BaseURL.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/network/BaseURL.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.4834437">
+              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -2216,7 +2226,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="4406705039000" />
+        <entry key="$PROJECT_DIR$" value="4406738104000" />
         <entry key="$PROJECT_DIR$/../../Sykodoro" value="5794682845000" />
       </map>
     </option>
@@ -2627,7 +2637,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/EventListFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_about.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/activities/AboutActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/pref_lists.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/utils/ImageTools.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/adapters/MessageListAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/customViews/RoundedCornerImageView.java" />
@@ -2647,9 +2656,7 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/models/NetworkKeys.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/models/Utils.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/eventManager/OpenEvent.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/models/Event.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/VideoFeedFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/application/App.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_video_feed.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/analytics/MessagingTracker.java" />
@@ -2664,17 +2671,20 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_colour_picker.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/activities/ColourPickerActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_colour_picker.xml" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/ColourPickerFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/xml/preferences.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/sharedPreferences/PreferenceKeys.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/SettingsFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/network/BaseURL.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_messaging.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/messageTypes/MessageType.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/application/App.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/pref_lists.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/network/BaseURL.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/models/Event.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
       </list>
     </option>
   </component>
@@ -2736,69 +2746,9 @@
               <option name="myItemId" value="LiveGrip-Android" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="LiveGrip-Android" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="LiveGrip-Android" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="menu" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="LiveGrip-Android" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="LiveGrip-Android" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+              <option name="myItemId" value="Gradle Scripts" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -2840,7 +2790,7 @@
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
     <property name="settings.editor.selected.configurable" value="preferences.editor" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="SearchEverywhereHistoryKey" value="Mess&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java&#10;Message&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/adapters/MessageListAdapter.java&#10;Base&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/network/BaseURL.java&#10;Mani&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/AndroidManifest.xml&#10;fragment_mes&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/fragment_messaging.xml&#10;bubble&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/drawable/bubble_left.xml&#10;Setting&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/fragments/SettingsFragment.java&#10;Messaging&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java&#10;Ad&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.ads.AdBuilder&#10;messaging&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/fragment_messaging.xml&#10;MessageT&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.messageTypes.MessageType&#10;activity_v&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/activity_video_feed.xml&#10;messagin&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/fragment_messaging.xml&#10;Bas&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/network/BaseURL.java&#10;App&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.application.App&#10;Logi&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.activities.LoginActivity&#10;EventLi&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/EventListActivity.java&#10;Fire&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.services.FirebaseRegisterService&#10;Fireb&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/services/FirebaseRegisterService.java&#10;Open&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/eventManager/OpenEvent.java&#10;Event&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.models.Event&#10;Video&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/fragments/VideoFeedFragment.java&#10;MessagingAc&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/MessagingActivity.java&#10;User&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/UserProfileActivity.java&#10;acti&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/activity_event_info.xml&#10;About&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/activity_about.xml&#10;Messa&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java&#10;Vi&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/activity_video_feed.xml&#10;EventList&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/EventListActivity.java&#10;Cut&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.customViews.CutLayoutView&#10;BaseU&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/network/BaseURL.java&#10;EventInf&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/EventInfoActivity.java&#10;ImageT&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/utils/ImageTools.java&#10;EventInfo&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.activities.EventInfoActivity&#10;Fc&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/services/FCMRegistrationService.java&#10;EventIn&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.fragments.EventInfoFragment&#10;Even&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/EventListActivity.java&#10;messa&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/fragment_messaging.xml&#10;google&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/google-services.json&#10;Messagin&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/fragment_messaging.xml&#10;MessageTy&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.messageTypes.MessageType&#10;Ima&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/utils/ImageTools.java&#10;message_bu&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/message_bubble.xml&#10;MessageAd&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.adapters.MessageListAdapter&#10;frag&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/fragment_messaging.xml&#10;MessaginA&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.activities.MessagingActivity&#10;Image&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.utils.ImageTools&#10;EventListAc&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/EventListActivity.java&#10;Abou&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.activities.AboutActivity" />
+    <property name="SearchEverywhereHistoryKey" value="Base&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/network/BaseURL.java&#10;Event&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/models/Event.java&#10;App&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/application/App.java&#10;Mess&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java&#10;Message&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/adapters/MessageListAdapter.java&#10;Mani&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/AndroidManifest.xml&#10;fragment_mes&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/fragment_messaging.xml&#10;bubble&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/drawable/bubble_left.xml&#10;Setting&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/fragments/SettingsFragment.java&#10;Messaging&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java&#10;Ad&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.ads.AdBuilder&#10;messaging&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/fragment_messaging.xml&#10;MessageT&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.messageTypes.MessageType&#10;activity_v&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/activity_video_feed.xml&#10;messagin&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/fragment_messaging.xml&#10;Bas&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/network/BaseURL.java&#10;Logi&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.activities.LoginActivity&#10;EventLi&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/EventListActivity.java&#10;Fire&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.services.FirebaseRegisterService&#10;Fireb&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/services/FirebaseRegisterService.java&#10;Open&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/eventManager/OpenEvent.java&#10;Video&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/fragments/VideoFeedFragment.java&#10;MessagingAc&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/MessagingActivity.java&#10;User&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/UserProfileActivity.java&#10;acti&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/activity_event_info.xml&#10;About&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/activity_about.xml&#10;Messa&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/fragments/MessagingFragment.java&#10;Vi&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/activity_video_feed.xml&#10;EventList&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/EventListActivity.java&#10;Cut&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.customViews.CutLayoutView&#10;BaseU&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/network/BaseURL.java&#10;EventInf&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/EventInfoActivity.java&#10;ImageT&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/utils/ImageTools.java&#10;EventInfo&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.activities.EventInfoActivity&#10;Fc&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/services/FCMRegistrationService.java&#10;EventIn&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.fragments.EventInfoFragment&#10;Even&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/EventListActivity.java&#10;messa&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/fragment_messaging.xml&#10;google&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/google-services.json&#10;Messagin&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/fragment_messaging.xml&#10;MessageTy&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.messageTypes.MessageType&#10;Ima&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/utils/ImageTools.java&#10;message_bu&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/message_bubble.xml&#10;MessageAd&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.adapters.MessageListAdapter&#10;frag&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/res/layout/fragment_messaging.xml&#10;MessaginA&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.activities.MessagingActivity&#10;Image&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.utils.ImageTools&#10;EventListAc&#9;FILE&#9;file:///Users/jarushaan/Documents/LiveGrip/LiveGrip-Android/app/src/main/java/com/jaysyko/wrestlechat/activities/EventListActivity.java&#10;Abou&#9;PSI&#9;JAVA://com.jaysyko.wrestlechat.activities.AboutActivity" />
     <property name="device.picker.selection" value="0123456789ABCDEF" />
     <property name="DEBUGGABLE_DEVICE" value="genymotion-google_nexus_5x___6_0_0___api_23___1080x1920-192.168.56.101:5555" />
     <property name="DEBUGGABLE_PROCESS" value="com.jaysyko.wrestlechat" />
@@ -2894,7 +2844,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Android Application.app">
+  <component name="RunManager" selected="JUnit.wrestlechat in app">
     <configuration default="false" name="FormTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -3286,8 +3236,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.SessionManagerTest.userSessionCreationTest" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.wrestlechat in app" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.wrestlechat in app" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.SessionManagerTest.userSessionCreationTest" />
         <item index="2" class="java.lang.String" itemvalue="JUnit.SessionManagerTest" />
         <item index="3" class="java.lang.String" itemvalue="JUnit.ImageToolsTest" />
         <item index="4" class="java.lang.String" itemvalue="JUnit.FormTest" />
@@ -3429,9 +3379,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="SessionManagerTest_userSessionCreationTest - 2016.07.30 at 00h 28m 11s.xml">
-      <configuration name="SessionManagerTest.userSessionCreationTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="SessionManagerTest_userSessionCreationTest - 2016.07.30 at 00h 28m 45s.xml">
       <configuration name="SessionManagerTest.userSessionCreationTest" configurationId="JUnit" />
     </history-entry>
@@ -3459,6 +3406,9 @@
     <history-entry file="SessionManagerTest_userSessionCreationTest - 2016.07.30 at 00h 40m 41s.xml">
       <configuration name="SessionManagerTest.userSessionCreationTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="wrestlechat_in_app - 2016.08.15 at 09h 52m 57s.xml">
+      <configuration name="wrestlechat in app" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -3471,7 +3421,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1600" y="173" width="1600" height="877" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3278237" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.49234694" sideWeight="0.43101344" order="11" side_tool="false" content_ui="tabs" />
@@ -3482,13 +3432,13 @@
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38265306" sideWeight="0.45665446" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33697048" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4502551" sideWeight="0.49688888" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2924731" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29209185" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4985955" sideWeight="0.5634847" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36456996" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36456996" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34183672" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -3638,13 +3588,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/models/Event.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.5147579">
-          <caret line="172" column="24" selection-start-line="172" selection-start-column="24" selection-end-line="172" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/app/libs/YouTubeAndroidPlayerApi.jar!/com/google/android/youtube/player/internal/s.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.4987775">
@@ -3713,14 +3656,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.21829522">
           <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/application/App.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="50" selection-start-line="7" selection-start-column="50" selection-end-line="7" selection-end-column="50" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3844,14 +3779,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-27.103449">
-          <caret line="79" column="53" selection-start-line="79" selection-start-column="53" selection-end-line="79" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -3912,14 +3839,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/network/BaseURL.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="45" selection-start-line="13" selection-start-column="45" selection-end-line="13" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_messaging.xml">
       <provider selected="true" editor-type-id="android-designer">
         <state />
@@ -3954,6 +3873,48 @@
         <state vertical-scroll-proportion="0.50549453">
           <caret line="76" column="33" selection-start-line="76" selection-start-column="33" selection-end-line="76" selection-end-column="33" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/pref_lists.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.12311901">
+          <caret line="6" column="29" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/models/Event.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.60264903">
+          <caret line="177" column="0" selection-start-line="177" selection-start-column="0" selection-end-line="177" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/application/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1589404">
+          <caret line="8" column="39" selection-start-line="8" selection-start-column="39" selection-end-line="8" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3178808">
+          <caret line="16" column="19" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/jaysyko/wrestlechat/network/BaseURL.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4834437">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

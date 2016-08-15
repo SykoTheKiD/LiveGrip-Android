@@ -170,7 +170,7 @@ public class Event{
     }
 
     public String getVideo(){
-        if(video.equals(DB_NULL)){
+        if(video == null || video.equals(DB_NULL)){
             return null;
         }
         return video;
