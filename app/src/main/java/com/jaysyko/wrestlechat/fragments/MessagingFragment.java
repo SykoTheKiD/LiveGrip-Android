@@ -26,8 +26,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -72,7 +72,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
     private static final String FONT_COLOR_HTML = "<font color=\"#FFFFFFF\">", FONT_HTML = "</font>";
     private View view;
     private boolean init;
-    private ImageButton btSend;
+    private Button btSend;
     private boolean mBound;
     private EditText etMessage;
     private Context mApplicationContext;
@@ -131,7 +131,7 @@ public class MessagingFragment extends Fragment implements IMessageArrivedListen
         }else{
             toolbar.setVisibility(View.GONE);
         }
-        btSend = (ImageButton) view.findViewById(R.id.send_button);
+        btSend = (Button) view.findViewById(R.id.send_button);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         handler.post(initMessageAdapter);
         handler.post(initSwipeAdapter);

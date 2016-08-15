@@ -129,10 +129,6 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity
-            android:name=".activities.ColourPickerActivity"
-            android:label="@string/title_activity_colour_picker"
-            android:theme="@style/NoActionBar"></activity>
     </application>
 
 </manifest>

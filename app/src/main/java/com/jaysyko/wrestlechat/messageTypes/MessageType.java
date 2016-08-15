@@ -74,6 +74,7 @@ public class MessageType implements MessageGenerator {
                     textView.setBackgroundDrawable(myIcon);
                 }
                 textView.setPadding(LEFT_BUBBLE_PADDING_LEFT, BUBBLE_PADDING_DEFAULT, LEFT_BUBBLE_PADDING_RIGHT, BUBBLE_PADDING_DEFAULT);
+                lp.setMargins(0,30,0,0);
                 break;
             case SENDER:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -122,6 +123,7 @@ public class MessageType implements MessageGenerator {
         switch (this.position) {
             case USER:
                 lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                imgMsg.setPadding(ZERO, ZERO, IMAGE_MSG_PADDING_LEFT, ZERO);
                 break;
             case SENDER:
                 imgMsg.setPadding(IMAGE_MSG_PADDING_LEFT, ZERO, ZERO, ZERO);
