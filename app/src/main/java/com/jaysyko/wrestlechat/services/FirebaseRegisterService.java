@@ -23,7 +23,6 @@ public class FirebaseRegisterService extends FirebaseInstanceIdService {
             @Override
             public void run() {
                 final SharedPreferences.Editor editor = PreferenceProvider.getEditor(getApplicationContext(), Preferences.FCM);
-                editor.putString(PreferenceKeys.FCM_KEY, refreshedToken);
                 editor.putBoolean(PreferenceKeys.FCM_UPDATED, false);
                 editor.apply();
             }
