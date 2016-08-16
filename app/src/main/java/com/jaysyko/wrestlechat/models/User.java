@@ -44,6 +44,7 @@ public final class User {
     }
 
     public String getAuthToken() {
+        eLog.i(TAG,  AUTH_PREFIX + token.getToken());
         return AUTH_PREFIX + token.getToken();
     }
 

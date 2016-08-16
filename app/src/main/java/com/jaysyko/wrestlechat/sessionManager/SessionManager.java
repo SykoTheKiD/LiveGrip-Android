@@ -30,6 +30,7 @@ public final class SessionManager {
      * @param user    User
      */
     public static void newSession(Context context, User user) {
+        clear(context);
         syncUser(context, user);
         Session.getInstance().setCurrentUser(user);
         AuthTracker.trackUser(user);
@@ -105,5 +106,9 @@ public final class SessionManager {
      */
     public static User getCurrentUser() {
         return Session.getInstance().getCurrentUser();
+    }
+
+    private static void clear(Context context){
+        PreferenceProvider.getEditor(context, Preferences.SESSION).clear();
     }
 }
