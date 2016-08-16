@@ -19,13 +19,11 @@ public class Messenger {
 
     private static final String TAG = Messenger.class.getSimpleName();
     private static final APIInterface apiManager = ApiManager.getApiService();
-    private static final String USER_AUTH_TOKEN = SessionManager.getCurrentUser().getAuthToken();
 
     public static void saveMessage(final String body) {
-
         final User currentUser = SessionManager.getCurrentUser();
         final Call<GenericResponse> saveMessagesCall = apiManager.saveMessage(
-                USER_AUTH_TOKEN,
+                currentUser.getAuthToken(),
                 new MessageData(
                         CurrentActiveEvent.getInstance().getCurrentEvent().getEventID(),
                         currentUser.getId(),

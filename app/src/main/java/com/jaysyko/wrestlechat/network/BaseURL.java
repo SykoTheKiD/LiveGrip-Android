@@ -11,7 +11,7 @@ import com.jaysyko.wrestlechat.utils.StringResources;
  */
 public final class BaseURL {
 
-    private static boolean genymotion = false;
+    private static boolean genymotion = true;
 
     // Development client URLS
     private static final String GENYMOTION_DEVELOPMENT_SERVER_IP = "10.0.3.2";

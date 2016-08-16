@@ -3,10 +3,10 @@ package com.jaysyko.wrestlechat.date;
 import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.utils.StringResources;
 
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -22,8 +22,9 @@ public class EventPublisher {
     private static final String TAG = EventPublisher.class.getSimpleName();
     private static final String STRING_DATE_FORMAT = "EEE, MMM dd hh:mm a";
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat(STRING_DATE_FORMAT, Locale.getDefault());
-    public static final String UTC = "UTC";
-    public static final String DB_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final String UTC = "UTC";
+    private static final String DB_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final TimeZone DEFAULT_TIMEZONE = null;
 
     /**
      * Returns a LiveStatus object stating whether or not we should go live with an event
@@ -32,24 +33,31 @@ public class EventPublisher {
      * @return LiveStatus
      */
     public static EventStatus goLive(String startTime, String endTime) {
-        Date startTimeDate = Timestamp.valueOf(startTime);
-        Date endTimeDate = Timestamp.valueOf(endTime);
-        eLog.i(TAG, startTimeDate.toString());
-        eLog.i(TAG, endTimeDate.toString());
-        // String UTC to Date object
-        Date currentTime = new Date();
-        Boolean notStarted = currentTime.before(startTimeDate);
-        Boolean ended = currentTime.after(endTimeDate);
-        if (notStarted) {
-            eLog.i(TAG, "Not Started");
+        SimpleDateFormat formatter = new SimpleDateFormat(DB_DATE_FORMAT, Locale.getDefault());
+        formatter.setTimeZone(TimeZone.getTimeZone(UTC));
+        Date startTimeDate, endTimeDate;
+        try {
+            EventStatus eventStatus;
+            startTimeDate = formatter.parse(startTime);
+            endTimeDate = formatter.parse(endTime);
+            TimeZone.setDefault(TimeZone.getTimeZone(UTC));
+            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(UTC));
+            Date currentTime = calendar.getTime();
+            Boolean notStarted = currentTime.before(startTimeDate);
+            Boolean ended = currentTime.after(endTimeDate);
+            if (notStarted) {
+                eventStatus =  new EventStatus(false, EventStatus.EVENT_NOT_STARTED);
+            }else if (ended) {
+                eventStatus = new EventStatus(false, EventStatus.EVENT_OVER);
+            }else{
+                eventStatus = new EventStatus(true, EventStatus.EVENT_STARTED);
+            }
+            TimeZone.setDefault(DEFAULT_TIMEZONE);
+            return eventStatus;
+        } catch (ParseException e) {
+            eLog.e(TAG, e.getMessage());
             return new EventStatus(false, EventStatus.EVENT_NOT_STARTED);
         }
-        if (ended) {
-            eLog.i(TAG, "Over");
-            return new EventStatus(false, EventStatus.EVENT_OVER);
-        }
-        eLog.i(TAG, "STARTED");
-        return new EventStatus(true, EventStatus.EVENT_STARTED);
     }
 
     /**
@@ -63,10 +71,9 @@ public class EventPublisher {
             SimpleDateFormat formatter = new SimpleDateFormat(DB_DATE_FORMAT, Locale.getDefault());
             formatter.setTimeZone(TimeZone.getTimeZone(UTC));
             Date value = formatter.parse(stringDate);
-
+            TimeZone.setDefault(DEFAULT_TIMEZONE);
             DATE_FORMAT.setTimeZone(TimeZone.getDefault());
             formattedTime = DATE_FORMAT.format(value);
-            eLog.i(TAG, formattedTime);
         } catch (ParseException e) {
             eLog.e(TAG, e.getMessage());
         }
