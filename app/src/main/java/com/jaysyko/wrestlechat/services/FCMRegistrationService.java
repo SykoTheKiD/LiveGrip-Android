@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.jaysyko.wrestlechat.application.eLog;
 import com.jaysyko.wrestlechat.models.User;
 import com.jaysyko.wrestlechat.network.ApiManager;
@@ -28,6 +29,7 @@ import retrofit2.Call;
 public class FCMRegistrationService extends IntentService {
 
     private static final String TAG = FCMRegistrationService.class.getSimpleName();
+
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      */
@@ -43,33 +45,31 @@ public class FCMRegistrationService extends IntentService {
     private void registerToken() {
         final Context applicationContext = getApplicationContext();
         final SharedPreferences sharedPreferences = PreferenceProvider.getSharedPreferences(applicationContext, Preferences.FCM);
-        final String currentToken = sharedPreferences.getString(PreferenceKeys.FCM_KEY, null);
-        if(currentToken != null){
-            final boolean fcmUpdated = sharedPreferences.getBoolean(PreferenceKeys.FCM_UPDATED, false);
-            if(!fcmUpdated){
-                    final User user = SessionManager.getCurrentUser();
-                    if(user != null){
-                        Call<GenericResponse> call = ApiManager.getApiService().updateFCMID(
-                                user.getAuthToken(), new UpdateFCMData(user.getId(), currentToken));
+        final String currentToken = FirebaseInstanceId.getInstance().getToken();
+        final boolean fcmUpdated = sharedPreferences.getBoolean(PreferenceKeys.FCM_UPDATED, false);
+        if (!fcmUpdated) {
+            eLog.i(TAG + "Firebase Token", currentToken);
+            final User user = SessionManager.getCurrentUser();
+            if (user != null) {
+                Call<GenericResponse> call = ApiManager.getApiService().updateFCMID(
+                        user.getAuthToken(), new UpdateFCMData(user.getId(), currentToken));
 
-                        ApiManager.request(call, new NetworkCallback<GenericResponse>() {
-                            @Override
-                            public void onSuccess(GenericResponse response) {
-                                eLog.i(TAG, response.getStatus());
-                                final SharedPreferences.Editor editor = PreferenceProvider.getEditor(applicationContext, Preferences.FCM);
-                                editor.putString(PreferenceKeys.FCM_KEY, currentToken);
-                                editor.putBoolean(PreferenceKeys.FCM_UPDATED, true);
-                                editor.apply();
-                            }
-
-                            @Override
-                            public void onFail(FailedRequestResponse error) {
-                                eLog.e(TAG, error.getMessage());
-                            }
-                        });
-                    }else{
-                        eLog.e(TAG, "User is null");
+                ApiManager.request(call, new NetworkCallback<GenericResponse>() {
+                    @Override
+                    public void onSuccess(GenericResponse response) {
+                        eLog.i(TAG, response.getStatus());
+                        final SharedPreferences.Editor editor = PreferenceProvider.getEditor(applicationContext, Preferences.FCM);
+                        editor.putBoolean(PreferenceKeys.FCM_UPDATED, true);
+                        editor.apply();
                     }
+
+                    @Override
+                    public void onFail(FailedRequestResponse error) {
+                        eLog.e(TAG, error.getMessage());
+                    }
+                });
+            } else {
+                eLog.e(TAG, "User is null");
             }
         }
     }
